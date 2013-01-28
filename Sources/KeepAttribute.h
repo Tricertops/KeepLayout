@@ -12,6 +12,7 @@
 
 
 
+/// Types of attributes
 typedef enum KeepAttributeType : NSInteger {
     KeepAttributeTypeWidth,
     KeepAttributeTypeHeight,
@@ -24,27 +25,28 @@ typedef enum KeepAttributeType : NSInteger {
 
 
 
+
+
+@class KeepRule;
+
 @interface KeepAttribute : NSObject
 
-
-#pragma mark Initialization
-
-- (id)initWithType:(KeepAttributeType)type;
-
-#pragma mark …
-
+- (id)initWithType:(KeepAttributeType)type rules:(NSArray *)rules;
 @property (nonatomic, readonly, assign) KeepAttributeType type;
+@property (nonatomic, readonly, copy) NSArray *rules;
 
-
-#pragma mark Quick Construction
-
-+ (instancetype)width;
-+ (instancetype)height;
-+ (instancetype)aspectRatio;
-+ (instancetype)leftInset;
-+ (instancetype)rightInset;
-+ (instancetype)topInset;
-+ (instancetype)bottomInset;
-
+/// Short Syntax contructor
++ (instancetype)rules:(KeepRule *)rules, ... NS_REQUIRES_NIL_TERMINATION;
 
 @end
+
+
+
+/// Short Syntax subclasses
+@interface KeepWidth       : KeepAttribute @end
+@interface KeepHeight      : KeepAttribute @end
+@interface KeepAspectRatio : KeepAttribute @end
+@interface KeepTopInset    : KeepAttribute @end
+@interface KeepBottomInset : KeepAttribute @end
+@interface KeepLeftInset   : KeepAttribute @end
+@interface KeepRightInset  : KeepAttribute @end

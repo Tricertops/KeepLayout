@@ -8,13 +8,13 @@
 
 #import "KeepAttribute.h"
 
-#define PRIVATE
 
 
-
-@interface KeepAttribute (PRIVATE)
+@interface KeepAttribute ()
 
 @property (nonatomic, readwrite, assign) KeepAttributeType type;
+
++ (KeepAttributeType)classType;
 
 @end
 
@@ -27,7 +27,7 @@
 
 #pragma mark Initialization
 
-- (id)initWithType:(KeepAttributeType)type {
+- (id)initWithType:(KeepAttributeType)type rules:(NSArray *)rules {
 	self = [super init];
 	if (self) {
 		self.type = type;
@@ -35,17 +35,27 @@
 	return self;
 }
 
++ (KeepAttributeType)classType {
+    @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Class KeepAttribute does not have implitit attribute type, use one of the subclasses" userInfo:nil];
+}
 
-#pragma mark Quick Construction
-
-+ (instancetype)width		{ return [[self alloc] initWithType:KeepAttributeTypeWidth      ]; }
-+ (instancetype)height		{ return [[self alloc] initWithType:KeepAttributeTypeHeight     ]; }
-+ (instancetype)aspectRatio { return [[self alloc] initWithType:KeepAttributeTypeAspectRatio]; }
-+ (instancetype)leftInset	{ return [[self alloc] initWithType:KeepAttributeTypeLeftInset  ]; }
-+ (instancetype)rightInset	{ return [[self alloc] initWithType:KeepAttributeTypeRightInset ]; }
-+ (instancetype)topInset	{ return [[self alloc] initWithType:KeepAttributeTypeTopInset   ]; }
-+ (instancetype)bottomInset { return [[self alloc] initWithType:KeepAttributeTypeBottomInset]; }
++ (instancetype)rules:(KeepRule *)rules, ... {
+    NSArray *rulesArray = nil;
+    return [[self alloc] initWithType:[self classType] rules:rulesArray];
+}
 
 
 
 @end
+
+
+
+
+
+@implementation KeepWidth       : KeepAttribute @end
+@implementation KeepHeight      : KeepAttribute @end
+@implementation KeepAspectRatio : KeepAttribute @end
+@implementation KeepTopInset    : KeepAttribute @end
+@implementation KeepBottomInset : KeepAttribute @end
+@implementation KeepLeftInset   : KeepAttribute @end
+@implementation KeepRightInset  : KeepAttribute @end
