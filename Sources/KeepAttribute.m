@@ -7,6 +7,7 @@
 //
 
 #import "KeepAttribute.h"
+#import "KeepRule.h"
 
 
 
@@ -52,10 +53,10 @@
 
 
 
-@implementation KeepWidth       : KeepAttribute @end
-@implementation KeepHeight      : KeepAttribute @end
-@implementation KeepAspectRatio : KeepAttribute @end
-@implementation KeepTopInset    : KeepAttribute @end
-@implementation KeepBottomInset : KeepAttribute @end
-@implementation KeepLeftInset   : KeepAttribute @end
-@implementation KeepRightInset  : KeepAttribute @end
+@implementation KeepWidth            + (KeepAttributeType)classType { return KeepAttributeTypeWidth; }     @end
+@implementation KeepHeight           + (KeepAttributeType)classType { return KeepAttributeTypeHeight; }     @end
+@implementation KeepAspectRatio      + (KeepAttributeType)classType { return KeepAttributeTypeAspectRatio; }     @end
+@implementation KeepTopInset         + (KeepAttributeType)classType { return KeepAttributeTypeTopInset; }     @end
+@implementation KeepBottomInset      + (KeepAttributeType)classType { return KeepAttributeTypeBottomInset; }     @end
+@implementation KeepLeftInset        + (KeepAttributeType)classType { return KeepAttributeTypeLeftInset; }     @end
+@implementation KeepRightInset       + (KeepAttributeType)classType { return KeepAttributeTypeRightInset; }     @end

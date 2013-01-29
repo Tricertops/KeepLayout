@@ -10,25 +10,7 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import <UIKit/UIKit.h>
 
-
-
-/// Types of rules
-typedef enum KeepRuleType : NSInteger {
-    KeepRuleTypeEqual,
-    KeepRuleTypeMax,
-    KeepRuleTypeMin,
-} KeepRuleType;
-
-/// Priorities
-enum {
-    KeepPriorityMust = UILayoutPriorityRequired,
-    KeepPriorityShall = UILayoutPriorityDefaultHigh,
-    KeepPriorityMay = UILayoutPriorityDefaultLow,
-    KeepPriorityFit = UILayoutPriorityFittingSizeLevel,
-};
-typedef UILayoutPriority KeepPriority;
-
-
+#import "KeepTypes.h"
 
 
 

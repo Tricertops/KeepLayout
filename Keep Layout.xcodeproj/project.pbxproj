@@ -53,6 +53,7 @@
 		5B208DC316B67391007ABFFE /* KeepLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeepLayout.h; sourceTree = "<group>"; };
 		5B208DC616B673C8007ABFFE /* KeepRule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeepRule.h; sourceTree = "<group>"; };
 		5B208DC716B673C8007ABFFE /* KeepRule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeepRule.m; sourceTree = "<group>"; };
+		5B208DDE16B6EFFB007ABFFE /* KeepTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeepTypes.h; sourceTree = "<group>"; };
 		5B3C507916B5304600D00BF3 /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B3C507D16B5304600D00BF3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5B3C507F16B5304600D00BF3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -155,6 +156,7 @@
 			isa = PBXGroup;
 			children = (
 				5B208DC316B67391007ABFFE /* KeepLayout.h */,
+				5B208DDE16B6EFFB007ABFFE /* KeepTypes.h */,
 				5B208DBF16B67381007ABFFE /* KeepAttribute.h */,
 				5B208DC016B67381007ABFFE /* KeepAttribute.m */,
 				5B208DC616B673C8007ABFFE /* KeepRule.h */,

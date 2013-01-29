@@ -10,20 +10,7 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import <UIKit/UIKit.h>
 
-
-
-/// Types of attributes
-typedef enum KeepAttributeType : NSInteger {
-    KeepAttributeTypeWidth,
-    KeepAttributeTypeHeight,
-    KeepAttributeTypeAspectRatio,
-    KeepAttributeTypeLeftInset,
-    KeepAttributeTypeRightInset,
-    KeepAttributeTypeTopInset,
-    KeepAttributeTypeBottomInset,
-} KeepAttributeType;
-
-
+#import "KeepTypes.h"
 
 
 
