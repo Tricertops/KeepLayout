@@ -50,25 +50,25 @@ Tell your view to keep created attribute with its rules. Examples:
 
 ##### Keep width exactly 150 points:
 
-```
+```objective-c
 [view keep:[KeepWidth rules:@[ [KeepEqual must:150] ]];
 ```
 
 ##### Keep aspect ratio between 4:3 and 16:9:
 
-```
+```objective-c
 [view keep:[KeepAspectRatio rules:@[ [KeepMin must:4/3.], [KeepMax must:16/9.] ]];
 ```
 
 ##### Keep top inset (to superview) flexible with preffered value of 20 points, but it may never be less than 10 points.
 
-```
+```objective-c
 [view keep:[KeepTopInset rules:@[ [KeepMin must:10], [KeepEqual may:20] ]];
 ```
 
 ##### Keep insets minimum of 10 points with preffered value 10 point. Keep aspect ration 16:9. Keep Horizontally centered but vertically in 1/3rd of superview with allowed movement to the center.
 
-```
+```objective-c
 NSArray *rules = @[ [KeepMin must:10], [KeepEqual may:10] ];
 [view keep:[KeepTopInset rules:rules]];
 [view keep:[KeepBottomInset rules:rules]];
@@ -83,8 +83,8 @@ NSArray *rules = @[ [KeepMin must:10], [KeepEqual may:10] ];
 
 **_See pictures and demo app included in project._**
 
-![image](readme/example-portrait.png)
-![image](readme/example-landscape.png)
+![Portrait](https://raw.github.com/iMartinKiss/KeepLayout/master/readme/example-portrait.png)
+![Landscape](https://raw.github.com/iMartinKiss/KeepLayout/master/readme/example-landscape.png)
 
 ---
 _Version 0.1.0_
