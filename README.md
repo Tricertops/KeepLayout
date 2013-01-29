@@ -9,7 +9,7 @@ _NOTE: I focus on iOS, but support for OSX will be added. In fact, **you may add
 ## Short Syntax
 Naming of classes and methods is focused on the shortest syntax possible. Because of this there are subclasses that override constructors for your convenience. Defining layout will be reduced to few lines of code.
 
-I will be improving interface of classes, so it would cover most of the uses with one lin
+I will be improving interface of classes, so it would cover most of the uses with one line. Because 90% of time you use only 10% possibilities of *Auto Layout*.
 
 
 
@@ -87,7 +87,7 @@ NSArray *rules = @[ [KeepMin must:10], [KeepEqual may:10] ];
 ![Landscape](https://raw.github.com/iMartinKiss/KeepLayout/master/readme/example-landscape.png)
 
 ---
-_Version 0.1.0_
+_Version 0.1.1_
 
 MIT License, Copyright © 2013 Martin Kiss
 
