@@ -23,17 +23,21 @@
 @property (nonatomic, readonly, copy) NSArray *rules;
 
 /// Short Syntax contructor
-+ (instancetype)rules:(KeepRule *)rules, ... NS_REQUIRES_NIL_TERMINATION;
++ (instancetype)rules:(NSArray *)rules;
+
+- (void)applyInView:(UIView *)view;
 
 @end
 
 
 
 /// Short Syntax subclasses
-@interface KeepWidth       : KeepAttribute @end
-@interface KeepHeight      : KeepAttribute @end
-@interface KeepAspectRatio : KeepAttribute @end
-@interface KeepTopInset    : KeepAttribute @end
-@interface KeepBottomInset : KeepAttribute @end
-@interface KeepLeftInset   : KeepAttribute @end
-@interface KeepRightInset  : KeepAttribute @end
+@interface KeepWidth        : KeepAttribute @end
+@interface KeepHeight       : KeepAttribute @end
+@interface KeepAspectRatio  : KeepAttribute @end
+@interface KeepTopInset     : KeepAttribute @end
+@interface KeepBottomInset  : KeepAttribute @end
+@interface KeepLeftInset    : KeepAttribute @end
+@interface KeepRightInset   : KeepAttribute @end
+@interface KeepHorizontally : KeepAttribute @end
+@interface KeepVertically   : KeepAttribute @end

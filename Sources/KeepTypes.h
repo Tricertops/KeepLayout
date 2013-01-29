@@ -21,6 +21,8 @@ typedef enum KeepAttributeType : NSInteger {
     KeepAttributeTypeBottomInset,
     KeepAttributeTypeLeftInset,
     KeepAttributeTypeRightInset,
+    KeepAttributeTypeHorizontally,
+    KeepAttributeTypeVertically,
 } KeepAttributeType;
 
 
@@ -35,10 +37,21 @@ typedef enum KeepRuleType : NSInteger {
 
 
 /// Priorities
-enum {
+enum : NSInteger {
     KeepPriorityMust = UILayoutPriorityRequired,
     KeepPriorityShall = UILayoutPriorityDefaultHigh,
     KeepPriorityMay = UILayoutPriorityDefaultLow,
     KeepPriorityFit = UILayoutPriorityFittingSizeLevel,
 };
 typedef UILayoutPriority KeepPriority;
+
+/// Priorities
+enum : NSInteger {
+    KeepVeryWeak = -30,
+    KeepWeak = -20,
+    KeepBitWeak = -10,
+    KeepNormal = 0,
+    KeepBitStrong = +10,
+    KeepStrong = +20,
+    KeepVeryStrong = +30,
+};

@@ -40,10 +40,10 @@
     @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Class KeepRule does not have implitit rule type, use one of the subclasses" userInfo:nil];
 }
 
-+ (instancetype)must :(CGFloat)value { return [[self alloc] initWithType:[self classType] value:value priority:KeepPriorityMust];  }
++ (instancetype)must :(CGFloat)value { return [[self alloc] initWithType:[self classType] value:value priority:KeepPriorityMust ]; }
 + (instancetype)shall:(CGFloat)value { return [[self alloc] initWithType:[self classType] value:value priority:KeepPriorityShall]; }
-+ (instancetype)may  :(CGFloat)value { return [[self alloc] initWithType:[self classType] value:value priority:KeepPriorityMay];   }
-+ (instancetype)fit  :(CGFloat)value { return [[self alloc] initWithType:[self classType] value:value priority:KeepPriorityFit];   }
++ (instancetype)may  :(CGFloat)value { return [[self alloc] initWithType:[self classType] value:value priority:KeepPriorityMay  ]; }
++ (instancetype)fit  :(CGFloat)value { return [[self alloc] initWithType:[self classType] value:value priority:KeepPriorityFit  ]; }
 
 @end
 

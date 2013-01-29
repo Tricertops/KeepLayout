@@ -10,12 +10,14 @@
 #import <UIKit/UIKit.h>
 #import <CoreGraphics/CoreGraphics.h>
 
-#import "KeepAttribute.h"
+@class KeepAttribute;
 
 
 
 @interface UIView (KeepLayout)
 
 - (void)keep:(KeepAttribute *)attribute;
+
+- (UIView *)commonAncestor:(UIView *)anotherView;
 
 @end
