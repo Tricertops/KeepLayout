@@ -118,10 +118,10 @@
         case KeepAttributeTypeWidth:        return NO ;
         case KeepAttributeTypeHeight:       return NO ;
         case KeepAttributeTypeAspectRatio:  return YES;
-        case KeepAttributeTypeTopInset:     return NO ;
-        case KeepAttributeTypeBottomInset:  return YES;
-        case KeepAttributeTypeLeftInset:    return NO ;
-        case KeepAttributeTypeRightInset:   return YES;
+        case KeepAttributeTypeTopInset:     return YES;
+        case KeepAttributeTypeBottomInset:  return NO ;
+        case KeepAttributeTypeLeftInset:    return YES;
+        case KeepAttributeTypeRightInset:   return NO ;
         case KeepAttributeTypeHorizontally: return YES;
         case KeepAttributeTypeVertically:   return YES;
     }

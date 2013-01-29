@@ -33,7 +33,7 @@
     view.backgroundColor = [UIColor redColor];
     [self.view addSubview:view];
     
-    NSArray *rules = @[ [KeepMax must:10], [KeepMin shall:10] ];
+    NSArray *rules = @[ [KeepMin must:10], [KeepEqual may:10] ];
 	[view keep:[KeepTopInset rules:rules]];
     [view keep:[KeepBottomInset rules:rules]];
     [view keep:[KeepRightInset rules:rules]];
