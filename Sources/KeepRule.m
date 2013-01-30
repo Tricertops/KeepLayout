@@ -42,14 +42,15 @@
     @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Class KeepRule does not have implitit rule type, use one of the subclasses" userInfo:nil];
 }
 
-+ (instancetype)must :(CGFloat)value { return [[self alloc] initWithType:[self classType] value:value relatedView:nil priority:KeepPriorityMust ]; }
-+ (instancetype)shall:(CGFloat)value { return [[self alloc] initWithType:[self classType] value:value relatedView:nil priority:KeepPriorityShall]; }
-+ (instancetype)may  :(CGFloat)value { return [[self alloc] initWithType:[self classType] value:value relatedView:nil priority:KeepPriorityMay  ]; }
-+ (instancetype)fit  :(CGFloat)value { return [[self alloc] initWithType:[self classType] value:value relatedView:nil priority:KeepPriorityFit  ]; }
++ (instancetype)must :(CGFloat)value { return [self must: value to:nil]; }
++ (instancetype)shall:(CGFloat)value { return [self shall:value to:nil]; }
++ (instancetype)may  :(CGFloat)value { return [self may:  value to:nil]; }
++ (instancetype)fit  :(CGFloat)value { return [self fit:  value to:nil]; }
 
-+ (instancetype)mustTo:(UIView *)view {
-    return [[self alloc] initWithType:[self classType] value:1 relatedView:view priority:KeepPriorityMust];
-}
++ (instancetype)must :(CGFloat)value to:(UIView *)view { return [[self alloc] initWithType:[self classType] value:value relatedView:view priority:KeepPriorityMust] ; }
++ (instancetype)shall:(CGFloat)value to:(UIView *)view { return [[self alloc] initWithType:[self classType] value:value relatedView:view priority:KeepPriorityShall]; }
++ (instancetype)may  :(CGFloat)value to:(UIView *)view { return [[self alloc] initWithType:[self classType] value:value relatedView:view priority:KeepPriorityMay]  ; }
++ (instancetype)fit  :(CGFloat)value to:(UIView *)view { return [[self alloc] initWithType:[self classType] value:value relatedView:view priority:KeepPriorityFit]  ; }
 
 @end
 

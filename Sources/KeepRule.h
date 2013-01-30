@@ -27,8 +27,11 @@
 + (instancetype)shall:(CGFloat)value; /// Priority High
 + (instancetype)may  :(CGFloat)value; /// Priority Low
 + (instancetype)fit  :(CGFloat)value; /// Priority Fitting Size
-
-+ (instancetype)mustTo:(UIView *)view;
+// Related to another view. E.g. to synchronize widths.
++ (instancetype)must :(CGFloat)value to:(UIView *)view;
++ (instancetype)shall:(CGFloat)value to:(UIView *)view;
++ (instancetype)may:(CGFloat)value   to:(UIView *)view;
++ (instancetype)fit:(CGFloat)value   to:(UIView *)view;
 
 @end
 

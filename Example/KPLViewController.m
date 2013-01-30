@@ -77,6 +77,9 @@
     [green keep:[KeepHeight rules:@[ [KeepEqual mustTo:red] ]]];
     [blue keep:[KeepHeight rules:@[ [KeepEqual mustTo:red] ]]];
     [blue keep:[KeepWidth rules:@[ [KeepEqual mustTo:green] ]]];
+    [green keep:[KeepHeight rules:@[ [KeepEqual must:1 to:red] ]]]; // Keep height of green equal to red.
+    [blue keep:[KeepHeight rules:@[ [KeepEqual must:1 to:red] ]]]; // Keep height of blue equal to red.
+    [blue keep:[KeepWidth rules:@[ [KeepEqual must:1 to:green] ]]]; // Keep width of blue equal to green.
     
 }
 
