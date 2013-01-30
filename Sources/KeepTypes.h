@@ -14,15 +14,23 @@
 
 /// Types of attributes
 typedef enum KeepAttributeType : NSInteger {
+    /// Dimensions
     KeepAttributeTypeWidth,
     KeepAttributeTypeHeight,
     KeepAttributeTypeAspectRatio,
+    /// Superview Insets
     KeepAttributeTypeTopInset,
     KeepAttributeTypeBottomInset,
     KeepAttributeTypeLeftInset,
     KeepAttributeTypeRightInset,
+    /// Relaive Position
     KeepAttributeTypeHorizontally,
     KeepAttributeTypeVertically,
+    /// Offset to Other View
+    KeepAttributeTypeTopOffset,
+    KeepAttributeTypeBottomOffset,
+    KeepAttributeTypeLeftOffset,
+    KeepAttributeTypeRightOffset,
 } KeepAttributeType;
 
 
