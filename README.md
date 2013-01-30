@@ -41,6 +41,8 @@ Rule priorities are four (just like when usinng `NSLayoutConstraint`) and you sp
  3. **may** – Normal priority saying this rule _may_ be applied. Use `+may:` constructor.
  4. **fit** – Lowest priority saying this rule is just fallback case to _fit_. Use `+fit:` constructor.
 
+You may create rule relative to another view. Not every attribute supports them, but for example you may keep widths of multiple views to be related, like “always double” or “at least one half”.
+
 _NOTE: You may not like the naming, but I wanted something human-friendly. Since “keep” is verb I choose modal verbs to make it more like natural language._
 
 
