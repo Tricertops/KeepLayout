@@ -19,11 +19,14 @@
 @interface KeepAttribute : NSObject
 
 - (id)initWithType:(KeepAttributeType)type rules:(NSArray *)rules;
+- (id)initWithType:(KeepAttributeType)type relatedView:(UIView *)view rules:(NSArray *)rules;
 @property (nonatomic, readonly, assign) KeepAttributeType type;
+@property (nonatomic, readonly, weak) UIView * relatedView;
 @property (nonatomic, readonly, copy) NSArray *rules;
 
 /// Short Syntax contructor
 + (instancetype)rules:(NSArray *)rules;
++ (instancetype)to:(UIView *)view rules:(NSArray *)rules;
 
 - (void)applyInView:(UIView *)view;
 
@@ -41,3 +44,7 @@
 @interface KeepRightInset   : KeepAttribute @end
 @interface KeepHorizontally : KeepAttribute @end
 @interface KeepVertically   : KeepAttribute @end
+@interface KeepTopOffset    : KeepAttribute @end
+@interface KeepBottomOffset : KeepAttribute @end
+@interface KeepLeftOffset   : KeepAttribute @end
+@interface KeepRightOffset  : KeepAttribute @end
