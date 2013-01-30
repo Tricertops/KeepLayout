@@ -9,7 +9,7 @@ _NOTE: I focus on iOS, but support for OSX will be added. In fact, **you may add
 ## Short Syntax
 Naming of classes and methods is focused on the shortest syntax possible. Because of this there are subclasses that override constructors for your convenience. Defining layout will be reduced to few lines of code.
 
-I will be improving interface of classes, so it would cover most of the uses with one line. Because 90% of time you use only 10% possibilities of *Auto Layout*.
+I will be improving interface of classes, so it would cover most of the uses with one line. Because 90% of time you use only 10% possibilities of *Auto Layout* (numbers are made up, but you get the point).
 
 
 
@@ -48,46 +48,75 @@ _NOTE: You may not like the naming, but I wanted something human-friendly. Since
 ### Keep the layout
 Tell your view to keep created attribute with its rules. Examples:
 
-##### Keep width exactly 150 points:
+##### 1. Keep width exactly 150 points:
 
 ```objective-c
 [view keep:[KeepWidth rules:@[ [KeepEqual must:150] ]];
 ```
 
-##### Keep aspect ratio between 4:3 and 16:9:
+##### 2. Keep aspect ratio between 4:3 and 16:9:
 
 ```objective-c
 [view keep:[KeepAspectRatio rules:@[ [KeepMin must:4/3.], [KeepMax must:16/9.] ]];
 ```
 
-##### Keep top inset (to superview) flexible with preffered value of 20 points, but it may never be less than 10 points.
+##### 3. Keep top inset (to superview) flexible with preffered value of 20 points, but it may never be less than 10 points.
 
 ```objective-c
 [view keep:[KeepTopInset rules:@[ [KeepMin must:10], [KeepEqual may:20] ]];
 ```
 
-##### Keep insets minimum of 10 points with preffered value 10 point. Keep aspect ration 16:9. Keep Horizontally centered but vertically in 1/3rd of superview with allowed movement to the center.
+##### 4. Keep insets 10 points. Keep aspect ration 16:9. Keep centered in 1/3rd of container. _See pictures and “example1” included in project._
 
 ```objective-c
+// Insets
 NSArray *rules = @[ [KeepMin must:10], [KeepEqual may:10] ];
 [view keep:[KeepTopInset rules:rules]];
 [view keep:[KeepBottomInset rules:rules]];
 [view keep:[KeepRightInset rules:rules]];
 [view keep:[KeepLeftInset rules:rules]];
-    
+
+// Dimensions
 [view keep:[KeepAspectRatio rules:@[ [KeepMin must:16/9.] ]]];
 
+// Position
 [view keep:[KeepHorizontally rules:@[ [KeepEqual must:1/2.] ]]];
 [view keep:[KeepVertically rules:@[ [KeepMax must:1/2.], [KeepMin must:1/3.], [KeepEqual may:1/3.] ]]];
 ```
 
-**_See pictures and demo app included in project._**
+![Portrait Example 1](https://raw.github.com/iMartinKiss/KeepLayout/master/readme/example1-portrait.png)
+![Landscape Example 1](https://raw.github.com/iMartinKiss/KeepLayout/master/readme/example1-landscape.png)
 
-![Portrait](https://raw.github.com/iMartinKiss/KeepLayout/master/readme/example-portrait.png)
-![Landscape](https://raw.github.com/iMartinKiss/KeepLayout/master/readme/example-landscape.png)
+##### 4. Keep insets 20 and inter-view spacing 10. Keep equal widths and heights. _See pictures and “example2” included in project._
+
+```objective-c
+// Insets
+NSArray *insetRules = @[ [KeepMin must:20], [KeepMax may:20] ];
+for (UIView *view in @[ red, green, blue ]) {
+    [view keep:[KeepTopInset rules:insetRules]];
+    [view keep:[KeepBottomInset rules:insetRules]];
+    [view keep:[KeepLeftInset rules:insetRules]];
+    [view keep:[KeepRightInset rules:insetRules]];
+}
+// Offsets
+NSArray *offsetRules = @[ [KeepMin must:10], [KeepMax shall:10] ];
+[red keep:[KeepBottomOffset to:green rules:offsetRules]];
+[red keep:[KeepBottomOffset to:blue rules:offsetRules]];
+[green keep:[KeepRightOffset to:blue rules:offsetRules]];
+
+// Dimensions
+[green keep:[KeepHeight rules:@[ [KeepEqual mustTo:red] ]]];
+[blue keep:[KeepHeight rules:@[ [KeepEqual mustTo:red] ]]];
+[blue keep:[KeepWidth rules:@[ [KeepEqual mustTo:green] ]]];
+```
+
+![Portrait Example 2](https://raw.github.com/iMartinKiss/KeepLayout/master/readme/example2-portrait.png)
+![Landscape Example 2](https://raw.github.com/iMartinKiss/KeepLayout/master/readme/example2-landscape.png)
+
+
 
 ---
-_Version 0.1.1_
+_Version 0.2.0_
 
 MIT License, Copyright © 2013 Martin Kiss
 

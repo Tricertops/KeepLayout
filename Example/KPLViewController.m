@@ -70,7 +70,6 @@
     }
     
     NSArray *offsetRules = @[ [KeepMin must:10], [KeepMax shall:10] ];
-    
     [red keep:[KeepBottomOffset to:green rules:offsetRules]];
     [red keep:[KeepBottomOffset to:blue rules:offsetRules]];
     [green keep:[KeepRightOffset to:blue rules:offsetRules]];
