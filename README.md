@@ -1,6 +1,8 @@
 # Keep Layout
 
-Keep Layout is project **under active development** whose purpose is to make *Auto Layout* easy to use _from code_! No more clicking in *Interface Builder* or manual creation of constraints. Think in attributes and their rules. *Keep Layout* will set all constraints to keep your desired layout.
+Keep Layout is project **under active development** whose purpose is to make _Auto Layout_ easy to use _from code_! No more clicking in _Interface Builder_ or manual creation of constraints. Think in attributes and their rules. _Keep Layout_ will set all constraints to keep your desired layout.
+
+You can safely create your own constraints in addition to those created by _Keep Layout_. Please, suggest your ideas by opening new 'enhancement' issue.
 
 _NOTE: I focus on iOS, but support for OSX will be added. In fact, **you may add it!** Please contribute with your ideas. Thank you!_
 
@@ -9,7 +11,7 @@ _NOTE: I focus on iOS, but support for OSX will be added. In fact, **you may add
 ## Short Syntax
 Naming of classes and methods is focused on the shortest syntax possible. Because of this there are subclasses that override constructors for your convenience. Defining layout will be reduced to few lines of code.
 
-I will be improving interface of classes, so it would cover most of the uses with one line. Because 90% of time you use only 10% possibilities of *Auto Layout* (numbers are made up, but you get the point).
+I will be improving interface of classes, so it would cover most of the uses with one line. Because **90%** of time you use only **10%** possibilities of *Auto Layout* (numbers are made up, but you get the point).
 
 
 
@@ -18,11 +20,12 @@ I will be improving interface of classes, so it would cover most of the uses wit
 
 
 ### Attributes – `KeepAttribute` subclasses
-Create representation of view attribute. They define internal metric or relation to another view:
+Representation of an attribute of `UIView`. They define internal metric or relation to another view:
 
  - **dimensions** – width, height, aspect ratio
- - **insets** – top, bottom, left, right – related to superview
+ - **insets** – related to superview (top, bottom, left, right)
  - **position** – relative to superview bounds
+ - **offsets** – padding between views (top, bottom, left, right)
  - *more comming…*
 
 
@@ -41,14 +44,13 @@ Rule priorities are four (just like when usinng `NSLayoutConstraint`) and you sp
  3. **may** – Normal priority saying this rule _may_ be applied. Use `+may:` constructor.
  4. **fit** – Lowest priority saying this rule is just fallback case to _fit_. Use `+fit:` constructor.
 
-You may create rule relative to another view. Not every attribute supports them, but for example you may keep widths of multiple views to be related, like “always double” or “at least one half”.
+You may create rule relative to another view. Not every attribute supports them (only Width and Height), but for example you may set widths of two views to be related, like “always double” or “at least one half”. See examples.
 
 _NOTE: You may not like the naming, but I wanted something human-friendly. Since “keep” is verb I choose modal verbs to make it more like natural language._
 
 
 
-### Keep the layout
-Tell your view to keep created attribute with its rules. Examples:
+## Examples
 
 ##### 1. Keep width exactly 150 points:
 
@@ -68,7 +70,7 @@ Tell your view to keep created attribute with its rules. Examples:
 [view keep:[KeepTopInset rules:@[ [KeepMin must:10], [KeepEqual may:20] ]];
 ```
 
-##### 4. Keep insets 10 points. Keep aspect ration 16:9. Keep centered in 1/3rd of container. _See pictures and “example1” included in project._
+##### 4. Keep insets 10 points. Keep aspect ration 16:9. Keep centered in 1/3rd of container. _See pictures and `-example1` included in project._
 
 ```objective-c
 // Insets
@@ -86,10 +88,10 @@ NSArray *rules = @[ [KeepMin must:10], [KeepEqual may:10] ];
 [view keep:[KeepVertically rules:@[ [KeepMax must:1/2.], [KeepMin must:1/3.], [KeepEqual may:1/3.] ]]];
 ```
 
-![Portrait Example 1](https://raw.github.com/iMartinKiss/KeepLayout/master/readme/example1-portrait.png)
-![Landscape Example 1](https://raw.github.com/iMartinKiss/KeepLayout/master/readme/example1-landscape.png)
+![Portrait Example 1](readme/example1-portrait.png)
+![Landscape Example 1](readme/example1-landscape.png)
 
-##### 4. Keep insets 20 and inter-view spacing 10. Keep equal widths and heights. _See pictures and “example2” included in project._
+##### 4. Keep insets 20 and inter-view spacing 10. Keep equal widths and heights. _See pictures and `-example2` included in project._
 
 ```objective-c
 // Insets
@@ -112,13 +114,13 @@ NSArray *offsetRules = @[ [KeepMin must:10], [KeepMax shall:10] ];
 [blue keep:[KeepWidth rules:@[ [KeepEqual mustTo:green] ]]];
 ```
 
-![Portrait Example 2](https://raw.github.com/iMartinKiss/KeepLayout/master/readme/example2-portrait.png)
-![Landscape Example 2](https://raw.github.com/iMartinKiss/KeepLayout/master/readme/example2-landscape.png)
+![Portrait Example 2](readme/example2-portrait.png)
+![Landscape Example 2](readme/example2-landscape.png)
 
 
 
 ---
-_Version 0.2.0_
+_Version 0.2.1_
 
 MIT License, Copyright © 2013 Martin Kiss
 
