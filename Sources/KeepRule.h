@@ -16,7 +16,7 @@
 
 @interface KeepRule : NSObject
 
-- (id)initWithType:(KeepRuleType)type value:(CGFloat)value relatedView:(UIView *)view priority:(KeepPriority)priority;
+- (id)initWithType:(KeepRuleType)type value:(CGFloat)value relatedToView:(UIView *)view priority:(KeepPriority)priority;
 @property (nonatomic, readonly, assign) KeepRuleType type;
 @property (nonatomic, readonly, assign) CGFloat value;
 @property (nonatomic, readonly, weak) UIView *relatedView;
@@ -27,7 +27,7 @@
 + (instancetype)shall:(CGFloat)value; /// Priority High
 + (instancetype)may  :(CGFloat)value; /// Priority Low
 + (instancetype)fit  :(CGFloat)value; /// Priority Fitting Size
-// Related to another view. E.g. to synchronize widths.
+/// Related to another view. E.g. set width to be double of another view's width.
 + (instancetype)must :(CGFloat)value to:(UIView *)view;
 + (instancetype)shall:(CGFloat)value to:(UIView *)view;
 + (instancetype)may:(CGFloat)value   to:(UIView *)view;
