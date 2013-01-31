@@ -48,3 +48,10 @@
 @interface KeepBottomOffset : KeepAttribute @end
 @interface KeepLeftOffset   : KeepAttribute @end
 @interface KeepRightOffset  : KeepAttribute @end
+@interface KeepAlignTop     : KeepAttribute @end
+@interface KeepAlignCenterX : KeepAttribute @end
+@interface KeepAlignBottom  : KeepAttribute @end
+@interface KeepAlignLeft    : KeepAttribute @end
+@interface KeepAlignCenterY : KeepAttribute @end
+@interface KeepAlignRight   : KeepAttribute @end
+@interface KeepAlignBaseline: KeepAttribute @end

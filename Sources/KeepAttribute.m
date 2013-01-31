@@ -116,6 +116,13 @@
         case KeepAttributeTypeBottomOffset: return NSLayoutAttributeBottom  ;
         case KeepAttributeTypeLeftOffset:   return NSLayoutAttributeLeft    ;
         case KeepAttributeTypeRightOffset:  return NSLayoutAttributeRight   ;
+        case KeepAttributeTypeAlignTop:     return NSLayoutAttributeTop     ;
+        case KeepAttributeTypeAlignCenterX: return NSLayoutAttributeCenterX ;
+        case KeepAttributeTypeAlignBottom:  return NSLayoutAttributeBottom  ;
+        case KeepAttributeTypeAlignLeft:    return NSLayoutAttributeLeft    ;
+        case KeepAttributeTypeAlignCenterY: return NSLayoutAttributeCenterY ;
+        case KeepAttributeTypeAlignRight:   return NSLayoutAttributeRight   ;
+        case KeepAttributeTypeAlignBaseline:return NSLayoutAttributeBaseline;
     }
 }
 
@@ -134,6 +141,13 @@
         case KeepAttributeTypeBottomOffset: return self.relatedView     ;
         case KeepAttributeTypeLeftOffset:   return self.relatedView     ;
         case KeepAttributeTypeRightOffset:  return self.relatedView     ;
+        case KeepAttributeTypeAlignTop:     return self.relatedView     ;
+        case KeepAttributeTypeAlignCenterX: return self.relatedView     ;
+        case KeepAttributeTypeAlignBottom:  return self.relatedView     ;
+        case KeepAttributeTypeAlignLeft:    return self.relatedView     ;
+        case KeepAttributeTypeAlignCenterY: return self.relatedView     ;
+        case KeepAttributeTypeAlignRight:   return self.relatedView     ;
+        case KeepAttributeTypeAlignBaseline:return self.relatedView     ;
     }
 }
 
@@ -141,17 +155,24 @@
     switch (self.type) {
         case KeepAttributeTypeWidth:        return (rule.relatedView? NSLayoutAttributeWidth  : NSLayoutAttributeNotAnAttribute);
         case KeepAttributeTypeHeight:       return (rule.relatedView? NSLayoutAttributeHeight : NSLayoutAttributeNotAnAttribute);
-        case KeepAttributeTypeAspectRatio:  return NSLayoutAttributeHeight          ; // Width to height.
-        case KeepAttributeTypeTopInset:     return NSLayoutAttributeTop             ;
-        case KeepAttributeTypeBottomInset:  return NSLayoutAttributeBottom          ;
-        case KeepAttributeTypeLeftInset:    return NSLayoutAttributeLeft            ;
-        case KeepAttributeTypeRightInset:   return NSLayoutAttributeRight           ;
-        case KeepAttributeTypeHorizontally: return NSLayoutAttributeCenterX         ;
-        case KeepAttributeTypeVertically:   return NSLayoutAttributeCenterY         ;
-        case KeepAttributeTypeTopOffset:    return NSLayoutAttributeBottom          ; // My top to his bottom.
-        case KeepAttributeTypeBottomOffset: return NSLayoutAttributeTop             ; // My bottom to his top.
-        case KeepAttributeTypeLeftOffset:   return NSLayoutAttributeRight           ; // My left to his right.
-        case KeepAttributeTypeRightOffset:  return NSLayoutAttributeLeft            ; // My right to his left.
+        case KeepAttributeTypeAspectRatio:  return NSLayoutAttributeHeight  ; // Width to height.
+        case KeepAttributeTypeTopInset:     return NSLayoutAttributeTop     ;
+        case KeepAttributeTypeBottomInset:  return NSLayoutAttributeBottom  ;
+        case KeepAttributeTypeLeftInset:    return NSLayoutAttributeLeft    ;
+        case KeepAttributeTypeRightInset:   return NSLayoutAttributeRight   ;
+        case KeepAttributeTypeHorizontally: return NSLayoutAttributeCenterX ;
+        case KeepAttributeTypeVertically:   return NSLayoutAttributeCenterY ;
+        case KeepAttributeTypeTopOffset:    return NSLayoutAttributeBottom  ; // My top to his bottom.
+        case KeepAttributeTypeBottomOffset: return NSLayoutAttributeTop     ; // My bottom to his top.
+        case KeepAttributeTypeLeftOffset:   return NSLayoutAttributeRight   ; // My left to his right.
+        case KeepAttributeTypeRightOffset:  return NSLayoutAttributeLeft    ; // My right to his left.
+        case KeepAttributeTypeAlignTop:     return NSLayoutAttributeTop     ;
+        case KeepAttributeTypeAlignCenterX: return NSLayoutAttributeCenterX ;
+        case KeepAttributeTypeAlignBottom:  return NSLayoutAttributeBottom  ;
+        case KeepAttributeTypeAlignLeft:    return NSLayoutAttributeLeft    ;
+        case KeepAttributeTypeAlignCenterY: return NSLayoutAttributeCenterY ;
+        case KeepAttributeTypeAlignRight:   return NSLayoutAttributeRight   ;
+        case KeepAttributeTypeAlignBaseline:return NSLayoutAttributeBaseline;
     }
 }
 
@@ -171,7 +192,14 @@
         case KeepAttributeTypeTopOffset:    return YES;
         case KeepAttributeTypeBottomOffset: return NO ;
         case KeepAttributeTypeLeftOffset:   return YES;
-        case KeepAttributeTypeRightOffset:  return NO;
+        case KeepAttributeTypeRightOffset:  return NO ;
+        case KeepAttributeTypeAlignTop:     return NO ;
+        case KeepAttributeTypeAlignCenterX: return NO ;
+        case KeepAttributeTypeAlignBottom:  return NO ;
+        case KeepAttributeTypeAlignLeft:    return NO ;
+        case KeepAttributeTypeAlignCenterY: return NO ;
+        case KeepAttributeTypeAlignRight:   return NO ;
+        case KeepAttributeTypeAlignBaseline:return NO ;
     }
 }
 
@@ -200,6 +228,13 @@
         case KeepAttributeTypeBottomOffset: return 1                ;
         case KeepAttributeTypeLeftOffset:   return 1                ;
         case KeepAttributeTypeRightOffset:  return 1                ;
+        case KeepAttributeTypeAlignTop:     return 1                ;
+        case KeepAttributeTypeAlignCenterX: return 1                ;
+        case KeepAttributeTypeAlignBottom:  return 1                ;
+        case KeepAttributeTypeAlignLeft:    return 1                ;
+        case KeepAttributeTypeAlignCenterY: return 1                ;
+        case KeepAttributeTypeAlignRight:   return 1                ;
+        case KeepAttributeTypeAlignBaseline:return 1                ;
     }
 }
 
@@ -218,6 +253,13 @@
         case KeepAttributeTypeBottomOffset: return -rule.value  ;
         case KeepAttributeTypeLeftOffset:   return  rule.value  ;
         case KeepAttributeTypeRightOffset:  return -rule.value  ;
+        case KeepAttributeTypeAlignTop:     return  rule.value  ;
+        case KeepAttributeTypeAlignCenterX: return  rule.value  ;
+        case KeepAttributeTypeAlignBottom:  return  rule.value  ;
+        case KeepAttributeTypeAlignLeft:    return  rule.value  ;
+        case KeepAttributeTypeAlignCenterY: return  rule.value  ;
+        case KeepAttributeTypeAlignRight:   return  rule.value  ;
+        case KeepAttributeTypeAlignBaseline:return  rule.value  ;
     }
 }
 
@@ -242,3 +284,10 @@
 @implementation KeepBottomOffset    + (KeepAttributeType)classType { return KeepAttributeTypeBottomOffset   ; }     @end
 @implementation KeepLeftOffset      + (KeepAttributeType)classType { return KeepAttributeTypeLeftOffset     ; }     @end
 @implementation KeepRightOffset     + (KeepAttributeType)classType { return KeepAttributeTypeRightOffset    ; }     @end
+@implementation KeepAlignTop        + (KeepAttributeType)classType { return KeepAttributeTypeAlignTop       ; }     @end
+@implementation KeepAlignCenterX    + (KeepAttributeType)classType { return KeepAttributeTypeAlignCenterX   ; }     @end
+@implementation KeepAlignBottom     + (KeepAttributeType)classType { return KeepAttributeTypeAlignBottom    ; }     @end
+@implementation KeepAlignLeft       + (KeepAttributeType)classType { return KeepAttributeTypeAlignLeft      ; }     @end
+@implementation KeepAlignCenterY    + (KeepAttributeType)classType { return KeepAttributeTypeAlignCenterY   ; }     @end
+@implementation KeepAlignRight      + (KeepAttributeType)classType { return KeepAttributeTypeAlignRight     ; }     @end
+@implementation KeepAlignBaseline   + (KeepAttributeType)classType { return KeepAttributeTypeAlignBaseline  ; }     @end
