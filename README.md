@@ -1,8 +1,8 @@
 # Keep Layout
 
-Keep Layout is project **under active development** whose purpose is to make _Auto Layout_ easy to use _from code_! No more clicking in _Interface Builder_ or manual creation of constraints. Think in attributes and their rules. _Keep Layout_ will set all constraints to keep your desired layout.
+Keep Layout is project **under active development** whose purpose is to make _Auto Layout_ easy to use _from code_! No more clicking in _Interface Builder_ or manual creation of constraints. Think in **attributes** and their **rules**. _Keep Layout_ will set all constraints to keep your desired layout.
 
-You can safely create your own constraints in addition to those created by _Keep Layout_. Please, suggest your ideas by opening new 'enhancement' issue.
+You should be familiar with _Auto Layout_ topic. [How it works and what's the point?](http://developer.apple.com/library/ios/#documentation/UserExperience/Conceptual/AutolayoutPG/Articles/Introduction.html#//apple_ref/doc/uid/TP40010853-CH1-SW1) **Basically you create relations** (_constraints_, or rules) **between views and their attributes.** When some atribute changes (e.g. bounds on rotation) all related attributes are recalculated to match the rules.
 
 _NOTE: I focus on iOS, but support for OSX will be added. In fact, **you may add it!** Please contribute with your ideas. Thank you!_
 
@@ -52,22 +52,25 @@ _NOTE: You may not like the naming, but I wanted something human-friendly. Since
 
 ## Examples
 
-##### 1. Keep width exactly 150 points:
+##### 1. Keep width exactly 150 points.
 
 ```objective-c
 [view keep:[KeepWidth rules:@[ [KeepEqual must:150] ]];
+// view must keep width of 150pt
 ```
 
-##### 2. Keep aspect ratio between 4:3 and 16:9:
+##### 2. Keep aspect ratio between 4:3 and 16:9.
 
 ```objective-c
 [view keep:[KeepAspectRatio rules:@[ [KeepMin must:4/3.], [KeepMax must:16/9.] ]];
+// view must keep its aspect ratio between 4:3 and 16:9 (4/3 < 16/9)
 ```
 
 ##### 3. Keep top inset (to superview) flexible with preffered value of 20 points, but it may never be less than 10 points.
 
 ```objective-c
 [view keep:[KeepTopInset rules:@[ [KeepMin must:10], [KeepEqual may:20] ]];
+// view must keep top inset minimum of 10pt and may keep it at 20pt (preffered value)
 ```
 
 ##### 4. Keep insets 10 points. Keep aspect ration 16:9. Keep centered in 1/3rd of container. _See pictures and `-example1` included in project._
@@ -117,10 +120,42 @@ NSArray *offsetRules = @[ [KeepMin must:10], [KeepMax shall:10] ];
 ![Portrait Example 2](readme/example2-portrait.png)
 ![Landscape Example 2](readme/example2-landscape.png)
 
+##### 5. Keep views alinged with padding. _See picture and `-example3` included in project._
+
+```objective-c
+// Keep 'magenta' centered
+[magenta keep:[KeepHorizontally rules:@[ [KeepEqual must:0.5] ]]];
+[magenta keep:[KeepVertically rules:@[ [KeepEqual must:0.5] ]]];
+
+NSArray *padding = @[ [KeepMin shall:10], [KeepMax may:10] ];
+
+// Keep gaps between views
+[red keep:[KeepRightOffset to:green rules:padding]];
+[cyan keep:[KeepRightOffset to:magenta rules:padding]];
+[green keep:[KeepRightOffset to:blue rules:padding]];
+[magenta keep:[KeepRightOffset to:yellow rules:padding]];
+[green keep:[KeepBottomOffset to:magenta rules:padding]];
+
+NSArray *alignRules = @[ [KeepEqual must:0] ]; // Keep aligned with zero tolerance.
+
+// Horizontal alignment
+[red keep:[KeepAlignBottom to:green rules:alignRules]];
+[blue keep:[KeepAlignBottom to:green rules:alignRules]];
+[cyan keep:[KeepAlignTop to:magenta rules:alignRules]];
+[yellow keep:[KeepAlignTop to:magenta rules:alignRules]];
+
+// Vertical alignment
+[red keep:[KeepAlignRight to:cyan rules:alignRules]];
+[green keep:[KeepAlignCenterX to:magenta rules:alignRules]];
+[blue keep:[KeepAlignLeft to:yellow rules:alignRules]];
+```
+
+![Example 3](readme/example3.png)
+
 
 
 ---
-_Version 0.2.1_
+_Version 0.3.0_
 
 MIT License, Copyright © 2013 Martin Kiss
 

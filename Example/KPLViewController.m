@@ -29,7 +29,7 @@
 	self.view.backgroundColor = [UIColor whiteColor];
     self.view.translatesAutoresizingMaskIntoConstraints = NO;
     
-    [self example2];
+    [self example3];
 }
 
 - (void)example1 {
@@ -80,7 +80,64 @@
     [green keep:[KeepHeight rules:@[ [KeepEqual must:1 to:red] ]]]; // Keep height of green equal to red.
     [blue keep:[KeepHeight rules:@[ [KeepEqual must:1 to:red] ]]]; // Keep height of blue equal to red.
     [blue keep:[KeepWidth rules:@[ [KeepEqual must:1 to:green] ]]]; // Keep width of blue equal to green.
+}
+
+- (void)example3 {
+    UIView *red = [[UIView alloc] init];
+    red.backgroundColor = [UIColor redColor];
+    [self.view addSubview:red];
     
+    UIView *green = [[UIView alloc] init];
+    green.backgroundColor = [UIColor greenColor];
+    [self.view addSubview:green];
+    
+    UIView *blue = [[UIView alloc] init];
+    blue.backgroundColor = [UIColor blueColor];
+    [self.view addSubview:blue];
+    
+    UIView *cyan = [[UIView alloc] init];
+    cyan.backgroundColor = [UIColor cyanColor];
+    [self.view addSubview:cyan];
+    
+    UIView *magenta = [[UIView alloc] init];
+    magenta.backgroundColor = [UIColor magentaColor];
+    [self.view addSubview:magenta];
+    
+    UIView *yellow = [[UIView alloc] init];
+    yellow.backgroundColor = [UIColor yellowColor];
+    [self.view addSubview:yellow];
+    
+    // Random sizes
+    for (UIView *view in @[ red, green, blue, cyan, magenta, yellow ]) {
+        #define RANDOM(X) (arc4random()%(X))
+        [view keep:[KeepWidth rules:@[ [KeepEqual must:50 + RANDOM(50)] ]]];
+        [view keep:[KeepHeight rules:@[ [KeepEqual must:50 + RANDOM(150)] ]]];
+    }
+    // Keep 'magenta' centered
+    [magenta keep:[KeepHorizontally rules:@[ [KeepEqual must:0.5] ]]];
+    [magenta keep:[KeepVertically rules:@[ [KeepEqual must:0.5] ]]];
+    
+    NSArray *padding = @[ [KeepMin shall:10], [KeepMax may:10] ];
+    
+    // Keep gaps between views
+    [red keep:[KeepRightOffset to:green rules:padding]];
+    [cyan keep:[KeepRightOffset to:magenta rules:padding]];
+    [green keep:[KeepRightOffset to:blue rules:padding]];
+    [magenta keep:[KeepRightOffset to:yellow rules:padding]];
+    [green keep:[KeepBottomOffset to:magenta rules:padding]];
+    
+    NSArray *alignRules = @[ [KeepEqual must:0] ]; // Keep aligned with zero tolerance.
+    
+    // Horizontal alignment
+    [red keep:[KeepAlignBottom to:green rules:alignRules]];
+    [blue keep:[KeepAlignBottom to:green rules:alignRules]];
+    [cyan keep:[KeepAlignTop to:magenta rules:alignRules]];
+    [yellow keep:[KeepAlignTop to:magenta rules:alignRules]];
+    
+    // Vertical alignment
+    [red keep:[KeepAlignRight to:cyan rules:alignRules]];
+    [green keep:[KeepAlignCenterX to:magenta rules:alignRules]];
+    [blue keep:[KeepAlignLeft to:yellow rules:alignRules]];
 }
 
 
