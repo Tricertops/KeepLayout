@@ -27,7 +27,7 @@
 
 @implementation KeepRule
 
-- (id)initWithType:(KeepRuleType)type value:(CGFloat)value relatedView:(UIView *)view priority:(KeepPriority)priority {
+- (id)initWithType:(KeepRuleType)type value:(CGFloat)value relatedToView:(UIView *)view priority:(KeepPriority)priority {
     self = [super init];
     if (self) {
         self.type = type;
@@ -47,10 +47,10 @@
 + (instancetype)may  :(CGFloat)value { return [self may:  value to:nil]; }
 + (instancetype)fit  :(CGFloat)value { return [self fit:  value to:nil]; }
 
-+ (instancetype)must :(CGFloat)value to:(UIView *)view { return [[self alloc] initWithType:[self classType] value:value relatedView:view priority:KeepPriorityMust] ; }
-+ (instancetype)shall:(CGFloat)value to:(UIView *)view { return [[self alloc] initWithType:[self classType] value:value relatedView:view priority:KeepPriorityShall]; }
-+ (instancetype)may  :(CGFloat)value to:(UIView *)view { return [[self alloc] initWithType:[self classType] value:value relatedView:view priority:KeepPriorityMay]  ; }
-+ (instancetype)fit  :(CGFloat)value to:(UIView *)view { return [[self alloc] initWithType:[self classType] value:value relatedView:view priority:KeepPriorityFit]  ; }
++ (instancetype)must :(CGFloat)value to:(UIView *)view { return [[self alloc] initWithType:[self classType] value:value relatedToView:view priority:KeepPriorityMust] ; }
++ (instancetype)shall:(CGFloat)value to:(UIView *)view { return [[self alloc] initWithType:[self classType] value:value relatedToView:view priority:KeepPriorityShall]; }
++ (instancetype)may  :(CGFloat)value to:(UIView *)view { return [[self alloc] initWithType:[self classType] value:value relatedToView:view priority:KeepPriorityMay]  ; }
++ (instancetype)fit  :(CGFloat)value to:(UIView *)view { return [[self alloc] initWithType:[self classType] value:value relatedToView:view priority:KeepPriorityFit]  ; }
 
 @end
 

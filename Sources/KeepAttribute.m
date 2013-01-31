@@ -71,28 +71,28 @@
 
 - (void)applyInView:(UIView *)mainView {
     NSLayoutAttribute mainLayoutAttribute = [self mainLayoutAttribute];
-    UIView *relatedLayoutView = [self relatedLayoutViewForMainView:mainView];
-    NSLayoutAttribute relatedLayoutAttribute = [self relatedLayoutAttribute];
     
     mainView.translatesAutoresizingMaskIntoConstraints = NO;
-    relatedLayoutView.translatesAutoresizingMaskIntoConstraints = NO;
     NSAssert(mainView.superview, @"Must have superview");
     
     for (KeepRule *rule in self.rules) {
-        if (rule.relatedView) {
-            relatedLayoutView = rule.relatedView;
-            relatedLayoutAttribute = mainLayoutAttribute;
-        }
+        UIView *relatedLayoutView = [self relatedLayoutViewForMainView:mainView rule:rule];
+        relatedLayoutView.translatesAutoresizingMaskIntoConstraints = NO;
+        NSLayoutAttribute relatedLayoutAttribute = [self relatedLayoutAttributeForRule:rule];
+        
         NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:mainView
                                                                       attribute:mainLayoutAttribute
                                                                       relatedBy:[self layoutRelationForRule:rule]
                                                                          toItem:relatedLayoutView
                                                                       attribute:relatedLayoutAttribute
                                                                      multiplier:[self layoutMultiplierForRule:rule]
-                                                                       constant:[self layoutConstantForRule:rule]];
+                                                                       constant:[self layoutConstantForRule:rule]
+                                          ];
         constraint.priority = rule.priority;
         UIView *commonView = (relatedLayoutView? [mainView commonAncestor:relatedLayoutView] : mainView);
-        NSLog(@"KeepLayout: Adding constraint %@", constraint);
+        
+        //NSLog(@"KeepLayout: Adding constraint %@", constraint);
+        
         [commonView addConstraint:constraint];
     }
 }
@@ -119,10 +119,10 @@
     }
 }
 
-- (UIView *)relatedLayoutViewForMainView:(UIView *)mainView {
+- (UIView *)relatedLayoutViewForMainView:(UIView *)mainView rule:(KeepRule *)rule {
     switch (self.type) {
-        case KeepAttributeTypeWidth:        return nil                  ; // No related view.
-        case KeepAttributeTypeHeight:       return nil                  ; // No related view.
+        case KeepAttributeTypeWidth:        return rule.relatedView     ; // Width supports related rules.
+        case KeepAttributeTypeHeight:       return rule.relatedView     ; // Height supports related rules.
         case KeepAttributeTypeAspectRatio:  return mainView             ;
         case KeepAttributeTypeTopInset:     return mainView.superview   ;
         case KeepAttributeTypeBottomInset:  return mainView.superview   ;
@@ -137,10 +137,10 @@
     }
 }
 
-- (NSLayoutAttribute)relatedLayoutAttribute {
+- (NSLayoutAttribute)relatedLayoutAttributeForRule:(KeepRule *)rule {
     switch (self.type) {
-        case KeepAttributeTypeWidth:        return NSLayoutAttributeNotAnAttribute  ; // No second attribute.
-        case KeepAttributeTypeHeight:       return NSLayoutAttributeNotAnAttribute  ; // No second attribute.
+        case KeepAttributeTypeWidth:        return (rule.relatedView? NSLayoutAttributeWidth  : NSLayoutAttributeNotAnAttribute);
+        case KeepAttributeTypeHeight:       return (rule.relatedView? NSLayoutAttributeHeight : NSLayoutAttributeNotAnAttribute);
         case KeepAttributeTypeAspectRatio:  return NSLayoutAttributeHeight          ; // Width to height.
         case KeepAttributeTypeTopInset:     return NSLayoutAttributeTop             ;
         case KeepAttributeTypeBottomInset:  return NSLayoutAttributeBottom          ;
@@ -187,8 +187,8 @@
 - (CGFloat)layoutMultiplierForRule:(KeepRule *)rule {
     // Rule value may be interpreted different ways depending on attribute type.
     switch (self.type) {
-        case KeepAttributeTypeWidth:        return 1                ;
-        case KeepAttributeTypeHeight:       return 1                ;
+        case KeepAttributeTypeWidth:        return (rule.relatedView? rule.value : 1); // Multiple of related view's width.
+        case KeepAttributeTypeHeight:       return (rule.relatedView? rule.value : 1); // Multiple of related view's height.
         case KeepAttributeTypeAspectRatio:  return rule.value       ; // Rule specified the multiplier.
         case KeepAttributeTypeTopInset:     return 1                ;
         case KeepAttributeTypeBottomInset:  return 1                ;
@@ -205,8 +205,8 @@
 
 - (CGFloat)layoutConstantForRule:(KeepRule *)rule {
     switch (self.type) {
-        case KeepAttributeTypeWidth:        return  rule.value  ;
-        case KeepAttributeTypeHeight:       return  rule.value  ;
+        case KeepAttributeTypeWidth:        return  (rule.relatedView? 0 : rule.value); // Multiple of related view's width.
+        case KeepAttributeTypeHeight:       return  (rule.relatedView? 0 : rule.value); // Multiple of related view's height.
         case KeepAttributeTypeAspectRatio:  return  0           ; // No constant.
         case KeepAttributeTypeTopInset:     return  rule.value  ;
         case KeepAttributeTypeBottomInset:  return -rule.value  ; // Bottom inset is inverted on Y axis.

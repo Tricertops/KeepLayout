@@ -63,8 +63,8 @@
     blue.backgroundColor = [UIColor blueColor];
     [self.view addSubview:blue];
     
-    // Keep at least 20pt gap between the views and superview edges.
-    NSArray *insetRules = @[ [KeepMin must:20], [KeepMax may:20] ];
+    // Keep at least 30pt gap between the views and superview edges.
+    NSArray *insetRules = @[ [KeepMin must:30], [KeepMax may:30] ];
     for (UIView *view in @[ red, green, blue ]) {
         [view keep:[KeepTopInset rules:insetRules]];
         [view keep:[KeepBottomInset rules:insetRules]];
