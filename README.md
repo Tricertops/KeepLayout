@@ -26,7 +26,7 @@ Representation of an attribute of `UIView`. They define internal metric or relat
  - **insets** – related to superview (top, bottom, left, right)
  - **position** – relative to superview bounds
  - **offsets** – padding between views (top, bottom, left, right)
- - *more comming…*
+ - **alignments** – top, bottom, left, right, center, baseline
 
 
 
