@@ -77,7 +77,9 @@
     
     for (KeepRule *rule in self.rules) {
         UIView *relatedLayoutView = [self relatedLayoutViewForMainView:mainView rule:rule];
-        relatedLayoutView.translatesAutoresizingMaskIntoConstraints = NO;
+        if (relatedLayoutView == rule.relatedView) {
+            relatedLayoutView.translatesAutoresizingMaskIntoConstraints = NO;
+        }
         NSLayoutAttribute relatedLayoutAttribute = [self relatedLayoutAttributeForRule:rule];
         
         NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:mainView
