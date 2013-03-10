@@ -155,7 +155,7 @@ NSArray *alignRules = @[ [KeepEqual must:0] ]; // Keep aligned with zero toleran
 
 
 ---
-_Version 0.3.0_
+_Version 0.3.1_
 
 MIT License, Copyright © 2013 Martin Kiss
 
