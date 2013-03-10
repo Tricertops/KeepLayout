@@ -182,17 +182,17 @@
     switch (self.type) {
         case KeepAttributeTypeWidth:        return NO ;
         case KeepAttributeTypeHeight:       return NO ;
-        case KeepAttributeTypeAspectRatio:  return YES;
-        case KeepAttributeTypeTopInset:     return YES;
-        case KeepAttributeTypeBottomInset:  return NO ;
-        case KeepAttributeTypeLeftInset:    return YES;
-        case KeepAttributeTypeRightInset:   return NO ;
-        case KeepAttributeTypeHorizontally: return YES;
-        case KeepAttributeTypeVertically:   return YES;
-        case KeepAttributeTypeTopOffset:    return YES;
-        case KeepAttributeTypeBottomOffset: return NO ;
-        case KeepAttributeTypeLeftOffset:   return YES;
-        case KeepAttributeTypeRightOffset:  return NO ;
+        case KeepAttributeTypeAspectRatio:  return NO ;
+        case KeepAttributeTypeTopInset:     return NO ;
+        case KeepAttributeTypeBottomInset:  return YES;
+        case KeepAttributeTypeLeftInset:    return NO ;
+        case KeepAttributeTypeRightInset:   return YES;
+        case KeepAttributeTypeHorizontally: return NO ;
+        case KeepAttributeTypeVertically:   return NO ;
+        case KeepAttributeTypeTopOffset:    return NO ;
+        case KeepAttributeTypeBottomOffset: return YES;
+        case KeepAttributeTypeLeftOffset:   return NO ;
+        case KeepAttributeTypeRightOffset:  return YES;
         case KeepAttributeTypeAlignTop:     return NO ;
         case KeepAttributeTypeAlignCenterX: return NO ;
         case KeepAttributeTypeAlignBottom:  return NO ;
@@ -207,8 +207,8 @@
     BOOL swapMaxMin = [self swapMaxMinLayoutRelation];
     switch (rule.type) {
         case KeepRuleTypeEqual: return NSLayoutRelationEqual;
-        case KeepRuleTypeMax:   return (swapMaxMin ? NSLayoutRelationLessThanOrEqual    : NSLayoutRelationGreaterThanOrEqual);
-        case KeepRuleTypeMin:   return (swapMaxMin ? NSLayoutRelationGreaterThanOrEqual : NSLayoutRelationLessThanOrEqual   );
+        case KeepRuleTypeMax:   return (swapMaxMin ? NSLayoutRelationGreaterThanOrEqual : NSLayoutRelationLessThanOrEqual   );
+        case KeepRuleTypeMin:   return (swapMaxMin ? NSLayoutRelationLessThanOrEqual    : NSLayoutRelationGreaterThanOrEqual);
     }
 }
 
