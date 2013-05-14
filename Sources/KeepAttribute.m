@@ -70,6 +70,12 @@
 #pragma mark Applying
 
 - (void)applyInView:(UIView *)mainView {
+    [self applyInView:mainView withBlock:^void(UIView *commonView, NSLayoutConstraint *constraint) {
+        [commonView addConstraint:constraint];
+    }];
+}
+
+- (void)applyInView:(UIView *)mainView withBlock:(KeepAttributeBlock)block{
     NSLayoutAttribute mainLayoutAttribute = [self mainLayoutAttribute];
     
     mainView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -94,8 +100,7 @@
         UIView *commonView = (relatedLayoutView? [mainView commonAncestor:relatedLayoutView] : mainView);
         
         //NSLog(@"KeepLayout: Adding constraint %@", constraint);
-        
-        [commonView addConstraint:constraint];
+        block(commonView,constraint);
     }
 }
 

@@ -16,6 +16,8 @@
 
 @class KeepRule;
 
+typedef void (^KeepAttributeBlock)(UIView* commonVIew, NSLayoutConstraint* constraint);
+
 @interface KeepAttribute : NSObject
 
 - (id)initWithType:(KeepAttributeType)type rules:(NSArray *)rules;
@@ -29,6 +31,7 @@
 + (instancetype)to:(UIView *)view rules:(NSArray *)rules;
 
 - (void)applyInView:(UIView *)view;
+- (void)applyInView:(UIView *)view withBlock:(KeepAttributeBlock)block;
 
 @end
 
