@@ -11,8 +11,11 @@
 
 
 
-@interface KPLViewController ()
-
+@interface KPLViewController (){
+    UIView *subview;
+    NSLayoutConstraint* portraitConstraint;
+    NSLayoutConstraint* landscapeConstraint;
+}
 @end
 
 
@@ -29,11 +32,12 @@
 	self.view.backgroundColor = [UIColor whiteColor];
     self.view.translatesAutoresizingMaskIntoConstraints = NO;
     
-    [self example3];
+    [self example1];
 }
 
 - (void)example1 {
     UIView *view = [[UIView alloc] init];
+    subview = view;
     view.backgroundColor = [UIColor redColor];
     [self.view addSubview:view];
     
@@ -44,9 +48,18 @@
     [view keep:[KeepRightInset rules:rules]];
     [view keep:[KeepLeftInset rules:rules]];
     
-    [view keep:[KeepAspectRatio rules:@[[KeepMin must:16/9.]]]]; // Keep the view at 16:9 format.
+    [[KeepAspectRatio rules:@[[KeepMin must:32/9.]]] applyInView:view withBlock:^(UIView *commonVIew, NSLayoutConstraint *constraint) {
+        landscapeConstraint = constraint;
+    }];
+    
+    [[KeepAspectRatio rules:@[[KeepMin must:1.]]] applyInView:view withBlock:^(UIView *commonVIew, NSLayoutConstraint *constraint) {
+        portraitConstraint = constraint;
+    }];
+
+    [self updateConstraintsForOrientation:self.interfaceOrientation];
     
     [view keep:[KeepHorizontally rules:@[[KeepEqual must:1/2.]]]]; // Keep it horizontally in center.
+            
     [view keep:[KeepVertically rules:@[[KeepMax must:1/2.], [KeepMin must:1/3.], [KeepEqual may:1/3.]]]]; // Keep it vertically between 1/3 and 1/2 of height with preffered position at 1/3.
 }
 
@@ -140,6 +153,21 @@
     [blue keep:[KeepAlignLeft to:yellow rules:alignRules]];
 }
 
+- (void)updateConstraintsForOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+{
+    if(UIDeviceOrientationIsPortrait(toInterfaceOrientation)){
+        [subview removeConstraint:landscapeConstraint];
+        [subview addConstraint:portraitConstraint];
+    }
+    else{
+        [subview addConstraint:landscapeConstraint];
+        [subview removeConstraint:portraitConstraint];
+    }
+}
 
+-(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    [self updateConstraintsForOrientation:toInterfaceOrientation];
+}
 
 @end
