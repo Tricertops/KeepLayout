@@ -14,7 +14,7 @@
 
 
 
-@interface KeepRule : NSObject
+@interface KeepRule : NSObject < NSCopying >
 
 - (id)initWithType:(KeepRuleType)type value:(CGFloat)value relatedToView:(UIView *)view priority:(KeepPriority)priority;
 @property (nonatomic, readonly, assign) KeepRuleType type;

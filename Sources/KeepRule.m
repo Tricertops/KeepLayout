@@ -38,6 +38,10 @@
     return self;
 }
 
+- (id)copyWithZone:(NSZone *)zone {
+    return self;
+}
+
 + (KeepRuleType)classType {
     @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Class KeepRule does not have implitit rule type, use one of the subclasses" userInfo:nil];
 }

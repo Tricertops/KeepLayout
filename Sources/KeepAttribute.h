@@ -28,7 +28,12 @@
 + (instancetype)rules:(NSArray *)rules;
 + (instancetype)to:(UIView *)view rules:(NSArray *)rules;
 
+/// Generates constraints, finds appropriate common views and adds them to the layout.
 - (void)applyInView:(UIView *)view;
+
+/// Returns mapping from KeepRule to propriate NSLayoutConstraint, so you can keep reference to them and add them yourself.
+/// You will need to find common superview of both (in case of two) views. You can do this by using -[UIView commonAncestor:] in UIView+KeepLayout.
+- (NSDictionary *)generateConstraintsForView:(UIView *)mainView;
 
 @end
 
