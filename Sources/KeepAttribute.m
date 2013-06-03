@@ -71,12 +71,7 @@
 
 - (void)applyInView:(UIView *)mainView {
     NSDictionary *constraintsByRule = [self generateConstraintsForView:mainView];
-    
-    for (NSLayoutConstraint *constraint in constraintsByRule.allValues) {
-        UIView *relatedLayoutView = constraint.secondItem;
-        UIView *commonView = (relatedLayoutView? [mainView commonAncestor:relatedLayoutView] : mainView);
-        [commonView addConstraint:constraint];
-    }
+    [mainView addConstraintsToCommonSuperview:constraintsByRule.allValues];
 }
 
 - (NSDictionary *)generateConstraintsForView:(UIView *)mainView {

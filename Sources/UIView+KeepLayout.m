@@ -19,15 +19,31 @@
     [attribute applyInView:self];
 }
 
-- (UIView *)commonAncestor:(UIView *)anotherView {
-    UIView *ancestor = self;
-    while (ancestor) {
-        if ([anotherView isDescendantOfView:ancestor]) {
+- (UIView *)commonSuperview:(UIView *)anotherView {
+    UIView *superview = self;
+    while (superview) {
+        if ([anotherView isDescendantOfView:superview]) {
             break; // This view is common ancestor to both views.
         }
-        ancestor = ancestor.superview;
+        superview = superview.superview;
     }
-    return ancestor;
+    return superview;
+}
+
+- (void)addConstraintToCommonSuperview:(NSLayoutConstraint *)constraint {
+    UIView *relatedLayoutView = constraint.secondItem;
+    UIView *commonView = (relatedLayoutView? [self commonSuperview:relatedLayoutView] : self);
+    [commonView addConstraint:constraint];
+}
+
+- (void)addConstraintsToCommonSuperview:(id<NSFastEnumeration>)constraints {
+    for (NSLayoutConstraint *constraint in constraints) {
+        [self addConstraintToCommonSuperview:constraint];
+    }
+}
+
+- (UIView *)commonAncestor:(UIView *)anotherView {
+    return [self commonSuperview:anotherView];
 }
 
 

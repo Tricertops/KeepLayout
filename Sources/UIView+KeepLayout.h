@@ -18,6 +18,10 @@
 
 - (void)keep:(KeepAttribute *)attribute;
 
-- (UIView *)commonAncestor:(UIView *)anotherView;
+- (UIView *)commonSuperview:(UIView *)anotherView;
+- (void)addConstraintToCommonSuperview:(NSLayoutConstraint *)constraint;
+- (void)addConstraintsToCommonSuperview:(id<NSFastEnumeration>)constraints;
+
+- (UIView *)commonAncestor:(UIView *)anotherView __attribute__((deprecated("Use -commonSuperview: instead")));
 
 @end
