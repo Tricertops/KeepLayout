@@ -70,8 +70,14 @@
 #pragma mark Applying
 
 - (void)applyInView:(UIView *)mainView {
-    NSLayoutAttribute mainLayoutAttribute = [self mainLayoutAttribute];
+    NSDictionary *constraintsByRule = [self generateConstraintsForView:mainView];
+    [mainView addConstraintsToCommonSuperview:constraintsByRule.allValues];
+}
+
+- (NSDictionary *)generateConstraintsForView:(UIView *)mainView {
+    NSMutableDictionary *constraintsBuilder = [[NSMutableDictionary alloc] init];
     
+    NSLayoutAttribute mainLayoutAttribute = [self mainLayoutAttribute];
     mainView.translatesAutoresizingMaskIntoConstraints = NO;
     NSAssert(mainView.superview, @"Must have superview");
     
@@ -91,12 +97,10 @@
                                                                        constant:[self layoutConstantForRule:rule]
                                           ];
         constraint.priority = rule.priority;
-        UIView *commonView = (relatedLayoutView? [mainView commonAncestor:relatedLayoutView] : mainView);
         
-        //NSLog(@"KeepLayout: Adding constraint %@", constraint);
-        
-        [commonView addConstraint:constraint];
+        [constraintsBuilder setObject:constraint forKey:rule];
     }
+    return [constraintsBuilder copy];
 }
 
 
