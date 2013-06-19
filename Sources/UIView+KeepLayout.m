@@ -74,6 +74,16 @@
     }];
 }
 
+- (KeepAttribute *)keepAllInsets {
+    return [self keep_getAttributeForSelector:_cmd creationBlock:^KeepAttribute *{
+        return [[KeepGroupAttribute alloc] initWithAttributes:@[
+                self.keepTopInset,
+                self.keepBottomInset,
+                self.keepLeftInset,
+                self.keepRightInset ]];
+    }];
+}
+
 
 
 - (UIView *)commonSuperview:(UIView *)anotherView {

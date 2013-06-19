@@ -50,3 +50,10 @@
 @property (nonatomic, readonly, assign) BOOL invertRelation;
 @end
 
+
+/// Used to group many attributes to single one. Setting equal, max and min properties will forward them to all.
+@interface KeepGroupAttribute : KeepAttribute
+- (instancetype)initWithAttributes:(id<NSFastEnumeration>)attributes;
++ (instancetype)group:(KeepAttribute *)first, ... NS_REQUIRES_NIL_TERMINATION;
+@property (nonatomic, readonly, strong) id<NSFastEnumeration> attributes;
+@end

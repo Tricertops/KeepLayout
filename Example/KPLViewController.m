@@ -38,10 +38,7 @@
     [self.view addSubview:view];
     
     KeepValue inset = KeepRequired(10);
-    view.keepTopInset.equal = inset;
-    view.keepBottomInset.equal = inset;
-    view.keepLeftInset.equal = inset;
-    view.keepRightInset.equal = inset;
+    view.keepAllInsets.equal = inset;
     
     NSLog(@"constraints: %@", view.superview.constraints);
 }

@@ -247,3 +247,84 @@
 
 
 @end
+
+
+
+
+
+#pragma mark -
+#pragma mark Group Attribute
+
+@interface KeepGroupAttribute ()
+
+@property (nonatomic, readwrite, strong) id<NSFastEnumeration> attributes;
+
+@end
+
+
+
+@implementation KeepGroupAttribute
+
+-(id)init {
+    return [self initWithAttributes:nil];
+}
+
+- (instancetype)initWithAttributes:(id<NSFastEnumeration>)attributes {
+    self = [super init];
+    if (self) {
+        NSParameterAssert(attributes);
+        
+        self.attributes = attributes;
+    }
+    return self;
+}
+
++ (instancetype)group:(KeepAttribute *)first, ... NS_REQUIRES_NIL_TERMINATION {
+    va_list list;
+    va_start(list, first);
+    
+    NSMutableArray *attributes = [[NSMutableArray alloc] init];
+    KeepAttribute *attribute;
+    while ((attribute = va_arg(list, KeepAttribute *))) {
+        [attributes addObject:attribute];
+    }
+    
+    va_end(list);
+    
+    return [[self alloc] initWithAttributes:attributes];
+}
+
+- (KeepValue)equal {
+    NSLog(@"Warning! Accessing property %@ for grouped attribute, returning KeepNone.", NSStringFromSelector(_cmd));
+    return KeepNone;
+}
+
+- (KeepValue)min {
+    NSLog(@"Warning! Accessing property %@ for grouped attribute, returning KeepNone.", NSStringFromSelector(_cmd));
+    return KeepNone;
+}
+
+- (KeepValue)max {
+    NSLog(@"Warning! Accessing property %@ for grouped attribute, returning KeepNone.", NSStringFromSelector(_cmd));
+    return KeepNone;
+}
+
+- (void)setEqual:(KeepValue)equal {
+    for (KeepAttribute *attribute in self.attributes) attribute.equal = equal;
+}
+
+- (void)setMax:(KeepValue)max {
+    for (KeepAttribute *attribute in self.attributes) attribute.max = max;
+}
+
+- (void)setMin:(KeepValue)min {
+    for (KeepAttribute *attribute in self.attributes) attribute.min = min;
+}
+
+- (void)remove {
+    for (KeepAttribute *attribute in self.attributes) [attribute remove];
+}
+
+
+
+@end
