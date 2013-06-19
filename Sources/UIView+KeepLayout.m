@@ -15,8 +15,6 @@
 
 
 
-- (void)keep:(KeepAttribute *)attribute {
-    [attribute applyInView:self];
 }
 
 
@@ -61,10 +59,6 @@
 }
 
 
-
-- (UIView *)commonAncestor:(UIView *)anotherView {
-    return [self commonSuperview:anotherView];
-}
 
 
 

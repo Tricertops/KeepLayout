@@ -16,8 +16,6 @@
 
 @interface UIView (KeepLayout)
 
-/// Calls -applyInView: on the `attribute`.
-- (void)keep:(KeepAttribute *)attribute;
 
 /// Traverses superviews and returns the first common for both, the receiver and the argument.
 - (UIView *)commonSuperview:(UIView *)anotherView;
@@ -29,8 +27,5 @@
 /// Add/remove collection of constraints.
 - (void)addConstraintsToCommonSuperview:(id<NSFastEnumeration>)constraints;
 - (void)removeConstraintsFromCommonSuperview:(id<NSFastEnumeration>)constraints;
-
-/// Deprecated, but still backward compatible.
-- (UIView *)commonAncestor:(UIView *)anotherView __attribute__((deprecated("Use -commonSuperview: instead")));
 
 @end

@@ -12,51 +12,30 @@
 
 
 
-/// Types of attributes
-typedef enum KeepAttributeType : NSInteger {
-    /// Dimensions
-    KeepAttributeTypeWidth,
-    KeepAttributeTypeHeight,
-    KeepAttributeTypeAspectRatio,
-    /// Superview Insets
-    KeepAttributeTypeTopInset,
-    KeepAttributeTypeBottomInset,
-    KeepAttributeTypeLeftInset,
-    KeepAttributeTypeRightInset,
-    /// Relaive Position
-    KeepAttributeTypeHorizontally,
-    KeepAttributeTypeVertically,
-    /// Offset to Other View
-    KeepAttributeTypeTopOffset,
-    KeepAttributeTypeBottomOffset,
-    KeepAttributeTypeLeftOffset,
-    KeepAttributeTypeRightOffset,
-    /// Alignment
-    KeepAttributeTypeAlignTop,
-    KeepAttributeTypeAlignCenterX,
-    KeepAttributeTypeAlignBottom,
-    KeepAttributeTypeAlignLeft,
-    KeepAttributeTypeAlignCenterY,
-    KeepAttributeTypeAlignRight,
-    KeepAttributeTypeAlignBaseline,
-} KeepAttributeType;
+#pragma mark Priority
+
+typedef enum : NSInteger {
+    KeepPriorityRequired = UILayoutPriorityRequired,
+    KeepPriorityHigh = UILayoutPriorityDefaultHigh,
+    KeepPriorityLow = UILayoutPriorityDefaultLow,
+    KeepPriorityFitting = UILayoutPriorityFittingSizeLevel,
+} KeepPriority;
 
 
 
-/// Types of rules
-typedef enum KeepRuleType : NSInteger {
-    KeepRuleTypeEqual,
-    KeepRuleTypeMax,
-    KeepRuleTypeMin,
-} KeepRuleType;
+#pragma mark Value
 
 
+typedef struct {
+    CGFloat value;
+    KeepPriority priority;
+} KeepValue;
 
-/// Priorities
-enum : NSInteger {
-    KeepPriorityMust = UILayoutPriorityRequired,
-    KeepPriorityShall = UILayoutPriorityDefaultHigh,
-    KeepPriorityMay = UILayoutPriorityDefaultLow,
-    KeepPriorityFit = UILayoutPriorityFittingSizeLevel,
-};
-typedef UILayoutPriority KeepPriority;
+extern KeepValue KeepNone;
+extern BOOL KeepValueIsNone(KeepValue);
+
+extern KeepValue KeepValueMake(CGFloat, KeepPriority);
+extern KeepValue KeepRequired(CGFloat);
+extern KeepValue KeepHigh(CGFloat);
+extern KeepValue KeepLow(CGFloat);
+extern KeepValue KeepFitting(CGFloat);

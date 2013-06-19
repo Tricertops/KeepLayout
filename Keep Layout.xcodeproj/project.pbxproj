@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5B19318317719A4E00A5747B /* KeepTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B19318217719A4E00A5747B /* KeepTypes.m */; };
 		5B208DC116B67381007ABFFE /* KeepAttribute.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B208DC016B67381007ABFFE /* KeepAttribute.m */; };
-		5B208DC816B673C8007ABFFE /* KeepRule.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B208DC716B673C8007ABFFE /* KeepRule.m */; };
 		5B208DC916B678C7007ABFFE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B3C508116B5304600D00BF3 /* CoreGraphics.framework */; };
 		5B208DCA16B678CB007ABFFE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B3C507D16B5304600D00BF3 /* UIKit.framework */; };
 		5B3C507E16B5304600D00BF3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B3C507D16B5304600D00BF3 /* UIKit.framework */; };
@@ -48,11 +48,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		5B19318217719A4E00A5747B /* KeepTypes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeepTypes.m; sourceTree = "<group>"; };
 		5B208DBF16B67381007ABFFE /* KeepAttribute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeepAttribute.h; sourceTree = "<group>"; };
 		5B208DC016B67381007ABFFE /* KeepAttribute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeepAttribute.m; sourceTree = "<group>"; };
 		5B208DC316B67391007ABFFE /* KeepLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeepLayout.h; sourceTree = "<group>"; };
-		5B208DC616B673C8007ABFFE /* KeepRule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeepRule.h; sourceTree = "<group>"; };
-		5B208DC716B673C8007ABFFE /* KeepRule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeepRule.m; sourceTree = "<group>"; };
 		5B208DDE16B6EFFB007ABFFE /* KeepTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeepTypes.h; sourceTree = "<group>"; };
 		5B3C507916B5304600D00BF3 /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B3C507D16B5304600D00BF3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -157,12 +156,11 @@
 			children = (
 				5B208DC316B67391007ABFFE /* KeepLayout.h */,
 				5B208DDE16B6EFFB007ABFFE /* KeepTypes.h */,
-				5B208DBF16B67381007ABFFE /* KeepAttribute.h */,
-				5B208DC016B67381007ABFFE /* KeepAttribute.m */,
-				5B208DC616B673C8007ABFFE /* KeepRule.h */,
-				5B208DC716B673C8007ABFFE /* KeepRule.m */,
+				5B19318217719A4E00A5747B /* KeepTypes.m */,
 				5B3C50AF16B530F900D00BF3 /* UIView+KeepLayout.h */,
 				5B3C50B016B530F900D00BF3 /* UIView+KeepLayout.m */,
+				5B208DBF16B67381007ABFFE /* KeepAttribute.h */,
+				5B208DC016B67381007ABFFE /* KeepAttribute.m */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -263,7 +261,7 @@
 			files = (
 				5B3C50B116B530F900D00BF3 /* UIView+KeepLayout.m in Sources */,
 				5B208DC116B67381007ABFFE /* KeepAttribute.m in Sources */,
-				5B208DC816B673C8007ABFFE /* KeepRule.m in Sources */,
+				5B19318317719A4E00A5747B /* KeepTypes.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
