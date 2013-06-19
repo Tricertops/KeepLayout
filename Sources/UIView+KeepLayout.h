@@ -17,6 +17,16 @@
 @interface UIView (KeepLayout)
 
 
+
+- (KeepAttribute *)keepWidth;
+- (KeepAttribute *)keepHeight;
+
+- (KeepAttribute *)keepLeftInset;
+- (KeepAttribute *)keepRightInset;
+- (KeepAttribute *)keepTopInset;
+- (KeepAttribute *)keepBottomInset;
+
+
 /// Traverses superviews and returns the first common for both, the receiver and the argument.
 - (UIView *)commonSuperview:(UIView *)anotherView;
 

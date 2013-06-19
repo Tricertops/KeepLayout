@@ -8,12 +8,71 @@
 
 #import "UIView+KeepLayout.h"
 #import "KeepAttribute.h"
+#import <objc/runtime.h>
 
 
 
 @implementation UIView (KeepLayout)
 
 
+
+
+- (KeepAttribute *)keep_getAttributeForSelector:(SEL)selector creationBlock:(KeepAttribute *(^)())creationBlock {
+    KeepAttribute *attribute = objc_getAssociatedObject(self, selector);
+    if ( ! attribute && creationBlock) {
+        attribute = creationBlock();
+        objc_setAssociatedObject(self, selector, attribute, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
+    return attribute;
+}
+
+- (KeepAttribute *)keepWidth {
+    return [self keep_getAttributeForSelector:_cmd creationBlock:^KeepAttribute *{
+        return [[KeepSelfAttribute alloc] initWithView:self
+                                       layoutAttribute:NSLayoutAttributeWidth];
+    }];
+}
+
+- (KeepAttribute *)keepHeight {
+    return [self keep_getAttributeForSelector:_cmd creationBlock:^KeepAttribute *{
+        return [[KeepSelfAttribute alloc] initWithView:self
+                                       layoutAttribute:NSLayoutAttributeHeight];
+    }];
+}
+
+- (KeepAttribute *)keepLeftInset {
+    return [self keep_getAttributeForSelector:_cmd creationBlock:^KeepAttribute *{
+        return [[KeepSuperviewAttribute alloc] initWithView:self
+                                            layoutAttribute:NSLayoutAttributeLeft
+                                   superviewLayoutAttribute:NSLayoutAttributeLeft];
+    }];
+}
+
+- (KeepAttribute *)keepRightInset {
+    return [self keep_getAttributeForSelector:_cmd creationBlock:^KeepAttribute *{
+        return [[KeepSuperviewAttribute alloc] initWithView:self
+                                            layoutAttribute:NSLayoutAttributeRight
+                                   superviewLayoutAttribute:NSLayoutAttributeRight
+                                             invertRelation:YES];
+    }];
+}
+
+- (KeepAttribute *)keepTopInset {
+    return [self keep_getAttributeForSelector:_cmd creationBlock:^KeepAttribute *{
+        return [[KeepSuperviewAttribute alloc] initWithView:self
+                                            layoutAttribute:NSLayoutAttributeTop
+                                   superviewLayoutAttribute:NSLayoutAttributeTop];
+    }];
+}
+
+- (KeepAttribute *)keepBottomInset {
+    return [self keep_getAttributeForSelector:_cmd creationBlock:^KeepAttribute *{
+        return [[KeepSuperviewAttribute alloc] initWithView:self
+                                            layoutAttribute:NSLayoutAttributeBottom
+                                   superviewLayoutAttribute:NSLayoutAttributeBottom
+                                             invertRelation:YES];
+    }];
+}
 
 
 
