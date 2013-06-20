@@ -165,7 +165,7 @@
     }
     
     if ( ! self.minConstraint) {
-        self.minConstraint = [self createConstraintWithRelation:NSLayoutRelationLessThanOrEqual value:min];
+        self.minConstraint = [self createConstraintWithRelation:NSLayoutRelationGreaterThanOrEqual value:min];
         [self addConstraint:self.minConstraint];
     }
     else {
