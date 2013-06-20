@@ -12,6 +12,8 @@
 
 #import "KeepTypes.h"
 
+@class KeepGroupAttribute;
+
 
 
 @interface KeepAttribute : NSObject
@@ -22,38 +24,35 @@
 
 - (void)remove;
 
+- (instancetype)initWithView:(UIView *)view
+             layoutAttribute:(NSLayoutAttribute)layoutAttribute
+                 relatedView:(UIView *)relatedView
+      relatedLayoutAttribute:(NSLayoutAttribute)relatedLayoutAttribute
+                 coefficient:(CGFloat)coefficient;
+@property (nonatomic, readonly, assign) CGFloat coefficient;
+
++ (KeepGroupAttribute *)group:(KeepAttribute *)first, ... NS_REQUIRES_NIL_TERMINATION;
+
 @end
 
 
 
 /// Used for attributes where the related view is none or is the main view itself - Width, Height
-@interface KeepSelfAttribute : KeepAttribute
-- (instancetype)initWithView:(UIView *)view
-             layoutAttribute:(NSLayoutAttribute)layoutAttribute;
-@property (nonatomic, readonly, weak) UIView *view;
-@property (nonatomic, readonly, assign) NSLayoutAttribute layoutAttribute;
+@interface KeepConstantAttribute : KeepAttribute
 @end
 
 
-/// Used for attributes where the related view is superview of the main view - Insets, 
-@interface KeepSuperviewAttribute : KeepAttribute
-- (instancetype)initWithView:(UIView *)view
-             layoutAttribute:(NSLayoutAttribute)layoutAttribute
-    superviewLayoutAttribute:(NSLayoutAttribute)superviewLayoutAttribute;
-- (instancetype)initWithView:(UIView *)view
-             layoutAttribute:(NSLayoutAttribute)layoutAttribute
-    superviewLayoutAttribute:(NSLayoutAttribute)superviewLayoutAttribute
-              invertRelation:(BOOL)invertRelation;
-@property (nonatomic, readonly, weak) UIView *view;
-@property (nonatomic, readonly, assign) NSLayoutAttribute layoutAttribute;
-@property (nonatomic, readonly, assign) NSLayoutAttribute superviewLayoutAttribute;
-@property (nonatomic, readonly, assign) BOOL invertRelation;
+
+/// Attribute that applies its equal, max and min as multipliers for underlaying constraints.
+@interface KeepMultiplierAttribute : KeepAttribute
 @end
+
 
 
 /// Used to group many attributes to single one. Setting equal, max and min properties will forward them to all.
 @interface KeepGroupAttribute : KeepAttribute
 - (instancetype)initWithAttributes:(id<NSFastEnumeration>)attributes;
-+ (instancetype)group:(KeepAttribute *)first, ... NS_REQUIRES_NIL_TERMINATION;
 @property (nonatomic, readonly, strong) id<NSFastEnumeration> attributes;
 @end
+
+

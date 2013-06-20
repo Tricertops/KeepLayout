@@ -39,8 +39,6 @@
     
     KeepValue inset = KeepRequired(10);
     view.keepAllInsets.equal = inset;
-    
-    NSLog(@"constraints: %@", view.superview.constraints);
 }
 
 - (void)example2 {

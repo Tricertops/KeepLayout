@@ -28,49 +28,69 @@
 
 - (KeepAttribute *)keepWidth {
     return [self keep_getAttributeForSelector:_cmd creationBlock:^KeepAttribute *{
-        return [[KeepSelfAttribute alloc] initWithView:self
-                                       layoutAttribute:NSLayoutAttributeWidth];
+        return [[KeepConstantAttribute alloc] initWithView:self
+                                           layoutAttribute:NSLayoutAttributeWidth
+                                               relatedView:nil
+                                    relatedLayoutAttribute:NSLayoutAttributeNotAnAttribute
+                                               coefficient:1];
     }];
 }
 
 - (KeepAttribute *)keepHeight {
     return [self keep_getAttributeForSelector:_cmd creationBlock:^KeepAttribute *{
-        return [[KeepSelfAttribute alloc] initWithView:self
-                                       layoutAttribute:NSLayoutAttributeHeight];
+        return [[KeepConstantAttribute alloc] initWithView:self
+                                           layoutAttribute:NSLayoutAttributeHeight
+                                               relatedView:nil
+                                    relatedLayoutAttribute:NSLayoutAttributeNotAnAttribute
+                                               coefficient:1];
     }];
 }
 
 - (KeepAttribute *)keepLeftInset {
+    NSAssert(self.superview, @"Calling %@ allowed only when superview exists", NSStringFromSelector(_cmd));
+    
     return [self keep_getAttributeForSelector:_cmd creationBlock:^KeepAttribute *{
-        return [[KeepSuperviewAttribute alloc] initWithView:self
-                                            layoutAttribute:NSLayoutAttributeLeft
-                                   superviewLayoutAttribute:NSLayoutAttributeLeft];
+        return [[KeepConstantAttribute alloc] initWithView:self
+                                           layoutAttribute:NSLayoutAttributeLeft
+                                               relatedView:self.superview
+                                    relatedLayoutAttribute:NSLayoutAttributeLeft
+                                               coefficient:1];
     }];
 }
 
 - (KeepAttribute *)keepRightInset {
+    NSAssert(self.superview, @"Calling %@ allowed only when superview exists", NSStringFromSelector(_cmd));
+    
     return [self keep_getAttributeForSelector:_cmd creationBlock:^KeepAttribute *{
-        return [[KeepSuperviewAttribute alloc] initWithView:self
-                                            layoutAttribute:NSLayoutAttributeRight
-                                   superviewLayoutAttribute:NSLayoutAttributeRight
-                                             invertRelation:YES];
+        return [[KeepConstantAttribute alloc] initWithView:self
+                                           layoutAttribute:NSLayoutAttributeRight
+                                               relatedView:self.superview
+                                    relatedLayoutAttribute:NSLayoutAttributeRight
+                                               coefficient:-1];
     }];
 }
 
 - (KeepAttribute *)keepTopInset {
+    NSAssert(self.superview, @"Calling %@ allowed only when superview exists", NSStringFromSelector(_cmd));
+    
     return [self keep_getAttributeForSelector:_cmd creationBlock:^KeepAttribute *{
-        return [[KeepSuperviewAttribute alloc] initWithView:self
-                                            layoutAttribute:NSLayoutAttributeTop
-                                   superviewLayoutAttribute:NSLayoutAttributeTop];
+        return [[KeepConstantAttribute alloc] initWithView:self
+                                           layoutAttribute:NSLayoutAttributeTop
+                                               relatedView:self.superview
+                                    relatedLayoutAttribute:NSLayoutAttributeTop
+                                               coefficient:1];
     }];
 }
 
 - (KeepAttribute *)keepBottomInset {
+    NSAssert(self.superview, @"Calling %@ allowed only when superview exists", NSStringFromSelector(_cmd));
+    
     return [self keep_getAttributeForSelector:_cmd creationBlock:^KeepAttribute *{
-        return [[KeepSuperviewAttribute alloc] initWithView:self
-                                            layoutAttribute:NSLayoutAttributeBottom
-                                   superviewLayoutAttribute:NSLayoutAttributeBottom
-                                             invertRelation:YES];
+        return [[KeepConstantAttribute alloc] initWithView:self
+                                           layoutAttribute:NSLayoutAttributeBottom
+                                               relatedView:self.superview
+                                    relatedLayoutAttribute:NSLayoutAttributeBottom
+                                               coefficient:-1];
     }];
 }
 
