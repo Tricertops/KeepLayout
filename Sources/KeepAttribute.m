@@ -51,7 +51,9 @@
 
 - (void)applyValue:(KeepValue)value forConstraint:(NSLayoutConstraint *)constraint {
     constraint.constant = value.value;
-    constraint.priority = value.priority;
+    if (constraint.priority != value.priority) {
+        constraint.priority = value.priority;
+    }
 }
 
 - (void)removeConstraint:(NSLayoutConstraint *)constraint {
