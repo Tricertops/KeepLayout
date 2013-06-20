@@ -94,12 +94,42 @@
     }];
 }
 
-- (KeepAttribute *)keepAllInsets {
+- (KeepAttribute *)keepInsets {
     return [[KeepGroupAttribute alloc] initWithAttributes:@[
             self.keepTopInset,
             self.keepBottomInset,
             self.keepLeftInset,
             self.keepRightInset ]];
+}
+
+- (KeepAttribute *)keepHorizontalCenter {
+    NSAssert(self.superview, @"Calling %@ allowed only when superview exists", NSStringFromSelector(_cmd));
+    
+    return [self keep_getAttributeForSelector:_cmd creationBlock:^KeepAttribute *{
+        return [[KeepMultiplierAttribute alloc] initWithView:self
+                                             layoutAttribute:NSLayoutAttributeCenterX
+                                                 relatedView:self.superview
+                                      relatedLayoutAttribute:NSLayoutAttributeCenterX
+                                                 coefficient:2];
+    }];
+}
+
+- (KeepAttribute *)keepVerticalCenter {
+    NSAssert(self.superview, @"Calling %@ allowed only when superview exists", NSStringFromSelector(_cmd));
+    
+    return [self keep_getAttributeForSelector:_cmd creationBlock:^KeepAttribute *{
+        return [[KeepMultiplierAttribute alloc] initWithView:self
+                                             layoutAttribute:NSLayoutAttributeCenterY
+                                                 relatedView:self.superview
+                                      relatedLayoutAttribute:NSLayoutAttributeCenterY
+                                                 coefficient:2];
+    }];
+}
+
+- (KeepAttribute *)keepCenter {
+    return [[KeepGroupAttribute alloc] initWithAttributes:@[
+            self.keepHorizontalCenter,
+            self.keepVerticalCenter ]];
 }
 
 

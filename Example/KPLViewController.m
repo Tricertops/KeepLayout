@@ -37,8 +37,12 @@
     view.backgroundColor = [UIColor redColor];
     [self.view addSubview:view];
     
-    KeepValue inset = KeepRequired(10);
-    view.keepAllInsets.equal = inset;
+    view.keepWidth.equal = KeepHigh(400);
+    view.keepHeight.equal = KeepHigh(400);
+    view.keepInsets.min = KeepRequired(10);
+    view.keepCenter.equal = KeepRequired(0.5);
+    
+    NSLog(@"constraints: %@", self.view.constraints);
 }
 
 - (void)example2 {

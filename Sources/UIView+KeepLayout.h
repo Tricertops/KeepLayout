@@ -25,7 +25,11 @@
 - (KeepAttribute *)keepRightInset;
 - (KeepAttribute *)keepTopInset;
 - (KeepAttribute *)keepBottomInset;
-- (KeepAttribute *)keepAllInsets;
+- (KeepAttribute *)keepInsets;
+
+- (KeepAttribute *)keepHorizontalCenter;
+- (KeepAttribute *)keepVerticalCenter;
+- (KeepAttribute *)keepCenter;
 
 
 /// Traverses superviews and returns the first common for both, the receiver and the argument.
