@@ -23,7 +23,7 @@
 #pragma mark Associations
 
 
-- (KeepAttribute *)keep_getAttributeForSelector:(SEL)selector creationBlock:(KeepAttribute *(^)())creationBlock {
+- (KeepAttribute *)keep_attributeForSelector:(SEL)selector creationBlock:(KeepAttribute *(^)(void))creationBlock {
     NSParameterAssert(selector);
     
     KeepAttribute *attribute = objc_getAssociatedObject(self, selector);
@@ -35,7 +35,7 @@
 }
 
 
-- (KeepAttribute *)keep_getAttributeForSelector:(SEL)selector relatedView:(UIView *)relatedView creationBlock:(KeepAttribute *(^)())creationBlock {
+- (KeepAttribute *)keep_attributeForSelector:(SEL)selector relatedView:(UIView *)relatedView creationBlock:(KeepAttribute *(^)())creationBlock {
     NSParameterAssert(selector);
     NSParameterAssert(relatedView);
     
@@ -59,27 +59,60 @@
 #pragma mark Dimensions
 
 
-- (KeepAttribute *)keepWidth {
-    return [self keep_getAttributeForSelector:_cmd creationBlock:^KeepAttribute *{
-        return [[[KeepConstantAttribute alloc] initWithView:self
-                                            layoutAttribute:NSLayoutAttributeWidth
-                                                relatedView:nil
-                                     relatedLayoutAttribute:NSLayoutAttributeNotAnAttribute
-                                                coefficient:1]
-                name:@"width of <%@ %p>", self.class, self];
+- (KeepAttribute *)keep_dimensionForSelector:(SEL)selector dimensionAttribute:(NSLayoutAttribute)dimensionAttribute name:(NSString *)name {
+    return [self keep_attributeForSelector:selector creationBlock:^KeepAttribute *{
+        KeepAttribute *attribute = [[[KeepConstantAttribute alloc] initWithView:self
+                                                                layoutAttribute:dimensionAttribute
+                                                                    relatedView:nil
+                                                         relatedLayoutAttribute:NSLayoutAttributeNotAnAttribute
+                                                                    coefficient:1]
+                                    name:@"%@ of <%@ %p>", name, self.class, self];
+        return attribute;
     }];
 }
 
 
-- (KeepAttribute *)keepHeight {
-    return [self keep_getAttributeForSelector:_cmd creationBlock:^KeepAttribute *{
-        return [[[KeepConstantAttribute alloc] initWithView:self
-                                            layoutAttribute:NSLayoutAttributeHeight
-                                                relatedView:nil
-                                     relatedLayoutAttribute:NSLayoutAttributeNotAnAttribute
-                                                coefficient:1]
-                name:@"height of <%@ %p>", self.class, self];
+- (KeepAttribute *)keep_dimensionForSelector:(SEL)selector dimensionAttribute:(NSLayoutAttribute)dimensionAttribute relatedView:(UIView *)relatedView name:(NSString *)name {
+    KeepAssert([self commonSuperview:relatedView], @"%@ requires both views to be in common hierarchy", NSStringFromSelector(selector));
+    
+    return [self keep_attributeForSelector:selector relatedView:relatedView creationBlock:^KeepAttribute *{
+        KeepAttribute *attribute = [[KeepMultiplierAttribute alloc] initWithView:self
+                                                                 layoutAttribute:dimensionAttribute
+                                                                     relatedView:relatedView
+                                                          relatedLayoutAttribute:dimensionAttribute
+                                                                     coefficient:1];
+        [attribute name:@"%@ of <%@ %p> to <%@ %p>", name, self.class, self, relatedView.class, relatedView];
+        attribute.equal = KeepRequired(1); // Default
+        // Establish inverse relation
+        [relatedView keep_attributeForSelector:_cmd relatedView:self creationBlock:^KeepAttribute *{
+            return attribute;
+        }];
+        return attribute;
     }];
+}
+
+
+- (KeepAttribute *)keepWidth {
+    return [self keep_dimensionForSelector:_cmd dimensionAttribute:NSLayoutAttributeWidth name:@"width"];
+}
+
+
+- (KeepAttribute *)keepHeight {
+    return [self keep_dimensionForSelector:_cmd dimensionAttribute:NSLayoutAttributeHeight name:@"height"];
+}
+
+
+- (KeepAttribute *(^)(UIView *))keepWidthTo {
+    return ^KeepAttribute *(UIView *view) {
+        return [self keep_dimensionForSelector:_cmd dimensionAttribute:NSLayoutAttributeWidth relatedView:view name:@"width"];
+    };
+}
+
+
+- (KeepAttribute *(^)(UIView *))keepHeightTo {
+    return ^KeepAttribute *(UIView *view) {
+        return [self keep_dimensionForSelector:_cmd dimensionAttribute:NSLayoutAttributeHeight relatedView:view name:@"height"];
+    };
 }
 
 
@@ -89,70 +122,45 @@
 #pragma mark Supreview Insets
 
 
-- (KeepAttribute *)keepLeftInset {
-    NSAssert(self.superview, @"Calling %@ allowed only when superview exists", NSStringFromSelector(_cmd));
+- (KeepAttribute *)keep_insetForSelector:(SEL)selector edgeAttribute:(NSLayoutAttribute)edgeAttribute coefficient:(CGFloat)coefficient name:(NSString *)name {
+    KeepAssert(self.superview, @"Calling %@ allowed only when superview exists", NSStringFromSelector(selector));
     
-    return [self keep_getAttributeForSelector:_cmd creationBlock:^KeepAttribute *{
+    return [self keep_attributeForSelector:selector creationBlock:^KeepAttribute *{
         return [[[KeepConstantAttribute alloc] initWithView:self
-                                           layoutAttribute:NSLayoutAttributeLeft
-                                               relatedView:self.superview
-                                    relatedLayoutAttribute:NSLayoutAttributeLeft
-                                               coefficient:1]
-                name:@"left inset of <%@ %p> to superview <%@ %p>", self.class, self, self.superview.class, self.superview];
+                                            layoutAttribute:edgeAttribute
+                                                relatedView:self.superview
+                                     relatedLayoutAttribute:edgeAttribute
+                                                coefficient:coefficient]
+                name:@"%@ of <%@ %p> to superview <%@ %p>", name, self.class, self, self.superview.class, self.superview];
     }];
+}
+
+- (KeepAttribute *)keepLeftInset {
+    return [self keep_insetForSelector:_cmd edgeAttribute:NSLayoutAttributeLeft coefficient:1 name:@"left inset"];
 }
 
 
 - (KeepAttribute *)keepRightInset {
-    NSAssert(self.superview, @"Calling %@ allowed only when superview exists", NSStringFromSelector(_cmd));
-    
-    return [self keep_getAttributeForSelector:_cmd creationBlock:^KeepAttribute *{
-        return [[[KeepConstantAttribute alloc] initWithView:self
-                                           layoutAttribute:NSLayoutAttributeRight
-                                               relatedView:self.superview
-                                    relatedLayoutAttribute:NSLayoutAttributeRight
-                                               coefficient:-1]
-                name:@"right inset of <%@ %p> to superview <%@ %p>", self.class, self, self.superview.class, self.superview];
-    }];
+    return [self keep_insetForSelector:_cmd edgeAttribute:NSLayoutAttributeRight coefficient:-1 name:@"right inset"];
 }
 
 
 - (KeepAttribute *)keepTopInset {
-    NSAssert(self.superview, @"Calling %@ allowed only when superview exists", NSStringFromSelector(_cmd));
-    
-    return [self keep_getAttributeForSelector:_cmd creationBlock:^KeepAttribute *{
-        return [[[KeepConstantAttribute alloc] initWithView:self
-                                           layoutAttribute:NSLayoutAttributeTop
-                                               relatedView:self.superview
-                                    relatedLayoutAttribute:NSLayoutAttributeTop
-                                               coefficient:1]
-                name:@"top inset of <%@ %p> to superview <%@ %p>", self.class, self, self.superview.class, self.superview];
-    }];
+    return [self keep_insetForSelector:_cmd edgeAttribute:NSLayoutAttributeTop coefficient:1 name:@"top inset"];
 }
 
 
 - (KeepAttribute *)keepBottomInset {
-    NSAssert(self.superview, @"Calling %@ allowed only when superview exists", NSStringFromSelector(_cmd));
-    
-    return [self keep_getAttributeForSelector:_cmd creationBlock:^KeepAttribute *{
-        return [[[KeepConstantAttribute alloc] initWithView:self
-                                           layoutAttribute:NSLayoutAttributeBottom
-                                               relatedView:self.superview
-                                    relatedLayoutAttribute:NSLayoutAttributeBottom
-                                               coefficient:-1]
-                name:@"bottom inset of <%@ %p> to superview <%@ %p>", self.class, self, self.superview.class, self.superview];
-    }];
+    return [self keep_insetForSelector:_cmd edgeAttribute:NSLayoutAttributeBottom coefficient:-1 name:@"bottom inset"];
 }
 
 
 - (KeepAttribute *)keepInsets {
-    NSAssert(self.superview, @"Calling %@ allowed only when superview exists", NSStringFromSelector(_cmd));
-    
     return [[[KeepGroupAttribute alloc] initWithAttributes:@[
-            self.keepTopInset,
-            self.keepBottomInset,
-            self.keepLeftInset,
-            self.keepRightInset ]]
+             self.keepTopInset,
+             self.keepBottomInset,
+             self.keepLeftInset,
+             self.keepRightInset ]]
             name:@"all insets of <%@ %p> to superview <%@ %p>", self.class, self, self.superview.class, self.superview];
 }
 
@@ -163,38 +171,34 @@
 #pragma mark Center
 
 
-- (KeepAttribute *)keepHorizontalCenter {
-    NSAssert(self.superview, @"Calling %@ allowed only when superview exists", NSStringFromSelector(_cmd));
+- (KeepAttribute *)keep_centerForSelector:(SEL)selector centerAttribute:(NSLayoutAttribute)centerAttribute name:(NSString *)name {
+    KeepAssert(self.superview, @"Calling %@ allowed only when superview exists", NSStringFromSelector(selector));
     
-    return [self keep_getAttributeForSelector:_cmd creationBlock:^KeepAttribute *{
+    return [self keep_attributeForSelector:selector creationBlock:^KeepAttribute *{
         return [[[KeepMultiplierAttribute alloc] initWithView:self
-                                             layoutAttribute:NSLayoutAttributeCenterX
-                                                 relatedView:self.superview
-                                      relatedLayoutAttribute:NSLayoutAttributeCenterX
-                                                 coefficient:2]
-                name:@"horizontal center of <%@ %p> in superview <%@ %p>", self.class, self, self.superview.class, self.superview];
+                                              layoutAttribute:centerAttribute
+                                                  relatedView:self.superview
+                                       relatedLayoutAttribute:centerAttribute
+                                                  coefficient:2]
+                name:@"%@ of <%@ %p> in superview <%@ %p>", name, self.class, self, self.superview.class, self.superview];
     }];
+}
+
+
+- (KeepAttribute *)keepHorizontalCenter {
+    return [self keep_centerForSelector:_cmd centerAttribute:NSLayoutAttributeCenterX name:@"horizontal center"];
 }
 
 
 - (KeepAttribute *)keepVerticalCenter {
-    NSAssert(self.superview, @"Calling %@ allowed only when superview exists", NSStringFromSelector(_cmd));
-    
-    return [self keep_getAttributeForSelector:_cmd creationBlock:^KeepAttribute *{
-        return [[[KeepMultiplierAttribute alloc] initWithView:self
-                                             layoutAttribute:NSLayoutAttributeCenterY
-                                                 relatedView:self.superview
-                                      relatedLayoutAttribute:NSLayoutAttributeCenterY
-                                                 coefficient:2]
-                name:@"vertical center of <%@ %p> in superview <%@ %p>", self.class, self, self.superview.class, self.superview];
-    }];
+    return [self keep_centerForSelector:_cmd centerAttribute:NSLayoutAttributeCenterY name:@"vertical center"];
 }
 
 
-- (KeepAttribute *)keepCenter {    
+- (KeepAttribute *)keepCenter {
     return [[[KeepGroupAttribute alloc] initWithAttributes:@[
-            self.keepHorizontalCenter,
-            self.keepVerticalCenter ]]
+             self.keepHorizontalCenter,
+             self.keepVerticalCenter ]]
             name:@"center of <%@ %p> in superview <%@ %p>", self.class, self, self.superview.class, self.superview];
 }
 
@@ -205,24 +209,30 @@
 #pragma mark Offsets
 
 
-- (KeepAttribute *(^)(UIView *))keep_offsetForSelector:(SEL)selector from:(NSLayoutAttribute)fromAttribute to:(NSLayoutAttribute)toAttribute name:(NSString *)name {
-    return ^KeepAttribute *(UIView *view) {
-        KeepAssert([self commonSuperview:view], @"%@ requires both views to be in common hierarchy", NSStringFromSelector(selector));
-        
-        return [self keep_getAttributeForSelector:selector relatedView:view creationBlock:^KeepAttribute *{
-            return [[[KeepConstantAttribute alloc] initWithView:self
-                                                layoutAttribute:fromAttribute
-                                                    relatedView:view
-                                         relatedLayoutAttribute:toAttribute
-                                                    coefficient:1]
-                    name:@"%@ offset of <%@ %p> to <%@ %p>", name, self.class, self, view.class, view];
-        }];
-    };
+- (KeepAttribute *)keep_offsetForSelector:(SEL)selector edgeAttribute:(NSLayoutAttribute)edgeAttribute relatedView:(UIView *)relatedView name:(NSString *)name {
+    KeepAssert([self commonSuperview:relatedView], @"%@ requires both views to be in common hierarchy", NSStringFromSelector(selector));
+    
+    return [self keep_attributeForSelector:selector relatedView:relatedView creationBlock:^KeepAttribute *{
+        NSDictionary *oppositeEdges = @{
+                                        @(NSLayoutAttributeLeft): @(NSLayoutAttributeRight),
+                                        @(NSLayoutAttributeRight): @(NSLayoutAttributeLeft),
+                                        @(NSLayoutAttributeTop): @(NSLayoutAttributeBottom),
+                                        @(NSLayoutAttributeBottom): @(NSLayoutAttributeTop),
+                                        };
+        return [[[KeepConstantAttribute alloc] initWithView:self
+                                            layoutAttribute:edgeAttribute
+                                                relatedView:relatedView
+                                     relatedLayoutAttribute:[[oppositeEdges objectForKey:@(edgeAttribute)] integerValue]
+                                                coefficient:1]
+                name:@"%@ of <%@ %p> to <%@ %p>", name, self.class, self, relatedView.class, relatedView];
+    }];
 }
 
 
 - (KeepAttribute *(^)(UIView *))keepLeftOffset {
-    return [self keep_offsetForSelector:_cmd from:NSLayoutAttributeLeft to:NSLayoutAttributeRight name:@"left"];
+    return ^KeepAttribute *(UIView *view) {
+        return [self keep_offsetForSelector:_cmd edgeAttribute:NSLayoutAttributeLeft relatedView:view name:@"left offset"];
+    };
 }
 
 
@@ -234,7 +244,9 @@
 
 
 - (KeepAttribute *(^)(UIView *))keepTopOffset {
-    return [self keep_offsetForSelector:_cmd from:NSLayoutAttributeTop to:NSLayoutAttributeBottom name:@"top"];
+    return ^KeepAttribute *(UIView *view) {
+        return [self keep_offsetForSelector:_cmd edgeAttribute:NSLayoutAttributeTop relatedView:view name:@"top offset"];
+    };
 }
 
 
@@ -251,60 +263,72 @@
 #pragma mark Alignments
 
 
-- (KeepAttribute *(^)(UIView *))keep_alignForSelector:(SEL)selector constraintAttribute:(NSLayoutAttribute)constraintAttribute coefficient:(CGFloat)coefficient name:(NSString *)name {
-    return ^KeepAttribute *(UIView *view) {
-        KeepAssert([self commonSuperview:view], @"%@ requires both views to be in common hierarchy", NSStringFromSelector(selector));
-        
-        return [self keep_getAttributeForSelector:selector relatedView:view creationBlock:^KeepAttribute *{
-            KeepAttribute *attribute =  [[[KeepConstantAttribute alloc] initWithView:self
-                                                                     layoutAttribute:constraintAttribute
-                                                                         relatedView:view
-                                                              relatedLayoutAttribute:constraintAttribute
-                                                                         coefficient:coefficient]
-                                         name:@"%@ alignment of <%@ %p> to <%@ %p>", name, self.class, self, view.class, view];
-            attribute.equal = KeepRequired(0); // Default
-            // Establish inverse attribute
-            [view keep_getAttributeForSelector:selector relatedView:self creationBlock:^KeepAttribute *{
-                return attribute;
-            }];
+- (KeepAttribute *)keep_alignForSelector:(SEL)selector alignAttribute:(NSLayoutAttribute)alignAttribute relatedView:(UIView *)relatedView coefficient:(CGFloat)coefficient name:(NSString *)name {
+    KeepAssert([self commonSuperview:relatedView], @"%@ requires both views to be in common hierarchy", NSStringFromSelector(selector));
+    
+    return [self keep_attributeForSelector:selector relatedView:relatedView creationBlock:^KeepAttribute *{
+        KeepAttribute *attribute =  [[[KeepConstantAttribute alloc] initWithView:self
+                                                                 layoutAttribute:alignAttribute
+                                                                     relatedView:relatedView
+                                                          relatedLayoutAttribute:alignAttribute
+                                                                     coefficient:coefficient]
+                                     name:@"%@ of <%@ %p> to <%@ %p>", name, self.class, self, relatedView.class, relatedView];
+        attribute.equal = KeepRequired(0); // Default
+        // Establish inverse attribute
+        [relatedView keep_attributeForSelector:selector relatedView:self creationBlock:^KeepAttribute *{
             return attribute;
         }];
-    };
+        return attribute;
+    }];
 }
 
 
 - (KeepAttribute *(^)(UIView *))keepLeftAlign {
-    return [self keep_alignForSelector:_cmd constraintAttribute:NSLayoutAttributeLeft coefficient:1 name:@"left"];
+    return ^KeepAttribute *(UIView *view) {
+        return [self keep_alignForSelector:_cmd alignAttribute:NSLayoutAttributeLeft relatedView:view coefficient:1 name:@"left alignment"];
+    };
 }
 
 
 - (KeepAttribute *(^)(UIView *))keepRightAlign {
-    return [self keep_alignForSelector:_cmd constraintAttribute:NSLayoutAttributeRight coefficient:-1 name:@"right"];
+    return ^KeepAttribute *(UIView *view) {
+        return [self keep_alignForSelector:_cmd alignAttribute:NSLayoutAttributeRight relatedView:view coefficient:-1 name:@"right alignment"];
+    };
 }
 
 
 - (KeepAttribute *(^)(UIView *))keepTopAlign {
-    return [self keep_alignForSelector:_cmd constraintAttribute:NSLayoutAttributeTop coefficient:1 name:@"top"];
+    return ^KeepAttribute *(UIView *view) {
+        return [self keep_alignForSelector:_cmd alignAttribute:NSLayoutAttributeTop relatedView:view coefficient:1 name:@"top alignment"];
+    };
 }
 
 
 - (KeepAttribute *(^)(UIView *))keepBottomAlign {
-    return [self keep_alignForSelector:_cmd constraintAttribute:NSLayoutAttributeBottom coefficient:-1 name:@"bottom"];
+    return ^KeepAttribute *(UIView *view) {
+        return [self keep_alignForSelector:_cmd alignAttribute:NSLayoutAttributeBottom relatedView:view coefficient:-1 name:@"bottom alignment"];
+    };
 }
 
 
 - (KeepAttribute *(^)(UIView *))keepVerticalAlign {
-    return [self keep_alignForSelector:_cmd constraintAttribute:NSLayoutAttributeCenterX coefficient:1 name:@"vertical center"];
+    return ^KeepAttribute *(UIView *view) {
+        return [self keep_alignForSelector:_cmd alignAttribute:NSLayoutAttributeCenterX relatedView:view coefficient:1 name:@"vertical center alignment"];
+    };
 }
 
 
 - (KeepAttribute *(^)(UIView *))keepHorizontalAlign {
-    return [self keep_alignForSelector:_cmd constraintAttribute:NSLayoutAttributeCenterY coefficient:1 name:@"horizontal center"];
+    return ^KeepAttribute *(UIView *view) {
+        return [self keep_alignForSelector:_cmd alignAttribute:NSLayoutAttributeCenterY relatedView:view coefficient:1 name:@"horizontal center alignment"];
+    };
 }
 
 
 - (KeepAttribute *(^)(UIView *))keepBaselineAlign {
-    return [self keep_alignForSelector:_cmd constraintAttribute:NSLayoutAttributeBaseline coefficient:-1 name:@"baseline"];
+    return ^KeepAttribute *(UIView *view) {
+        return [self keep_alignForSelector:_cmd alignAttribute:NSLayoutAttributeBaseline relatedView:view coefficient:-1 name:@"baseline alignment"];
+    };
 }
 
 

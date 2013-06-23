@@ -28,6 +28,9 @@
 - (KeepAttribute *)keepWidth;
 - (KeepAttribute *)keepHeight;
 
+- (KeepAttribute *(^)(UIView *))keepWidthTo;
+- (KeepAttribute *(^)(UIView *))keepHeightTo;
+
 
 #pragma mark Superview Insets
 /// Attributes representing internal inset (margin) of the receive to its superview.
