@@ -12,6 +12,12 @@
 
 
 
+#define KeepAssert(CONDITION, DESCRIPTION...)   NSAssert(CONDITION, @"KeepLayout: " DESCRIPTION)
+
+
+
+
+
 #pragma mark Priority
 
 typedef enum : NSInteger {
