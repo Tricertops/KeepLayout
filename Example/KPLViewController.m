@@ -58,6 +58,8 @@
     blue.backgroundColor = [UIColor blueColor];
     [self.view addSubview:blue];
     
+    NSArray *views = @[ red, green, blue ];
+    
     red.keepWidth.equal = KeepHigh(500);
     red.keepHeight.equal = KeepRequired(100);
     green.keepWidth.equal = KeepHigh(100);
@@ -65,22 +67,12 @@
     blue.keepWidth.equal = KeepRequired(100);
     blue.keepHeight.equal = KeepHigh(500);
 
-    KeepAttribute *allInsets = [KeepAttribute group:
-                                red.keepInsets,
-                                green.keepInsets,
-                                blue.keepInsets,
-                                nil];
-    allInsets.min = KeepRequired(10); // Never get closer to bounds than 10 pts
+    // Never get closer to bounds than 10 pts
+    views.keepInsets.min = KeepRequired(10);
     
-    KeepAttribute *topAndLeftInsets = [KeepAttribute group:
-                                       red.keepTopInset,
-                                       red.keepLeftInset,
-                                       green.keepTopInset,
-                                       green.keepLeftInset,
-                                       blue.keepTopInset,
-                                       blue.keepLeftInset,
-                                       nil];
-    topAndLeftInsets.equal = KeepLow(10); // Keep the views close to top-left corner, but with low priority.
+    // Keep the views close to top-left corner, but with low priority.
+    views.keepTopInset.equal = KeepLow(10);
+    views.keepLeftInset.equal = KeepLow(10);
     
     KeepAttribute *offsets = [KeepAttribute group:
                               green.keepLeftOffset(red),

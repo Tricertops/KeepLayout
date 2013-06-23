@@ -9,3 +9,4 @@
 #import "KeepTypes.h"
 #import "KeepAttribute.h"
 #import "UIView+KeepLayout.h"
+#import "NSArray+KeepLayout.h"
