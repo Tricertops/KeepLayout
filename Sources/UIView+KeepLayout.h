@@ -51,6 +51,12 @@
 - (KeepAttribute *(^)(UIView *))keepBaselineAlign;
 
 
+#pragma mark Animating Constraints
+- (void)keepAnimatedWithDuration:(NSTimeInterval)duration layout:(void(^)(void))animations;
+- (void)keepAnimatedWithDuration:(NSTimeInterval)duration delay:(NSTimeInterval)delay layout:(void(^)(void))animations;
+- (void)keepAnimatedWithDuration:(NSTimeInterval)duration delay:(NSTimeInterval)delay options:(UIViewAnimationOptions)options layout:(void(^)(void))animations completion:(void(^)(BOOL finished))completion;
+
+
 #pragma mark Common Superview
 /// Traverses superviews and returns the first common for both, the receiver and the argument.
 - (UIView *)commonSuperview:(UIView *)anotherView;

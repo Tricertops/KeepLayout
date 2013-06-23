@@ -356,6 +356,38 @@
 
 
 
+#pragma mark Animating Constraints
+
+
+- (void)keepAnimatedWithDuration:(NSTimeInterval)duration layout:(void(^)(void))animations {
+    [self keepAnimatedWithDuration:duration delay:0 options:kNilOptions layout:animations completion:nil];
+}
+
+
+- (void)keepAnimatedWithDuration:(NSTimeInterval)duration delay:(NSTimeInterval)delay layout:(void(^)(void))animations {
+    [self keepAnimatedWithDuration:duration delay:delay options:kNilOptions layout:animations completion:nil];
+}
+
+
+- (void)keepAnimatedWithDuration:(NSTimeInterval)duration delay:(NSTimeInterval)delay options:(UIViewAnimationOptions)options layout:(void(^)(void))animations completion:(void(^)(BOOL finished))completion {
+    [[NSOperationQueue mainQueue] performSelector:@selector(addOperationWithBlock:)
+                                       withObject:^{
+                                           [UIView animateWithDuration:duration
+                                                                 delay:0
+                                                               options:options
+                                                            animations:^{
+                                                                animations();
+                                                                [self layoutIfNeeded];
+                                                            }
+                                                            completion:completion];
+                                       }
+                                       afterDelay:delay];
+}
+
+
+
+
+
 #pragma mark Common Superview
 
 

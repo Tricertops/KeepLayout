@@ -117,15 +117,11 @@
     green.keepTopOffset(red).equal = KeepRequired(10);
     green.keepRightAlign(red).equal = KeepRequired(10);
     
-    [self performSelector:@selector(resize:) withObject:red afterDelay:1];
-}
-
-- (void)resize:(UIView *)view {
-    [UIView animateWithDuration:3 animations:^{
-        view.keepVerticalCenter.equal = KeepRequired(0.25);
-        view.keepWidth.equal = KeepRequired(300);
-        [self.view layoutIfNeeded];
+    [self.view keepAnimatedWithDuration:3 delay:1 layout:^{
+        red.keepVerticalCenter.equal = KeepRequired(0.25);
+        red.keepWidth.equal = KeepRequired(300);
     }];
+    
 }
 
 
