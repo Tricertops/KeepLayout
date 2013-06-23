@@ -61,10 +61,10 @@
 /// Requires both views to be in the same hierarchy.
 /// Usage `view.keepLeftOffset(anotherView)`
 // TODO: Use 0 as default
-- (KeepAttribute *(^)(UIView *))keepLeftOffset;
-- (KeepAttribute *(^)(UIView *))keepRightOffset; /// Identical to left offset in reversed direction.
-- (KeepAttribute *(^)(UIView *))keepTopOffset;
-- (KeepAttribute *(^)(UIView *))keepBottomOffset; /// Identical to top offset in reversed direction.
+- (KeepAttribute *(^)(UIView *))keepLeftOffsetTo;
+- (KeepAttribute *(^)(UIView *))keepRightOffsetTo; /// Identical to left offset in reversed direction.
+- (KeepAttribute *(^)(UIView *))keepTopOffsetTo;
+- (KeepAttribute *(^)(UIView *))keepBottomOffsetTo; /// Identical to top offset in reversed direction.
 
 
 #pragma mark Alignments
@@ -73,18 +73,18 @@
 /// Usage `view.keepLeftAlign(anotherView)`.
 /// Optional values specify offset from the alignment line.
 /// Default is „0 required”.
-- (KeepAttribute *(^)(UIView *))keepLeftAlign;
-- (KeepAttribute *(^)(UIView *))keepRightAlign; /// Automatically inverts values.
-- (KeepAttribute *(^)(UIView *))keepTopAlign;
-- (KeepAttribute *(^)(UIView *))keepBottomAlign; /// Automatically inverts values.
+- (KeepAttribute *(^)(UIView *))keepLeftAlignTo;
+- (KeepAttribute *(^)(UIView *))keepRightAlignTo; /// Automatically inverts values.
+- (KeepAttribute *(^)(UIView *))keepTopAlignTo;
+- (KeepAttribute *(^)(UIView *))keepBottomAlignTo; /// Automatically inverts values.
 
 /// Attributes representing center alignments of two views.
-- (KeepAttribute *(^)(UIView *))keepVerticalAlign;
-- (KeepAttribute *(^)(UIView *))keepHorizontalAlign; /// Automatically inverts values.
+- (KeepAttribute *(^)(UIView *))keepVerticalAlignTo;
+- (KeepAttribute *(^)(UIView *))keepHorizontalAlignTo; /// Automatically inverts values.
 
 /// Attribute representing baseline alignments of two views.
 /// Not all views have baseline.
-- (KeepAttribute *(^)(UIView *))keepBaselineAlign; /// Automatically inverts values.
+- (KeepAttribute *(^)(UIView *))keepBaselineAlignTo; /// Automatically inverts values.
 
 
 #pragma mark Animating Constraints

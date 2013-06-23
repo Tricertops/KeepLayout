@@ -229,30 +229,30 @@
 }
 
 
-- (KeepAttribute *(^)(UIView *))keepLeftOffset {
+- (KeepAttribute *(^)(UIView *))keepLeftOffsetTo {
     return ^KeepAttribute *(UIView *view) {
         return [self keep_offsetForSelector:_cmd edgeAttribute:NSLayoutAttributeLeft relatedView:view name:@"left offset"];
     };
 }
 
 
-- (KeepAttribute *(^)(UIView *))keepRightOffset {
+- (KeepAttribute *(^)(UIView *))keepRightOffsetTo {
     return ^KeepAttribute *(UIView *view) {
-        return view.keepLeftOffset(self);
+        return view.keepLeftOffsetTo(self);
     };
 }
 
 
-- (KeepAttribute *(^)(UIView *))keepTopOffset {
+- (KeepAttribute *(^)(UIView *))keepTopOffsetTo {
     return ^KeepAttribute *(UIView *view) {
         return [self keep_offsetForSelector:_cmd edgeAttribute:NSLayoutAttributeTop relatedView:view name:@"top offset"];
     };
 }
 
 
-- (KeepAttribute *(^)(UIView *))keepBottomOffset {
+- (KeepAttribute *(^)(UIView *))keepBottomOffsetTo {
     return ^KeepAttribute *(UIView *view) {
-        return view.keepTopOffset(self);
+        return view.keepTopOffsetTo(self);
     };
 }
 
@@ -283,49 +283,49 @@
 }
 
 
-- (KeepAttribute *(^)(UIView *))keepLeftAlign {
+- (KeepAttribute *(^)(UIView *))keepLeftAlignTo {
     return ^KeepAttribute *(UIView *view) {
         return [self keep_alignForSelector:_cmd alignAttribute:NSLayoutAttributeLeft relatedView:view coefficient:1 name:@"left alignment"];
     };
 }
 
 
-- (KeepAttribute *(^)(UIView *))keepRightAlign {
+- (KeepAttribute *(^)(UIView *))keepRightAlignTo {
     return ^KeepAttribute *(UIView *view) {
         return [self keep_alignForSelector:_cmd alignAttribute:NSLayoutAttributeRight relatedView:view coefficient:-1 name:@"right alignment"];
     };
 }
 
 
-- (KeepAttribute *(^)(UIView *))keepTopAlign {
+- (KeepAttribute *(^)(UIView *))keepTopAlignTo {
     return ^KeepAttribute *(UIView *view) {
         return [self keep_alignForSelector:_cmd alignAttribute:NSLayoutAttributeTop relatedView:view coefficient:1 name:@"top alignment"];
     };
 }
 
 
-- (KeepAttribute *(^)(UIView *))keepBottomAlign {
+- (KeepAttribute *(^)(UIView *))keepBottomAlignTo {
     return ^KeepAttribute *(UIView *view) {
         return [self keep_alignForSelector:_cmd alignAttribute:NSLayoutAttributeBottom relatedView:view coefficient:-1 name:@"bottom alignment"];
     };
 }
 
 
-- (KeepAttribute *(^)(UIView *))keepVerticalAlign {
+- (KeepAttribute *(^)(UIView *))keepVerticalAlignTo {
     return ^KeepAttribute *(UIView *view) {
         return [self keep_alignForSelector:_cmd alignAttribute:NSLayoutAttributeCenterX relatedView:view coefficient:1 name:@"vertical center alignment"];
     };
 }
 
 
-- (KeepAttribute *(^)(UIView *))keepHorizontalAlign {
+- (KeepAttribute *(^)(UIView *))keepHorizontalAlignTo {
     return ^KeepAttribute *(UIView *view) {
         return [self keep_alignForSelector:_cmd alignAttribute:NSLayoutAttributeCenterY relatedView:view coefficient:1 name:@"horizontal center alignment"];
     };
 }
 
 
-- (KeepAttribute *(^)(UIView *))keepBaselineAlign {
+- (KeepAttribute *(^)(UIView *))keepBaselineAlignTo {
     return ^KeepAttribute *(UIView *view) {
         return [self keep_alignForSelector:_cmd alignAttribute:NSLayoutAttributeBaseline relatedView:view coefficient:-1 name:@"baseline alignment"];
     };

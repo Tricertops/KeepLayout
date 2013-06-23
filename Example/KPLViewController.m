@@ -75,9 +75,9 @@
     views.keepLeftInset.equal = KeepLow(10);
     
     KeepAttribute *offsets = [KeepAttribute group:
-                              green.keepLeftOffset(red),
-                              blue.keepTopOffset(red),
-                              blue.keepRightOffset(green),
+                              green.keepLeftOffsetTo(red),
+                              blue.keepTopOffsetTo(red),
+                              blue.keepRightOffsetTo(green),
                               nil];
     offsets.equal = KeepRequired(10); // Never get closer to each other than 10 pts.
 }
@@ -114,14 +114,14 @@
     green.keepWidth.equal = KeepRequired(50);
     green.keepHeight.equal = KeepRequired(50);
     
-    green.keepTopOffset(red).equal = KeepRequired(10);
-    green.keepRightAlign(red).equal = KeepRequired(10);
+    green.keepTopOffsetTo(red).equal = KeepRequired(10);
+    green.keepRightAlignTo(red).equal = KeepRequired(10);
     
     blue.keepWidthTo(red);
     blue.keepTopInset.min = KeepRequired(10);
     blue.keepHeight.equal = KeepHigh(100);
-    blue.keepVerticalAlign(red);
-    blue.keepBottomOffset(red).equal = KeepRequired(10);
+    blue.keepVerticalAlignTo(red);
+    blue.keepBottomOffsetTo(red).equal = KeepRequired(10);
     
     [self.view keepAnimatedWithDuration:3 delay:1 layout:^{
         red.keepVerticalCenter.equal = KeepRequired(0.25);
