@@ -22,27 +22,53 @@
 
 
 #pragma mark Dimensions
+
 - (KeepAttribute *)keepWidth;
 - (KeepAttribute *)keepHeight;
 
+- (KeepAttribute *(^)(UIView *))keepWidthTo;
+- (KeepAttribute *(^)(UIView *))keepHeightTo;
+
+
 #pragma mark Superview Insets
+
 - (KeepAttribute *)keepLeftInset;
 - (KeepAttribute *)keepRightInset;
 - (KeepAttribute *)keepTopInset;
 - (KeepAttribute *)keepBottomInset;
+
 - (KeepAttribute *)keepInsets;
 
+
 #pragma mark Center
+
 - (KeepAttribute *)keepHorizontalCenter;
 - (KeepAttribute *)keepVerticalCenter;
+
 - (KeepAttribute *)keepCenter;
 
+
 #pragma mark Offsets
-/// Usage: `view.keepLeftOffset(anotherView).equal = KeepRequired(10);`
+
 - (KeepAttribute *(^)(UIView *))keepLeftOffset;
 - (KeepAttribute *(^)(UIView *))keepRightOffset;
+
 - (KeepAttribute *(^)(UIView *))keepTopOffset;
 - (KeepAttribute *(^)(UIView *))keepBottomOffset;
+
+
+#pragma mark Alignments
+
+- (KeepAttribute *(^)(UIView *))keepLeftAlignTo;
+- (KeepAttribute *(^)(UIView *))keepRightAlignTo;
+- (KeepAttribute *(^)(UIView *))keepTopAlignTo;
+- (KeepAttribute *(^)(UIView *))keepBottomAlignTo;
+
+- (KeepAttribute *(^)(UIView *))keepVerticalAlignTo;
+- (KeepAttribute *(^)(UIView *))keepHorizontalAlignTo;
+
+- (KeepAttribute *(^)(UIView *))keepBaselineAlignTo;
+
 
 
 

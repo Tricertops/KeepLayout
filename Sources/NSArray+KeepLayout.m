@@ -31,11 +31,15 @@
 
 
 - (KeepGroupAttribute *)keep_getGroupAttributeForSelector:(SEL)selector {
+    KeepAssert([self keep_onlyContainsUIViews], @"%@ can only be called on array of UIView objects", NSStringFromSelector(_cmd));
+    
     return [[KeepGroupAttribute alloc] initWithAttributes:[self valueForKeyPath:NSStringFromSelector(selector)]];
 }
 
 
-- (KeepGroupAttribute *)keep_getGroupAttributeForSelector:(SEL)selector relatedView:(UIView *)relatedView {
+- (KeepGroupAttribute *)keep_groupAttributeForSelector:(SEL)selector relatedView:(UIView *)relatedView {
+    KeepAssert([self keep_onlyContainsUIViews], @"%@ can only be called on array of UIView objects", NSStringFromSelector(_cmd));
+    
     NSMutableArray *builder = [[NSMutableArray alloc] initWithCapacity:self.count];
     for (UIView *view in self) {
         KeepAttribute *(^block)(UIView *) = [view valueForKeyPath:NSStringFromSelector(selector)];
@@ -52,14 +56,26 @@
 
 
 - (KeepAttribute *)keepWidth {
-    NSAssert([self keep_onlyContainsUIViews], @"%@ can only be called on array of UIView objects", NSStringFromSelector(_cmd));
     return [self keep_getGroupAttributeForSelector:_cmd];
 }
 
 
 - (KeepAttribute *)keepHeight {
-    NSAssert([self keep_onlyContainsUIViews], @"%@ can only be called on array of UIView objects", NSStringFromSelector(_cmd));
     return [self keep_getGroupAttributeForSelector:_cmd];
+}
+
+
+- (KeepAttribute *(^)(UIView *))keepWidthTo {
+    return ^KeepAttribute *(UIView *view) {
+        return [self keep_groupAttributeForSelector:_cmd relatedView:view];
+    };
+}
+
+
+- (KeepAttribute *(^)(UIView *))keepHeightTo {
+    return ^KeepAttribute *(UIView *view) {
+        return [self keep_groupAttributeForSelector:_cmd relatedView:view];
+    };
 }
 
 
@@ -70,31 +86,26 @@
 
 
 - (KeepAttribute *)keepLeftInset {
-    NSAssert([self keep_onlyContainsUIViews], @"%@ can only be called on array of UIView objects", NSStringFromSelector(_cmd));
     return [self keep_getGroupAttributeForSelector:_cmd];
 }
 
 
 - (KeepAttribute *)keepRightInset {
-    NSAssert([self keep_onlyContainsUIViews], @"%@ can only be called on array of UIView objects", NSStringFromSelector(_cmd));
     return [self keep_getGroupAttributeForSelector:_cmd];
 }
 
 
 - (KeepAttribute *)keepTopInset {
-    NSAssert([self keep_onlyContainsUIViews], @"%@ can only be called on array of UIView objects", NSStringFromSelector(_cmd));
     return [self keep_getGroupAttributeForSelector:_cmd];
 }
 
 
 - (KeepAttribute *)keepBottomInset {
-    NSAssert([self keep_onlyContainsUIViews], @"%@ can only be called on array of UIView objects", NSStringFromSelector(_cmd));
     return [self keep_getGroupAttributeForSelector:_cmd];
 }
 
 
 - (KeepAttribute *)keepInsets {
-    NSAssert([self keep_onlyContainsUIViews], @"%@ can only be called on array of UIView objects", NSStringFromSelector(_cmd));
     return [self keep_getGroupAttributeForSelector:_cmd];
 }
 
@@ -105,19 +116,16 @@
 #pragma mark Center
 
 - (KeepAttribute *)keepHorizontalCenter {
-    NSAssert([self keep_onlyContainsUIViews], @"%@ can only be called on array of UIView objects", NSStringFromSelector(_cmd));
     return [self keep_getGroupAttributeForSelector:_cmd];
 }
 
 
 - (KeepAttribute *)keepVerticalCenter {
-    NSAssert([self keep_onlyContainsUIViews], @"%@ can only be called on array of UIView objects", NSStringFromSelector(_cmd));
     return [self keep_getGroupAttributeForSelector:_cmd];
 }
 
 
 - (KeepAttribute *)keepCenter {
-    NSAssert([self keep_onlyContainsUIViews], @"%@ can only be called on array of UIView objects", NSStringFromSelector(_cmd));
     return [self keep_getGroupAttributeForSelector:_cmd];
 }
 
@@ -129,33 +137,84 @@
 
 
 - (KeepAttribute *(^)(UIView *))keepLeftOffset {
-    NSAssert([self keep_onlyContainsUIViews], @"%@ can only be called on array of UIView objects", NSStringFromSelector(_cmd));
     return ^KeepAttribute *(UIView *view) {
-        return [self keep_getGroupAttributeForSelector:_cmd relatedView:view];
+        return [self keep_groupAttributeForSelector:_cmd relatedView:view];
     };
 }
 
 
 - (KeepAttribute *(^)(UIView *))keepRightOffset {
-    NSAssert([self keep_onlyContainsUIViews], @"%@ can only be called on array of UIView objects", NSStringFromSelector(_cmd));
     return ^KeepAttribute *(UIView *view) {
-        return [self keep_getGroupAttributeForSelector:_cmd relatedView:view];
+        return [self keep_groupAttributeForSelector:_cmd relatedView:view];
     };
 }
 
 
 - (KeepAttribute *(^)(UIView *))keepTopOffset {
-    NSAssert([self keep_onlyContainsUIViews], @"%@ can only be called on array of UIView objects", NSStringFromSelector(_cmd));
     return ^KeepAttribute *(UIView *view) {
-        return [self keep_getGroupAttributeForSelector:_cmd relatedView:view];
+        return [self keep_groupAttributeForSelector:_cmd relatedView:view];
     };
 }
 
 
 - (KeepAttribute *(^)(UIView *))keepBottomOffset {
-    NSAssert([self keep_onlyContainsUIViews], @"%@ can only be called on array of UIView objects", NSStringFromSelector(_cmd));
     return ^KeepAttribute *(UIView *view) {
-        return [self keep_getGroupAttributeForSelector:_cmd relatedView:view];
+        return [self keep_groupAttributeForSelector:_cmd relatedView:view];
+    };
+}
+
+
+
+
+
+#pragma mark Alignments
+
+
+- (KeepAttribute *(^)(UIView *))keepLeftAlignTo {
+    return ^KeepAttribute *(UIView *view) {
+        return [self keep_groupAttributeForSelector:_cmd relatedView:view];
+    };
+}
+
+
+- (KeepAttribute *(^)(UIView *))keepRightAlignTo {
+    return ^KeepAttribute *(UIView *view) {
+        return [self keep_groupAttributeForSelector:_cmd relatedView:view];
+    };
+}
+
+
+- (KeepAttribute *(^)(UIView *))keepTopAlignTo {
+    return ^KeepAttribute *(UIView *view) {
+        return [self keep_groupAttributeForSelector:_cmd relatedView:view];
+    };
+}
+
+
+- (KeepAttribute *(^)(UIView *))keepBottomAlignTo {
+    return ^KeepAttribute *(UIView *view) {
+        return [self keep_groupAttributeForSelector:_cmd relatedView:view];
+    };
+}
+
+
+- (KeepAttribute *(^)(UIView *))keepVerticalAlignTo {
+    return ^KeepAttribute *(UIView *view) {
+        return [self keep_groupAttributeForSelector:_cmd relatedView:view];
+    };
+}
+
+
+- (KeepAttribute *(^)(UIView *))keepHorizontalAlignTo {
+    return ^KeepAttribute *(UIView *view) {
+        return [self keep_groupAttributeForSelector:_cmd relatedView:view];
+    };
+}
+
+
+- (KeepAttribute *(^)(UIView *))keepBaselineAlignTo {
+    return ^KeepAttribute *(UIView *view) {
+        return [self keep_groupAttributeForSelector:_cmd relatedView:view];
     };
 }
 
