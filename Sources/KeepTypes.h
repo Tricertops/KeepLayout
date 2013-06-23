@@ -19,7 +19,7 @@
 
 
 #pragma mark Priority
-
+/// Use custom names.
 typedef enum : NSInteger {
     KeepPriorityRequired = UILayoutPriorityRequired,
     KeepPriorityHigh = UILayoutPriorityDefaultHigh,
@@ -30,20 +30,24 @@ typedef enum : NSInteger {
 
 
 #pragma mark Value
-
-
+/// Represents a value with associated priority. Used as values for attributes and underlaying constraints.
 typedef struct {
     CGFloat value;
     KeepPriority priority;
 } KeepValue;
 
-extern KeepValue KeepNone;
+/// Value, that represents no value. KeepValueIsNone will return YES.
+extern const KeepValue KeepNone;
+/// Returns YES for any value that has real value of CGFLOAT_MIN or priority 0.
 extern BOOL KeepValueIsNone(KeepValue);
 
+/// Constructor with arbitrary priority
 extern KeepValue KeepValueMake(CGFloat, KeepPriority);
+/// Constructors for 4 basic priorities
 extern KeepValue KeepRequired(CGFloat);
 extern KeepValue KeepHigh(CGFloat);
 extern KeepValue KeepLow(CGFloat);
 extern KeepValue KeepFitting(CGFloat);
 
+/// Debug description (example “42@750”, or just “42” if priority is Required)
 extern NSString *KeepValueDescription(KeepValue);
