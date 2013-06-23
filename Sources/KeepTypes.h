@@ -12,7 +12,8 @@
 
 
 
-#define KeepAssert(CONDITION, DESCRIPTION...)   NSAssert(CONDITION, @"KeepLayout: " DESCRIPTION)
+#define KeepAssert(CONDITION, DESCRIPTION...)   NSAssert((CONDITION), @"Keep Layout: " DESCRIPTION)
+#define KeepParameterAssert(CONDITION)          NSAssert((CONDITION), @"Keep Layout: " @"Invalid parameter not satisfying: %s", #CONDITION)
 
 
 

@@ -60,6 +60,11 @@
 
 
 - (KeepAttribute *)keep_dimensionForSelector:(SEL)selector dimensionAttribute:(NSLayoutAttribute)dimensionAttribute name:(NSString *)name {
+    KeepParameterAssert(selector);
+    KeepParameterAssert(dimensionAttribute == NSLayoutAttributeWidth
+                        || dimensionAttribute == NSLayoutAttributeHeight);
+    KeepParameterAssert(name);
+    
     return [self keep_attributeForSelector:selector creationBlock:^KeepAttribute *{
         KeepAttribute *attribute = [[[KeepConstantAttribute alloc] initWithView:self
                                                                 layoutAttribute:dimensionAttribute
@@ -73,6 +78,11 @@
 
 
 - (KeepAttribute *)keep_dimensionForSelector:(SEL)selector dimensionAttribute:(NSLayoutAttribute)dimensionAttribute relatedView:(UIView *)relatedView name:(NSString *)name {
+    KeepParameterAssert(selector);
+    KeepParameterAssert(dimensionAttribute == NSLayoutAttributeWidth
+                        || dimensionAttribute == NSLayoutAttributeHeight);
+    KeepParameterAssert(relatedView);
+    KeepParameterAssert(name);
     KeepAssert([self commonSuperview:relatedView], @"%@ requires both views to be in common hierarchy", NSStringFromSelector(selector));
     
     return [self keep_attributeForSelector:selector relatedView:relatedView creationBlock:^KeepAttribute *{
@@ -123,6 +133,14 @@
 
 
 - (KeepAttribute *)keep_insetForSelector:(SEL)selector edgeAttribute:(NSLayoutAttribute)edgeAttribute coefficient:(CGFloat)coefficient name:(NSString *)name {
+    KeepParameterAssert(selector);
+    KeepParameterAssert(edgeAttribute == NSLayoutAttributeLeft
+                        || edgeAttribute == NSLayoutAttributeRight
+                        || edgeAttribute == NSLayoutAttributeTop
+                        || edgeAttribute == NSLayoutAttributeBottom
+                        || edgeAttribute == NSLayoutAttributeLeading
+                        || edgeAttribute == NSLayoutAttributeTrailing);
+    KeepParameterAssert(name);
     KeepAssert(self.superview, @"Calling %@ allowed only when superview exists", NSStringFromSelector(selector));
     
     return [self keep_attributeForSelector:selector creationBlock:^KeepAttribute *{
@@ -172,6 +190,10 @@
 
 
 - (KeepAttribute *)keep_centerForSelector:(SEL)selector centerAttribute:(NSLayoutAttribute)centerAttribute name:(NSString *)name {
+    KeepParameterAssert(selector);
+    KeepParameterAssert(centerAttribute == NSLayoutAttributeCenterX
+                        || centerAttribute == NSLayoutAttributeCenterY);
+    KeepParameterAssert(name);
     KeepAssert(self.superview, @"Calling %@ allowed only when superview exists", NSStringFromSelector(selector));
     
     return [self keep_attributeForSelector:selector creationBlock:^KeepAttribute *{
@@ -210,6 +232,15 @@
 
 
 - (KeepAttribute *)keep_offsetForSelector:(SEL)selector edgeAttribute:(NSLayoutAttribute)edgeAttribute relatedView:(UIView *)relatedView name:(NSString *)name {
+    KeepParameterAssert(selector);
+    KeepParameterAssert(edgeAttribute == NSLayoutAttributeLeft
+                        || edgeAttribute == NSLayoutAttributeRight
+                        || edgeAttribute == NSLayoutAttributeTop
+                        || edgeAttribute == NSLayoutAttributeBottom
+                        || edgeAttribute == NSLayoutAttributeLeading
+                        || edgeAttribute == NSLayoutAttributeTrailing);
+    KeepParameterAssert(relatedView);
+    KeepParameterAssert(name);
     KeepAssert([self commonSuperview:relatedView], @"%@ requires both views to be in common hierarchy", NSStringFromSelector(selector));
     
     return [self keep_attributeForSelector:selector relatedView:relatedView creationBlock:^KeepAttribute *{
@@ -264,6 +295,17 @@
 
 
 - (KeepAttribute *)keep_alignForSelector:(SEL)selector alignAttribute:(NSLayoutAttribute)alignAttribute relatedView:(UIView *)relatedView coefficient:(CGFloat)coefficient name:(NSString *)name {
+    KeepParameterAssert(selector);
+    KeepParameterAssert(alignAttribute == NSLayoutAttributeLeft
+                        || alignAttribute == NSLayoutAttributeRight
+                        || alignAttribute == NSLayoutAttributeTop
+                        || alignAttribute == NSLayoutAttributeBottom
+                        || alignAttribute == NSLayoutAttributeLeading
+                        || alignAttribute == NSLayoutAttributeTrailing
+                        || alignAttribute == NSLayoutAttributeCenterX
+                        || alignAttribute == NSLayoutAttributeCenterY);
+    KeepParameterAssert(relatedView);
+    KeepParameterAssert(name);
     KeepAssert([self commonSuperview:relatedView], @"%@ requires both views to be in common hierarchy", NSStringFromSelector(selector));
     
     return [self keep_attributeForSelector:selector relatedView:relatedView creationBlock:^KeepAttribute *{
@@ -349,6 +391,10 @@
 
 
 - (void)keepAnimatedWithDuration:(NSTimeInterval)duration delay:(NSTimeInterval)delay options:(UIViewAnimationOptions)options layout:(void(^)(void))animations completion:(void(^)(BOOL finished))completion {
+    KeepParameterAssert(duration >= 0);
+    KeepParameterAssert(delay >= 0);
+    KeepParameterAssert(animations);
+    
     [[NSOperationQueue mainQueue] performSelector:@selector(addOperationWithBlock:)
                                        withObject:^{
                                            [UIView animateWithDuration:duration
