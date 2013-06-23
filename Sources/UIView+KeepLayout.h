@@ -41,6 +41,15 @@
 - (KeepAttribute *(^)(UIView *))keepTopOffset;
 - (KeepAttribute *(^)(UIView *))keepBottomOffset;
 
+#pragma mark Alignments
+/// Usage: `view.keepLeftAlign(anotherView).equal = KeepRequired(0);`
+/// Simplified: `view.keepLeftAlign(anotherView);` (".equal = KeepRequired(0)" is default)
+- (KeepAttribute *(^)(UIView *))keepLeftAlign;
+- (KeepAttribute *(^)(UIView *))keepRightAlign;
+- (KeepAttribute *(^)(UIView *))keepTopAlign;
+- (KeepAttribute *(^)(UIView *))keepBottomAlign;
+- (KeepAttribute *(^)(UIView *))keepBaselineAlign;
+
 
 #pragma mark Common Superview
 /// Traverses superviews and returns the first common for both, the receiver and the argument.

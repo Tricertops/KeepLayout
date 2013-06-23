@@ -250,6 +250,112 @@
 
 
 
+#pragma mark Alignments
+
+
+- (KeepAttribute *(^)(UIView *))keepLeftAlign {
+    return ^KeepAttribute *(UIView *view) {
+        return [self keep_getAttributeForSelector:_cmd relatedView:view creationBlock:^KeepAttribute *{
+            KeepAttribute *attribute =  [[[KeepConstantAttribute alloc] initWithView:self
+                                                                     layoutAttribute:NSLayoutAttributeLeft
+                                                                         relatedView:view
+                                                              relatedLayoutAttribute:NSLayoutAttributeLeft
+                                                                         coefficient:1]
+                                         name:@"left alignment of <%@ %p> to <%@ %p>", self.class, self, view.class, view];
+            attribute.equal = KeepRequired(0); // Default
+            // Establish inverse attribute
+            [view keep_getAttributeForSelector:_cmd relatedView:self creationBlock:^KeepAttribute *{
+                return attribute;
+            }];
+            return attribute;
+        }];
+    };
+}
+
+
+- (KeepAttribute *(^)(UIView *))keepRightAlign {
+    return ^KeepAttribute *(UIView *view) {
+        return [self keep_getAttributeForSelector:_cmd relatedView:view creationBlock:^KeepAttribute *{
+            KeepAttribute *attribute =  [[[KeepConstantAttribute alloc] initWithView:self
+                                                                     layoutAttribute:NSLayoutAttributeRight
+                                                                         relatedView:view
+                                                              relatedLayoutAttribute:NSLayoutAttributeRight
+                                                                         coefficient:-1]
+                                         name:@"right alignment of <%@ %p> to <%@ %p>", self.class, self, view.class, view];
+            attribute.equal = KeepRequired(0); // Default
+            // Establish inverse attribute
+            [view keep_getAttributeForSelector:_cmd relatedView:self creationBlock:^KeepAttribute *{
+                return attribute;
+            }];
+            return attribute;
+        }];
+    };
+}
+
+
+- (KeepAttribute *(^)(UIView *))keepTopAlign {
+    return ^KeepAttribute *(UIView *view) {
+        return [self keep_getAttributeForSelector:_cmd relatedView:view creationBlock:^KeepAttribute *{
+            KeepAttribute *attribute =  [[[KeepConstantAttribute alloc] initWithView:self
+                                                                     layoutAttribute:NSLayoutAttributeTop
+                                                                         relatedView:view
+                                                              relatedLayoutAttribute:NSLayoutAttributeTop
+                                                                         coefficient:1]
+                                         name:@"top alignment of <%@ %p> to <%@ %p>", self.class, self, view.class, view];
+            attribute.equal = KeepRequired(0); // Default
+            // Establish inverse attribute
+            [view keep_getAttributeForSelector:_cmd relatedView:self creationBlock:^KeepAttribute *{
+                return attribute;
+            }];
+            return attribute;
+        }];
+    };
+}
+
+
+- (KeepAttribute *(^)(UIView *))keepBottomAlign {
+    return ^KeepAttribute *(UIView *view) {
+        return [self keep_getAttributeForSelector:_cmd relatedView:view creationBlock:^KeepAttribute *{
+            KeepAttribute *attribute =  [[[KeepConstantAttribute alloc] initWithView:self
+                                                                     layoutAttribute:NSLayoutAttributeBottom
+                                                                         relatedView:view
+                                                              relatedLayoutAttribute:NSLayoutAttributeBottom
+                                                                         coefficient:-1]
+                                         name:@"bottom alignment of <%@ %p> to <%@ %p>", self.class, self, view.class, view];
+            attribute.equal = KeepRequired(0); // Default
+            // Establish inverse attribute
+            [view keep_getAttributeForSelector:_cmd relatedView:self creationBlock:^KeepAttribute *{
+                return attribute;
+            }];
+            return attribute;
+        }];
+    };
+}
+
+
+- (KeepAttribute *(^)(UIView *))keepBaselineAlign {
+    return ^KeepAttribute *(UIView *view) {
+        return [self keep_getAttributeForSelector:_cmd relatedView:view creationBlock:^KeepAttribute *{
+            KeepAttribute *attribute =  [[[KeepConstantAttribute alloc] initWithView:self
+                                                                     layoutAttribute:NSLayoutAttributeBaseline
+                                                                         relatedView:view
+                                                              relatedLayoutAttribute:NSLayoutAttributeBaseline
+                                                                         coefficient:-1]
+                                         name:@"baseline alignment of <%@ %p> to <%@ %p>", self.class, self, view.class, view];
+            attribute.equal = KeepRequired(0); // Default
+            // Establish inverse attribute
+            [view keep_getAttributeForSelector:_cmd relatedView:self creationBlock:^KeepAttribute *{
+                return attribute;
+            }];
+            return attribute;
+        }];
+    };
+}
+
+
+
+
+
 #pragma mark Common Superview
 
 

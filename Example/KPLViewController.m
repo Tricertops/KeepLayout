@@ -29,7 +29,7 @@
 	self.view.backgroundColor = [UIColor whiteColor];
     self.view.translatesAutoresizingMaskIntoConstraints = NO;
     
-    [self example2];
+    [self example3];
 }
 
 - (void)example1 {
@@ -91,21 +91,41 @@
     green.backgroundColor = [UIColor greenColor];
     [self.view addSubview:green];
     
-    UIView *blue = [[UIView alloc] init];
-    blue.backgroundColor = [UIColor blueColor];
-    [self.view addSubview:blue];
+//    UIView *blue = [[UIView alloc] init];
+//    blue.backgroundColor = [UIColor blueColor];
+//    [self.view addSubview:blue];
+//    
+//    UIView *cyan = [[UIView alloc] init];
+//    cyan.backgroundColor = [UIColor cyanColor];
+//    [self.view addSubview:cyan];
+//    
+//    UIView *magenta = [[UIView alloc] init];
+//    magenta.backgroundColor = [UIColor magentaColor];
+//    [self.view addSubview:magenta];
+//    
+//    UIView *yellow = [[UIView alloc] init];
+//    yellow.backgroundColor = [UIColor yellowColor];
+//    [self.view addSubview:yellow];
     
-    UIView *cyan = [[UIView alloc] init];
-    cyan.backgroundColor = [UIColor cyanColor];
-    [self.view addSubview:cyan];
+    red.keepWidth.equal = KeepRequired(100);
+    red.keepHeight.equal = KeepRequired(150);
+    red.keepCenter.equal = KeepRequired(0.5);
     
-    UIView *magenta = [[UIView alloc] init];
-    magenta.backgroundColor = [UIColor magentaColor];
-    [self.view addSubview:magenta];
+    green.keepWidth.equal = KeepRequired(50);
+    green.keepHeight.equal = KeepRequired(50);
     
-    UIView *yellow = [[UIView alloc] init];
-    yellow.backgroundColor = [UIColor yellowColor];
-    [self.view addSubview:yellow];
+    green.keepTopOffset(red).equal = KeepRequired(10);
+    green.keepRightAlign(red).equal = KeepRequired(10);
+    
+    [self performSelector:@selector(resize:) withObject:red afterDelay:1];
+}
+
+- (void)resize:(UIView *)view {
+    [UIView animateWithDuration:3 animations:^{
+        view.keepVerticalCenter.equal = KeepRequired(0.25);
+        view.keepWidth.equal = KeepRequired(300);
+        [self.view layoutIfNeeded];
+    }];
 }
 
 
