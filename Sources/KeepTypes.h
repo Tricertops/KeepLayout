@@ -39,3 +39,5 @@ extern KeepValue KeepRequired(CGFloat);
 extern KeepValue KeepHigh(CGFloat);
 extern KeepValue KeepLow(CGFloat);
 extern KeepValue KeepFitting(CGFloat);
+
+extern NSString *KeepValueDescription(KeepValue);

@@ -31,6 +31,9 @@
                  coefficient:(CGFloat)coefficient;
 @property (nonatomic, readonly, assign) CGFloat coefficient;
 
+@property (nonatomic, readwrite, copy) NSString *name;
+- (instancetype)name:(NSString *)format, ... NS_FORMAT_FUNCTION(1, 2);
+
 + (KeepGroupAttribute *)group:(KeepAttribute *)first, ... NS_REQUIRES_NIL_TERMINATION;
 
 @end

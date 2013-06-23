@@ -48,21 +48,23 @@
 
 - (KeepAttribute *)keepWidth {
     return [self keep_getAttributeForSelector:_cmd creationBlock:^KeepAttribute *{
-        return [[KeepConstantAttribute alloc] initWithView:self
-                                           layoutAttribute:NSLayoutAttributeWidth
-                                               relatedView:nil
-                                    relatedLayoutAttribute:NSLayoutAttributeNotAnAttribute
-                                               coefficient:1];
+        return [[[KeepConstantAttribute alloc] initWithView:self
+                                            layoutAttribute:NSLayoutAttributeWidth
+                                                relatedView:nil
+                                     relatedLayoutAttribute:NSLayoutAttributeNotAnAttribute
+                                                coefficient:1]
+                name:@"width of <%@ %p>", self.class, self];
     }];
 }
 
 - (KeepAttribute *)keepHeight {
     return [self keep_getAttributeForSelector:_cmd creationBlock:^KeepAttribute *{
-        return [[KeepConstantAttribute alloc] initWithView:self
-                                           layoutAttribute:NSLayoutAttributeHeight
-                                               relatedView:nil
-                                    relatedLayoutAttribute:NSLayoutAttributeNotAnAttribute
-                                               coefficient:1];
+        return [[[KeepConstantAttribute alloc] initWithView:self
+                                            layoutAttribute:NSLayoutAttributeHeight
+                                                relatedView:nil
+                                     relatedLayoutAttribute:NSLayoutAttributeNotAnAttribute
+                                                coefficient:1]
+                name:@"height of <%@ %p>", self.class, self];
     }];
 }
 
@@ -70,11 +72,12 @@
     NSAssert(self.superview, @"Calling %@ allowed only when superview exists", NSStringFromSelector(_cmd));
     
     return [self keep_getAttributeForSelector:_cmd creationBlock:^KeepAttribute *{
-        return [[KeepConstantAttribute alloc] initWithView:self
+        return [[[KeepConstantAttribute alloc] initWithView:self
                                            layoutAttribute:NSLayoutAttributeLeft
                                                relatedView:self.superview
                                     relatedLayoutAttribute:NSLayoutAttributeLeft
-                                               coefficient:1];
+                                               coefficient:1]
+                name:@"left inset of <%@ %p> to superview <%@ %p>", self.class, self, self.superview.class, self.superview];
     }];
 }
 
@@ -82,11 +85,12 @@
     NSAssert(self.superview, @"Calling %@ allowed only when superview exists", NSStringFromSelector(_cmd));
     
     return [self keep_getAttributeForSelector:_cmd creationBlock:^KeepAttribute *{
-        return [[KeepConstantAttribute alloc] initWithView:self
+        return [[[KeepConstantAttribute alloc] initWithView:self
                                            layoutAttribute:NSLayoutAttributeRight
                                                relatedView:self.superview
                                     relatedLayoutAttribute:NSLayoutAttributeRight
-                                               coefficient:-1];
+                                               coefficient:-1]
+                name:@"right inset of <%@ %p> to superview <%@ %p>", self.class, self, self.superview.class, self.superview];
     }];
 }
 
@@ -94,11 +98,12 @@
     NSAssert(self.superview, @"Calling %@ allowed only when superview exists", NSStringFromSelector(_cmd));
     
     return [self keep_getAttributeForSelector:_cmd creationBlock:^KeepAttribute *{
-        return [[KeepConstantAttribute alloc] initWithView:self
+        return [[[KeepConstantAttribute alloc] initWithView:self
                                            layoutAttribute:NSLayoutAttributeTop
                                                relatedView:self.superview
                                     relatedLayoutAttribute:NSLayoutAttributeTop
-                                               coefficient:1];
+                                               coefficient:1]
+                name:@"top inset of <%@ %p> to superview <%@ %p>", self.class, self, self.superview.class, self.superview];
     }];
 }
 
@@ -106,33 +111,36 @@
     NSAssert(self.superview, @"Calling %@ allowed only when superview exists", NSStringFromSelector(_cmd));
     
     return [self keep_getAttributeForSelector:_cmd creationBlock:^KeepAttribute *{
-        return [[KeepConstantAttribute alloc] initWithView:self
+        return [[[KeepConstantAttribute alloc] initWithView:self
                                            layoutAttribute:NSLayoutAttributeBottom
                                                relatedView:self.superview
                                     relatedLayoutAttribute:NSLayoutAttributeBottom
-                                               coefficient:-1];
+                                               coefficient:-1]
+                name:@"bottom inset of <%@ %p> to superview <%@ %p>", self.class, self, self.superview.class, self.superview];
     }];
 }
 
 - (KeepAttribute *)keepInsets {
     NSAssert(self.superview, @"Calling %@ allowed only when superview exists", NSStringFromSelector(_cmd));
     
-    return [[KeepGroupAttribute alloc] initWithAttributes:@[
+    return [[[KeepGroupAttribute alloc] initWithAttributes:@[
             self.keepTopInset,
             self.keepBottomInset,
             self.keepLeftInset,
-            self.keepRightInset ]];
+            self.keepRightInset ]]
+            name:@"all insets of <%@ %p> to superview <%@ %p>", self.class, self, self.superview.class, self.superview];
 }
 
 - (KeepAttribute *)keepHorizontalCenter {
     NSAssert(self.superview, @"Calling %@ allowed only when superview exists", NSStringFromSelector(_cmd));
     
     return [self keep_getAttributeForSelector:_cmd creationBlock:^KeepAttribute *{
-        return [[KeepMultiplierAttribute alloc] initWithView:self
+        return [[[KeepMultiplierAttribute alloc] initWithView:self
                                              layoutAttribute:NSLayoutAttributeCenterX
                                                  relatedView:self.superview
                                       relatedLayoutAttribute:NSLayoutAttributeCenterX
-                                                 coefficient:2];
+                                                 coefficient:2]
+                name:@"horizontal center of <%@ %p> in superview <%@ %p>", self.class, self, self.superview.class, self.superview];
     }];
 }
 
@@ -140,33 +148,30 @@
     NSAssert(self.superview, @"Calling %@ allowed only when superview exists", NSStringFromSelector(_cmd));
     
     return [self keep_getAttributeForSelector:_cmd creationBlock:^KeepAttribute *{
-        return [[KeepMultiplierAttribute alloc] initWithView:self
+        return [[[KeepMultiplierAttribute alloc] initWithView:self
                                              layoutAttribute:NSLayoutAttributeCenterY
                                                  relatedView:self.superview
                                       relatedLayoutAttribute:NSLayoutAttributeCenterY
-                                                 coefficient:2];
+                                                 coefficient:2]
+                name:@"vertical center of <%@ %p> in superview <%@ %p>", self.class, self, self.superview.class, self.superview];
     }];
 }
 
-- (KeepAttribute *)keepCenter {
-    NSAssert(self.superview, @"Calling %@ allowed only when superview exists", NSStringFromSelector(_cmd));
-    
-    return [[KeepGroupAttribute alloc] initWithAttributes:@[
+- (KeepAttribute *)keepCenter {    
+    return [[[KeepGroupAttribute alloc] initWithAttributes:@[
             self.keepHorizontalCenter,
-            self.keepVerticalCenter ]];
+            self.keepVerticalCenter ]]
+            name:@"center of <%@ %p> in superview <%@ %p>", self.class, self, self.superview.class, self.superview];
 }
 
 - (KeepAttribute *)keepLeftOffsetTo:(UIView *)view {
     return [self keep_getAttributeForSelector:_cmd relatedView:view creationBlock:^KeepAttribute *{
-        KeepAttribute *offset = [[KeepConstantAttribute alloc] initWithView:self
-                                                            layoutAttribute:NSLayoutAttributeLeft
-                                                                relatedView:view
-                                                     relatedLayoutAttribute:NSLayoutAttributeRight
-                                                                coefficient:1];
-        [view keep_getAttributeForSelector:@selector(keepRightOffsetTo:) relatedView:self creationBlock:^KeepAttribute *{
-            return offset;
-        }];
-        return offset;
+        return [[[KeepConstantAttribute alloc] initWithView:self
+                                            layoutAttribute:NSLayoutAttributeLeft
+                                                relatedView:view
+                                     relatedLayoutAttribute:NSLayoutAttributeRight
+                                                coefficient:1]
+                name:@"left offset of <%@ %p> to <%@ %p>", self.class, self, view.class, view];
     }];
 }
 
@@ -176,15 +181,12 @@
 
 - (KeepAttribute *)keepTopOffsetTo:(UIView *)view {
     return [self keep_getAttributeForSelector:_cmd relatedView:view creationBlock:^KeepAttribute *{
-        KeepAttribute *offset = [[KeepConstantAttribute alloc] initWithView:self
-                                                            layoutAttribute:NSLayoutAttributeTop
-                                                                relatedView:view
-                                                     relatedLayoutAttribute:NSLayoutAttributeBottom
-                                                                coefficient:1];
-        [view keep_getAttributeForSelector:@selector(keepBottomOffsetTo:) relatedView:self creationBlock:^KeepAttribute *{
-            return offset;
-        }];
-        return offset;
+        return [[[KeepConstantAttribute alloc] initWithView:self
+                                           layoutAttribute:NSLayoutAttributeTop
+                                               relatedView:view
+                                    relatedLayoutAttribute:NSLayoutAttributeBottom
+                                               coefficient:1]
+                name:@"top offset of <%@ %p> to <%@ %p>", self.class, self, view.class, view];
     }];
 }
 

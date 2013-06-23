@@ -37,3 +37,13 @@ KeepValue KeepLow(CGFloat value) {
 KeepValue KeepFitting(CGFloat value) {
     return KeepValueMake(value, KeepPriorityFitting);
 }
+
+NSString *KeepValueDescription(KeepValue value) {
+    if (KeepValueIsNone(value)) return @"none";
+    
+    NSString *description = @(value.value).stringValue;
+    if (value.priority != KeepPriorityRequired) {
+        description = [description stringByAppendingFormat:@"@%@", @(value.priority).stringValue];
+    }
+    return description;
+}

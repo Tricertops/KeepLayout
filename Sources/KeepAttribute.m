@@ -79,6 +79,20 @@
     return self;
 }
 
+- (instancetype)name:(NSString *)format, ... {
+    va_list arguments;
+    va_start(arguments, format);
+    
+    self.name = [[NSString alloc] initWithFormat:format arguments:arguments];
+    
+    va_end(arguments);
+    return self;
+}
+
+- (NSString *)description {
+    return [NSString stringWithFormat:@"<%@ %p; %@ [%@ < %@ < %@]>", self.class, self, self.name ?: @"(no name)", KeepValueDescription(self.min), KeepValueDescription(self.equal), KeepValueDescription(self.max)];
+}
+
 + (KeepGroupAttribute *)group:(KeepAttribute *)first, ... NS_REQUIRES_NIL_TERMINATION {
     va_list list;
     va_start(list, first);
@@ -271,6 +285,10 @@
         self.attributes = attributes;
     }
     return self;
+}
+
+- (NSString *)description {
+    return [NSString stringWithFormat:@"<%@ %p; %@ %@>", self.class, self, self.name ?: @"(no name)", [self valueForKeyPath:@"attributes.description"]];
 }
 
 - (KeepValue)equal {
