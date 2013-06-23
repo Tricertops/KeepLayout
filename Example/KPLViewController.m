@@ -91,10 +91,10 @@
     green.backgroundColor = [UIColor greenColor];
     [self.view addSubview:green];
     
-//    UIView *blue = [[UIView alloc] init];
-//    blue.backgroundColor = [UIColor blueColor];
-//    [self.view addSubview:blue];
-//    
+    UIView *blue = [[UIView alloc] init];
+    blue.backgroundColor = [UIColor blueColor];
+    [self.view addSubview:blue];
+//
 //    UIView *cyan = [[UIView alloc] init];
 //    cyan.backgroundColor = [UIColor cyanColor];
 //    [self.view addSubview:cyan];
@@ -116,6 +116,12 @@
     
     green.keepTopOffset(red).equal = KeepRequired(10);
     green.keepRightAlign(red).equal = KeepRequired(10);
+    
+    blue.keepWidthTo(red);
+    blue.keepTopInset.min = KeepRequired(10);
+    blue.keepHeight.equal = KeepHigh(100);
+    blue.keepVerticalAlign(red);
+    blue.keepBottomOffset(red).equal = KeepRequired(10);
     
     [self.view keepAnimatedWithDuration:3 delay:1 layout:^{
         red.keepVerticalCenter.equal = KeepRequired(0.25);
