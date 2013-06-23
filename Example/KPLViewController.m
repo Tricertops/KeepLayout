@@ -29,7 +29,7 @@
 	self.view.backgroundColor = [UIColor whiteColor];
     self.view.translatesAutoresizingMaskIntoConstraints = NO;
     
-    [self example1];
+    [self example2];
 }
 
 - (void)example1 {
@@ -57,6 +57,21 @@
     UIView *blue = [[UIView alloc] init];
     blue.backgroundColor = [UIColor blueColor];
     [self.view addSubview:blue];
+    
+    red.keepWidth.equal = KeepHigh(500);
+    red.keepHeight.equal = KeepRequired(100);
+    green.keepWidth.equal = KeepHigh(100);
+    green.keepHeight.equal = KeepHigh(100);
+    blue.keepWidth.equal = KeepRequired(100);
+    blue.keepHeight.equal = KeepHigh(500);
+
+    red.keepInsets.min = green.keepInsets.min = blue.keepInsets.min = KeepRequired(10);
+    red.keepTopInset.equal = green.keepTopInset.equal = blue.keepTopInset.equal = KeepLow(10);
+    red.keepLeftInset.equal = green.keepLeftInset.equal = blue.keepLeftInset.equal = KeepLow(10);
+    
+    [green keepLeftOffsetTo:red].equal = KeepRequired(10);
+    [blue keepTopOffsetTo:red].equal = KeepRequired(10);
+    [blue keepRightOffsetTo:green].equal = KeepRequired(10);
 }
 
 - (void)example3 {

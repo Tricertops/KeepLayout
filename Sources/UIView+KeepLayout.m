@@ -18,6 +18,8 @@
 
 
 - (KeepAttribute *)keep_getAttributeForSelector:(SEL)selector creationBlock:(KeepAttribute *(^)())creationBlock {
+    NSParameterAssert(selector);
+    
     KeepAttribute *attribute = objc_getAssociatedObject(self, selector);
     if ( ! attribute && creationBlock) {
         attribute = creationBlock();
@@ -25,6 +27,24 @@
     }
     return attribute;
 }
+
+- (KeepAttribute *)keep_getAttributeForSelector:(SEL)selector relatedView:(UIView *)relatedView creationBlock:(KeepAttribute *(^)())creationBlock {
+    NSParameterAssert(selector);
+    NSParameterAssert(relatedView);
+    
+    NSMapTable *attributesByRelatedView = objc_getAssociatedObject(self, selector);
+    if ( ! attributesByRelatedView) {
+        attributesByRelatedView = [NSMapTable weakToStrongObjectsMapTable];
+        objc_setAssociatedObject(self, selector, attributesByRelatedView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
+    KeepAttribute *attribute = [attributesByRelatedView objectForKey:relatedView];
+    if ( ! attribute && creationBlock) {
+        attribute = creationBlock();
+        [attributesByRelatedView setObject:attribute forKey:relatedView];
+    }
+    return attribute;
+}
+
 
 - (KeepAttribute *)keepWidth {
     return [self keep_getAttributeForSelector:_cmd creationBlock:^KeepAttribute *{
@@ -95,6 +115,8 @@
 }
 
 - (KeepAttribute *)keepInsets {
+    NSAssert(self.superview, @"Calling %@ allowed only when superview exists", NSStringFromSelector(_cmd));
+    
     return [[KeepGroupAttribute alloc] initWithAttributes:@[
             self.keepTopInset,
             self.keepBottomInset,
@@ -127,10 +149,49 @@
 }
 
 - (KeepAttribute *)keepCenter {
+    NSAssert(self.superview, @"Calling %@ allowed only when superview exists", NSStringFromSelector(_cmd));
+    
     return [[KeepGroupAttribute alloc] initWithAttributes:@[
             self.keepHorizontalCenter,
             self.keepVerticalCenter ]];
 }
+
+- (KeepAttribute *)keepLeftOffsetTo:(UIView *)view {
+    return [self keep_getAttributeForSelector:_cmd relatedView:view creationBlock:^KeepAttribute *{
+        KeepAttribute *offset = [[KeepConstantAttribute alloc] initWithView:self
+                                                            layoutAttribute:NSLayoutAttributeLeft
+                                                                relatedView:view
+                                                     relatedLayoutAttribute:NSLayoutAttributeRight
+                                                                coefficient:1];
+        [view keep_getAttributeForSelector:@selector(keepRightOffsetTo:) relatedView:self creationBlock:^KeepAttribute *{
+            return offset;
+        }];
+        return offset;
+    }];
+}
+
+- (KeepAttribute *)keepRightOffsetTo:(UIView *)view {
+    return [view keepLeftOffsetTo:self];
+}
+
+- (KeepAttribute *)keepTopOffsetTo:(UIView *)view {
+    return [self keep_getAttributeForSelector:_cmd relatedView:view creationBlock:^KeepAttribute *{
+        KeepAttribute *offset = [[KeepConstantAttribute alloc] initWithView:self
+                                                            layoutAttribute:NSLayoutAttributeTop
+                                                                relatedView:view
+                                                     relatedLayoutAttribute:NSLayoutAttributeBottom
+                                                                coefficient:1];
+        [view keep_getAttributeForSelector:@selector(keepBottomOffsetTo:) relatedView:self creationBlock:^KeepAttribute *{
+            return offset;
+        }];
+        return offset;
+    }];
+}
+
+- (KeepAttribute *)keepBottomOffsetTo:(UIView *)view {
+    return [view keepTopOffsetTo:self];
+}
+
 
 
 
@@ -144,6 +205,9 @@
     }
     return superview;
 }
+
+
+
 
 
 
