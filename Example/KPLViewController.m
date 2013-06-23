@@ -65,9 +65,22 @@
     blue.keepWidth.equal = KeepRequired(100);
     blue.keepHeight.equal = KeepHigh(500);
 
-    red.keepInsets.min = green.keepInsets.min = blue.keepInsets.min = KeepRequired(10);
-    red.keepTopInset.equal = green.keepTopInset.equal = blue.keepTopInset.equal = KeepLow(10);
-    red.keepLeftInset.equal = green.keepLeftInset.equal = blue.keepLeftInset.equal = KeepLow(10);
+    KeepAttribute *allInsets = [KeepAttribute group:
+                                red.keepInsets,
+                                green.keepInsets,
+                                blue.keepInsets,
+                                nil];
+    allInsets.min = KeepRequired(10); // Never get closer to bounds than 10pts
+    
+    KeepAttribute *topAndLeftInsets = [KeepAttribute group:
+                                       red.keepTopInset,
+                                       red.keepLeftInset,
+                                       green.keepTopInset,
+                                       green.keepLeftInset,
+                                       blue.keepTopInset,
+                                       blue.keepLeftInset,
+                                       nil];
+    topAndLeftInsets.equal = KeepLow(10); // Keep the views close to top-left corner, but with low priority.
     
     [green keepLeftOffsetTo:red].equal = KeepRequired(10);
     [blue keepTopOffsetTo:red].equal = KeepRequired(10);

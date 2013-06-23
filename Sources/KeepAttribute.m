@@ -84,14 +84,15 @@
     va_start(list, first);
     
     NSMutableArray *attributes = [[NSMutableArray alloc] init];
-    KeepAttribute *attribute;
-    while ((attribute = va_arg(list, KeepAttribute *))) {
+    KeepAttribute *attribute = first;
+    while (attribute) {
         [attributes addObject:attribute];
+        attribute = va_arg(list, KeepAttribute *);
     }
     
     va_end(list);
     
-    return [[self alloc] initWithAttributes:attributes];
+    return [[KeepGroupAttribute alloc] initWithAttributes:attributes];
 }
 
 
