@@ -70,7 +70,7 @@
                                 green.keepInsets,
                                 blue.keepInsets,
                                 nil];
-    allInsets.min = KeepRequired(10); // Never get closer to bounds than 10pts
+    allInsets.min = KeepRequired(10); // Never get closer to bounds than 10 pts
     
     KeepAttribute *topAndLeftInsets = [KeepAttribute group:
                                        red.keepTopInset,
@@ -82,9 +82,12 @@
                                        nil];
     topAndLeftInsets.equal = KeepLow(10); // Keep the views close to top-left corner, but with low priority.
     
-    [green keepLeftOffsetTo:red].equal = KeepRequired(10);
-    [blue keepTopOffsetTo:red].equal = KeepRequired(10);
-    [blue keepRightOffsetTo:green].equal = KeepRequired(10);
+    KeepAttribute *offsets = [KeepAttribute group:
+                              green.keepLeftOffset(red),
+                              blue.keepTopOffset(red),
+                              blue.keepRightOffset(green),
+                              nil];
+    offsets.equal = KeepRequired(10); // Never get closer to each other than 10 pts.
 }
 
 - (void)example3 {

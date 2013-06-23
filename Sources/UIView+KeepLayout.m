@@ -12,9 +12,15 @@
 
 
 
+
+
 @implementation UIView (KeepLayout)
 
 
+
+
+
+#pragma mark Associations
 
 
 - (KeepAttribute *)keep_getAttributeForSelector:(SEL)selector creationBlock:(KeepAttribute *(^)())creationBlock {
@@ -27,6 +33,7 @@
     }
     return attribute;
 }
+
 
 - (KeepAttribute *)keep_getAttributeForSelector:(SEL)selector relatedView:(UIView *)relatedView creationBlock:(KeepAttribute *(^)())creationBlock {
     NSParameterAssert(selector);
@@ -46,6 +53,12 @@
 }
 
 
+
+
+
+#pragma mark Dimensions
+
+
 - (KeepAttribute *)keepWidth {
     return [self keep_getAttributeForSelector:_cmd creationBlock:^KeepAttribute *{
         return [[[KeepConstantAttribute alloc] initWithView:self
@@ -57,6 +70,7 @@
     }];
 }
 
+
 - (KeepAttribute *)keepHeight {
     return [self keep_getAttributeForSelector:_cmd creationBlock:^KeepAttribute *{
         return [[[KeepConstantAttribute alloc] initWithView:self
@@ -67,6 +81,13 @@
                 name:@"height of <%@ %p>", self.class, self];
     }];
 }
+
+
+
+
+
+#pragma mark Supreview Insets
+
 
 - (KeepAttribute *)keepLeftInset {
     NSAssert(self.superview, @"Calling %@ allowed only when superview exists", NSStringFromSelector(_cmd));
@@ -81,6 +102,7 @@
     }];
 }
 
+
 - (KeepAttribute *)keepRightInset {
     NSAssert(self.superview, @"Calling %@ allowed only when superview exists", NSStringFromSelector(_cmd));
     
@@ -93,6 +115,7 @@
                 name:@"right inset of <%@ %p> to superview <%@ %p>", self.class, self, self.superview.class, self.superview];
     }];
 }
+
 
 - (KeepAttribute *)keepTopInset {
     NSAssert(self.superview, @"Calling %@ allowed only when superview exists", NSStringFromSelector(_cmd));
@@ -107,6 +130,7 @@
     }];
 }
 
+
 - (KeepAttribute *)keepBottomInset {
     NSAssert(self.superview, @"Calling %@ allowed only when superview exists", NSStringFromSelector(_cmd));
     
@@ -120,6 +144,7 @@
     }];
 }
 
+
 - (KeepAttribute *)keepInsets {
     NSAssert(self.superview, @"Calling %@ allowed only when superview exists", NSStringFromSelector(_cmd));
     
@@ -130,6 +155,13 @@
             self.keepRightInset ]]
             name:@"all insets of <%@ %p> to superview <%@ %p>", self.class, self, self.superview.class, self.superview];
 }
+
+
+
+
+
+#pragma mark Center
+
 
 - (KeepAttribute *)keepHorizontalCenter {
     NSAssert(self.superview, @"Calling %@ allowed only when superview exists", NSStringFromSelector(_cmd));
@@ -144,6 +176,7 @@
     }];
 }
 
+
 - (KeepAttribute *)keepVerticalCenter {
     NSAssert(self.superview, @"Calling %@ allowed only when superview exists", NSStringFromSelector(_cmd));
     
@@ -157,6 +190,7 @@
     }];
 }
 
+
 - (KeepAttribute *)keepCenter {    
     return [[[KeepGroupAttribute alloc] initWithAttributes:@[
             self.keepHorizontalCenter,
@@ -164,37 +198,59 @@
             name:@"center of <%@ %p> in superview <%@ %p>", self.class, self, self.superview.class, self.superview];
 }
 
-- (KeepAttribute *)keepLeftOffsetTo:(UIView *)view {
-    return [self keep_getAttributeForSelector:_cmd relatedView:view creationBlock:^KeepAttribute *{
-        return [[[KeepConstantAttribute alloc] initWithView:self
-                                            layoutAttribute:NSLayoutAttributeLeft
-                                                relatedView:view
-                                     relatedLayoutAttribute:NSLayoutAttributeRight
-                                                coefficient:1]
-                name:@"left offset of <%@ %p> to <%@ %p>", self.class, self, view.class, view];
-    }];
-}
 
-- (KeepAttribute *)keepRightOffsetTo:(UIView *)view {
-    return [view keepLeftOffsetTo:self];
-}
 
-- (KeepAttribute *)keepTopOffsetTo:(UIView *)view {
-    return [self keep_getAttributeForSelector:_cmd relatedView:view creationBlock:^KeepAttribute *{
-        return [[[KeepConstantAttribute alloc] initWithView:self
-                                           layoutAttribute:NSLayoutAttributeTop
-                                               relatedView:view
-                                    relatedLayoutAttribute:NSLayoutAttributeBottom
-                                               coefficient:1]
-                name:@"top offset of <%@ %p> to <%@ %p>", self.class, self, view.class, view];
-    }];
-}
 
-- (KeepAttribute *)keepBottomOffsetTo:(UIView *)view {
-    return [view keepTopOffsetTo:self];
+
+#pragma mark Offsets
+
+
+- (KeepAttribute *(^)(UIView *))keepLeftOffset {
+    return ^KeepAttribute *(UIView *view) {
+        return [self keep_getAttributeForSelector:_cmd relatedView:view creationBlock:^KeepAttribute *{
+            return [[[KeepConstantAttribute alloc] initWithView:self
+                                                layoutAttribute:NSLayoutAttributeLeft
+                                                    relatedView:view
+                                         relatedLayoutAttribute:NSLayoutAttributeRight
+                                                    coefficient:1]
+                    name:@"left offset of <%@ %p> to <%@ %p>", self.class, self, view.class, view];
+        }];
+    };
 }
 
 
+- (KeepAttribute *(^)(UIView *))keepRightOffset {
+    return ^KeepAttribute *(UIView *view) {
+        return view.keepLeftOffset(self);
+    };
+}
+
+
+- (KeepAttribute *(^)(UIView *))keepTopOffset {
+    return ^KeepAttribute *(UIView *view) {
+        return [self keep_getAttributeForSelector:_cmd relatedView:view creationBlock:^KeepAttribute *{
+            return [[[KeepConstantAttribute alloc] initWithView:self
+                                                layoutAttribute:NSLayoutAttributeTop
+                                                    relatedView:view
+                                         relatedLayoutAttribute:NSLayoutAttributeBottom
+                                                    coefficient:1]
+                    name:@"top offset of <%@ %p> to <%@ %p>", self.class, self, view.class, view];
+        }];
+    };
+}
+
+
+- (KeepAttribute *(^)(UIView *))keepBottomOffset {
+    return ^KeepAttribute *(UIView *view) {
+        return view.keepTopOffset(self);
+    };
+}
+
+
+
+
+
+#pragma mark Common Superview
 
 
 - (UIView *)commonSuperview:(UIView *)anotherView {
@@ -212,12 +268,15 @@
 
 
 
+#pragma mark Convenience Auto Layout
+
 
 - (void)addConstraintToCommonSuperview:(NSLayoutConstraint *)constraint {
     UIView *relatedLayoutView = constraint.secondItem;
     UIView *commonView = (relatedLayoutView? [self commonSuperview:relatedLayoutView] : self);
     [commonView addConstraint:constraint];
 }
+
 
 - (void)removeConstraintFromCommonSuperview:(NSLayoutConstraint *)constraint {
     UIView *relatedLayoutView = constraint.secondItem;
@@ -226,12 +285,12 @@
 }
 
 
-
 - (void)addConstraintsToCommonSuperview:(id<NSFastEnumeration>)constraints {
     for (NSLayoutConstraint *constraint in constraints) {
         [self addConstraintToCommonSuperview:constraint];
     }
 }
+
 
 - (void)removeConstraintsFromCommonSuperview:(id<NSFastEnumeration>)constraints {
     for (NSLayoutConstraint *constraint in constraints) {

@@ -31,10 +31,11 @@
 - (KeepAttribute *)keepVerticalCenter;
 - (KeepAttribute *)keepCenter;
 
-- (KeepAttribute *)keepLeftOffsetTo:(UIView *)view;
-- (KeepAttribute *)keepRightOffsetTo:(UIView *)view;
-- (KeepAttribute *)keepTopOffsetTo:(UIView *)view;
-- (KeepAttribute *)keepBottomOffsetTo:(UIView *)view;
+/// Usage: `view.keepLeftOffset(anotherView).equal = KeepRequired(10);`
+- (KeepAttribute *(^)(UIView *))keepLeftOffset;
+- (KeepAttribute *(^)(UIView *))keepRightOffset;
+- (KeepAttribute *(^)(UIView *))keepTopOffset;
+- (KeepAttribute *(^)(UIView *))keepBottomOffset;
 
 
 /// Traverses superviews and returns the first common for both, the receiver and the argument.
