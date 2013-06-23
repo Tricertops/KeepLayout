@@ -7,7 +7,7 @@
 //
 
 #import "KPLAppDelegate.h"
-#import "KPLViewController.h"
+#import "KPLExampleListViewController.h"
 
 
 
@@ -15,8 +15,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    self.window.rootViewController = [[KPLViewController alloc] init];
-    self.window.backgroundColor = [UIColor whiteColor];
+    KPLExampleListViewController *exampleListViewController = [[KPLExampleListViewController alloc] init];
+    self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:exampleListViewController];
+    self.window.backgroundColor = [UIColor blackColor];
     [self.window makeKeyAndVisible];
     return YES;
 }
