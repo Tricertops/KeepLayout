@@ -46,6 +46,11 @@
 
 - (KeepAttribute *(^)(UIView *))keepSizeTo;
 
+/// Convenience methods applied to whole array, in the order they are in array.
+- (void)keepWidthsEqual;
+- (void)keepHeightsEqual;
+- (void)keepSizesEqual;
+
 
 
 #pragma mark Superview Insets
@@ -85,6 +90,10 @@
 - (KeepAttribute *(^)(UIView *))keepTopOffset;
 - (KeepAttribute *(^)(UIView *))keepBottomOffset;
 
+/// Convenience methods applied to whole array, in the order they are in array.
+- (void)keepHorizontalOffsets:(KeepValue)value;
+- (void)keepVerticalOffsets:(KeepValue)value;
+
 
 
 #pragma mark Alignments
@@ -98,6 +107,15 @@
 - (KeepAttribute *(^)(UIView *))keepHorizontalAlignTo;
 
 - (KeepAttribute *(^)(UIView *))keepBaselineAlignTo;
+
+/// Convenience methods applied to whole array, in the order they are in array.
+- (void)keepLeftAligned;
+- (void)keepRightAligned;
+- (void)keepTopAligned;
+- (void)keepBottomAligned;
+- (void)keepVerticallyAligned;
+- (void)keepHorizontallyAligned;
+- (void)keepBaselineAligned;
 
 
 
