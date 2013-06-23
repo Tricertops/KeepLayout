@@ -11,9 +11,100 @@
 
 
 
-#pragma mark General Attribute
 
-@interface KeepAttribute ()
+
+@implementation KeepAttribute
+
+
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        NSAssert(self.class != KeepAttribute.class, @"%@ is abstract class", self.class);
+        if (self.class == KeepAttribute.class) {
+            return nil;
+        }
+    }
+    return self;
+}
+
+
+#pragma mark Remove
+
+
+- (void)remove {
+    NSAssert(NO, @"-[%@ %@] is abstract", KeepAttribute.class, NSStringFromSelector(_cmd));
+}
+
+
+
+
+
+#pragma mark Grouping
+
+
++ (KeepGroupAttribute *)group:(KeepAttribute *)first, ... NS_REQUIRES_NIL_TERMINATION {
+    va_list list;
+    va_start(list, first);
+    
+    NSMutableArray *attributes = [[NSMutableArray alloc] init];
+    KeepAttribute *attribute = first;
+    while (attribute) {
+        [attributes addObject:attribute];
+        attribute = va_arg(list, KeepAttribute *);
+    }
+    
+    va_end(list);
+    
+    return [[KeepGroupAttribute alloc] initWithAttributes:attributes];
+}
+
+
+
+
+
+#pragma mark Naming & Debugging
+
+
+- (instancetype)name:(NSString *)format, ... {
+    va_list arguments;
+    va_start(arguments, format);
+    
+    self.name = [[NSString alloc] initWithFormat:format arguments:arguments];
+    
+    va_end(arguments);
+    return self;
+}
+
+
+- (NSString *)description {
+    return [NSString stringWithFormat:@"<%@ %p; %@ [%@ < %@ < %@]>",
+            self.class,
+            self,
+            self.name ?: @"(no name)",
+            KeepValueDescription(self.min),
+            KeepValueDescription(self.equal),
+            KeepValueDescription(self.max)];
+}
+
+
+
+
+
+@end
+
+
+
+
+
+
+
+
+
+
+#pragma mark -
+
+
+@interface KeepSimpleAttribute ()
 
 @property (nonatomic, readwrite, weak) UIView *view;
 @property (nonatomic, readwrite, assign) NSLayoutAttribute layoutAttribute;
@@ -43,7 +134,13 @@
 
 
 
-@implementation KeepAttribute
+@implementation KeepSimpleAttribute
+
+
+
+
+
+#pragma mark Initialization
 
 
 - (instancetype)init {
@@ -54,6 +151,7 @@
             coefficient:0];
 }
 
+
 - (instancetype)initWithView:(UIView *)view
              layoutAttribute:(NSLayoutAttribute)layoutAttribute
                  relatedView:(UIView *)relatedView
@@ -61,13 +159,14 @@
                  coefficient:(CGFloat)coefficient {
     self = [super init];
     if (self) {
-        if (self.class != KeepGroupAttribute.class) {
             NSParameterAssert(view);
             NSParameterAssert(layoutAttribute != NSLayoutAttributeNotAnAttribute);
             NSParameterAssert(coefficient);
-        }
         
-        NSAssert(self != [KeepAttribute class], @"%@ is abstract class", self.class);
+        NSAssert(self.class != KeepSimpleAttribute.class, @"%@ is abstract class", self.class);
+        if (self.class == KeepSimpleAttribute.class) {
+            return nil;
+        }
         
         self.view = view;
         self.layoutAttribute = layoutAttribute;
@@ -79,41 +178,18 @@
     return self;
 }
 
-- (instancetype)name:(NSString *)format, ... {
-    va_list arguments;
-    va_start(arguments, format);
-    
-    self.name = [[NSString alloc] initWithFormat:format arguments:arguments];
-    
-    va_end(arguments);
-    return self;
-}
 
-- (NSString *)description {
-    return [NSString stringWithFormat:@"<%@ %p; %@ [%@ < %@ < %@]>", self.class, self, self.name ?: @"(no name)", KeepValueDescription(self.min), KeepValueDescription(self.equal), KeepValueDescription(self.max)];
-}
 
-+ (KeepGroupAttribute *)group:(KeepAttribute *)first, ... NS_REQUIRES_NIL_TERMINATION {
-    va_list list;
-    va_start(list, first);
-    
-    NSMutableArray *attributes = [[NSMutableArray alloc] init];
-    KeepAttribute *attribute = first;
-    while (attribute) {
-        [attributes addObject:attribute];
-        attribute = va_arg(list, KeepAttribute *);
-    }
-    
-    va_end(list);
-    
-    return [[KeepGroupAttribute alloc] initWithAttributes:attributes];
-}
+
+
+#pragma mark Constraints
 
 
 - (NSLayoutConstraint *)createConstraintWithRelation:(NSLayoutRelation)relation value:(KeepValue)value {
-    NSAssert(NO, @"-[%@ %@] is abstract", KeepAttribute.class, NSStringFromSelector(_cmd));
+    NSAssert(NO, @"-[%@ %@] is abstract", KeepSimpleAttribute.class, NSStringFromSelector(_cmd));
     return nil;
 }
+
 
 - (void)addConstraint:(NSLayoutConstraint *)constraint {
     [self.constraintView addConstraint:constraint];
@@ -123,13 +199,16 @@
     self.constraintView.translatesAutoresizingMaskIntoConstraints = NO;
 }
 
+
 - (void)applyValue:(KeepValue)value forConstraint:(NSLayoutConstraint *)constraint {
-    NSAssert(NO, @"-[%@ %@] is abstract", KeepAttribute.class, NSStringFromSelector(_cmd));
+    NSAssert(NO, @"-[%@ %@] is abstract", KeepSimpleAttribute.class, NSStringFromSelector(_cmd));
 }
+
 
 - (void)removeConstraint:(NSLayoutConstraint *)constraint {
     [self.constraintView removeConstraint:constraint];
 }
+
 
 - (void)remove {
     [self removeConstraint:self.equalConstraint];
@@ -137,8 +216,15 @@
     [self removeConstraint:self.minConstraint];
 }
 
+
+
+
+
+#pragma mark Values
+
+
 - (void)setEqual:(KeepValue)equal {
-    self->_equal = equal;
+    [super setEqual:equal];
     
     if (KeepValueIsNone(equal)) {
         [self removeConstraint:self.equalConstraint];
@@ -154,8 +240,9 @@
     }
 }
 
+
 - (void)setMax:(KeepValue)max {
-    self->_max = max;
+    [super setMax:max];
     
     if (KeepValueIsNone(max)) {
         [self removeConstraint:self.maxConstraint];
@@ -171,8 +258,9 @@
     }
 }
 
+
 - (void)setMin:(KeepValue)min {
-    self->_min = min;
+    [super setMin:min];
     
     if (KeepValueIsNone(min)) {
         [self removeConstraint:self.minConstraint];
@@ -189,17 +277,30 @@
 }
 
 
+
+
+
 @end
 
 
 
 
 
+
+
+
+
+
 #pragma mark -
-#pragma mark Constant Attribute
 
 
 @implementation KeepConstantAttribute
+
+
+
+
+
+#pragma mark Constraint Overrides
 
 
 - (NSLayoutConstraint *)createConstraintWithRelation:(NSLayoutRelation)relation value:(KeepValue)value {
@@ -215,6 +316,7 @@
     return constraint;
 }
 
+
 - (void)applyValue:(KeepValue)value forConstraint:(NSLayoutConstraint *)constraint {
     constraint.constant = value.value * self.coefficient;
     if (constraint.priority != value.priority) {
@@ -223,18 +325,31 @@
 }
 
 
+
+
+
 @end
 
 
 
 
 
+
+
+
+
+
 #pragma mark -
-#pragma mark Multiplier Attribute
 
 
 
 @implementation KeepMultiplierAttribute
+
+
+
+
+
+#pragma mark Constraint Overrides
 
 
 - (NSLayoutConstraint *)createConstraintWithRelation:(NSLayoutRelation)relation value:(KeepValue)value {
@@ -246,6 +361,7 @@
     return constraint;
 }
 
+
 - (void)applyValue:(KeepValue)value forConstraint:(NSLayoutConstraint *)constraint {
     // Since multiplier is not read/write proeperty, we need to re-add the whole constraint again.
     [self removeConstraint:constraint];
@@ -254,28 +370,47 @@
 }
 
 
+
+
+
 @end
+
+
+
+
 
 
 
 
 
 #pragma mark -
-#pragma mark Group Attribute
+
 
 @interface KeepGroupAttribute ()
 
+
 @property (nonatomic, readwrite, strong) id<NSFastEnumeration> attributes;
+
 
 @end
 
 
 
+
+
 @implementation KeepGroupAttribute
+
+
+
+
+
+#pragma mark Initialization
+
 
 - (id)init {
     return [self initWithAttributes:nil];
 }
+
 
 - (instancetype)initWithAttributes:(id<NSFastEnumeration>)attributes {
     self = [super init];
@@ -287,9 +422,22 @@
     return self;
 }
 
+
+
+
+
+#pragma mark Debugging
+
+
 - (NSString *)description {
     return [NSString stringWithFormat:@"<%@ %p; %@ %@>", self.class, self, self.name ?: @"(no name)", [self valueForKeyPath:@"attributes.description"]];
 }
+
+
+
+
+
+#pragma mark Accessing Values
 
 - (KeepValue)equal {
     NSLog(@"Warning! Accessing property %@ for grouped attribute, returning KeepNone.", NSStringFromSelector(_cmd));
@@ -306,17 +454,33 @@
     return KeepNone;
 }
 
+
+
+
+
+#pragma mark Setting Values
+
+
 - (void)setEqual:(KeepValue)equal {
     for (KeepAttribute *attribute in self.attributes) attribute.equal = equal;
 }
+
 
 - (void)setMax:(KeepValue)max {
     for (KeepAttribute *attribute in self.attributes) attribute.max = max;
 }
 
+
 - (void)setMin:(KeepValue)min {
     for (KeepAttribute *attribute in self.attributes) attribute.min = min;
 }
+
+
+
+
+
+#pragma mark Remove
+
 
 - (void)remove {
     for (KeepAttribute *attribute in self.attributes) [attribute remove];
@@ -324,8 +488,8 @@
 
 
 
+
+
 @end
-
-
 
 

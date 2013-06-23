@@ -12,50 +12,84 @@
 
 #import "KeepTypes.h"
 
-@class KeepGroupAttribute;
 
 
 
+
+/// Each instance if KeepAttribute manages up to 3 NSLayoutConstraints: one for each relation.
+/// Class cluster.
 @interface KeepAttribute : NSObject
 
-@property (nonatomic, readwrite, assign) KeepValue equal;
-@property (nonatomic, readwrite, assign) KeepValue max;
-@property (nonatomic, readwrite, assign) KeepValue min;
 
+
+#pragma mark Values
+/// Value with priority to be applied to underlaying constraints.
+@property (nonatomic, readwrite, assign) KeepValue equal; /// Constraint with relation Equal
+@property (nonatomic, readwrite, assign) KeepValue max; /// Constraint with relation GreaterThanOrEqual
+@property (nonatomic, readwrite, assign) KeepValue min; /// Constraint with relation LessThanOrEqual
+
+
+#pragma mark Remove
+/// Removes all constraints managed by this attribute from view hierarchy.
 - (void)remove;
 
+
+#pragma mark Grouping
+/// Allows you to create groups of attributes. Grouped attribute forwards all methods to its children.
++ (KeepAttribute *)group:(KeepAttribute *)first, ... NS_REQUIRES_NIL_TERMINATION;
+
+
+#pragma mar Debugging
+/// Debugging helper. Name of attribute is a part of its `-description`
+@property (nonatomic, readwrite, copy) NSString *name;
+- (instancetype)name:(NSString *)format, ... NS_FORMAT_FUNCTION(1, 2);
+
+
+
+@end
+
+
+
+
+
+/// Private class.
+/// Used by Keep Layout implementation to create attributes.
+@interface KeepSimpleAttribute : KeepAttribute
+
+/// Properties that don't change in time.
 - (instancetype)initWithView:(UIView *)view
              layoutAttribute:(NSLayoutAttribute)layoutAttribute
                  relatedView:(UIView *)relatedView
       relatedLayoutAttribute:(NSLayoutAttribute)relatedLayoutAttribute
                  coefficient:(CGFloat)coefficient;
+/// Multiplier of values: equal, min and max
 @property (nonatomic, readonly, assign) CGFloat coefficient;
 
-@property (nonatomic, readwrite, copy) NSString *name;
-- (instancetype)name:(NSString *)format, ... NS_FORMAT_FUNCTION(1, 2);
-
-+ (KeepGroupAttribute *)group:(KeepAttribute *)first, ... NS_REQUIRES_NIL_TERMINATION;
-
 @end
 
 
 
-/// Used for attributes where the related view is none or is the main view itself - Width, Height
-@interface KeepConstantAttribute : KeepAttribute
+/// Private class.
+/// Used for attributes where the values are expressed as constants.
+@interface KeepConstantAttribute : KeepSimpleAttribute
 @end
 
 
 
-/// Attribute that applies its equal, max and min as multipliers for underlaying constraints.
-@interface KeepMultiplierAttribute : KeepAttribute
+/// Private class.
+/// Used for attributes where the values are expressed as multipliers.
+@interface KeepMultiplierAttribute : KeepSimpleAttribute
 @end
 
 
 
-/// Used to group many attributes to single one. Setting equal, max and min properties will forward them to all.
+/// Private class.
+/// The `+group:` method returns instance of this class. Forwards methods from base class cluster interface to its children.
 @interface KeepGroupAttribute : KeepAttribute
+
 - (instancetype)initWithAttributes:(id<NSFastEnumeration>)attributes;
 @property (nonatomic, readonly, strong) id<NSFastEnumeration> attributes;
+
 @end
 
 
