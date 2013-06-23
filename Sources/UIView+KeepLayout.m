@@ -112,6 +112,38 @@
 }
 
 
+- (KeepAttribute *)keepSize {
+    return [[KeepAttribute group:
+            self.keepWidth,
+            self.keepHeight,
+            nil] name:@"size of <%@ %p>", self.class, self];
+}
+
+
+- (void)keepSize:(CGSize)size {
+    [self keepSize:size priority:KeepPriorityRequired];
+}
+
+
+- (void)keepSize:(CGSize)size priority:(KeepPriority)priority {
+    self.keepWidth.equal = KeepValueMake(size.width, priority);
+    self.keepHeight.equal = KeepValueMake(size.height, priority);
+}
+
+
+- (KeepAttribute *)keepAspectRatio {
+    return [self keep_attributeForSelector:_cmd creationBlock:^KeepAttribute *{
+        KeepAttribute *attribute = [[KeepMultiplierAttribute alloc] initWithView:self
+                                                                 layoutAttribute:NSLayoutAttributeWidth
+                                                                     relatedView:self
+                                                          relatedLayoutAttribute:NSLayoutAttributeHeight
+                                                                     coefficient:1];
+        [attribute name:@"aspect ration of <%@ %p>", self.class, self];
+        return attribute;
+    }];
+}
+
+
 - (KeepAttribute *(^)(UIView *))keepWidthTo {
     return ^KeepAttribute *(UIView *view) {
         return [self keep_dimensionForSelector:_cmd dimensionAttribute:NSLayoutAttributeWidth relatedView:view name:@"width"];
@@ -122,6 +154,16 @@
 - (KeepAttribute *(^)(UIView *))keepHeightTo {
     return ^KeepAttribute *(UIView *view) {
         return [self keep_dimensionForSelector:_cmd dimensionAttribute:NSLayoutAttributeHeight relatedView:view name:@"height"];
+    };
+}
+
+
+- (KeepAttribute *(^)(UIView *))keepSizeTo {
+    return ^KeepAttribute *(UIView *view) {
+        return [[KeepAttribute group:
+                 self.keepWidthTo(view),
+                 self.keepHeightTo(view),
+                 nil] name:@"size of <%@ %p> to <%@ %p>", self.class, self, view.class, view];
     };
 }
 
@@ -183,6 +225,35 @@
 }
 
 
+- (KeepAttribute *)keepHorizontalInsets {
+    return [[[KeepGroupAttribute alloc] initWithAttributes:@[
+             self.keepLeftInset,
+             self.keepRightInset ]]
+            name:@"horizontal insets of <%@ %p> to superview <%@ %p>", self.class, self, self.superview.class, self.superview];
+}
+
+
+- (KeepAttribute *)keepVerticalInsets {
+    return [[[KeepGroupAttribute alloc] initWithAttributes:@[
+             self.keepTopInset,
+             self.keepBottomInset ]]
+            name:@"vertical insets of <%@ %p> to superview <%@ %p>", self.class, self, self.superview.class, self.superview];
+}
+
+
+- (void)keepInsets:(UIEdgeInsets)insets {
+    [self keepInsets:insets priority:KeepPriorityRequired];
+}
+
+
+- (void)keepInsets:(UIEdgeInsets)insets priority:(KeepPriority)priority {
+    self.keepLeftInset.equal = KeepValueMake(insets.left, priority);
+    self.keepRightInset.equal = KeepValueMake(insets.right, priority);
+    self.keepTopInset.equal = KeepValueMake(insets.top, priority);
+    self.keepBottomInset.equal = KeepValueMake(insets.bottom, priority);
+}
+
+
 
 
 
@@ -222,6 +293,27 @@
              self.keepHorizontalCenter,
              self.keepVerticalCenter ]]
             name:@"center of <%@ %p> in superview <%@ %p>", self.class, self, self.superview.class, self.superview];
+}
+
+
+- (void)keepCentered {
+    [self keepCenteredWithPriority:KeepPriorityRequired];
+}
+
+
+- (void)keepCenteredWithPriority:(KeepPriority)priority {
+    [self keepCenter:CGPointMake(0.5, 0.5) priority:priority];
+}
+
+
+- (void)keepCenter:(CGPoint)center {
+    [self keepCenter:center priority:KeepPriorityRequired];
+}
+
+
+- (void)keepCenter:(CGPoint)center priority:(KeepPriority)priority {
+    self.keepHorizontalCenter.equal = KeepValueMake(center.x, priority);
+    self.keepVerticalCenter.equal = KeepValueMake(center.y, priority);
 }
 
 
@@ -355,6 +447,24 @@
 }
 
 
+- (void)keepEdgeAlignTo:(UIView *)view {
+    [self keepEdgeAlignTo:view insets:UIEdgeInsetsZero];
+}
+
+
+- (void)keepEdgeAlignTo:(UIView *)view insets:(UIEdgeInsets)insets {
+    [self keepEdgeAlignTo:view insets:insets withPriority:KeepPriorityRequired];
+}
+
+
+- (void)keepEdgeAlignTo:(UIView *)view insets:(UIEdgeInsets)insets withPriority:(KeepPriority)priority {
+    self.keepLeftAlignTo(view).equal = KeepValueMake(insets.left, priority);
+    self.keepRightAlignTo(view).equal = KeepValueMake(insets.right, priority);
+    self.keepTopAlignTo(view).equal = KeepValueMake(insets.top, priority);
+    self.keepBottomAlignTo(view).equal = KeepValueMake(insets.bottom, priority);
+}
+
+
 - (KeepAttribute *(^)(UIView *))keepVerticalAlignTo {
     return ^KeepAttribute *(UIView *view) {
         return [self keep_alignForSelector:_cmd alignAttribute:NSLayoutAttributeCenterX relatedView:view coefficient:1 name:@"vertical center alignment"];
@@ -366,6 +476,22 @@
     return ^KeepAttribute *(UIView *view) {
         return [self keep_alignForSelector:_cmd alignAttribute:NSLayoutAttributeCenterY relatedView:view coefficient:1 name:@"horizontal center alignment"];
     };
+}
+
+
+- (void)keepCenterAlignTo:(UIView *)view {
+    [self keepCenterAlignTo:view offset:UIOffsetZero];
+}
+
+
+- (void)keepCenterAlignTo:(UIView *)view offset:(UIOffset)offset {
+    [self keepCenterAlignTo:view offset:offset withPriority:KeepPriorityRequired];
+}
+
+
+- (void)keepCenterAlignTo:(UIView *)view offset:(UIOffset)offset withPriority:(KeepPriority)priority {
+    self.keepHorizontalAlignTo(view).equal = KeepValueMake(offset.horizontal, priority);
+    self.keepVerticalAlignTo(view).equal = KeepValueMake(offset.vertical, priority);
 }
 
 

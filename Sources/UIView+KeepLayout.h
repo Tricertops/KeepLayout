@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import <CoreGraphics/CoreGraphics.h>
+#import "KeepTypes.h"
 
 @class KeepAttribute;
 
@@ -28,9 +29,22 @@
 - (KeepAttribute *)keepWidth;
 - (KeepAttribute *)keepHeight;
 
+/// Grouped proxy attribute for size.
+- (KeepAttribute *)keepSize;
+
+/// Convenience methods for setting both dimensions at once.
+- (void)keepSize:(CGSize)size; /// Uses Required priority
+- (void)keepSize:(CGSize)size priority:(KeepPriority)priority;
+
+/// Attributes representing aspect ratio of receiver's dimensions. Values are multipliers of width/height.
+- (KeepAttribute *)keepAspectRatio;
+
 /// Attributes representing relative dimension to other view.
 - (KeepAttribute *(^)(UIView *))keepWidthTo;
 - (KeepAttribute *(^)(UIView *))keepHeightTo;
+
+/// Grouped proxy attribute for relative size.
+- (KeepAttribute *(^)(UIView *))keepSizeTo;
 
 
 
@@ -45,6 +59,12 @@
 
 /// Grouped proxy attributes for insets.
 - (KeepAttribute *)keepInsets;
+- (KeepAttribute *)keepHorizontalInsets;
+- (KeepAttribute *)keepVerticalInsets;
+
+/// Convenience methods for setting all dimensions at once.
+- (void)keepInsets:(UIEdgeInsets)insets; /// Uses Required priority
+- (void)keepInsets:(UIEdgeInsets)insets priority:(KeepPriority)priority;
 
 
 
@@ -59,6 +79,11 @@
 /// Grouped proxy attribute of the two centers above.
 - (KeepAttribute *)keepCenter;
 
+/// Convenience methods for setting both centers at once.
+- (void)keepCentered; /// Uses Required priority
+- (void)keepCenteredWithPriority:(KeepPriority)priority;
+- (void)keepCenter:(CGPoint)center; /// Uses Required priority
+- (void)keepCenter:(CGPoint)center priority:(KeepPriority)priority;
 
 
 
@@ -74,7 +99,9 @@
 - (KeepAttribute *(^)(UIView *))keepBottomOffsetTo; /// Identical to top offset in reversed direction.
 
 
+
 #pragma mark Alignments
+
 /// Attributes representing edge alignments of two views.
 /// Requires both views to be in the same hierarchy.
 /// Usage `view.keepLeftAlign(anotherView)`.
@@ -85,18 +112,31 @@
 - (KeepAttribute *(^)(UIView *))keepTopAlignTo;
 - (KeepAttribute *(^)(UIView *))keepBottomAlignTo; /// Automatically inverts values.
 
+/// Convenience methods for setting all edge alignments at once.
+- (void)keepEdgeAlignTo:(UIView *)view;
+- (void)keepEdgeAlignTo:(UIView *)view insets:(UIEdgeInsets)insets;
+- (void)keepEdgeAlignTo:(UIView *)view insets:(UIEdgeInsets)insets withPriority:(KeepPriority)priority;
+
 /// Attributes representing center alignments of two views.
 - (KeepAttribute *(^)(UIView *))keepVerticalAlignTo;
 - (KeepAttribute *(^)(UIView *))keepHorizontalAlignTo; /// Automatically inverts values.
+
+/// Convenience methods for setting all edge alignments at once.
+- (void)keepCenterAlignTo:(UIView *)view;
+- (void)keepCenterAlignTo:(UIView *)view offset:(UIOffset)offset;
+- (void)keepCenterAlignTo:(UIView *)view offset:(UIOffset)offset withPriority:(KeepPriority)priority;
 
 /// Attribute representing baseline alignments of two views.
 /// Not all views have baseline.
 - (KeepAttribute *(^)(UIView *))keepBaselineAlignTo; /// Automatically inverts values.
 
 
+
 #pragma mark Animating Constraints
+
 /// Animation methods allowing you to modify all above attributes (or even constraints directly) animatedly.
 /// Receiver automatically calls `-layoutIfNeeded` right in the animation block.
+/// All animations are scheduled on main queue with given delay. The layout code itself is executed after the delay (this is different than in UIView animation methods)
 - (void)keepAnimatedWithDuration:(NSTimeInterval)duration layout:(void(^)(void))animations;
 - (void)keepAnimatedWithDuration:(NSTimeInterval)duration delay:(NSTimeInterval)delay layout:(void(^)(void))animations;
 - (void)keepAnimatedWithDuration:(NSTimeInterval)duration delay:(NSTimeInterval)delay options:(UIViewAnimationOptions)options layout:(void(^)(void))animations completion:(void(^)(BOOL finished))completion;
