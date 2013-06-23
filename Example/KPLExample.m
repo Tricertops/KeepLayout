@@ -16,6 +16,7 @@
 
 
 @property (nonatomic, readwrite, copy) NSString *name;
+@property (nonatomic, readwrite, assign) NSUInteger lines;
 @property (nonatomic, readwrite, copy) void(^setupBlock)(UIView *container);
 
 
@@ -31,10 +32,11 @@
 
 
 
-- (instancetype)initWithName:(NSString *)name setupBlock:(void (^)(UIView *))setupBlock {
+- (instancetype)initWithName:(NSString *)name lines:(NSUInteger)lines setupBlock:(void (^)(UIView *))setupBlock {
     self = [super init];
     if (self) {
         self.name = name;
+        self.lines = lines;
         self.setupBlock = setupBlock;
     }
     return self;

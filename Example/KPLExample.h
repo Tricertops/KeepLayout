@@ -11,9 +11,10 @@
 @interface KPLExample : NSObject
 
 
-- (instancetype)initWithName:(NSString *)name setupBlock:(void(^)(UIView *container))setupBlock;
+- (instancetype)initWithName:(NSString *)name lines:(NSUInteger)lines setupBlock:(void(^)(UIView *container))setupBlock;
 
 @property (nonatomic, readonly, copy) NSString *name;
+@property (nonatomic, readonly, assign) NSUInteger lines;
 @property (nonatomic, readonly, copy) void(^setupBlock)(UIView *container);
 
 

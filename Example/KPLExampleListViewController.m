@@ -62,19 +62,25 @@
 
 
 - (void)loadExamples {
-    NSMutableArray *examplesBuilder = [[NSMutableArray alloc] init];
+    NSMutableArray *examples = [[NSMutableArray alloc] init];
     
-    [examplesBuilder addObject:[[KPLExample alloc] initWithName:@"Simple Insets"
-                                                     setupBlock:^(UIView *container) {
-                                                         UIView *black = [[UIView alloc] init];
-                                                         black.backgroundColor = [UIColor blackColor];
-                                                         [container addSubview:black];
-                                                         
-                                                         black.keepInsets.equal = KeepRequired(10);
-                                                         
-                                                     }]];
+    UIView *(^createView)(UIColor *, UIView *) = ^UIView *(UIColor *color, UIView *superview) {
+        UIView *view = [[UIView alloc] init];
+        view.backgroundColor = color;
+        [superview addSubview:view];
+        return view;
+    };
     
-    self.examples = [examplesBuilder copy];
+    [examples addObject:[[KPLExample alloc] initWithName:@"Simple Insets"
+                                                   lines:1
+                                              setupBlock:^(UIView *container) {
+                                                  UIView *black = createView(UIColor.blackColor, container);
+                                                  
+                                                  black.keepInsets.equal = KeepRequired(10);
+                                                  
+                                              }]];
+    
+    self.examples = [examples copy];
 }
 
 
@@ -103,12 +109,13 @@
     static NSString *reuseIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
     if ( ! cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:reuseIdentifier];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     
     KPLExample *example = [self.examples objectAtIndex:indexPath.row];
     cell.textLabel.text = example.name;
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%i line%@ of code", example.lines, (example.lines == 1? @"" : @"s")];
     
     return cell;
 }
