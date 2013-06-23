@@ -250,12 +250,14 @@
                                         @(NSLayoutAttributeTop): @(NSLayoutAttributeBottom),
                                         @(NSLayoutAttributeBottom): @(NSLayoutAttributeTop),
                                         };
-        return [[[KeepConstantAttribute alloc] initWithView:self
-                                            layoutAttribute:edgeAttribute
-                                                relatedView:relatedView
-                                     relatedLayoutAttribute:[[oppositeEdges objectForKey:@(edgeAttribute)] integerValue]
-                                                coefficient:1]
-                name:@"%@ of <%@ %p> to <%@ %p>", name, self.class, self, relatedView.class, relatedView];
+        KeepAttribute *attribute =  [[[KeepConstantAttribute alloc] initWithView:self
+                                                                 layoutAttribute:edgeAttribute
+                                                                     relatedView:relatedView
+                                                          relatedLayoutAttribute:[[oppositeEdges objectForKey:@(edgeAttribute)] integerValue]
+                                                                     coefficient:1]
+                                     name:@"%@ of <%@ %p> to <%@ %p>", name, self.class, self, relatedView.class, relatedView];
+        attribute.equal = KeepRequired(0);
+        return attribute;
     }];
 }
 

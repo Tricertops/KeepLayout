@@ -23,16 +23,19 @@
 
 
 #pragma mark Dimensions
+
 /// Attributes representing internal size of the receiver.
-// TODO: Use intrictic size by default.
 - (KeepAttribute *)keepWidth;
 - (KeepAttribute *)keepHeight;
 
+/// Attributes representing relative dimension to other view.
 - (KeepAttribute *(^)(UIView *))keepWidthTo;
 - (KeepAttribute *(^)(UIView *))keepHeightTo;
 
 
+
 #pragma mark Superview Insets
+
 /// Attributes representing internal inset (margin) of the receive to its superview.
 /// Requires superview.
 - (KeepAttribute *)keepLeftInset;
@@ -40,15 +43,16 @@
 - (KeepAttribute *)keepTopInset;
 - (KeepAttribute *)keepBottomInset; /// Automatically inverts values.
 
-/// Grouped proxy attribute of all 4 insets above.
+/// Grouped proxy attributes for insets.
 - (KeepAttribute *)keepInsets;
 
 
+
 #pragma mark Center
+
 /// Attributes representing relative position of the receiver to its superview.
 /// Requires superview.
 /// Example values: 0 = left edge, 0.5 = middle, 1 = right edge
-// TODO: Use 0.5 by default
 - (KeepAttribute *)keepHorizontalCenter;
 - (KeepAttribute *)keepVerticalCenter;
 
@@ -56,11 +60,14 @@
 - (KeepAttribute *)keepCenter;
 
 
+
+
 #pragma mark Offsets
+
 /// Attributes representing offset (padding, distance) of two views.
 /// Requires both views to be in the same hierarchy.
 /// Usage `view.keepLeftOffset(anotherView)`
-// TODO: Use 0 as default
+/// Default is “0 required”
 - (KeepAttribute *(^)(UIView *))keepLeftOffsetTo;
 - (KeepAttribute *(^)(UIView *))keepRightOffsetTo; /// Identical to left offset in reversed direction.
 - (KeepAttribute *(^)(UIView *))keepTopOffsetTo;
