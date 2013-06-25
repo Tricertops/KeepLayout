@@ -48,9 +48,14 @@
     
     [self.view keepSize:self.view.bounds.size];
     
-    [self.view keepAnimatedWithDuration:1 delay:1 layout:^{
+    [self.view keepAnimatedWithDuration:0 layout:^{
         self.example.setupBlock(self.view);
     }];
+}
+
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
 }
 
 

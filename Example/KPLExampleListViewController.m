@@ -62,7 +62,7 @@
 
 
 - (void)loadExamples {
-    NSMutableArray *examples = [[NSMutableArray alloc] init];
+    NSMutableArray *simpleExamples = [[NSMutableArray alloc] init];
     
     UIView *(^createView)(UIColor *, UIView *) = ^UIView *(UIColor *color, UIView *superview) {
         UIView *view = [[UIView alloc] init];
@@ -71,16 +71,78 @@
         return view;
     };
     
-    [examples addObject:[[KPLExample alloc] initWithName:@"Simple Insets"
-                                                   lines:1
-                                              setupBlock:^(UIView *container) {
-                                                  UIView *black = createView(UIColor.blackColor, container);
-                                                  
-                                                  black.keepInsets.equal = KeepRequired(10);
-                                                  
-                                              }]];
+    [simpleExamples addObject:
+     [[KPLExample alloc] initWithName:@"Equal Insets"
+                                lines:1
+                           setupBlock:^(UIView *container) {
+                               UIView *black = createView(UIColor.blackColor, container);
+                               
+                               // 1
+                               black.keepInsets.equal = KeepRequired(10);
+                               
+                               // Equivalent:
+                               /*
+                                black.keepTopInset.equal = KeepRequired(10);
+                                black.keepBottomInset.equal = KeepRequired(10);
+                                black.keepLeftInset.equal = KeepRequired(10);
+                                black.keepRightInset.equal = KeepRequired(10);
+                                */
+                           }]];
+    [simpleExamples addObject:
+     [[KPLExample alloc] initWithName:@"Various Insets"
+                                lines:1
+                           setupBlock:^(UIView *container) {
+                               UIView *black = createView(UIColor.blackColor, container);
+                               
+                               // 1
+                               [black keepInsets:UIEdgeInsetsMake(10, 20, 30, 40)];
+                               
+                               // Equivalent:
+                               /*
+                                black.keepTopInset.equal = KeepRequired(10);
+                                black.keepBottomInset.equal = KeepRequired(30);
+                                black.keepLeftInset.equal = KeepRequired(20);
+                                black.keepRightInset.equal = KeepRequired(40);
+                                */
+                           }]];
+    [simpleExamples addObject:
+     [[KPLExample alloc] initWithName:@"Center & Size"
+                                lines:2
+                           setupBlock:^(UIView *container) {
+                               UIView *black = createView(UIColor.blackColor, container);
+                               
+                               // 1
+                               [black keepSize:CGSizeMake(100, 200)];
+                               
+                               // Equivalent:
+                               /*
+                                black.keepWidth.equal = KeepRequired(100);
+                                black.keepHeight.equal = KeepRequired(200);
+                                */
+                               
+                               // 2
+                               [black keepCentered];
+                               
+                               // Equivalent:
+                               /*
+                                black.keepHorizontalCenter.equal = KeepRequired(0.5);
+                                black.keepVerticalCenter.equal = KeepRequired(0.5);
+                                */
+                           }]];
+    [simpleExamples addObject:
+     [[KPLExample alloc] initWithName:@"Video 16:9"
+                                lines:4
+                           setupBlock:^(UIView *container) {
+                               UIView *black = createView(UIColor.blackColor, container);
+                               
+                               black.keepAspectRatio.equal = KeepRequired(16./9.);
+                               [black keepCentered];
+                               black.keepInsets.min = KeepRequired(10); // Inset restriction
+                               black.keepInsets.equal = KeepHigh(10); // Preferred value
+                               
+                           }]];
     
-    self.examples = [examples copy];
+    self.examples = @[ simpleExamples ];
 }
 
 
@@ -91,17 +153,20 @@
 
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
-}
-
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.examples.count;
 }
 
 
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return [[self.examples objectAtIndex:section] count];
+}
+
+
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    return @"Examples";
+    switch (section) {
+        case 0: return @"Simple Examples";
+        default: return nil;
+    }
 }
 
 
@@ -113,7 +178,7 @@
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     
-    KPLExample *example = [self.examples objectAtIndex:indexPath.row];
+    KPLExample *example = [[self.examples objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
     cell.textLabel.text = example.name;
     cell.detailTextLabel.text = [NSString stringWithFormat:@"%i line%@ of code", example.lines, (example.lines == 1? @"" : @"s")];
     
@@ -122,7 +187,7 @@
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    KPLExample *example = [self.examples objectAtIndex:indexPath.row];
+    KPLExample *example = [[self.examples objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
     KPLExampleViewController *exampleViewController = [[KPLExampleViewController alloc] initWithExample:example];
     [self.navigationController pushViewController:exampleViewController animated:YES];
 }
