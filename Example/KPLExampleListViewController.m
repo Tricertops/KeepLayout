@@ -199,7 +199,14 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     KPLExample *example = [[self.examples objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
     KPLExampleViewController *exampleViewController = [[KPLExampleViewController alloc] initWithExample:example];
-    [self.navigationController pushViewController:exampleViewController animated:YES];
+    
+    if (UIDevice.currentDevice.userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        UINavigationController *detailNavigationController = [self.splitViewController.viewControllers objectAtIndex:1];
+        detailNavigationController.viewControllers = @[ exampleViewController ];
+    }
+    else {
+        [self.navigationController pushViewController:exampleViewController animated:YES];
+    }
 }
 
 
