@@ -46,7 +46,7 @@
     [super viewDidLoad];
     
     UILabel *footnote = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.tableView.bounds.size.width, 100)];
-    footnote.textColor = [UIColor blackColor];
+    footnote.textColor = [UIColor grayColor];
     footnote.numberOfLines = 0;
     footnote.font = [UIFont boldSystemFontOfSize:[UIFont smallSystemFontSize]];
     footnote.textAlignment = NSTextAlignmentCenter;
