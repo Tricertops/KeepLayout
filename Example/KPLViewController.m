@@ -37,17 +37,12 @@
     view.backgroundColor = [UIColor redColor];
     [self.view addSubview:view];
     
-    // Keep at least 10pt gap between the view and superview edges.
-    NSArray *rules = @[ [KeepMin must:10], [KeepEqual may:10] ];
-	[view keep:[KeepTopInset rules:rules]];
-    [view keep:[KeepBottomInset rules:rules]];
-    [view keep:[KeepRightInset rules:rules]];
-    [view keep:[KeepLeftInset rules:rules]];
+    view.keepWidth.equal = KeepHigh(400);
+    view.keepHeight.equal = KeepHigh(400);
+    view.keepInsets.min = KeepRequired(10);
+    view.keepCenter.equal = KeepRequired(0.5);
     
-    [view keep:[KeepAspectRatio rules:@[[KeepMin must:16/9.]]]]; // Keep the view at 16:9 format.
-    
-    [view keep:[KeepHorizontally rules:@[[KeepEqual must:1/2.]]]]; // Keep it horizontally in center.
-    [view keep:[KeepVertically rules:@[[KeepMax must:1/2.], [KeepMin must:1/3.], [KeepEqual may:1/3.]]]]; // Keep it vertically between 1/3 and 1/2 of height with preffered position at 1/3.
+    NSLog(@"constraints: %@", self.view.constraints);
 }
 
 - (void)example2 {
@@ -63,23 +58,28 @@
     blue.backgroundColor = [UIColor blueColor];
     [self.view addSubview:blue];
     
-    // Keep at least 30pt gap between the views and superview edges.
-    NSArray *insetRules = @[ [KeepMin must:30], [KeepMax may:30] ];
-    for (UIView *view in @[ red, green, blue ]) {
-        [view keep:[KeepTopInset rules:insetRules]];
-        [view keep:[KeepBottomInset rules:insetRules]];
-        [view keep:[KeepLeftInset rules:insetRules]];
-        [view keep:[KeepRightInset rules:insetRules]];
-    }
+    NSArray *views = @[ red, green, blue ];
     
-    NSArray *offsetRules = @[ [KeepMin must:10], [KeepMax shall:10] ];
-    [red keep:[KeepBottomOffset to:green rules:offsetRules]]; // Keep 10pt bottom gap between red and green.
-    [red keep:[KeepBottomOffset to:blue rules:offsetRules]]; // Keep 10pt bottom gap between red and blue.
-    [green keep:[KeepRightOffset to:blue rules:offsetRules]]; // Keep 10pt gap between green and blue.
+    red.keepWidth.equal = KeepHigh(500);
+    red.keepHeight.equal = KeepRequired(100);
+    green.keepWidth.equal = KeepHigh(100);
+    green.keepHeight.equal = KeepHigh(100);
+    blue.keepWidth.equal = KeepRequired(100);
+    blue.keepHeight.equal = KeepHigh(500);
+
+    // Never get closer to bounds than 10 pts
+    views.keepInsets.min = KeepRequired(10);
     
-    [green keep:[KeepHeight rules:@[ [KeepEqual must:1 to:red] ]]]; // Keep height of green equal to red.
-    [blue keep:[KeepHeight rules:@[ [KeepEqual must:1 to:red] ]]]; // Keep height of blue equal to red.
-    [blue keep:[KeepWidth rules:@[ [KeepEqual must:1 to:green] ]]]; // Keep width of blue equal to green.
+    // Keep the views close to top-left corner, but with low priority.
+    views.keepTopInset.equal = KeepLow(10);
+    views.keepLeftInset.equal = KeepLow(10);
+    
+    KeepAttribute *offsets = [KeepAttribute group:
+                              green.keepLeftOffsetTo(red),
+                              blue.keepTopOffsetTo(red),
+                              blue.keepRightOffsetTo(green),
+                              nil];
+    offsets.equal = KeepRequired(10); // Never get closer to each other than 10 pts.
 }
 
 - (void)example3 {
@@ -94,50 +94,40 @@
     UIView *blue = [[UIView alloc] init];
     blue.backgroundColor = [UIColor blueColor];
     [self.view addSubview:blue];
+//
+//    UIView *cyan = [[UIView alloc] init];
+//    cyan.backgroundColor = [UIColor cyanColor];
+//    [self.view addSubview:cyan];
+//    
+//    UIView *magenta = [[UIView alloc] init];
+//    magenta.backgroundColor = [UIColor magentaColor];
+//    [self.view addSubview:magenta];
+//    
+//    UIView *yellow = [[UIView alloc] init];
+//    yellow.backgroundColor = [UIColor yellowColor];
+//    [self.view addSubview:yellow];
     
-    UIView *cyan = [[UIView alloc] init];
-    cyan.backgroundColor = [UIColor cyanColor];
-    [self.view addSubview:cyan];
+    red.keepWidth.equal = KeepRequired(100);
+    red.keepHeight.equal = KeepRequired(150);
+    red.keepCenter.equal = KeepRequired(0.5);
     
-    UIView *magenta = [[UIView alloc] init];
-    magenta.backgroundColor = [UIColor magentaColor];
-    [self.view addSubview:magenta];
+    green.keepWidth.equal = KeepRequired(50);
+    green.keepHeight.equal = KeepRequired(50);
     
-    UIView *yellow = [[UIView alloc] init];
-    yellow.backgroundColor = [UIColor yellowColor];
-    [self.view addSubview:yellow];
+    green.keepTopOffsetTo(red).equal = KeepRequired(10);
+    green.keepRightAlignTo(red).equal = KeepRequired(10);
     
-    // Random sizes
-    for (UIView *view in @[ red, green, blue, cyan, magenta, yellow ]) {
-        #define RANDOM(X) (arc4random()%(X))
-        [view keep:[KeepWidth rules:@[ [KeepEqual must:50 + RANDOM(50)] ]]];
-        [view keep:[KeepHeight rules:@[ [KeepEqual must:50 + RANDOM(150)] ]]];
-    }
-    // Keep 'magenta' centered
-    [magenta keep:[KeepHorizontally rules:@[ [KeepEqual must:0.5] ]]];
-    [magenta keep:[KeepVertically rules:@[ [KeepEqual must:0.5] ]]];
+    blue.keepWidthTo(red);
+    blue.keepTopInset.min = KeepRequired(10);
+    blue.keepHeight.equal = KeepHigh(100);
+    blue.keepVerticalAlignTo(red);
+    blue.keepBottomOffsetTo(red).equal = KeepRequired(10);
     
-    NSArray *padding = @[ [KeepMin shall:10], [KeepMax may:10] ];
+    [self.view keepAnimatedWithDuration:3 delay:1 layout:^{
+        red.keepVerticalCenter.equal = KeepRequired(0.25);
+        red.keepWidth.equal = KeepRequired(300);
+    }];
     
-    // Keep gaps between views
-    [red keep:[KeepRightOffset to:green rules:padding]];
-    [cyan keep:[KeepRightOffset to:magenta rules:padding]];
-    [green keep:[KeepRightOffset to:blue rules:padding]];
-    [magenta keep:[KeepRightOffset to:yellow rules:padding]];
-    [green keep:[KeepBottomOffset to:magenta rules:padding]];
-    
-    NSArray *alignRules = @[ [KeepEqual must:0] ]; // Keep aligned with zero tolerance.
-    
-    // Horizontal alignment
-    [red keep:[KeepAlignBottom to:green rules:alignRules]];
-    [blue keep:[KeepAlignBottom to:green rules:alignRules]];
-    [cyan keep:[KeepAlignTop to:magenta rules:alignRules]];
-    [yellow keep:[KeepAlignTop to:magenta rules:alignRules]];
-    
-    // Vertical alignment
-    [red keep:[KeepAlignRight to:cyan rules:alignRules]];
-    [green keep:[KeepAlignCenterX to:magenta rules:alignRules]];
-    [blue keep:[KeepAlignLeft to:yellow rules:alignRules]];
 }
 
 

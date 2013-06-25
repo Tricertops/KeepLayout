@@ -7,20 +7,8 @@
 //
 
 #import "KeepAttribute.h"
-#import "KeepRule.h"
 #import "UIView+KeepLayout.h"
 
-
-
-@interface KeepAttribute ()
-
-@property (nonatomic, readwrite, assign) KeepAttributeType type;
-@property (nonatomic, readwrite, weak) UIView *relatedView;
-@property (nonatomic, readwrite, copy) NSArray *rules;
-
-+ (KeepAttributeType)classType;
-
-@end
 
 
 
@@ -29,245 +17,110 @@
 
 
 
-#pragma mark Initialization
 
-- (id)initWithType:(KeepAttributeType)type relatedView:(UIView *)view rules:(NSArray *)rules {
+
+- (instancetype)init {
     self = [super init];
-	if (self) {
-		self.type = type;
-        self.relatedView = view;
-        self.rules = rules;
-	}
-	return self;
-}
-
-- (id)initWithType:(KeepAttributeType)type rules:(NSArray *)rules {
-	return [self initWithType:type relatedView:nil rules:rules];
-}
-
-
-
-#pragma mark Short Syntax
-
-+ (instancetype)rules:(NSArray *)rules {
-    return [self to:nil rules:rules];
-}
-
-+ (instancetype)to:(UIView *)view rules:(NSArray *)rules {
-    return [[self alloc] initWithType:[self classType] relatedView:view rules:rules];
-}
-
-
-
-#pragma mark Class-Specific
-
-+ (KeepAttributeType)classType {
-    @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Class KeepAttribute does not have implitit attribute type, use one of the subclasses" userInfo:nil];
-}
-
-
-
-#pragma mark Applying
-
-- (void)applyInView:(UIView *)mainView {
-    NSDictionary *constraintsByRule = [self generateConstraintsForView:mainView];
-    [mainView addConstraintsToCommonSuperview:constraintsByRule.allValues];
-}
-
-- (NSDictionary *)generateConstraintsForView:(UIView *)mainView {
-    NSMutableDictionary *constraintsBuilder = [[NSMutableDictionary alloc] init];
-    
-    NSLayoutAttribute mainLayoutAttribute = [self mainLayoutAttribute];
-    mainView.translatesAutoresizingMaskIntoConstraints = NO;
-    NSAssert(mainView.superview, @"Must have superview");
-    
-    for (KeepRule *rule in self.rules) {
-        UIView *relatedLayoutView = [self relatedLayoutViewForMainView:mainView rule:rule];
-        if (relatedLayoutView == rule.relatedView) {
-            relatedLayoutView.translatesAutoresizingMaskIntoConstraints = NO;
+    if (self) {
+        NSAssert(self.class != KeepAttribute.class, @"%@ is abstract class", self.class);
+        if (self.class == KeepAttribute.class) {
+            return nil;
         }
-        NSLayoutAttribute relatedLayoutAttribute = [self relatedLayoutAttributeForRule:rule];
-        
-        NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:mainView
-                                                                      attribute:mainLayoutAttribute
-                                                                      relatedBy:[self layoutRelationForRule:rule]
-                                                                         toItem:relatedLayoutView
-                                                                      attribute:relatedLayoutAttribute
-                                                                     multiplier:[self layoutMultiplierForRule:rule]
-                                                                       constant:[self layoutConstantForRule:rule]
-                                          ];
-        constraint.priority = rule.priority;
-        
-        [constraintsBuilder setObject:constraint forKey:rule];
     }
-    return [constraintsBuilder copy];
+    return self;
 }
 
 
 
-#pragma mark Constraint Attribute Mapping
 
-- (NSLayoutAttribute)mainLayoutAttribute {
-    switch (self.type) {
-        case KeepAttributeTypeWidth:        return NSLayoutAttributeWidth   ;
-        case KeepAttributeTypeHeight:       return NSLayoutAttributeHeight  ;
-        case KeepAttributeTypeAspectRatio:  return NSLayoutAttributeWidth   ;
-        case KeepAttributeTypeTopInset:     return NSLayoutAttributeTop     ;
-        case KeepAttributeTypeBottomInset:  return NSLayoutAttributeBottom  ;
-        case KeepAttributeTypeLeftInset:    return NSLayoutAttributeLeft    ;
-        case KeepAttributeTypeRightInset:   return NSLayoutAttributeRight   ;
-        case KeepAttributeTypeHorizontally: return NSLayoutAttributeCenterX ;
-        case KeepAttributeTypeVertically:   return NSLayoutAttributeCenterY ;
-        case KeepAttributeTypeTopOffset:    return NSLayoutAttributeTop     ;
-        case KeepAttributeTypeBottomOffset: return NSLayoutAttributeBottom  ;
-        case KeepAttributeTypeLeftOffset:   return NSLayoutAttributeLeft    ;
-        case KeepAttributeTypeRightOffset:  return NSLayoutAttributeRight   ;
-        case KeepAttributeTypeAlignTop:     return NSLayoutAttributeTop     ;
-        case KeepAttributeTypeAlignCenterX: return NSLayoutAttributeCenterX ;
-        case KeepAttributeTypeAlignBottom:  return NSLayoutAttributeBottom  ;
-        case KeepAttributeTypeAlignLeft:    return NSLayoutAttributeLeft    ;
-        case KeepAttributeTypeAlignCenterY: return NSLayoutAttributeCenterY ;
-        case KeepAttributeTypeAlignRight:   return NSLayoutAttributeRight   ;
-        case KeepAttributeTypeAlignBaseline:return NSLayoutAttributeBaseline;
-    }
+
+#pragma mark Values
+
+
+- (void)keepAt:(CGFloat)equalHigh min:(CGFloat)minRequired {
+    self.equal = KeepHigh(equalHigh);
+    self.min = KeepRequired(minRequired);
 }
 
-- (UIView *)relatedLayoutViewForMainView:(UIView *)mainView rule:(KeepRule *)rule {
-    switch (self.type) {
-        case KeepAttributeTypeWidth:        return rule.relatedView     ; // Width supports related rules.
-        case KeepAttributeTypeHeight:       return rule.relatedView     ; // Height supports related rules.
-        case KeepAttributeTypeAspectRatio:  return mainView             ;
-        case KeepAttributeTypeTopInset:     return mainView.superview   ;
-        case KeepAttributeTypeBottomInset:  return mainView.superview   ;
-        case KeepAttributeTypeLeftInset:    return mainView.superview   ;
-        case KeepAttributeTypeRightInset:   return mainView.superview   ;
-        case KeepAttributeTypeHorizontally: return mainView.superview   ;
-        case KeepAttributeTypeVertically:   return mainView.superview   ;
-        case KeepAttributeTypeTopOffset:    return self.relatedView     ;
-        case KeepAttributeTypeBottomOffset: return self.relatedView     ;
-        case KeepAttributeTypeLeftOffset:   return self.relatedView     ;
-        case KeepAttributeTypeRightOffset:  return self.relatedView     ;
-        case KeepAttributeTypeAlignTop:     return self.relatedView     ;
-        case KeepAttributeTypeAlignCenterX: return self.relatedView     ;
-        case KeepAttributeTypeAlignBottom:  return self.relatedView     ;
-        case KeepAttributeTypeAlignLeft:    return self.relatedView     ;
-        case KeepAttributeTypeAlignCenterY: return self.relatedView     ;
-        case KeepAttributeTypeAlignRight:   return self.relatedView     ;
-        case KeepAttributeTypeAlignBaseline:return self.relatedView     ;
-    }
+
+- (void)keepAt:(CGFloat)equalHigh max:(CGFloat)maxRequired {
+    self.equal = KeepHigh(equalHigh);
+    self.max = KeepRequired(maxRequired);
 }
 
-- (NSLayoutAttribute)relatedLayoutAttributeForRule:(KeepRule *)rule {
-    switch (self.type) {
-        case KeepAttributeTypeWidth:        return (rule.relatedView? NSLayoutAttributeWidth  : NSLayoutAttributeNotAnAttribute);
-        case KeepAttributeTypeHeight:       return (rule.relatedView? NSLayoutAttributeHeight : NSLayoutAttributeNotAnAttribute);
-        case KeepAttributeTypeAspectRatio:  return NSLayoutAttributeHeight  ; // Width to height.
-        case KeepAttributeTypeTopInset:     return NSLayoutAttributeTop     ;
-        case KeepAttributeTypeBottomInset:  return NSLayoutAttributeBottom  ;
-        case KeepAttributeTypeLeftInset:    return NSLayoutAttributeLeft    ;
-        case KeepAttributeTypeRightInset:   return NSLayoutAttributeRight   ;
-        case KeepAttributeTypeHorizontally: return NSLayoutAttributeCenterX ;
-        case KeepAttributeTypeVertically:   return NSLayoutAttributeCenterY ;
-        case KeepAttributeTypeTopOffset:    return NSLayoutAttributeBottom  ; // My top to his bottom.
-        case KeepAttributeTypeBottomOffset: return NSLayoutAttributeTop     ; // My bottom to his top.
-        case KeepAttributeTypeLeftOffset:   return NSLayoutAttributeRight   ; // My left to his right.
-        case KeepAttributeTypeRightOffset:  return NSLayoutAttributeLeft    ; // My right to his left.
-        case KeepAttributeTypeAlignTop:     return NSLayoutAttributeTop     ;
-        case KeepAttributeTypeAlignCenterX: return NSLayoutAttributeCenterX ;
-        case KeepAttributeTypeAlignBottom:  return NSLayoutAttributeBottom  ;
-        case KeepAttributeTypeAlignLeft:    return NSLayoutAttributeLeft    ;
-        case KeepAttributeTypeAlignCenterY: return NSLayoutAttributeCenterY ;
-        case KeepAttributeTypeAlignRight:   return NSLayoutAttributeRight   ;
-        case KeepAttributeTypeAlignBaseline:return NSLayoutAttributeBaseline;
-    }
+
+- (void)keepAt:(CGFloat)equalHigh min:(CGFloat)minRequired max:(CGFloat)maxRequired {
+    self.equal = KeepHigh(equalHigh);
+    self.min = KeepRequired(minRequired);
+    self.max = KeepRequired(maxRequired);
 }
 
-- (BOOL)swapMaxMinLayoutRelation {
-    // Some of the types need to have inverted maximum and mimimum rules.
-    // For example BottomInset is inverted on Y axis, so maximum value means view bottom edge is less or equal than superview's bottom + 10.
-    switch (self.type) {
-        case KeepAttributeTypeWidth:        return NO ;
-        case KeepAttributeTypeHeight:       return NO ;
-        case KeepAttributeTypeAspectRatio:  return NO ;
-        case KeepAttributeTypeTopInset:     return NO ;
-        case KeepAttributeTypeBottomInset:  return YES;
-        case KeepAttributeTypeLeftInset:    return NO ;
-        case KeepAttributeTypeRightInset:   return YES;
-        case KeepAttributeTypeHorizontally: return NO ;
-        case KeepAttributeTypeVertically:   return NO ;
-        case KeepAttributeTypeTopOffset:    return NO ;
-        case KeepAttributeTypeBottomOffset: return YES;
-        case KeepAttributeTypeLeftOffset:   return NO ;
-        case KeepAttributeTypeRightOffset:  return YES;
-        case KeepAttributeTypeAlignTop:     return NO ;
-        case KeepAttributeTypeAlignCenterX: return NO ;
-        case KeepAttributeTypeAlignBottom:  return NO ;
-        case KeepAttributeTypeAlignLeft:    return NO ;
-        case KeepAttributeTypeAlignCenterY: return NO ;
-        case KeepAttributeTypeAlignRight:   return NO ;
-        case KeepAttributeTypeAlignBaseline:return NO ;
-    }
+
+- (void)keepMin:(CGFloat)minRequired max:(CGFloat)maxRequired {
+    self.min = KeepRequired(minRequired);
+    self.max = KeepRequired(maxRequired);
 }
 
-- (NSLayoutRelation)layoutRelationForRule:(KeepRule *)rule {
-    BOOL swapMaxMin = [self swapMaxMinLayoutRelation];
-    switch (rule.type) {
-        case KeepRuleTypeEqual: return NSLayoutRelationEqual;
-        case KeepRuleTypeMax:   return (swapMaxMin ? NSLayoutRelationGreaterThanOrEqual : NSLayoutRelationLessThanOrEqual   );
-        case KeepRuleTypeMin:   return (swapMaxMin ? NSLayoutRelationLessThanOrEqual    : NSLayoutRelationGreaterThanOrEqual);
-    }
+
+#pragma mark Remove
+
+
+- (void)remove {
+    NSAssert(NO, @"-[%@ %@] is abstract", KeepAttribute.class, NSStringFromSelector(_cmd));
 }
 
-- (CGFloat)layoutMultiplierForRule:(KeepRule *)rule {
-    // Rule value may be interpreted different ways depending on attribute type.
-    switch (self.type) {
-        case KeepAttributeTypeWidth:        return (rule.relatedView? rule.value : 1); // Multiple of related view's width.
-        case KeepAttributeTypeHeight:       return (rule.relatedView? rule.value : 1); // Multiple of related view's height.
-        case KeepAttributeTypeAspectRatio:  return rule.value       ; // Rule specified the multiplier.
-        case KeepAttributeTypeTopInset:     return 1                ;
-        case KeepAttributeTypeBottomInset:  return 1                ;
-        case KeepAttributeTypeLeftInset:    return 1                ;
-        case KeepAttributeTypeRightInset:   return 1                ;
-        case KeepAttributeTypeHorizontally: return rule.value * 2   ; // One in constraint multiplier mean 0.5 of the whole width.
-        case KeepAttributeTypeVertically:   return rule.value * 2   ; // One in constraint multiplier mean 0.5 of the whole height.
-        case KeepAttributeTypeTopOffset:    return 1                ;
-        case KeepAttributeTypeBottomOffset: return 1                ;
-        case KeepAttributeTypeLeftOffset:   return 1                ;
-        case KeepAttributeTypeRightOffset:  return 1                ;
-        case KeepAttributeTypeAlignTop:     return 1                ;
-        case KeepAttributeTypeAlignCenterX: return 1                ;
-        case KeepAttributeTypeAlignBottom:  return 1                ;
-        case KeepAttributeTypeAlignLeft:    return 1                ;
-        case KeepAttributeTypeAlignCenterY: return 1                ;
-        case KeepAttributeTypeAlignRight:   return 1                ;
-        case KeepAttributeTypeAlignBaseline:return 1                ;
+
+
+
+
+#pragma mark Grouping
+
+
++ (KeepGroupAttribute *)group:(KeepAttribute *)first, ... NS_REQUIRES_NIL_TERMINATION {
+    va_list list;
+    va_start(list, first);
+    
+    NSMutableArray *attributes = [[NSMutableArray alloc] init];
+    KeepAttribute *attribute = first;
+    while (attribute) {
+        [attributes addObject:attribute];
+        attribute = va_arg(list, KeepAttribute *);
     }
+    
+    va_end(list);
+    
+    return [[KeepGroupAttribute alloc] initWithAttributes:attributes];
 }
 
-- (CGFloat)layoutConstantForRule:(KeepRule *)rule {
-    switch (self.type) {
-        case KeepAttributeTypeWidth:        return  (rule.relatedView? 0 : rule.value); // Multiple of related view's width.
-        case KeepAttributeTypeHeight:       return  (rule.relatedView? 0 : rule.value); // Multiple of related view's height.
-        case KeepAttributeTypeAspectRatio:  return  0           ; // No constant.
-        case KeepAttributeTypeTopInset:     return  rule.value  ;
-        case KeepAttributeTypeBottomInset:  return -rule.value  ; // Bottom inset is inverted on Y axis.
-        case KeepAttributeTypeLeftInset:    return  rule.value  ;
-        case KeepAttributeTypeRightInset:   return -rule.value  ; // Right inset is inverted on X axis.
-        case KeepAttributeTypeHorizontally: return  0           ; // No constant.
-        case KeepAttributeTypeVertically:   return  0           ; // No constant.
-        case KeepAttributeTypeTopOffset:    return  rule.value  ;
-        case KeepAttributeTypeBottomOffset: return -rule.value  ;
-        case KeepAttributeTypeLeftOffset:   return  rule.value  ;
-        case KeepAttributeTypeRightOffset:  return -rule.value  ;
-        case KeepAttributeTypeAlignTop:     return  rule.value  ;
-        case KeepAttributeTypeAlignCenterX: return  rule.value  ;
-        case KeepAttributeTypeAlignBottom:  return  rule.value  ;
-        case KeepAttributeTypeAlignLeft:    return  rule.value  ;
-        case KeepAttributeTypeAlignCenterY: return  rule.value  ;
-        case KeepAttributeTypeAlignRight:   return  rule.value  ;
-        case KeepAttributeTypeAlignBaseline:return  rule.value  ;
-    }
+
+
+
+
+#pragma mark Naming & Debugging
+
+
+- (instancetype)name:(NSString *)format, ... {
+    va_list arguments;
+    va_start(arguments, format);
+    
+    self.name = [[NSString alloc] initWithFormat:format arguments:arguments];
+    
+    va_end(arguments);
+    return self;
 }
+
+
+- (NSString *)description {
+    return [NSString stringWithFormat:@"<%@ %p; %@ [%@ < %@ < %@]>",
+            self.class,
+            self,
+            self.name ?: @"(no name)",
+            KeepValueDescription(self.min),
+            KeepValueDescription(self.equal),
+            KeepValueDescription(self.max)];
+}
+
+
 
 
 
@@ -277,23 +130,400 @@
 
 
 
-@implementation KeepWidth           + (KeepAttributeType)classType { return KeepAttributeTypeWidth          ; }     @end
-@implementation KeepHeight          + (KeepAttributeType)classType { return KeepAttributeTypeHeight         ; }     @end
-@implementation KeepAspectRatio     + (KeepAttributeType)classType { return KeepAttributeTypeAspectRatio    ; }     @end
-@implementation KeepTopInset        + (KeepAttributeType)classType { return KeepAttributeTypeTopInset       ; }     @end
-@implementation KeepBottomInset     + (KeepAttributeType)classType { return KeepAttributeTypeBottomInset    ; }     @end
-@implementation KeepLeftInset       + (KeepAttributeType)classType { return KeepAttributeTypeLeftInset      ; }     @end
-@implementation KeepRightInset      + (KeepAttributeType)classType { return KeepAttributeTypeRightInset     ; }     @end
-@implementation KeepHorizontally    + (KeepAttributeType)classType { return KeepAttributeTypeHorizontally   ; }     @end
-@implementation KeepVertically      + (KeepAttributeType)classType { return KeepAttributeTypeVertically     ; }     @end
-@implementation KeepTopOffset       + (KeepAttributeType)classType { return KeepAttributeTypeTopOffset      ; }     @end
-@implementation KeepBottomOffset    + (KeepAttributeType)classType { return KeepAttributeTypeBottomOffset   ; }     @end
-@implementation KeepLeftOffset      + (KeepAttributeType)classType { return KeepAttributeTypeLeftOffset     ; }     @end
-@implementation KeepRightOffset     + (KeepAttributeType)classType { return KeepAttributeTypeRightOffset    ; }     @end
-@implementation KeepAlignTop        + (KeepAttributeType)classType { return KeepAttributeTypeAlignTop       ; }     @end
-@implementation KeepAlignCenterX    + (KeepAttributeType)classType { return KeepAttributeTypeAlignCenterX   ; }     @end
-@implementation KeepAlignBottom     + (KeepAttributeType)classType { return KeepAttributeTypeAlignBottom    ; }     @end
-@implementation KeepAlignLeft       + (KeepAttributeType)classType { return KeepAttributeTypeAlignLeft      ; }     @end
-@implementation KeepAlignCenterY    + (KeepAttributeType)classType { return KeepAttributeTypeAlignCenterY   ; }     @end
-@implementation KeepAlignRight      + (KeepAttributeType)classType { return KeepAttributeTypeAlignRight     ; }     @end
-@implementation KeepAlignBaseline   + (KeepAttributeType)classType { return KeepAttributeTypeAlignBaseline  ; }     @end
+
+
+
+
+
+#pragma mark -
+
+
+@interface KeepSimpleAttribute ()
+
+@property (nonatomic, readwrite, weak) UIView *view;
+@property (nonatomic, readwrite, assign) NSLayoutAttribute layoutAttribute;
+@property (nonatomic, readwrite, weak) UIView *relatedView;
+@property (nonatomic, readwrite, assign) NSLayoutAttribute relatedLayoutAttribute;
+@property (nonatomic, readwrite, weak) UIView *constraintView;
+
+@property (nonatomic, readwrite, assign) CGFloat coefficient;
+
+@property (nonatomic, readwrite, strong) NSLayoutConstraint *equalConstraint;
+@property (nonatomic, readwrite, strong) NSLayoutConstraint *maxConstraint;
+@property (nonatomic, readwrite, strong) NSLayoutConstraint *minConstraint;
+
+- (instancetype)initWithView:(UIView *)view
+             layoutAttribute:(NSLayoutAttribute)layoutAttribute
+                 relatedView:(UIView *)relatedView
+      relatedLayoutAttribute:(NSLayoutAttribute)superviewLayoutAttribute
+                 coefficient:(CGFloat)coefficient;
+- (NSLayoutConstraint *)createConstraintWithRelation:(NSLayoutRelation)relation value:(KeepValue)value;
+- (void)addConstraint:(NSLayoutConstraint *)constraint;
+- (void)applyValue:(KeepValue)value forConstraint:(NSLayoutConstraint *)constraint;
+- (void)removeConstraint:(NSLayoutConstraint *)constraint;
+
+@end
+
+
+
+
+
+@implementation KeepSimpleAttribute
+
+
+
+
+
+#pragma mark Initialization
+
+
+- (instancetype)init {
+    return [self initWithView:nil
+              layoutAttribute:NSLayoutAttributeNotAnAttribute
+                  relatedView:nil
+       relatedLayoutAttribute:NSLayoutAttributeNotAnAttribute
+            coefficient:0];
+}
+
+
+- (instancetype)initWithView:(UIView *)view
+             layoutAttribute:(NSLayoutAttribute)layoutAttribute
+                 relatedView:(UIView *)relatedView
+      relatedLayoutAttribute:(NSLayoutAttribute)relatedLayoutAttribute
+                 coefficient:(CGFloat)coefficient {
+    self = [super init];
+    if (self) {
+            NSParameterAssert(view);
+            NSParameterAssert(layoutAttribute != NSLayoutAttributeNotAnAttribute);
+            NSParameterAssert(coefficient);
+        
+        NSAssert(self.class != KeepSimpleAttribute.class, @"%@ is abstract class", self.class);
+        if (self.class == KeepSimpleAttribute.class) {
+            return nil;
+        }
+        
+        self.view = view;
+        self.layoutAttribute = layoutAttribute;
+        self.relatedView = relatedView;
+        self.relatedLayoutAttribute = relatedLayoutAttribute;
+        self.constraintView = (relatedView? [view commonSuperview:relatedView] : view);
+        self.coefficient = coefficient;
+    }
+    return self;
+}
+
+
+
+
+
+#pragma mark Constraints
+
+
+- (NSLayoutConstraint *)createConstraintWithRelation:(NSLayoutRelation)relation value:(KeepValue)value {
+    NSAssert(NO, @"-[%@ %@] is abstract", KeepSimpleAttribute.class, NSStringFromSelector(_cmd));
+    return nil;
+}
+
+
+- (void)addConstraint:(NSLayoutConstraint *)constraint {
+    [self.constraintView addConstraint:constraint];
+    
+    self.view.translatesAutoresizingMaskIntoConstraints = NO;
+    self.relatedView.translatesAutoresizingMaskIntoConstraints = NO;
+    self.constraintView.translatesAutoresizingMaskIntoConstraints = NO;
+}
+
+
+- (void)applyValue:(KeepValue)value forConstraint:(NSLayoutConstraint *)constraint {
+    NSAssert(NO, @"-[%@ %@] is abstract", KeepSimpleAttribute.class, NSStringFromSelector(_cmd));
+}
+
+
+- (void)removeConstraint:(NSLayoutConstraint *)constraint {
+    [self.constraintView removeConstraint:constraint];
+}
+
+
+- (void)remove {
+    [self removeConstraint:self.equalConstraint];
+    [self removeConstraint:self.maxConstraint];
+    [self removeConstraint:self.minConstraint];
+}
+
+
+
+
+
+#pragma mark Values
+
+
+- (void)setEqual:(KeepValue)equal {
+    [super setEqual:equal];
+    
+    if (KeepValueIsNone(equal)) {
+        [self removeConstraint:self.equalConstraint];
+        return;
+    }
+    
+    if ( ! self.equalConstraint) {
+        self.equalConstraint = [self createConstraintWithRelation:NSLayoutRelationEqual value:equal];
+        [self addConstraint:self.equalConstraint];
+    }
+    else {
+        [self applyValue:equal forConstraint:self.equalConstraint];
+    }
+}
+
+
+- (void)setMax:(KeepValue)max {
+    [super setMax:max];
+    
+    if (KeepValueIsNone(max)) {
+        [self removeConstraint:self.maxConstraint];
+        return;
+    }
+    
+    if ( ! self.maxConstraint) {
+        self.maxConstraint = [self createConstraintWithRelation:NSLayoutRelationLessThanOrEqual value:max];
+        [self addConstraint:self.maxConstraint];
+    }
+    else {
+        [self applyValue:max forConstraint:self.maxConstraint];
+    }
+}
+
+
+- (void)setMin:(KeepValue)min {
+    [super setMin:min];
+    
+    if (KeepValueIsNone(min)) {
+        [self removeConstraint:self.minConstraint];
+        return;
+    }
+    
+    if ( ! self.minConstraint) {
+        self.minConstraint = [self createConstraintWithRelation:NSLayoutRelationGreaterThanOrEqual value:min];
+        [self addConstraint:self.minConstraint];
+    }
+    else {
+        [self applyValue:min forConstraint:self.minConstraint];
+    }
+}
+
+
+
+
+
+@end
+
+
+
+
+
+
+
+
+
+
+#pragma mark -
+
+
+@implementation KeepConstantAttribute
+
+
+
+
+
+#pragma mark Constraint Overrides
+
+
+- (NSLayoutConstraint *)createConstraintWithRelation:(NSLayoutRelation)relation value:(KeepValue)value {
+    if (self.coefficient < 0) {
+        if (relation == NSLayoutRelationGreaterThanOrEqual) relation = NSLayoutRelationLessThanOrEqual;
+        else if (relation == NSLayoutRelationLessThanOrEqual) relation = NSLayoutRelationGreaterThanOrEqual;
+    }
+    NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:self.view attribute:self.layoutAttribute
+                                                                  relatedBy:relation
+                                                                     toItem:self.relatedView attribute:self.relatedLayoutAttribute
+                                                                 multiplier:1 constant:value.value * self.coefficient];
+    constraint.priority = value.priority;
+    return constraint;
+}
+
+
+- (void)applyValue:(KeepValue)value forConstraint:(NSLayoutConstraint *)constraint {
+    constraint.constant = value.value * self.coefficient;
+    if (constraint.priority != value.priority) {
+        constraint.priority = value.priority;
+    }
+}
+
+
+
+
+
+@end
+
+
+
+
+
+
+
+
+
+
+#pragma mark -
+
+
+
+@implementation KeepMultiplierAttribute
+
+
+
+
+
+#pragma mark Constraint Overrides
+
+
+- (NSLayoutConstraint *)createConstraintWithRelation:(NSLayoutRelation)relation value:(KeepValue)value {
+    NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:self.view attribute:self.layoutAttribute
+                                                                  relatedBy:relation
+                                                                     toItem:self.relatedView attribute:self.relatedLayoutAttribute
+                                                                 multiplier:value.value * self.coefficient constant:0];
+    constraint.priority = value.priority;
+    return constraint;
+}
+
+
+- (void)applyValue:(KeepValue)value forConstraint:(NSLayoutConstraint *)constraint {
+    // Since multiplier is not read/write proeperty, we need to re-add the whole constraint again.
+    [self removeConstraint:constraint];
+    constraint = [self createConstraintWithRelation:constraint.relation value:value];
+    [self addConstraint:constraint];
+}
+
+
+
+
+
+@end
+
+
+
+
+
+
+
+
+
+#pragma mark -
+
+
+@interface KeepGroupAttribute ()
+
+
+@property (nonatomic, readwrite, strong) id<NSFastEnumeration> attributes;
+
+
+@end
+
+
+
+
+
+@implementation KeepGroupAttribute
+
+
+
+
+
+#pragma mark Initialization
+
+
+- (id)init {
+    return [self initWithAttributes:nil];
+}
+
+
+- (instancetype)initWithAttributes:(id<NSFastEnumeration>)attributes {
+    self = [super init];
+    if (self) {
+        NSParameterAssert(attributes);
+        
+        self.attributes = attributes;
+    }
+    return self;
+}
+
+
+
+
+
+#pragma mark Debugging
+
+
+- (NSString *)description {
+    return [NSString stringWithFormat:@"<%@ %p; %@ %@>", self.class, self, self.name ?: @"(no name)", [self valueForKeyPath:@"attributes.description"]];
+}
+
+
+
+
+
+#pragma mark Accessing Values
+
+- (KeepValue)equal {
+    NSLog(@"Warning! Accessing property %@ for grouped attribute, returning KeepNone.", NSStringFromSelector(_cmd));
+    return KeepNone;
+}
+
+- (KeepValue)min {
+    NSLog(@"Warning! Accessing property %@ for grouped attribute, returning KeepNone.", NSStringFromSelector(_cmd));
+    return KeepNone;
+}
+
+- (KeepValue)max {
+    NSLog(@"Warning! Accessing property %@ for grouped attribute, returning KeepNone.", NSStringFromSelector(_cmd));
+    return KeepNone;
+}
+
+
+
+
+
+#pragma mark Setting Values
+
+
+- (void)setEqual:(KeepValue)equal {
+    for (KeepAttribute *attribute in self.attributes) attribute.equal = equal;
+}
+
+
+- (void)setMax:(KeepValue)max {
+    for (KeepAttribute *attribute in self.attributes) attribute.max = max;
+}
+
+
+- (void)setMin:(KeepValue)min {
+    for (KeepAttribute *attribute in self.attributes) attribute.min = min;
+}
+
+
+
+
+
+#pragma mark Remove
+
+
+- (void)remove {
+    for (KeepAttribute *attribute in self.attributes) [attribute remove];
+}
+
+
+
+
+
+@end
+
+
