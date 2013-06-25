@@ -8,7 +8,7 @@
 
 
 
-@interface KPLAppDelegate : UIResponder <UIApplicationDelegate>
+@interface KPLAppDelegate : UIResponder < UIApplicationDelegate, UISplitViewControllerDelegate >
 
 @property (strong, nonatomic) UIWindow *window;
 
