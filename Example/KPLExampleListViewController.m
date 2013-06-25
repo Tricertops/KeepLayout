@@ -131,14 +131,24 @@
                            }]];
     [simpleExamples addObject:
      [[KPLExample alloc] initWithName:@"Video 16:9"
-                                lines:4
+                                lines:3
                            setupBlock:^(UIView *container) {
                                UIView *black = createView(UIColor.blackColor, container);
                                
+                               // 1
                                black.keepAspectRatio.equal = KeepRequired(16./9.);
+                               
+                               // 2
                                [black keepCentered];
-                               black.keepInsets.min = KeepRequired(10); // Inset restriction
-                               black.keepInsets.equal = KeepHigh(10); // Preferred value
+                               
+                               // 3
+                               [black.keepInsets keepAt:10 min:10];
+                               
+                               // Equivalent:
+                               /*
+                                black.keepInsets.equal = KeepHigh(10);
+                                black.keepInsets.min = KeepRequired(10);
+                                */
                                
                            }]];
     

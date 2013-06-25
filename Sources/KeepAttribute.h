@@ -28,6 +28,11 @@
 @property (nonatomic, readwrite, assign) KeepValue max; /// Constraint with relation GreaterThanOrEqual
 @property (nonatomic, readwrite, assign) KeepValue min; /// Constraint with relation LessThanOrEqual
 
+- (void)keepAt:(CGFloat)equalHigh min:(CGFloat)minRequired;
+- (void)keepAt:(CGFloat)equalHigh max:(CGFloat)maxRequired;
+- (void)keepAt:(CGFloat)equalHigh min:(CGFloat)minRequired max:(CGFloat)maxRequired;
+- (void)keepMin:(CGFloat)minRequired max:(CGFloat)maxRequired;
+
 
 #pragma mark Remove
 /// Removes all constraints managed by this attribute from view hierarchy.

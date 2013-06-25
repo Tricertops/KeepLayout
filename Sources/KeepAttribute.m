@@ -16,6 +16,9 @@
 @implementation KeepAttribute
 
 
+
+
+
 - (instancetype)init {
     self = [super init];
     if (self) {
@@ -25,6 +28,37 @@
         }
     }
     return self;
+}
+
+
+
+
+
+#pragma mark Values
+
+
+- (void)keepAt:(CGFloat)equalHigh min:(CGFloat)minRequired {
+    self.equal = KeepHigh(equalHigh);
+    self.min = KeepRequired(minRequired);
+}
+
+
+- (void)keepAt:(CGFloat)equalHigh max:(CGFloat)maxRequired {
+    self.equal = KeepHigh(equalHigh);
+    self.max = KeepRequired(maxRequired);
+}
+
+
+- (void)keepAt:(CGFloat)equalHigh min:(CGFloat)minRequired max:(CGFloat)maxRequired {
+    self.equal = KeepHigh(equalHigh);
+    self.min = KeepRequired(minRequired);
+    self.max = KeepRequired(maxRequired);
+}
+
+
+- (void)keepMin:(CGFloat)minRequired max:(CGFloat)maxRequired {
+    self.min = KeepRequired(minRequired);
+    self.max = KeepRequired(maxRequired);
 }
 
 
