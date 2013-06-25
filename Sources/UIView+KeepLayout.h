@@ -121,7 +121,7 @@
 - (KeepAttribute *(^)(UIView *))keepVerticalAlignTo;
 - (KeepAttribute *(^)(UIView *))keepHorizontalAlignTo; /// Automatically inverts values.
 
-/// Convenience methods for setting all edge alignments at once.
+/// Convenience methods for setting center (both axis) alignment.
 - (void)keepCenterAlignTo:(UIView *)view;
 - (void)keepCenterAlignTo:(UIView *)view offset:(UIOffset)offset;
 - (void)keepCenterAlignTo:(UIView *)view offset:(UIOffset)offset withPriority:(KeepPriority)priority;

@@ -1,162 +1,190 @@
 # Keep Layout
 
-Keep Layout is project **under active development** whose purpose is to make _Auto Layout_ easy to use _from code_! No more clicking in _Interface Builder_ or manual creation of constraints. Think in **attributes** and their **rules**. _Keep Layout_ will set all constraints to keep your desired layout.
+Keep Layout is project **under active development** whose purpose is to make _Auto Layout_ much easier to use _from code_! No more _Interface Builder_ or _Visual Format_. _Keep Layout_ provides **simple, more readable and powerful API for creating and _accessing existing_ constraints**.
 
-You should be familiar with _Auto Layout_ topic. [How it works and what's the point?](http://developer.apple.com/library/ios/#documentation/UserExperience/Conceptual/AutolayoutPG/Articles/Introduction.html#//apple_ref/doc/uid/TP40010853-CH1-SW1) **Basically you create relations** (_constraints_, or rules) **between views and their attributes.** When some atribute changes (e.g. bounds on rotation) all related attributes are recalculated to match the rules.
+_**Keep Layout** turned v1.0 recently and that means it is not backward compatible with older versions. This new release was written from scratch, it brings completely redesigned API, that is easier to write, easier to read and yet provides more possibilities._
 
-_NOTE: I focus on iOS, but support for OSX will be added. In fact, **you may add it!** Please contribute with your ideas. Thank you!_
-
-
-
-## Short Syntax
-Naming of classes and methods is focused on the shortest syntax possible. Because of this there are subclasses that override constructors for your convenience. Defining layout will be reduced to few lines of code.
-
-I will be improving interface of classes, so it would cover most of the uses with one line. Because **90%** of time you use only **10%** possibilities of *Auto Layout* (numbers are made up, but you get the point).
+Before you start, you should be familiar with _Auto Layout_ topic. [How it works and what's the point?](http://developer.apple.com/library/ios/#documentation/UserExperience/Conceptual/AutolayoutPG/Articles/Introduction.html#//apple_ref/doc/uid/TP40010853-CH1-SW1)
 
 
 
-## Overview
+## Attributes
 
+Every view has several _attributes_ that are represented by `KeepAttribute` class.
 
+  - Dimensions: **width**, **height**, **aspect ratio**
+  - Insets to superview: **top**, **bottom**, **left**, **right**
+  - Position in superview: **horizontal** and **vertical**
+  - Offsets to other views: **top**, **bottom**, **left**, **right**
+  - Alignments with other views: **top**, **bottom**, **left**, **right**, **horizontal**, **vertical**, **baseline**
+ 
+They can be accessed by calling methods on `UIView` object with one of these format:
 
-### Attributes – `KeepAttribute` subclasses
-Representation of an attribute of `UIView`. They define internal metric or relation to another view:
-
- - **dimensions** – width, height, aspect ratio
- - **insets** – related to superview (top, bottom, left, right)
- - **position** – relative to superview bounds
- - **offsets** – padding between views (top, bottom, left, right)
- - **alignments** – top, bottom, left, right, center, baseline
-
-
-
-### Rules – `KeepRule` subclasses
-Create multiple rules for each attribute. Rule encapsulates a value, type of the value and its priority. There are 3 types with one subclass for each:
-
- - **equal** – attribute should be equal to this value
- - **max** – attribute should be lower or equal to this value
- - **min** – attribute should be greater or equal to this value
-
-Rule priorities are four (just like when usinng `NSLayoutConstraint`) and you specify them by calling appropriate constructor:
-
- 1. **must** – Highest priority saying this rule _must_ be applied without compromises. Use `+must:` constructor.
- 2. **shall** – High priority saying this rule _should_ be applied. Use `+shall:` constructor.
- 3. **may** – Normal priority saying this rule _may_ be applied. Use `+may:` constructor.
- 4. **fit** – Lowest priority saying this rule is just fallback case to _fit_. Use `+fit:` constructor.
-
-You may create rule relative to another view. Not every attribute supports them (only Width and Height), but for example you may set widths of two views to be related, like “always double” or “at least one half”. See examples.
-
-_NOTE: You may not like the naming, but I wanted something human-friendly. Since “keep” is verb I choose modal verbs to make it more like natural language._
-
-
-
-## Examples
-
-##### 1. Keep width exactly 150 points.
-
-```objective-c
-[view keep:[KeepWidth rules:@[ [KeepEqual must:150] ]];
-// view must keep width of 150pt
+```
+- (KeepLayout *)keep<AttributeName>;
+- (KeepLayout *(^)(UIView *))keep<AttributeName>To; // Returns block taking another view.
 ```
 
-##### 2. Keep aspect ratio between 4:3 and 16:9.
+Example:
 
-```objective-c
-[view keep:[KeepAspectRatio rules:@[ [KeepMin must:4/3.], [KeepMax must:16/9.] ]];
-// view must keep its aspect ratio between 4:3 and 16:9 (4/3 < 16/9)
+```
+KeepAttribute *width = view.keepWidth;
+KeepAttribute *topOffset = view.keepTopOffsetTo(anotherView); // Invoking the block that returns the actual attribute.
 ```
 
-##### 3. Keep top inset (to superview) flexible with preffered value of 20 points, but it may never be less than 10 points.
+Calling such method for the first time creates the attribute object and any subsequent calls will return the same object. For attributes related to other views this is true for each pair of views. Sometimes even in inversed order or direction:
 
-```objective-c
-[view keep:[KeepTopInset rules:@[ [KeepMin must:10], [KeepEqual may:20] ]];
-// view must keep top inset minimum of 10pt and may keep it at 20pt (preffered value)
+```
+// aligns are the same regardless of order
+viewOne.keepLeftAlign(viewTwo) == viewTwo.keepLeftAlign(viewOne)
+// left offset from 1 to 2 is right offset from 2 to 1
+viewOne.keepLeftOffset(viewTwo) == viewTwo.keepRightOffset(viewOne)
 ```
 
-##### 4. Keep insets 10 points. Keep aspect ration 16:9. Keep centered in 1/3rd of container. _See pictures and `-example1` included in project._
+See `UIView+KeepLayout.h` for more.
 
-```objective-c
-// Insets
-NSArray *rules = @[ [KeepMin must:10], [KeepEqual may:10] ];
-[view keep:[KeepTopInset rules:rules]];
-[view keep:[KeepBottomInset rules:rules]];
-[view keep:[KeepRightInset rules:rules]];
-[view keep:[KeepLeftInset rules:rules]];
 
-// Dimensions
-[view keep:[KeepAspectRatio rules:@[ [KeepMin must:16/9.] ]]];
 
-// Position
-[view keep:[KeepHorizontally rules:@[ [KeepEqual must:1/2.] ]]];
-[view keep:[KeepVertically rules:@[ [KeepMax must:1/2.], [KeepMin must:1/3.], [KeepEqual may:1/3.] ]]];
+## Values
+
+Attributes have three properties: **equal**, **min** and **max**. These are not just plain scalar values, but rather a `struct` representing **value with priority**.
+
+They can be created with one of four convenience functions, one for every basic layout priority:
+
+```
+KeepValue value = KeepRequired(42);
+value = KeepHigh(42);
+value = KeepLow(42);
+value = KeepFitting(42);
+
+// Arbitrary priority:
+value = KeepValueMake(42, 800);
 ```
 
-![Portrait Example 1](readme/example1-portrait.png)
-![Landscape Example 1](readme/example1-landscape.png)
+Priorities are redeclared as `KeepPriority` enum using `UILayoutPriority` values and they use similar naming:
 
-##### 4. Keep insets 20 and inter-view spacing 10. Keep equal widths and heights. _See pictures and `-example2` included in project._
-
-```objective-c
-// Insets
-NSArray *insetRules = @[ [KeepMin must:20], [KeepMax may:20] ];
-for (UIView *view in @[ red, green, blue ]) {
-    [view keep:[KeepTopInset rules:insetRules]];
-    [view keep:[KeepBottomInset rules:insetRules]];
-    [view keep:[KeepLeftInset rules:insetRules]];
-    [view keep:[KeepRightInset rules:insetRules]];
-}
-// Offsets
-NSArray *offsetRules = @[ [KeepMin must:10], [KeepMax shall:10] ];
-[red keep:[KeepBottomOffset to:green rules:offsetRules]];
-[red keep:[KeepBottomOffset to:blue rules:offsetRules]];
-[green keep:[KeepRightOffset to:blue rules:offsetRules]];
-
-// Dimensions
-[green keep:[KeepHeight rules:@[ [KeepEqual mustTo:red] ]]];
-[blue keep:[KeepHeight rules:@[ [KeepEqual mustTo:red] ]]];
-[blue keep:[KeepWidth rules:@[ [KeepEqual mustTo:green] ]]];
+```
+Required > High > Low > Fitting
+1000       750    250   50
 ```
 
-![Portrait Example 2](readme/example2-portrait.png)
-![Landscape Example 2](readme/example2-landscape.png)
+See `KeepTypes.h` for more.
 
-##### 5. Keep views alinged with padding. _See picture and `-example3` included in project._
 
-```objective-c
-// Keep 'magenta' centered
-[magenta keep:[KeepHorizontally rules:@[ [KeepEqual must:0.5] ]]];
-[magenta keep:[KeepVertically rules:@[ [KeepEqual must:0.5] ]]];
 
-NSArray *padding = @[ [KeepMin shall:10], [KeepMax may:10] ];
+## Putting it together – Examples
 
-// Keep gaps between views
-[red keep:[KeepRightOffset to:green rules:padding]];
-[cyan keep:[KeepRightOffset to:magenta rules:padding]];
-[green keep:[KeepRightOffset to:blue rules:padding]];
-[magenta keep:[KeepRightOffset to:yellow rules:padding]];
-[green keep:[KeepBottomOffset to:magenta rules:padding]];
+Keep width of the view to be equal to 150 with High priority:
 
-NSArray *alignRules = @[ [KeepEqual must:0] ]; // Keep aligned with zero tolerance.
-
-// Horizontal alignment
-[red keep:[KeepAlignBottom to:green rules:alignRules]];
-[blue keep:[KeepAlignBottom to:green rules:alignRules]];
-[cyan keep:[KeepAlignTop to:magenta rules:alignRules]];
-[yellow keep:[KeepAlignTop to:magenta rules:alignRules]];
-
-// Vertical alignment
-[red keep:[KeepAlignRight to:cyan rules:alignRules]];
-[green keep:[KeepAlignCenterX to:magenta rules:alignRules]];
-[blue keep:[KeepAlignLeft to:yellow rules:alignRules]];
+```
+view.keepWidth.equal = KeepHigh(150);
 ```
 
-![Example 3](readme/example3.png)
+Keep top inset to superview of the view to be at least 10, no excuses:
+
+```
+view.keepTopInset.min = KeepRequired(10);
+
+```
+
+Don't let the first view to get closer than 10 to the second from the left:
+
+```
+firstView.keepLeftOffsetTo(secondView).min = KeepRequired(10);
+```
+
+#### See the _Examples_ app included in the project for more.
 
 
 
 ---
-_Version 0.3.2_
+
+
+
+## Grouped Attributes
+
+You will often want to set multiple attributes to the same value. For this we have **grouped attributes**.
+
+You can create groups at your own:
+
+```
+KeepAttribute *leftInsets = [KeepAttribute group:
+                             viewOne.keepLeftInset,
+                             viewTwo.keepLeftInset,
+                             viewThree.keepLeftInset,
+                             nil];
+leftInsets.equal = KeepRequired(10);
+```
+
+However there are already some accessors to few of them:
+
+```
+view.keepSize    // group of both Width and Height
+view.keepInsets  // group of all four insets
+view.keepCenter  // group of both axis of position
+```
+
+See `UIView+KeepLayout.h` for more or `KeepAttribute.h`.
+
+
+
+## Convenience Methods
+
+For the most used cases there are convenience methods. Nothing you could write yourself, but simplify your code and improve readability. Some of them:
+
+```
+[view keepSize:CGSizeMake(100, 200)];
+[view keepInsets:UIEdgeInsetsMake(10, 20, 30, 40)];
+[view keepCentered];
+```
+
+See `UIView+KeepLayout.h` for more.
+
+
+
+## Array Attributes – What?
+
+Most of the methods added to `UIView` class can also be called on any **array on views**. Such call creates grouped attribute of all contained view attributes:
+
+```
+NSArray *views = @[ viewOne, viewTwo, viewThree ];
+views.keepInsets.min = KeepRequired(10);
+```
+
+**The above code creates and configures 12 layout constraints!**
+
+In addition, arrays allow you to use related attributes more easily, using another convenience methods:
+
+```
+NSArray *views = @[ viewOne, viewTwo, viewThree ];
+[views keepWidthsEqual];
+[views keepHorizontalOffsets:KeepRequired(20)];
+[views keepTopAligned];
+```
+
+See `NSArray+KeepLayout.h` for more.
+
+
+
+## Implementation Details
+
+Once the attribute is accessed it is created and associated with given view (runtime asociation). In case of related attribbutes, the second view is used as weak key in `NSMapTable`.  
+See `UIView+KeepLayout.m` for details.
+
+Each attribute manages up to three constraints (`NSLayoutConstraint`) that are created, updated and removed when needed. One constraint for each of three relations (`NSLayoutRelation` enum) and setting `equal`, `min` or `max` properties modifies them.  
+See `KeepAttribute.m` for details.
+
+`KeepAttribute` class is a class cluster with specific subclasses. One that manages constraints using `constant` value, one for constraints using `multiplier` and one grouping subclass that forwards primitive methods to its contained children.  
+See `KeepAttribute.m` for details.
+
+Array methods usually call the same selector on contained views and return group of returned attributes.  
+See `NSArray+KeepLayout.m` for details.
+
+
+
+---
+_Version 1.0.0_
 
 MIT License, Copyright © 2013 Martin Kiss
 
-`THE SOFTWARE IS PROVIDED "AS IS", and so on...`
+`THE SOFTWARE IS PROVIDED "AS IS", and so on...` see `LICENSE.md` more.
