@@ -20,21 +20,21 @@ Every view has several _attributes_ that are represented by `KeepAttribute` clas
  
 They can be accessed by calling methods on `UIView` object with one of these format:
 
-```
+```objc
 - (KeepLayout *)keep<AttributeName>;
 - (KeepLayout *(^)(UIView *))keep<AttributeName>To; // Returns block taking another view.
 ```
 
 Example:
 
-```
+```objc
 KeepAttribute *width = view.keepWidth;
 KeepAttribute *topOffset = view.keepTopOffsetTo(anotherView); // Invoking the block that returns the actual attribute.
 ```
 
 Calling such method for the first time creates the attribute object and any subsequent calls will return the same object. For attributes related to other views this is true for each pair of views. Sometimes even in inversed order or direction:
 
-```
+```objc
 // aligns are the same regardless of order
 viewOne.keepLeftAlign(viewTwo) == viewTwo.keepLeftAlign(viewOne)
 // left offset from 1 to 2 is right offset from 2 to 1
@@ -51,7 +51,7 @@ Attributes have three properties: **equal**, **min** and **max**. These are not 
 
 They can be created with one of four convenience functions, one for every basic layout priority:
 
-```
+```objc
 KeepValue value = KeepRequired(42);
 value = KeepHigh(42);
 value = KeepLow(42);
@@ -63,7 +63,7 @@ value = KeepValueMake(42, 800);
 
 Priorities are redeclared as `KeepPriority` enum using `UILayoutPriority` values and they use similar naming:
 
-```
+```objc
 Required > High > Low > Fitting
 1000       750    250   50
 ```
@@ -76,20 +76,20 @@ See `KeepTypes.h` for more.
 
 Keep width of the view to be equal to 150 with High priority:
 
-```
+```objc
 view.keepWidth.equal = KeepHigh(150);
 ```
 
 Keep top inset to superview of the view to be at least 10, no excuses:
 
-```
+```objc
 view.keepTopInset.min = KeepRequired(10);
 
 ```
 
 Don't let the first view to get closer than 10 to the second from the left:
 
-```
+```objc
 firstView.keepLeftOffsetTo(secondView).min = KeepRequired(10);
 ```
 
@@ -107,7 +107,7 @@ You will often want to set multiple attributes to the same value. For this we ha
 
 You can create groups at your own:
 
-```
+```objc
 KeepAttribute *leftInsets = [KeepAttribute group:
                              viewOne.keepLeftInset,
                              viewTwo.keepLeftInset,
@@ -118,7 +118,7 @@ leftInsets.equal = KeepRequired(10);
 
 However there are already some accessors to few of them:
 
-```
+```objc
 view.keepSize    // group of both Width and Height
 view.keepInsets  // group of all four insets
 view.keepCenter  // group of both axis of position
@@ -132,7 +132,7 @@ See `UIView+KeepLayout.h` for more or `KeepAttribute.h`.
 
 For the most used cases there are convenience methods. Nothing you could write yourself, but simplify your code and improve readability. Some of them:
 
-```
+```objc
 [view keepSize:CGSizeMake(100, 200)];
 [view keepInsets:UIEdgeInsetsMake(10, 20, 30, 40)];
 [view keepCentered];
@@ -146,7 +146,7 @@ See `UIView+KeepLayout.h` for more.
 
 Most of the methods added to `UIView` class can also be called on any **array on views**. Such call creates grouped attribute of all contained view attributes:
 
-```
+```objc
 NSArray *views = @[ viewOne, viewTwo, viewThree ];
 views.keepInsets.min = KeepRequired(10);
 ```
@@ -155,7 +155,7 @@ views.keepInsets.min = KeepRequired(10);
 
 In addition, arrays allow you to use related attributes more easily, using another convenience methods:
 
-```
+```objc
 NSArray *views = @[ viewOne, viewTwo, viewThree ];
 [views keepWidthsEqual];
 [views keepHorizontalOffsets:KeepRequired(20)];
@@ -172,7 +172,7 @@ Constraints can be animated. You can use plain simple `UIView` block animation, 
 
 Or you can use one of provided methods to don't need to case about that:
 
-```
+```objc
 view.keepWidth.equal = KeepRequired(100);
 
 [view.superview keepAnimatedWithDuration:1 layout:^{
