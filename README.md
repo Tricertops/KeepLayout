@@ -4,7 +4,7 @@ Keep Layout is project **under active development** whose purpose is to make _Au
 
 _**Keep Layout** turned v1.0 recently and that means it is not backward compatible with older versions. This new release was written from scratch, it brings completely redesigned API, that is easier to write, easier to read and yet provides more possibilities._
 
-Before you start, you should be familiar with _Auto Layout_ topic. [How it works and what's the point?](http://developer.apple.com/library/ios/#documentation/UserExperience/Conceptual/AutolayoutPG/Articles/Introduction.html#//apple_ref/doc/uid/TP40010853-CH1-SW1)
+Before you start, you should be familiar with _Auto Layout_ topic. [How it works and what's the point?][1]
 
 
 
@@ -41,7 +41,7 @@ viewOne.keepLeftAlign(viewTwo) == viewTwo.keepLeftAlign(viewOne)
 viewOne.keepLeftOffset(viewTwo) == viewTwo.keepRightOffset(viewOne)
 ```
 
-See `UIView+KeepLayout.h` for more.
+See [`UIView+KeepLayout.h`][2] for more.
 
 
 
@@ -68,7 +68,7 @@ Required > High > Low > Fitting
 1000       750    250   50
 ```
 
-See `KeepTypes.h` for more.
+See [`KeepTypes.h`][3] for more.
 
 
 
@@ -124,7 +124,7 @@ view.keepInsets  // group of all four insets
 view.keepCenter  // group of both axis of position
 ```
 
-See `UIView+KeepLayout.h` for more or `KeepAttribute.h`.
+See [`UIView+KeepLayout.h`][2] or [`KeepAttribute.h`][4] for more .
 
 
 
@@ -138,7 +138,7 @@ For the most used cases there are convenience methods. Nothing you could write y
 [view keepCentered];
 ```
 
-See `UIView+KeepLayout.h` for more.
+See [`UIView+KeepLayout.h`][2] for more.
 
 
 
@@ -162,7 +162,7 @@ NSArray *views = @[ viewOne, viewTwo, viewThree ];
 [views keepTopAligned];
 ```
 
-See `NSArray+KeepLayout.h` for more.
+See [`NSArray+KeepLayout.h`][5] for more.
 
 
 
@@ -182,26 +182,26 @@ view.keepWidth.equal = KeepRequired(100);
 
 These are instance methods and must be called on parent view of all affected subviews. At the end of layout block this view receives `-layoutIfNeeded` method. Any changes to views out of the receiver's subview tree will not be animated.
 
-See `UIView+KeepLayout.h` for more.
+See [`UIView+KeepLayout.h`][2] for more.
 
 
 
 ## Implementation Details
 
 Once the attribute is accessed it is created and associated with given view (runtime asociation). In case of related attribbutes, the second view is used as weak key in `NSMapTable`.  
-See `UIView+KeepLayout.m` for details.
+See [`UIView+KeepLayout.m`][6] for details.
 
 Each attribute manages up to three constraints (`NSLayoutConstraint`) that are created, updated and removed when needed. One constraint for each of three relations (`NSLayoutRelation` enum) and setting `equal`, `min` or `max` properties modifies them.  
-See `KeepAttribute.m` for details.
+See [`KeepAttribute.m`][7] for details.
 
 `KeepAttribute` class is a class cluster with specific subclasses. One that manages constraints using `constant` value, one for constraints using `multiplier` and one grouping subclass that forwards primitive methods to its contained children.  
-See `KeepAttribute.m` for details.
+See [`KeepAttribute.m`][7] for details.
 
 Array methods usually call the same selector on contained views and return group of returned attributes.  
-See `NSArray+KeepLayout.m` for details.
+See [`NSArray+KeepLayout.m`][8] for details.
 
 Animation delay is implemented as real execution delay, not just delay for animating the changes. This differs from `UIView` block animations. This allows you to setup animations in the same update cycle as your initial layout.  
-See `UIView+KeepLayout.m` for details.
+See [`UIView+KeepLayout.m`][6] for details.
 
 
 
@@ -211,3 +211,18 @@ _Version 1.0.0_
 MIT License, Copyright © 2013 Martin Kiss
 
 `THE SOFTWARE IS PROVIDED "AS IS", and so on...` see `LICENSE.md` more.
+
+
+
+
+
+[1]: http://developer.apple.com/library/ios/#documentation/UserExperience/Conceptual/AutolayoutPG/Articles/Introduction.html#//apple_ref/doc/uid/TP40010853-CH1-SW1
+
+[2]: Sources/UIView+KeepLayout.h
+[3]: Sources/KeepTypes.h
+[4]: Sources/KeepAttribute.h
+[5]: Sources/NSArray+KeepLayout.h
+
+[6]: Sources/UIView+KeepLayout.m
+[7]: Sources/KeepAttribute.m
+[8]: Sources/NSArray+KeepLayout.m
