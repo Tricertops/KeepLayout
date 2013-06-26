@@ -166,6 +166,26 @@ See `NSArray+KeepLayout.h` for more.
 
 
 
+## Animations
+
+Constraints can be animated. You can use plain simple `UIView` block animation, but don't  forget to call `-layoutIfNeeded` in the animation block. That triggers `-layoutSubviews` which applies new constraints.
+
+Or you can use one of provided methods to don't need to case about that:
+
+```
+view.keepWidth.equal = KeepRequired(100);
+
+[view.superview keepAnimatedWithDuration:1 layout:^{
+    view.keepWidth.equal = KeepRequired(200);
+}];
+```
+
+These are instance methods and must be called on parent view of all affected subviews. At the end of layout block this view receives `-layoutIfNeeded` method. Any changes to views out of the receiver's subview tree will not be animated.
+
+See `UIView+KeepLayout.h` for more.
+
+
+
 ## Implementation Details
 
 Once the attribute is accessed it is created and associated with given view (runtime asociation). In case of related attribbutes, the second view is used as weak key in `NSMapTable`.  
