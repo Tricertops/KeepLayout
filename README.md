@@ -168,9 +168,9 @@ See [`NSArray+KeepLayout.h`][5] for more.
 
 ## Animations
 
-Constraints can be animated. You can use plain simple `UIView` block animation, but don't  forget to call `-layoutIfNeeded` in the animation block. That triggers `-layoutSubviews` which applies new constraints.
+Constraints can be animated. You can use simple `UIView` block animation, but you need to call `-layoutIfNeeded` at the end of animation block. That triggers `-layoutSubviews` which applies new constraints.
 
-Or you can use one of provided methods to don't need to case about that:
+Or you can use one of the provided methods so you don't need to care:
 
 ```objc
 view.keepWidth.equal = KeepRequired(100);
@@ -200,7 +200,7 @@ See [`KeepAttribute.m`][7] for details.
 Array methods usually call the same selector on contained views and return group of returned attributes.  
 See [`NSArray+KeepLayout.m`][8] for details.
 
-Animation delay is implemented as real execution delay, not just delay for animating the changes. This differs from `UIView` block animations. This allows you to setup animations in the same update cycle as your initial layout.  
+Animation delay is implemented as real execution delay, not just delay for animating the changes. This differs from `UIView` block animations and allows you to set up animations in the same update cycle as your initial layout.  
 See [`UIView+KeepLayout.m`][6] for details.
 
 
@@ -210,7 +210,7 @@ _Version 1.0.0_
 
 MIT License, Copyright © 2013 Martin Kiss
 
-`THE SOFTWARE IS PROVIDED "AS IS", and so on...` see `LICENSE.md` more.
+`THE SOFTWARE IS PROVIDED "AS IS", and so on...` see [`LICENSE.md`][9] more.
 
 
 
@@ -226,3 +226,4 @@ MIT License, Copyright © 2013 Martin Kiss
 [6]: Sources/UIView+KeepLayout.m
 [7]: Sources/KeepAttribute.m
 [8]: Sources/NSArray+KeepLayout.m
+[9]: LICENSE.md
