@@ -200,6 +200,9 @@ See `KeepAttribute.m` for details.
 Array methods usually call the same selector on contained views and return group of returned attributes.  
 See `NSArray+KeepLayout.m` for details.
 
+Animation delay is implemented as real execution delay, not just delay for animating the changes. This differs from `UIView` block animations. This allows you to setup animations in the same update cycle as your initial layout.  
+See `UIView+KeepLayout.m` for details.
+
 
 
 ---
