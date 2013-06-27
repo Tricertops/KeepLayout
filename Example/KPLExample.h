@@ -6,16 +6,18 @@
 //  Copyright (c) 2013 Triceratops. All rights reserved.
 //
 
+typedef void (^KPLExampleStateBlock)(NSUInteger state);
+typedef KPLExampleStateBlock (^KPLExampleSetupBlock)(UIView *container);
 
 
 @interface KPLExample : NSObject
 
 
-- (instancetype)initWithName:(NSString *)name lines:(NSUInteger)lines setupBlock:(void(^)(UIView *container))setupBlock;
+- (instancetype)initWithTitle:(NSString *)name subtitle:(NSString *)subtitle setupBlock:(KPLExampleSetupBlock)setupBlock;
 
-@property (nonatomic, readonly, copy) NSString *name;
-@property (nonatomic, readonly, assign) NSUInteger lines;
-@property (nonatomic, readonly, copy) void(^setupBlock)(UIView *container);
+@property (nonatomic, readonly, copy) NSString *title;
+@property (nonatomic, readonly, copy) NSString *subtitle;
+@property (nonatomic, readonly, copy) KPLExampleSetupBlock setupBlock;
 
 
 @end

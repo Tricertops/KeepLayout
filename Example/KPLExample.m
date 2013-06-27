@@ -15,9 +15,9 @@
 @interface KPLExample ()
 
 
-@property (nonatomic, readwrite, copy) NSString *name;
-@property (nonatomic, readwrite, assign) NSUInteger lines;
-@property (nonatomic, readwrite, copy) void(^setupBlock)(UIView *container);
+@property (nonatomic, readwrite, copy) NSString *title;
+@property (nonatomic, readwrite, copy) NSString *subtitle;
+@property (nonatomic, readwrite, copy) KPLExampleSetupBlock setupBlock;
 
 
 @end
@@ -32,11 +32,11 @@
 
 
 
-- (instancetype)initWithName:(NSString *)name lines:(NSUInteger)lines setupBlock:(void (^)(UIView *))setupBlock {
+- (instancetype)initWithTitle:(NSString *)name subtitle:(NSString *)subtitle setupBlock:(KPLExampleSetupBlock)setupBlock {
     self = [super init];
     if (self) {
-        self.name = name;
-        self.lines = lines;
+        self.title = name;
+        self.subtitle = subtitle;
         self.setupBlock = setupBlock;
     }
     return self;

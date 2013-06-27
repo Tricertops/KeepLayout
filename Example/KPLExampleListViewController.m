@@ -72,13 +72,13 @@
     };
     
     [simpleExamples addObject:
-     [[KPLExample alloc] initWithName:@"Equal Insets"
-                                lines:1
+     [[KPLExample alloc] initWithTitle:@"Equal Insets"
+                             subtitle:@"1 line of code"
                            setupBlock:^(UIView *container) {
-                               UIView *black = createView(UIColor.blackColor, container);
+                               UIView *view = createView(UIColor.blackColor, container);
                                
                                // 1
-                               black.keepInsets.equal = KeepRequired(10);
+                               view.keepInsets.equal = KeepRequired(10);
                                
                                // Equivalent:
                                /*
@@ -87,15 +87,21 @@
                                 black.keepLeftInset.equal = KeepRequired(10);
                                 black.keepRightInset.equal = KeepRequired(10);
                                 */
+                               
+                               // Animating insets
+                               return ^(NSUInteger state) {
+                                   BOOL odd = (state % 2);
+                                   view.keepInsets.equal = KeepRequired(odd? 80 : 10);
+                               };
                            }]];
     [simpleExamples addObject:
-     [[KPLExample alloc] initWithName:@"Various Insets"
-                                lines:1
+     [[KPLExample alloc] initWithTitle:@"Various Insets"
+                                subtitle:@"1 line of code"
                            setupBlock:^(UIView *container) {
-                               UIView *black = createView(UIColor.blackColor, container);
+                               UIView *view = createView(UIColor.blackColor, container);
                                
                                // 1
-                               [black keepInsets:UIEdgeInsetsMake(10, 20, 30, 40)];
+                               [view keepInsets:UIEdgeInsetsMake(10, 20, 30, 40)];
                                
                                // Equivalent:
                                /*
@@ -104,15 +110,21 @@
                                 black.keepLeftInset.equal = KeepRequired(20);
                                 black.keepRightInset.equal = KeepRequired(40);
                                 */
+                               
+                               // Animating insets
+                               return ^(NSUInteger state) {
+                                   BOOL odd = (state % 2);
+                                   [view keepInsets:UIEdgeInsetsMake(odd? 80 : 10, 20, 30, odd? 5 : 40)];
+                               };
                            }]];
     [simpleExamples addObject:
-     [[KPLExample alloc] initWithName:@"Center & Size"
-                                lines:2
+     [[KPLExample alloc] initWithTitle:@"Center & Size"
+                                subtitle:@"2 lines of code"
                            setupBlock:^(UIView *container) {
-                               UIView *black = createView(UIColor.blackColor, container);
+                               UIView *view = createView(UIColor.blackColor, container);
                                
                                // 1
-                               [black keepSize:CGSizeMake(100, 200)];
+                               [view keepSize:CGSizeMake(200, 200) priority:KeepPriorityHigh];
                                
                                // Equivalent:
                                /*
@@ -121,17 +133,24 @@
                                 */
                                
                                // 2
-                               [black keepCentered];
+                               [view keepCentered];
                                
                                // Equivalent:
                                /*
                                 black.keepHorizontalCenter.equal = KeepRequired(0.5);
                                 black.keepVerticalCenter.equal = KeepRequired(0.5);
                                 */
+                               
+                               // Animating center, which changes size
+                               view.keepInsets.min = KeepRequired(10);
+                               return ^(NSUInteger state) {
+                                   BOOL odd = (state % 2);
+                                   view.keepHorizontalCenter.equal = KeepRequired(odd? 0.1 : 0.5);
+                               };
                            }]];
     [simpleExamples addObject:
-     [[KPLExample alloc] initWithName:@"Video 16:9"
-                                lines:3
+     [[KPLExample alloc] initWithTitle:@"Video 16:9"
+                                subtitle:@"3 lines of code"
                            setupBlock:^(UIView *container) {
                                UIView *black = createView(UIColor.blackColor, container);
                                
@@ -150,6 +169,11 @@
                                 black.keepInsets.min = KeepRequired(10);
                                 */
                                
+                               // Animating horizontal or vertical aspect ratio
+                               return ^(NSUInteger state) {
+                                   BOOL odd = (state % 2);
+                                   black.keepAspectRatio.equal = KeepRequired(odd? 9./16 : 16./9.);
+                               };
                            }]];
     
     self.examples = @[ simpleExamples ];
@@ -189,8 +213,8 @@
     }
     
     KPLExample *example = [[self.examples objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
-    cell.textLabel.text = example.name;
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%i line%@ of code", example.lines, (example.lines == 1? @"" : @"s")];
+    cell.textLabel.text = example.title;
+    cell.detailTextLabel.text = example.subtitle;
     
     return cell;
 }

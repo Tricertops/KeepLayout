@@ -17,6 +17,8 @@
 @interface KPLExampleViewController ()
 
 @property (nonatomic, readwrite, strong) KPLExample *example;
+@property (nonatomic, readwrite, strong) KPLExampleStateBlock exampleStateBlock;
+@property (nonatomic, readwrite, assign) NSUInteger state;
 
 @end
 
@@ -34,7 +36,10 @@
     self = [super initWithNibName:nil bundle:nil];
     if (self) {
         self.example = example;
-        self.title = self.example.name;
+        self.title = self.example.title;
+        
+        UIBarButtonItem *actionButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPlay target:self action:@selector(actionButtonTapped)];
+        self.navigationItem.rightBarButtonItem = actionButton;
     }
     return self;
 }
@@ -49,7 +54,7 @@
     [self.view keepSize:self.view.bounds.size];
     
     [self.view keepAnimatedWithDuration:0 layout:^{
-        self.example.setupBlock(self.view);
+        self.exampleStateBlock = self.example.setupBlock(self.view);
     }];
 }
 
@@ -64,6 +69,14 @@
     [self.view layoutIfNeeded];
 }
 
+
+- (void)actionButtonTapped {
+    self.state++;
+    
+    [self.view keepAnimatedWithDuration:0.35 layout:^{
+        self.exampleStateBlock(self.state);
+    }];
+}
 
 
 
