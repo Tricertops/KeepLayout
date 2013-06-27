@@ -400,6 +400,20 @@
     // Since multiplier is not read/write proeperty, we need to re-add the whole constraint again.
     [self removeConstraint:constraint];
     constraint = [self createConstraintWithRelation:constraint.relation value:value];
+    
+    // TODO: Better solution
+    switch (constraint.relation) {
+        case NSLayoutRelationEqual:
+            self.equalConstraint = constraint;
+            break;
+        case NSLayoutRelationGreaterThanOrEqual:
+            self.minConstraint = constraint;
+            break;
+        case NSLayoutRelationLessThanOrEqual:
+            self.maxConstraint = constraint;
+            break;
+    }
+    
     [self addConstraint:constraint];
 }
 
