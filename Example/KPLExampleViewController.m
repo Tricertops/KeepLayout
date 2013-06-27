@@ -53,9 +53,9 @@
     
     [self.view keepSize:self.view.bounds.size];
     
-    [self.view keepAnimatedWithDuration:0 layout:^{
-        self.exampleStateBlock = self.example.setupBlock(self.view);
-    }];
+    self.exampleStateBlock = self.example.setupBlock(self.view);
+    
+    self.navigationItem.rightBarButtonItem.enabled = (self.exampleStateBlock != nil);
 }
 
 
@@ -71,6 +71,8 @@
 
 
 - (void)actionButtonTapped {
+    if ( ! self.exampleStateBlock) return;
+    
     self.state++;
     
     [self.view keepAnimatedWithDuration:0.35 layout:^{

@@ -74,7 +74,7 @@
     [simpleExamples addObject:
      [[KPLExample alloc] initWithTitle:@"Equal Insets"
                              subtitle:@"1 line of code"
-                           setupBlock:^(UIView *container) {
+                           setupBlock:^KPLExampleStateBlock(UIView *container) {
                                UIView *view = createView(UIColor.blackColor, container);
                                
                                // 1
@@ -97,7 +97,7 @@
     [simpleExamples addObject:
      [[KPLExample alloc] initWithTitle:@"Various Insets"
                                 subtitle:@"1 line of code"
-                           setupBlock:^(UIView *container) {
+                           setupBlock:^KPLExampleStateBlock(UIView *container) {
                                UIView *view = createView(UIColor.blackColor, container);
                                
                                // 1
@@ -120,7 +120,7 @@
     [simpleExamples addObject:
      [[KPLExample alloc] initWithTitle:@"Center & Size"
                                 subtitle:@"2 lines of code"
-                           setupBlock:^(UIView *container) {
+                           setupBlock:^KPLExampleStateBlock(UIView *container) {
                                UIView *view = createView(UIColor.blackColor, container);
                                
                                // 1
@@ -151,7 +151,7 @@
     [simpleExamples addObject:
      [[KPLExample alloc] initWithTitle:@"Video 16:9"
                                 subtitle:@"3 lines of code"
-                           setupBlock:^(UIView *container) {
+                           setupBlock:^KPLExampleStateBlock(UIView *container) {
                                UIView *black = createView(UIColor.blackColor, container);
                                
                                // 1
