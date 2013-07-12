@@ -92,7 +92,6 @@
                                                           relatedLayoutAttribute:dimensionAttribute
                                                                      coefficient:1];
         [attribute name:@"%@ of <%@ %p> to <%@ %p>", name, self.class, self, relatedView.class, relatedView];
-        attribute.equal = KeepRequired(1); // Default
         // Establish inverse relation
         [relatedView keep_attributeForSelector:_cmd relatedView:self creationBlock:^KeepAttribute *{
             return attribute;
@@ -348,7 +347,6 @@
                                                           relatedLayoutAttribute:[[oppositeEdges objectForKey:@(edgeAttribute)] integerValue]
                                                                      coefficient:1]
                                      name:@"%@ of <%@ %p> to <%@ %p>", name, self.class, self, relatedView.class, relatedView];
-        attribute.equal = KeepRequired(0);
         return attribute;
     }];
 }
@@ -409,7 +407,6 @@
                                                           relatedLayoutAttribute:alignAttribute
                                                                      coefficient:coefficient]
                                      name:@"%@ of <%@ %p> to <%@ %p>", name, self.class, self, relatedView.class, relatedView];
-        attribute.equal = KeepRequired(0); // Default
         // Establish inverse attribute
         [relatedView keep_attributeForSelector:selector relatedView:self creationBlock:^KeepAttribute *{
             return attribute;
