@@ -245,9 +245,9 @@
 
 
 - (void)remove {
-    [self removeConstraint:self.equalConstraint];
-    [self removeConstraint:self.maxConstraint];
-    [self removeConstraint:self.minConstraint];
+    [self removeConstraint:self.equalConstraint]; self.equalConstraint = nil;
+    [self removeConstraint:self.maxConstraint]; self.maxConstraint = nil;
+    [self removeConstraint:self.minConstraint]; self.minConstraint = nil;
 }
 
 
@@ -261,7 +261,7 @@
     [super setEqual:equal];
     
     if (KeepValueIsNone(equal)) {
-        [self removeConstraint:self.equalConstraint];
+        [self removeConstraint:self.equalConstraint]; self.equalConstraint = nil;
         return;
     }
     
@@ -279,7 +279,7 @@
     [super setMax:max];
     
     if (KeepValueIsNone(max)) {
-        [self removeConstraint:self.maxConstraint];
+        [self removeConstraint:self.maxConstraint]; self.maxConstraint = nil;
         return;
     }
     
@@ -297,7 +297,7 @@
     [super setMin:min];
     
     if (KeepValueIsNone(min)) {
-        [self removeConstraint:self.minConstraint];
+        [self removeConstraint:self.minConstraint]; self.minConstraint = nil;
         return;
     }
     
