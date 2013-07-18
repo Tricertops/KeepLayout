@@ -8,6 +8,7 @@
 
 #import "KeepAttribute.h"
 #import "UIView+KeepLayout.h"
+#import "KeepLayoutConstraint.h"
 
 
 
@@ -148,19 +149,20 @@
 
 @property (nonatomic, readwrite, assign) CGFloat coefficient;
 
-@property (nonatomic, readwrite, strong) NSLayoutConstraint *equalConstraint;
-@property (nonatomic, readwrite, strong) NSLayoutConstraint *maxConstraint;
-@property (nonatomic, readwrite, strong) NSLayoutConstraint *minConstraint;
+@property (nonatomic, readwrite, strong) KeepLayoutConstraint *equalConstraint;
+@property (nonatomic, readwrite, strong) KeepLayoutConstraint *maxConstraint;
+@property (nonatomic, readwrite, strong) KeepLayoutConstraint *minConstraint;
 
 - (instancetype)initWithView:(UIView *)view
              layoutAttribute:(NSLayoutAttribute)layoutAttribute
                  relatedView:(UIView *)relatedView
       relatedLayoutAttribute:(NSLayoutAttribute)superviewLayoutAttribute
                  coefficient:(CGFloat)coefficient;
-- (NSLayoutConstraint *)createConstraintWithRelation:(NSLayoutRelation)relation value:(KeepValue)value;
-- (void)addConstraint:(NSLayoutConstraint *)constraint;
-- (void)applyValue:(KeepValue)value forConstraint:(NSLayoutConstraint *)constraint;
-- (void)removeConstraint:(NSLayoutConstraint *)constraint;
+- (KeepLayoutConstraint *)createConstraintWithRelation:(NSLayoutRelation)relation value:(KeepValue)value;
+- (void)addConstraint:(KeepLayoutConstraint *)constraint;
+- (void)applyValue:(KeepValue)value forConstraint:(KeepLayoutConstraint *)constraint relation:(NSLayoutRelation)relation;
+- (void)removeConstraint:(KeepLayoutConstraint *)constraint;
+- (void)setNameForConstraint:(KeepLayoutConstraint *)constraint relation:(NSLayoutRelation)relation value:(KeepValue)value;
 
 @end
 
@@ -219,13 +221,13 @@
 #pragma mark Constraints
 
 
-- (NSLayoutConstraint *)createConstraintWithRelation:(NSLayoutRelation)relation value:(KeepValue)value {
+- (KeepLayoutConstraint *)createConstraintWithRelation:(NSLayoutRelation)relation value:(KeepValue)value {
     NSAssert(NO, @"-[%@ %@] is abstract", KeepSimpleAttribute.class, NSStringFromSelector(_cmd));
     return nil;
 }
 
 
-- (void)addConstraint:(NSLayoutConstraint *)constraint {
+- (void)addConstraint:(KeepLayoutConstraint *)constraint {
     [self.constraintView addConstraint:constraint];
     
     self.view.translatesAutoresizingMaskIntoConstraints = NO;
@@ -234,12 +236,12 @@
 }
 
 
-- (void)applyValue:(KeepValue)value forConstraint:(NSLayoutConstraint *)constraint {
+- (void)applyValue:(KeepValue)value forConstraint:(KeepLayoutConstraint *)constraint relation:(NSLayoutRelation)relation {
     NSAssert(NO, @"-[%@ %@] is abstract", KeepSimpleAttribute.class, NSStringFromSelector(_cmd));
 }
 
 
-- (void)removeConstraint:(NSLayoutConstraint *)constraint {
+- (void)removeConstraint:(KeepLayoutConstraint *)constraint {
     [self.constraintView removeConstraint:constraint];
 }
 
@@ -270,8 +272,9 @@
         [self addConstraint:self.equalConstraint];
     }
     else {
-        [self applyValue:equal forConstraint:self.equalConstraint];
+        [self applyValue:equal forConstraint:self.equalConstraint relation:NSLayoutRelationEqual];
     }
+    [self setNameForConstraint:self.equalConstraint relation:NSLayoutRelationEqual value:equal];
 }
 
 
@@ -288,8 +291,9 @@
         [self addConstraint:self.maxConstraint];
     }
     else {
-        [self applyValue:max forConstraint:self.maxConstraint];
+        [self applyValue:max forConstraint:self.maxConstraint relation:NSLayoutRelationLessThanOrEqual];
     }
+    [self setNameForConstraint:self.maxConstraint relation:NSLayoutRelationLessThanOrEqual value:max];
 }
 
 
@@ -306,8 +310,24 @@
         [self addConstraint:self.minConstraint];
     }
     else {
-        [self applyValue:min forConstraint:self.minConstraint];
+        [self applyValue:min forConstraint:self.minConstraint relation:NSLayoutRelationGreaterThanOrEqual];
     }
+    [self setNameForConstraint:self.minConstraint relation:NSLayoutRelationGreaterThanOrEqual value:min];
+}
+
+
+
+- (void)setNameForConstraint:(KeepLayoutConstraint *)constraint relation:(NSLayoutRelation)relation value:(KeepValue)value {
+    NSDictionary *relationNames = @{
+                                    @(NSLayoutRelationEqual) : @"equal to",
+                                    @(NSLayoutRelationEqual) : @"at least",
+                                    @(NSLayoutRelationEqual) : @"at most",
+                                    };
+    [constraint name:@"%@ %@ %@ with %@ priority",
+     self.name,
+     [relationNames objectForKey:@(relation)],
+     @(value.value),
+     KeepPriorityDescription(value.priority)];
 }
 
 
@@ -337,21 +357,21 @@
 #pragma mark Constraint Overrides
 
 
-- (NSLayoutConstraint *)createConstraintWithRelation:(NSLayoutRelation)relation value:(KeepValue)value {
+- (KeepLayoutConstraint *)createConstraintWithRelation:(NSLayoutRelation)relation value:(KeepValue)value {
     if (self.coefficient < 0) {
         if (relation == NSLayoutRelationGreaterThanOrEqual) relation = NSLayoutRelationLessThanOrEqual;
         else if (relation == NSLayoutRelationLessThanOrEqual) relation = NSLayoutRelationGreaterThanOrEqual;
     }
-    NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:self.view attribute:self.layoutAttribute
-                                                                  relatedBy:relation
-                                                                     toItem:self.relatedView attribute:self.relatedLayoutAttribute
-                                                                 multiplier:1 constant:value.value * self.coefficient];
+    KeepLayoutConstraint *constraint = [KeepLayoutConstraint constraintWithItem:self.view attribute:self.layoutAttribute
+                                                                    relatedBy:relation
+                                                                       toItem:self.relatedView attribute:self.relatedLayoutAttribute
+                                                                   multiplier:1 constant:value.value * self.coefficient];
     constraint.priority = value.priority;
     return constraint;
 }
 
 
-- (void)applyValue:(KeepValue)value forConstraint:(NSLayoutConstraint *)constraint {
+- (void)applyValue:(KeepValue)value forConstraint:(KeepLayoutConstraint *)constraint relation:(NSLayoutRelation)relation {
     constraint.constant = value.value * self.coefficient;
     if (constraint.priority != value.priority) {
         constraint.priority = value.priority;
@@ -386,23 +406,23 @@
 #pragma mark Constraint Overrides
 
 
-- (NSLayoutConstraint *)createConstraintWithRelation:(NSLayoutRelation)relation value:(KeepValue)value {
-    NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:self.view attribute:self.layoutAttribute
-                                                                  relatedBy:relation
-                                                                     toItem:self.relatedView attribute:self.relatedLayoutAttribute
-                                                                 multiplier:value.value * self.coefficient constant:0];
+- (KeepLayoutConstraint *)createConstraintWithRelation:(NSLayoutRelation)relation value:(KeepValue)value {
+    KeepLayoutConstraint *constraint = [KeepLayoutConstraint constraintWithItem:self.view attribute:self.layoutAttribute
+                                                                    relatedBy:relation
+                                                                       toItem:self.relatedView attribute:self.relatedLayoutAttribute
+                                                                   multiplier:value.value * self.coefficient constant:0];
     constraint.priority = value.priority;
     return constraint;
 }
 
 
-- (void)applyValue:(KeepValue)value forConstraint:(NSLayoutConstraint *)constraint {
+- (void)applyValue:(KeepValue)value forConstraint:(KeepLayoutConstraint *)constraint relation:(NSLayoutRelation)relation {
     // Since multiplier is not read/write proeperty, we need to re-add the whole constraint again.
     [self removeConstraint:constraint];
     constraint = [self createConstraintWithRelation:constraint.relation value:value];
     
     // TODO: Better solution
-    switch (constraint.relation) {
+    switch (relation) {
         case NSLayoutRelationEqual:
             self.equalConstraint = constraint;
             break;

@@ -27,6 +27,7 @@
 		5B6D196217777E4200FA2E3E /* KPLExampleListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B6D196117777E4200FA2E3E /* KPLExampleListViewController.m */; };
 		5B6D196517777E5100FA2E3E /* KPLExampleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B6D196417777E5100FA2E3E /* KPLExampleViewController.m */; };
 		5B6D19681777811600FA2E3E /* KPLExample.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B6D19671777811600FA2E3E /* KPLExample.m */; };
+		5B96279317984366005531F4 /* KeepLayoutConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B96279217984366005531F4 /* KeepLayoutConstraint.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,6 +83,8 @@
 		5B6D196417777E5100FA2E3E /* KPLExampleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPLExampleViewController.m; sourceTree = "<group>"; };
 		5B6D19661777811600FA2E3E /* KPLExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPLExample.h; sourceTree = "<group>"; };
 		5B6D19671777811600FA2E3E /* KPLExample.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPLExample.m; sourceTree = "<group>"; };
+		5B96279117984366005531F4 /* KeepLayoutConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeepLayoutConstraint.h; sourceTree = "<group>"; };
+		5B96279217984366005531F4 /* KeepLayoutConstraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeepLayoutConstraint.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -181,6 +184,8 @@
 				5B6D195E1776F32000FA2E3E /* NSArray+KeepLayout.m */,
 				5B208DBF16B67381007ABFFE /* KeepAttribute.h */,
 				5B208DC016B67381007ABFFE /* KeepAttribute.m */,
+				5B96279117984366005531F4 /* KeepLayoutConstraint.h */,
+				5B96279217984366005531F4 /* KeepLayoutConstraint.m */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -282,6 +287,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5B96279317984366005531F4 /* KeepLayoutConstraint.m in Sources */,
 				5B3C50B116B530F900D00BF3 /* UIView+KeepLayout.m in Sources */,
 				5B208DC116B67381007ABFFE /* KeepAttribute.m in Sources */,
 				5B19318317719A4E00A5747B /* KeepTypes.m in Sources */,

@@ -10,6 +10,35 @@
 
 
 
+extern NSString *KeepPriorityDescription(KeepPriority priority) {
+    NSString *name = @"";
+    
+    if (priority >= (KeepPriorityRequired + KeepPriorityHigh) / 2) {
+        priority -= KeepPriorityRequired;
+        name = @"required";
+    }
+    else if (priority >= (KeepPriorityHigh + KeepPriorityLow) / 2) {
+        priority -= KeepPriorityHigh;
+        name = @"high";
+    }
+    else if (priority >= (KeepPriorityLow + KeepPriorityFitting) / 2) {
+        priority -= KeepPriorityLow;
+        name = @"low";
+    }
+    else {
+        priority -= KeepPriorityFitting;
+        name = @"fitting";
+    }
+    
+    if (priority) {
+        name = [name stringByAppendingFormat:@"(%@%i)", (priority > 0? @"+" : @""), priority];
+    }
+    
+    return name;
+}
+
+
+
 
 const KeepValue KeepNone = {
     .value = CGFLOAT_MIN,

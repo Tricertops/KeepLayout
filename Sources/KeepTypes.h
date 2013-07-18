@@ -28,6 +28,8 @@ typedef enum : NSInteger {
     KeepPriorityFitting = UILayoutPriorityFittingSizeLevel,
 } KeepPriority;
 
+extern NSString *KeepPriorityDescription(KeepPriority);
+
 
 
 #pragma mark Value
@@ -52,3 +54,5 @@ extern KeepValue KeepFitting(CGFloat);
 
 /// Debug description (example “42@750”, or just “42” if priority is Required)
 extern NSString *KeepValueDescription(KeepValue);
+
+
