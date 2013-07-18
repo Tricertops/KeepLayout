@@ -185,6 +185,20 @@ These are instance methods and must be called on parent view of all affected sub
 See [`UIView+KeepLayout.h`][2] for more.
 
 
+## Debugging
+
+Keep Layout uses its own `NSLayoutConstraint` subclass that overrides `-debugDescription` method. Once you get error message **_`Unable to simultaneously satisfy constraints.`_**, you will see nicely readable description of every constraint you have created. Example:
+
+```objc
+"<KeepLayoutConstraint:0xc695560 left offset of <YourView 0xc682cf0> to <YourAnotherView 0xc681350> equal to 20 with required priority>",
+"<KeepLayoutConstraint:0xc695560 left offset of <YourView 0xc682cf0> to <YourAnotherView 0xc681350> equal to 50 with required priority>",
+```
+
+With this you can very easily find the wrong attribute and fix it.
+
+
+---
+
 
 ## Implementation Details
 
@@ -206,7 +220,7 @@ See [`UIView+KeepLayout.m`][6] for details.
 
 
 ---
-_Version 1.0.0_
+_Version 1.0.2_
 
 MIT License, Copyright © 2013 Martin Kiss
 
