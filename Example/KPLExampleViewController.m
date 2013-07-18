@@ -51,22 +51,9 @@
     self.view.backgroundColor = [UIColor whiteColor];
     self.view.clipsToBounds = YES;
     
-    [self.view keepSize:self.view.bounds.size];
-    
     self.exampleStateBlock = self.example.setupBlock(self.view);
     
     self.navigationItem.rightBarButtonItem.enabled = (self.exampleStateBlock != nil);
-}
-
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-}
-
-
-- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-    [self.view keepSize:self.view.bounds.size];
-    [self.view layoutIfNeeded];
 }
 
 

@@ -72,6 +72,7 @@
                                                          relatedLayoutAttribute:NSLayoutAttributeNotAnAttribute
                                                                     coefficient:1]
                                     name:@"%@ of <%@ %p>", name, self.class, self];
+        self.translatesAutoresizingMaskIntoConstraints = NO;
         return attribute;
     }];
 }
@@ -92,6 +93,8 @@
                                                           relatedLayoutAttribute:dimensionAttribute
                                                                      coefficient:1];
         [attribute name:@"%@ of <%@ %p> to <%@ %p>", name, self.class, self, relatedView.class, relatedView];
+        self.translatesAutoresizingMaskIntoConstraints = NO;
+        relatedView.translatesAutoresizingMaskIntoConstraints = NO;
         // Establish inverse relation
         [relatedView keep_attributeForSelector:_cmd relatedView:self creationBlock:^KeepAttribute *{
             return attribute;
@@ -138,6 +141,7 @@
                                                           relatedLayoutAttribute:NSLayoutAttributeHeight
                                                                      coefficient:1];
         [attribute name:@"aspect ration of <%@ %p>", self.class, self];
+        self.translatesAutoresizingMaskIntoConstraints = NO;
         return attribute;
     }];
 }
@@ -185,12 +189,14 @@
     KeepAssert(self.superview, @"Calling %@ allowed only when superview exists", NSStringFromSelector(selector));
     
     return [self keep_attributeForSelector:selector creationBlock:^KeepAttribute *{
-        return [[[KeepConstantAttribute alloc] initWithView:self
-                                            layoutAttribute:edgeAttribute
-                                                relatedView:self.superview
-                                     relatedLayoutAttribute:edgeAttribute
-                                                coefficient:coefficient]
-                name:@"%@ of <%@ %p> to superview <%@ %p>", name, self.class, self, self.superview.class, self.superview];
+        KeepAttribute *attribute = [[[KeepConstantAttribute alloc] initWithView:self
+                                                                layoutAttribute:edgeAttribute
+                                                                    relatedView:self.superview
+                                                         relatedLayoutAttribute:edgeAttribute
+                                                                    coefficient:coefficient]
+                                    name:@"%@ of <%@ %p> to superview <%@ %p>", name, self.class, self, self.superview.class, self.superview];
+        self.translatesAutoresizingMaskIntoConstraints = NO;
+        return attribute;
     }];
 }
 
@@ -267,12 +273,14 @@
     KeepAssert(self.superview, @"Calling %@ allowed only when superview exists", NSStringFromSelector(selector));
     
     return [self keep_attributeForSelector:selector creationBlock:^KeepAttribute *{
-        return [[[KeepMultiplierAttribute alloc] initWithView:self
-                                              layoutAttribute:centerAttribute
-                                                  relatedView:self.superview
-                                       relatedLayoutAttribute:centerAttribute
-                                                  coefficient:2]
-                name:@"%@ of <%@ %p> in superview <%@ %p>", name, self.class, self, self.superview.class, self.superview];
+        KeepAttribute *attribute = [[[KeepMultiplierAttribute alloc] initWithView:self
+                                                                  layoutAttribute:centerAttribute
+                                                                      relatedView:self.superview
+                                                           relatedLayoutAttribute:centerAttribute
+                                                                      coefficient:2]
+                                    name:@"%@ of <%@ %p> in superview <%@ %p>", name, self.class, self, self.superview.class, self.superview];
+        self.translatesAutoresizingMaskIntoConstraints = NO;
+        return attribute;
     }];
 }
 
@@ -347,6 +355,8 @@
                                                           relatedLayoutAttribute:[[oppositeEdges objectForKey:@(edgeAttribute)] integerValue]
                                                                      coefficient:1]
                                      name:@"%@ of <%@ %p> to <%@ %p>", name, self.class, self, relatedView.class, relatedView];
+        self.translatesAutoresizingMaskIntoConstraints = NO;
+        relatedView.translatesAutoresizingMaskIntoConstraints = NO;
         return attribute;
     }];
 }
@@ -408,6 +418,8 @@
                                                           relatedLayoutAttribute:alignAttribute
                                                                      coefficient:coefficient]
                                      name:@"%@ of <%@ %p> to <%@ %p>", name, self.class, self, relatedView.class, relatedView];
+        self.translatesAutoresizingMaskIntoConstraints = NO;
+        relatedView.translatesAutoresizingMaskIntoConstraints = NO;
         // Establish inverse attribute
         [relatedView keep_attributeForSelector:selector relatedView:self creationBlock:^KeepAttribute *{
             return attribute;
