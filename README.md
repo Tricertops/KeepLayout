@@ -222,7 +222,7 @@ Keep Layout uses its own `NSLayoutConstraint` subclass that overrides `-debugDes
 
 With this you can very easily find the wrong attribute and fix it.
 
-See [`KeepConstraint.h`][10] for details.
+See [`KeepLayoutConstraint.h`][10] for details.
 
 ---
 
@@ -263,7 +263,7 @@ MIT License, Copyright © 2013 Martin Kiss
 [3]: Sources/KeepTypes.h
 [4]: Sources/KeepAttribute.h
 [5]: Sources/NSArray+KeepLayout.h
-[10]: Sources/KeepConstraint.h
+[10]: Sources/KeepLayoutConstraint.h
 
 [6]: Sources/UIView+KeepLayout.m
 [7]: Sources/KeepAttribute.m
