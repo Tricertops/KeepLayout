@@ -21,13 +21,13 @@
     return self;
 }
 
-
 - (NSString *)description {
-    return self.debugDescription;
-}
-
-- (NSString *)debugDescription {
-    return [NSString stringWithFormat: @"<%@:%p %@>", self.class, self, self.name];
+    if (self.name) {
+        return [NSString stringWithFormat: @"<%@:%p %@>", self.class, self, self.name];
+    }
+    else {
+        return [super description];
+    }
 }
 
 

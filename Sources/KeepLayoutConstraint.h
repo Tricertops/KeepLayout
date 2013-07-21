@@ -1,4 +1,4 @@
-//
+
 //  KeepLayoutConstraint.h
 //  Keep Layout
 //
@@ -19,7 +19,6 @@
 - (instancetype)name:(NSString *)format, ... NS_FORMAT_FUNCTION(1, 2);
 
 - (NSString *)description;
-- (NSString *)debugDescription;
 
 
 @end

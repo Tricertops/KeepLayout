@@ -265,12 +265,13 @@
     
     if ( ! self.equalConstraint) {
         self.equalConstraint = [self createConstraintWithRelation:NSLayoutRelationEqual value:equal];
+        [self setNameForConstraint:self.equalConstraint relation:NSLayoutRelationEqual value:equal];
         [self addConstraint:self.equalConstraint];
     }
     else {
         [self applyValue:equal forConstraint:self.equalConstraint relation:NSLayoutRelationEqual];
+        [self setNameForConstraint:self.equalConstraint relation:NSLayoutRelationEqual value:equal];
     }
-    [self setNameForConstraint:self.equalConstraint relation:NSLayoutRelationEqual value:equal];
 }
 
 
@@ -284,12 +285,13 @@
     
     if ( ! self.maxConstraint) {
         self.maxConstraint = [self createConstraintWithRelation:NSLayoutRelationLessThanOrEqual value:max];
+        [self setNameForConstraint:self.maxConstraint relation:NSLayoutRelationLessThanOrEqual value:max];
         [self addConstraint:self.maxConstraint];
     }
     else {
         [self applyValue:max forConstraint:self.maxConstraint relation:NSLayoutRelationLessThanOrEqual];
+        [self setNameForConstraint:self.maxConstraint relation:NSLayoutRelationLessThanOrEqual value:max];
     }
-    [self setNameForConstraint:self.maxConstraint relation:NSLayoutRelationLessThanOrEqual value:max];
 }
 
 
@@ -303,12 +305,13 @@
     
     if ( ! self.minConstraint) {
         self.minConstraint = [self createConstraintWithRelation:NSLayoutRelationGreaterThanOrEqual value:min];
+        [self setNameForConstraint:self.minConstraint relation:NSLayoutRelationGreaterThanOrEqual value:min];
         [self addConstraint:self.minConstraint];
     }
     else {
         [self applyValue:min forConstraint:self.minConstraint relation:NSLayoutRelationGreaterThanOrEqual];
+        [self setNameForConstraint:self.minConstraint relation:NSLayoutRelationGreaterThanOrEqual value:min];
     }
-    [self setNameForConstraint:self.minConstraint relation:NSLayoutRelationGreaterThanOrEqual value:min];
 }
 
 
@@ -429,7 +432,7 @@
             self.maxConstraint = constraint;
             break;
     }
-    
+    [self setNameForConstraint:constraint relation:relation value:value];
     [self addConstraint:constraint];
 }
 
