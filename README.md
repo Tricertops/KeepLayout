@@ -128,6 +128,32 @@ See [`UIView+KeepLayout.h`][2] or [`KeepAttribute.h`][4] for more .
 
 
 
+## Removable Groups
+
+_Removable Groups_ is a way to remove multiple attributes (or their values) at once. With this you can quickly change one desired set of constraints (= layout) to another.
+
+```objc
+// Create removable group
+removableLayout = [KeepAttribute removableChanges:^{
+    self.view.keepWidth.min = KeepHigh(320); // Set minimum width limit.
+    self.view.keepVerticalInsets.equal = KeepRequired(0); // Vertically stretch to fit.
+}];
+// Group now contains all attributes that were changed in the block.
+
+[removableLayout remove];
+// self.view no longer has minimum width of 320 and is no longer stretched vertically.
+```
+
+You can also remove these manually using:
+
+```objc
+self.view.keepWidth.min = KeepNone; // Removes minimum width constraint.
+[self.view.keepWidth remove]; // Removes all constraints for width.
+```
+
+See [`KeepAttribute.h`][4] for details.
+
+
 ## Convenience Methods
 
 For the most used cases there are convenience methods. Nothing you could write yourself, but simplify your code and improve readability. Some of them:
@@ -196,6 +222,7 @@ Keep Layout uses its own `NSLayoutConstraint` subclass that overrides `-debugDes
 
 With this you can very easily find the wrong attribute and fix it.
 
+See [`KeepConstraint.h`][10] for details.
 
 ---
 
@@ -220,7 +247,7 @@ See [`UIView+KeepLayout.m`][6] for details.
 
 
 ---
-_Version 1.0.2_
+_Version 1.1.0_
 
 MIT License, Copyright © 2013 Martin Kiss
 
@@ -236,6 +263,7 @@ MIT License, Copyright © 2013 Martin Kiss
 [3]: Sources/KeepTypes.h
 [4]: Sources/KeepAttribute.h
 [5]: Sources/NSArray+KeepLayout.h
+[10]: Sources/KeepConstraint.h
 
 [6]: Sources/UIView+KeepLayout.m
 [7]: Sources/KeepAttribute.m
