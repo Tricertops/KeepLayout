@@ -42,6 +42,8 @@
 #pragma mark Grouping
 /// Allows you to create groups of attributes. Grouped attribute forwards all methods to its children.
 + (KeepAttribute *)group:(KeepAttribute *)first, ... NS_REQUIRES_NIL_TERMINATION;
+/// Executes block and return group of all changed attributes. The returned attribute accepts only -remove message.
++ (KeepAttribute *)removableChanges:(void(^)(void))block;
 
 
 #pragma mar Debugging
@@ -94,6 +96,18 @@
 
 - (instancetype)initWithAttributes:(id<NSFastEnumeration>)attributes;
 @property (nonatomic, readonly, strong) id<NSFastEnumeration> attributes;
+
+@end
+
+
+
+/// Private class.
+/// The `+removableChanges:` method returns instance of this class. Forwards -remove to its children.
+@interface KeepRemovableGroupAttribute : KeepGroupAttribute
+
++ (KeepRemovableGroupAttribute *)current;
++ (void)setCurrent:(KeepRemovableGroupAttribute *)current;
+- (void)addAttribute:(KeepAttribute *)attribute;
 
 @end
 

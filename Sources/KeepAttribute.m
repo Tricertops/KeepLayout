@@ -94,6 +94,15 @@
 }
 
 
++ (KeepAttribute *)removableChanges:(void(^)(void))block {
+    KeepRemovableGroupAttribute *removableGroup = [[KeepRemovableGroupAttribute alloc] init];
+    [KeepRemovableGroupAttribute setCurrent:removableGroup];
+    block();
+    [KeepRemovableGroupAttribute setCurrent:nil];
+    return removableGroup;
+}
+
+
 
 
 
@@ -272,6 +281,8 @@
         [self applyValue:equal forConstraint:self.equalConstraint relation:NSLayoutRelationEqual];
         [self setNameForConstraint:self.equalConstraint relation:NSLayoutRelationEqual value:equal];
     }
+    
+    [[KeepRemovableGroupAttribute current] addAttribute:self];
 }
 
 
@@ -292,6 +303,8 @@
         [self applyValue:max forConstraint:self.maxConstraint relation:NSLayoutRelationLessThanOrEqual];
         [self setNameForConstraint:self.maxConstraint relation:NSLayoutRelationLessThanOrEqual value:max];
     }
+    
+    [[KeepRemovableGroupAttribute current] addAttribute:self];
 }
 
 
@@ -312,6 +325,8 @@
         [self applyValue:min forConstraint:self.minConstraint relation:NSLayoutRelationGreaterThanOrEqual];
         [self setNameForConstraint:self.minConstraint relation:NSLayoutRelationGreaterThanOrEqual value:min];
     }
+    
+    [[KeepRemovableGroupAttribute current] addAttribute:self];
 }
 
 
@@ -558,5 +573,98 @@
 
 
 @end
+
+
+
+
+
+
+
+
+
+#pragma mark -
+
+
+@interface KeepRemovableGroupAttribute ()
+
+
+@property (nonatomic, readwrite, strong) NSMutableArray *attributes;
+
+
+@end
+
+
+
+
+
+@implementation KeepRemovableGroupAttribute
+
+
+
+
+
+#pragma mark Initialization
+
+
+- (instancetype)initWithAttributes:(id<NSFastEnumeration>)attributes {
+    self = [super initWithAttributes:[[NSMutableArray alloc] init]];
+    if (self) {
+        
+    }
+    return self;
+}
+
+
+
+
+
+#pragma mark Building
+
+
+static KeepRemovableGroupAttribute *staticCurrent = nil;
+
+
++ (KeepRemovableGroupAttribute *)current {
+    return staticCurrent;
+}
+
+
++ (void)setCurrent:(KeepRemovableGroupAttribute *)current {
+    staticCurrent = current;
+}
+
+
+- (void)addAttribute:(KeepAttribute *)attribute {
+    [self.attributes addObject:attribute];
+}
+
+
+
+
+
+#pragma mark Setting Values
+
+
+- (void)setEqual:(KeepValue)equal {
+    NSLog(@"Warning! Setting property %@ for removable grouped attribute, doing nothing.", NSStringFromSelector(_cmd));
+}
+
+
+- (void)setMax:(KeepValue)max {
+    NSLog(@"Warning! Setting property %@ for removable grouped attribute, doing nothing.", NSStringFromSelector(_cmd));
+}
+
+
+- (void)setMin:(KeepValue)min {
+    NSLog(@"Warning! Setting property %@ for removable grouped attribute, doing nothing.", NSStringFromSelector(_cmd));
+}
+
+
+
+
+
+@end
+
+
 
 
