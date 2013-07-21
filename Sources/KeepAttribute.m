@@ -94,11 +94,11 @@
 }
 
 
-+ (KeepAttribute *)removableChanges:(void(^)(void))block {
-    KeepRemovableGroupAttribute *removableGroup = [[KeepRemovableGroupAttribute alloc] init];
-    [KeepRemovableGroupAttribute setCurrent:removableGroup];
++ (KeepRemovableGroup *)removableChanges:(void(^)(void))block {
+    KeepRemovableGroup *removableGroup = [[KeepRemovableGroup alloc] init];
+    [KeepRemovableGroup setCurrent:removableGroup];
     block();
-    [KeepRemovableGroupAttribute setCurrent:nil];
+    [KeepRemovableGroup setCurrent:nil];
     return removableGroup;
 }
 
@@ -272,17 +272,19 @@
         return;
     }
     
+    NSLayoutRelation relation = NSLayoutRelationEqual;
+    
     if ( ! self.equalConstraint) {
-        self.equalConstraint = [self createConstraintWithRelation:NSLayoutRelationEqual value:equal];
-        [self setNameForConstraint:self.equalConstraint relation:NSLayoutRelationEqual value:equal];
+        self.equalConstraint = [self createConstraintWithRelation:relation value:equal];
+        [self setNameForConstraint:self.equalConstraint relation:relation value:equal];
         [self addConstraint:self.equalConstraint];
     }
     else {
-        [self applyValue:equal forConstraint:self.equalConstraint relation:NSLayoutRelationEqual];
-        [self setNameForConstraint:self.equalConstraint relation:NSLayoutRelationEqual value:equal];
+        [self applyValue:equal forConstraint:self.equalConstraint relation:relation];
+        [self setNameForConstraint:self.equalConstraint relation:relation value:equal];
     }
     
-    [[KeepRemovableGroupAttribute current] addAttribute:self];
+    [[KeepRemovableGroup current] addAttribute:self forRelation:relation];
 }
 
 
@@ -294,17 +296,19 @@
         return;
     }
     
+    NSLayoutRelation relation = NSLayoutRelationLessThanOrEqual;
+    
     if ( ! self.maxConstraint) {
-        self.maxConstraint = [self createConstraintWithRelation:NSLayoutRelationLessThanOrEqual value:max];
-        [self setNameForConstraint:self.maxConstraint relation:NSLayoutRelationLessThanOrEqual value:max];
+        self.maxConstraint = [self createConstraintWithRelation:relation value:max];
+        [self setNameForConstraint:self.maxConstraint relation:relation value:max];
         [self addConstraint:self.maxConstraint];
     }
     else {
-        [self applyValue:max forConstraint:self.maxConstraint relation:NSLayoutRelationLessThanOrEqual];
-        [self setNameForConstraint:self.maxConstraint relation:NSLayoutRelationLessThanOrEqual value:max];
+        [self applyValue:max forConstraint:self.maxConstraint relation:relation];
+        [self setNameForConstraint:self.maxConstraint relation:relation value:max];
     }
     
-    [[KeepRemovableGroupAttribute current] addAttribute:self];
+    [[KeepRemovableGroup current] addAttribute:self forRelation:relation];
 }
 
 
@@ -316,17 +320,19 @@
         return;
     }
     
+    NSLayoutRelation relation = NSLayoutRelationGreaterThanOrEqual;
+    
     if ( ! self.minConstraint) {
-        self.minConstraint = [self createConstraintWithRelation:NSLayoutRelationGreaterThanOrEqual value:min];
-        [self setNameForConstraint:self.minConstraint relation:NSLayoutRelationGreaterThanOrEqual value:min];
+        self.minConstraint = [self createConstraintWithRelation:relation value:min];
+        [self setNameForConstraint:self.minConstraint relation:relation value:min];
         [self addConstraint:self.minConstraint];
     }
     else {
-        [self applyValue:min forConstraint:self.minConstraint relation:NSLayoutRelationGreaterThanOrEqual];
-        [self setNameForConstraint:self.minConstraint relation:NSLayoutRelationGreaterThanOrEqual value:min];
+        [self applyValue:min forConstraint:self.minConstraint relation:relation];
+        [self setNameForConstraint:self.minConstraint relation:relation value:min];
     }
     
-    [[KeepRemovableGroupAttribute current] addAttribute:self];
+    [[KeepRemovableGroup current] addAttribute:self forRelation:relation];
 }
 
 
@@ -585,10 +591,12 @@
 #pragma mark -
 
 
-@interface KeepRemovableGroupAttribute ()
+@interface KeepRemovableGroup ()
 
 
-@property (nonatomic, readwrite, strong) NSMutableArray *attributes;
+@property (nonatomic, readwrite, strong) NSMutableSet *equalAttributes;
+@property (nonatomic, readwrite, strong) NSMutableSet *minAttributes;
+@property (nonatomic, readwrite, strong) NSMutableSet *maxAttributes;
 
 
 @end
@@ -597,7 +605,7 @@
 
 
 
-@implementation KeepRemovableGroupAttribute
+@implementation KeepRemovableGroup
 
 
 
@@ -606,10 +614,12 @@
 #pragma mark Initialization
 
 
-- (instancetype)initWithAttributes:(id<NSFastEnumeration>)attributes {
-    self = [super initWithAttributes:[[NSMutableArray alloc] init]];
+- (instancetype)init {
+    self = [super init];
     if (self) {
-        
+        self.equalAttributes = [[NSMutableSet alloc] init];
+        self.minAttributes = [[NSMutableSet alloc] init];
+        self.maxAttributes = [[NSMutableSet alloc] init];
     }
     return self;
 }
@@ -621,21 +631,25 @@
 #pragma mark Building
 
 
-static KeepRemovableGroupAttribute *staticCurrent = nil;
+static KeepRemovableGroup *staticCurrent = nil;
 
 
-+ (KeepRemovableGroupAttribute *)current {
++ (KeepRemovableGroup *)current {
     return staticCurrent;
 }
 
 
-+ (void)setCurrent:(KeepRemovableGroupAttribute *)current {
++ (void)setCurrent:(KeepRemovableGroup *)current {
     staticCurrent = current;
 }
 
 
-- (void)addAttribute:(KeepAttribute *)attribute {
-    [self.attributes addObject:attribute];
+- (void)addAttribute:(KeepAttribute *)attribute forRelation:(NSLayoutRelation)relation {
+    switch (relation) {
+        case NSLayoutRelationEqual: [self.equalAttributes addObject:attribute]; break;
+        case NSLayoutRelationLessThanOrEqual: [self.maxAttributes addObject:attribute]; break;
+        case NSLayoutRelationGreaterThanOrEqual: [self.minAttributes addObject:attribute]; break;
+    }
 }
 
 
@@ -645,18 +659,10 @@ static KeepRemovableGroupAttribute *staticCurrent = nil;
 #pragma mark Setting Values
 
 
-- (void)setEqual:(KeepValue)equal {
-    NSLog(@"Warning! Setting property %@ for removable grouped attribute, doing nothing.", NSStringFromSelector(_cmd));
-}
-
-
-- (void)setMax:(KeepValue)max {
-    NSLog(@"Warning! Setting property %@ for removable grouped attribute, doing nothing.", NSStringFromSelector(_cmd));
-}
-
-
-- (void)setMin:(KeepValue)min {
-    NSLog(@"Warning! Setting property %@ for removable grouped attribute, doing nothing.", NSStringFromSelector(_cmd));
+- (void)remove {
+    for (KeepAttribute *attribute in self.equalAttributes) attribute.equal = KeepNone;
+    for (KeepAttribute *attribute in self.minAttributes) attribute.min = KeepNone;
+    for (KeepAttribute *attribute in self.maxAttributes) attribute.max = KeepNone;
 }
 
 

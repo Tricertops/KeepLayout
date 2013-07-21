@@ -14,6 +14,10 @@
 
 
 
+@class KeepRemovableGroup;
+
+
+
 
 
 /// Each instance if KeepAttribute manages up to 3 NSLayoutConstraints: one for each relation.
@@ -42,8 +46,8 @@
 #pragma mark Grouping
 /// Allows you to create groups of attributes. Grouped attribute forwards all methods to its children.
 + (KeepAttribute *)group:(KeepAttribute *)first, ... NS_REQUIRES_NIL_TERMINATION;
-/// Executes block and return group of all changed attributes. The returned attribute accepts only -remove message.
-+ (KeepAttribute *)removableChanges:(void(^)(void))block;
+/// Executes block and return group of all changed attributes. Call -remove on returned object to discard all changed attribute values.
++ (KeepRemovableGroup *)removableChanges:(void(^)(void))block;
 
 
 #pragma mar Debugging
@@ -102,12 +106,14 @@
 
 
 /// Private class.
-/// The `+removableChanges:` method returns instance of this class. Forwards -remove to its children.
-@interface KeepRemovableGroupAttribute : KeepGroupAttribute
+/// The `+removableChanges:` method returns instance of this class.
+@interface KeepRemovableGroup : NSObject
 
-+ (KeepRemovableGroupAttribute *)current;
-+ (void)setCurrent:(KeepRemovableGroupAttribute *)current;
-- (void)addAttribute:(KeepAttribute *)attribute;
++ (KeepRemovableGroup *)current;
++ (void)setCurrent:(KeepRemovableGroup *)current;
+- (void)addAttribute:(KeepAttribute *)attribute forRelation:(NSLayoutRelation)relation;
+
+- (void)remove;
 
 @end
 
