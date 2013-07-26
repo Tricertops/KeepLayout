@@ -48,8 +48,11 @@
 
 /// Convenience methods applied to whole array, in the order they are in array.
 - (void)keepWidthsEqual;
+- (void)keepWidthsEqualWithPriority:(KeepPriority)priority;
 - (void)keepHeightsEqual;
+//TODO: keepHeightsEqualWithPriority:
 - (void)keepSizesEqual;
+//TODO: keepSizesEqualWithPriority:
 
 
 

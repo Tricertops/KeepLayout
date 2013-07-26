@@ -136,8 +136,13 @@
 
 
 - (void)keepWidthsEqual {
+    [self keepWidthsEqualWithPriority:KeepPriorityRequired];
+}
+
+
+- (void)keepWidthsEqualWithPriority:(KeepPriority)priority {
     [self keep_invoke:_cmd eachTwo:^(UIView *this, UIView *next) {
-        this.keepWidthTo(next).equal = KeepRequired(1);
+        this.keepWidthTo(next).equal = KeepValueMake(1, priority);
     }];
 }
 
