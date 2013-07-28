@@ -176,7 +176,67 @@
                                };
                            }]];
     
-    self.examples = @[ simpleExamples ];
+    NSMutableArray *complexExamples = [[NSMutableArray alloc] init];
+    [complexExamples addObject:
+     [[KPLExample alloc] initWithTitle:@"Everything"
+                              subtitle:@"All attributes used"
+                            setupBlock:^KPLExampleStateBlock(UIView *container) {
+                                UIView *center = createView(UIColor.blackColor, container);
+                                UIView *topStick = createView(UIColor.blackColor, container);
+                                UIView *bottomStick = createView(UIColor.blackColor, container);
+                                UIView *leftBox = createView(UIColor.blackColor, container);
+                                UIView *rightBox = createView(UIColor.blackColor, container);
+                                UIView *topLeftCorner = createView(UIColor.blackColor, container);
+                                UIView *bottomRightCorner = createView(UIColor.blackColor, container);
+                                
+                                KeepValue offsetHigh = KeepHigh(10);
+                                KeepValue offsetRequired = KeepRequired(10);
+                                KeepValue thickness = KeepRequired(30);
+                                
+                                NSArray *views = @[ center, topStick, bottomStick, leftBox, rightBox, topLeftCorner, bottomRightCorner ];
+                                views.keepInsets.min = offsetRequired;
+
+                                center.keepCenter.equal = KeepRequired(0.5);
+                                
+                                center.keepTopOffsetTo(topStick).equal = offsetHigh;
+                                center.keepBottomOffsetTo(bottomStick).equal = offsetHigh;
+                                center.keepLeftOffsetTo(leftBox).equal = offsetHigh;
+                                center.keepRightOffsetTo(rightBox).equal = offsetHigh;
+                                
+                                leftBox.keepLeftInset.equal = offsetRequired;
+                                rightBox.keepRightInset.equal = offsetRequired;
+                                topStick.keepTopInset.equal = offsetRequired;
+                                bottomStick.keepBottomInset.equal = offsetRequired;
+                                
+                                leftBox.keepAspectRatio.equal = KeepRequired(1);
+                                rightBox.keepAspectRatio.equal = KeepRequired(1);
+                                
+                                topStick.keepWidth.equal = thickness;
+                                bottomStick.keepWidth.equal = thickness;
+                                
+                                center.keepTopAlignTo(leftBox).equal = KeepRequired(0);
+                                center.keepBottomAlignTo(rightBox).equal = KeepRequired(0);
+                                
+                                topLeftCorner.keepHeight.equal = thickness;
+                                topLeftCorner.keepRightOffsetTo(center).equal = KeepRequired(0);
+                                topLeftCorner.keepHorizontalAlignTo(topStick).equal = KeepRequired(0);
+                                topLeftCorner.keepLeftAlignTo(leftBox).equal = offsetRequired;
+                                
+                                bottomRightCorner.keepHeight.equal = thickness;
+                                bottomRightCorner.keepLeftOffsetTo(center).equal = KeepRequired(0);
+                                bottomRightCorner.keepHorizontalAlignTo(bottomStick).equal = KeepRequired(0);
+                                bottomRightCorner.keepRightAlignTo(rightBox).equal = offsetRequired;
+                                
+                                NSArray *horizontal = @[ leftBox, center, rightBox ];
+                                [horizontal keepWidthsEqual];
+                                NSArray *vertical = @[ topStick, center, bottomStick ];
+                                [vertical keepHeightsEqual];
+                                [vertical keepVerticallyAligned];
+                                
+                                return nil;
+                            }]];
+    
+    self.examples = @[ simpleExamples, complexExamples ];
 }
 
 
@@ -199,6 +259,7 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     switch (section) {
         case 0: return @"Simple Examples";
+        case 1: return @"Complex Examples";
         default: return nil;
     }
 }
