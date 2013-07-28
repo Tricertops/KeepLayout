@@ -236,6 +236,57 @@
                                 return nil;
                             }]];
     
+    [complexExamples addObject:
+     [[KPLExample alloc] initWithTitle:@"Tiles"
+                              subtitle:@"Using many NSArray attributes"
+                            setupBlock:^KPLExampleStateBlock(UIView *container) {
+                                
+                                NSUInteger rowCount = 5;
+                                NSUInteger columnCount = 5;
+                                CGFloat padding = 10;
+                                
+                                // Arrays
+                                NSMutableArray *tiles = [[NSMutableArray alloc] init];
+                                
+                                NSMutableArray *columns = [[NSMutableArray alloc] init];
+                                for (NSUInteger c = 0; c < columnCount; c++) {
+                                    NSMutableArray *column = [[NSMutableArray alloc] init];
+                                    [columns addObject:column];
+                                }
+                                NSMutableArray *rows = [[NSMutableArray alloc] init];
+                                for (NSUInteger r = 0; r < rowCount; r++) {
+                                    NSMutableArray *row = [[NSMutableArray alloc] init];
+                                    [rows addObject:row];
+                                }
+                                
+                                // Populate arrays
+                                for (NSUInteger c = 0; c < columnCount; c++) {
+                                    for (NSUInteger r = 0; r < rowCount; r++) {
+                                        UIView *view = createView(UIColor.blackColor, container);
+                                        [tiles addObject:view];
+                                        [[columns objectAtIndex:c] addObject:view];
+                                        [[rows objectAtIndex:r] addObject:view];
+                                    }
+                                }
+                                
+                                
+                                [tiles keepSizesEqual];
+                                tiles.keepInsets.min = KeepRequired(padding);
+                                
+                                for (NSMutableArray *column in columns) {
+                                    [column keepVerticalOffsets:KeepHigh(padding)];
+                                    [column keepVerticallyAligned];
+                                }
+                                
+                                for (NSMutableArray *row in rows) {
+                                    [row keepHorizontalOffsets:KeepHigh(padding)];
+                                    [row keepHorizontallyAligned];
+                                }
+                                
+                                
+                                return nil;
+                            }]];
+    
     self.examples = @[ simpleExamples, complexExamples ];
 }
 
