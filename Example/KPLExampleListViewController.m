@@ -227,13 +227,20 @@
                                 bottomRightCorner.keepHorizontalAlignTo(bottomStick).equal = KeepRequired(0);
                                 bottomRightCorner.keepRightAlignTo(rightBox).equal = offsetRequired;
                                 
-                                NSArray *horizontal = @[ leftBox, center, rightBox ];
-                                [horizontal keepWidthsEqual];
+                                center.keepWidthTo(leftBox).equal = KeepRequired(1);
+                                leftBox.keepWidthTo(rightBox).equal = KeepRequired(1);
+                                
+                                center.keepHeightTo(topStick).equal = KeepRequired(1);
+                                topStick.keepHeightTo(bottomStick).equal = KeepRequired(1);
+                                
                                 NSArray *vertical = @[ topStick, center, bottomStick ];
-                                [vertical keepHeightsEqual];
                                 [vertical keepVerticallyAligned];
                                 
-                                return nil;
+                                return ^(NSUInteger state) {
+                                    BOOL odd = (state % 2);
+                                    center.keepWidthTo(leftBox).equal = KeepRequired(odd? 2 : 1);
+                                    center.keepHeightTo(topStick).equal = KeepRequired(odd? 2 : 1);
+                                };
                             }]];
     
     [complexExamples addObject:
@@ -279,15 +286,15 @@
                                 
                                 [[[columns objectAtIndex:0] keepLeftInset] setEqual:KeepRequired(padding)];
                                 for (NSMutableArray *column in columns) {
-                                    [column keepVerticalOffsets:KeepRequired(padding)];
-                                    [column keepVerticallyAligned];
+                                    [column keepVerticalOffsets:KeepHigh(padding)];
+                                    [column keepVerticalAlignments:KeepHigh(0)];
                                 }
                                 [[columns.lastObject keepRightInset] setEqual:KeepRequired(padding)];
                                 
                                 [[[rows objectAtIndex:0] keepTopInset] setEqual:KeepRequired(padding)];
                                 for (NSMutableArray *row in rows) {
-                                    [row keepHorizontalOffsets:KeepRequired(padding)];
-                                    [row keepHorizontallyAligned];
+                                    [row keepHorizontalOffsets:KeepHigh(padding)];
+                                    [row keepHorizontalAlignments:KeepHigh(0)];
                                 }
                                 [[rows.lastObject keepBottomInset] setEqual:KeepRequired(padding)];
                                 
@@ -297,7 +304,7 @@
                                 
                                 return ^(NSUInteger state) {
                                     BOOL odd = (state % 2);
-                                    cells.keepAspectRatio.equal = (odd? KeepRequired(1) : KeepNone);
+                                    cells.keepAspectRatio.equal = (odd? KeepValueMake(1, KeepPriorityHigh+1) : KeepNone);
                                 };
                             }]];
     
