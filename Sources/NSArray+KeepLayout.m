@@ -135,24 +135,39 @@
 }
 
 
-- (void)keepWidthsEqual {
+- (void)keepWidthsEqualWithPriority:(KeepPriority)priority {
     [self keep_invoke:_cmd eachTwo:^(UIView *this, UIView *next) {
-        this.keepWidthTo(next).equal = KeepRequired(1);
+        this.keepWidthTo(next).equal = KeepValueMake(1, priority);
     }];
+}
+
+
+- (void)keepHeightsEqualWithPriority:(KeepPriority)priority {
+    [self keep_invoke:_cmd eachTwo:^(UIView *this, UIView *next) {
+        this.keepHeightTo(next).equal = KeepValueMake(1, priority);
+    }];
+}
+
+
+- (void)keepSizesEqualWithPriority:(KeepPriority)priority {
+    [self keep_invoke:_cmd eachTwo:^(UIView *this, UIView *next) {
+        this.keepSizeTo(next).equal = KeepValueMake(1, priority);
+    }];
+}
+
+
+- (void)keepWidthsEqual {
+    [self keepWidthsEqualWithPriority:KeepPriorityRequired];
 }
 
 
 - (void)keepHeightsEqual {
-    [self keep_invoke:_cmd eachTwo:^(UIView *this, UIView *next) {
-        this.keepHeightTo(next).equal = KeepRequired(1);
-    }];
+    [self keepHeightsEqualWithPriority:KeepPriorityRequired];
 }
 
 
 - (void)keepSizesEqual {
-    [self keep_invoke:_cmd eachTwo:^(UIView *this, UIView *next) {
-        this.keepSizeTo(next).equal = KeepRequired(1);
-    }];
+    [self keepSizesEqualWithPriority:KeepPriorityRequired];
 }
 
 
@@ -197,17 +212,15 @@
 }
 
 
-- (void)keepInsets:(UIEdgeInsets)insets {
-    [self keep_invoke:_cmd each:^(UIView *view) {
-        [view keepInsets:insets];
-    }];
-}
-
-
 - (void)keepInsets:(UIEdgeInsets)insets priority:(KeepPriority)priority {
     [self keep_invoke:_cmd each:^(UIView *view) {
         [view keepInsets:insets priority:priority];
     }];
+}
+
+
+- (void)keepInsets:(UIEdgeInsets)insets {
+    [self keepInsets:insets priority:KeepPriorityRequired];
 }
 
 
@@ -231,23 +244,9 @@
 }
 
 
-- (void)keepCentered {
-    [self keep_invoke:_cmd each:^(UIView *view) {
-        [view keepCentered];
-    }];
-}
-
-
 - (void)keepCenteredWithPriority:(KeepPriority)priority {
     [self keep_invoke:_cmd each:^(UIView *view) {
         [view keepCenteredWithPriority:priority];
-    }];
-}
-
-
-- (void)keepCenter:(CGPoint)center {
-    [self keep_invoke:_cmd each:^(UIView *view) {
-        [view keepCenter:center];
     }];
 }
 
@@ -256,6 +255,16 @@
     [self keep_invoke:_cmd each:^(UIView *view) {
         [view keepCenter:center priority:priority];
     }];
+}
+
+
+- (void)keepCentered {
+    [self keepCenteredWithPriority:KeepPriorityRequired];
+}
+
+
+- (void)keepCenter:(CGPoint)center {
+    [self keepCenter:center priority:KeepPriorityRequired];
 }
 
 
@@ -362,47 +371,82 @@
 }
 
 
-- (void)keep_alignedSelector:(SEL)selector invokeSelector:(SEL)invokeSelector {
+- (void)keep_alignedSelector:(SEL)selector invokeSelector:(SEL)invokeSelector value:(KeepValue)value {
     [self keep_invoke:selector eachTwo:^(UIView *this, UIView *next) {
         KeepAttribute *(^block)(UIView *) = [this valueForKey:NSStringFromSelector(invokeSelector)];
         KeepAttribute *attribute = block(next);
-        attribute.equal = KeepRequired(0);
+        attribute.equal = value;
     }];
 }
 
 
+- (void)keepLeftAlignments:(KeepValue)value {
+    [self keep_alignedSelector:_cmd invokeSelector:@selector(keepLeftAlignTo) value:value];
+}
+
+
+- (void)keepRightAlignments:(KeepValue)value {
+    [self keep_alignedSelector:_cmd invokeSelector:@selector(keepRightAlignTo) value:value];
+}
+
+
+- (void)keepTopAlignments:(KeepValue)value {
+    [self keep_alignedSelector:_cmd invokeSelector:@selector(keepTopAlignTo) value:value];
+}
+
+
+- (void)keepBottomAlignments:(KeepValue)value {
+    [self keep_alignedSelector:_cmd invokeSelector:@selector(keepBottomAlignTo) value:value];
+}
+
+
+- (void)keepVerticalAlignments:(KeepValue)value {
+    [self keep_alignedSelector:_cmd invokeSelector:@selector(keepVerticalAlignTo) value:value];
+}
+
+
+- (void)keepHorizontalAlignments:(KeepValue)value {
+    [self keep_alignedSelector:_cmd invokeSelector:@selector(keepHorizontalAlignTo) value:value];
+}
+
+
+- (void)keepBaselineAlignments:(KeepValue)value {
+    [self keep_alignedSelector:_cmd invokeSelector:@selector(keepBaselineAlignTo) value:value];
+}
+
+
 - (void)keepLeftAligned {
-    [self keep_alignedSelector:_cmd invokeSelector:@selector(keepLeftAlignTo)];
+    [self keep_alignedSelector:_cmd invokeSelector:@selector(keepLeftAlignTo) value:KeepRequired(0)];
 }
 
 
 - (void)keepRightAligned {
-    [self keep_alignedSelector:_cmd invokeSelector:@selector(keepRightAlignTo)];
+    [self keep_alignedSelector:_cmd invokeSelector:@selector(keepRightAlignTo) value:KeepRequired(0)];
 }
 
 
 - (void)keepTopAligned {
-    [self keep_alignedSelector:_cmd invokeSelector:@selector(keepTopAlignTo)];
+    [self keep_alignedSelector:_cmd invokeSelector:@selector(keepTopAlignTo) value:KeepRequired(0)];
 }
 
 
 - (void)keepBottomAligned {
-    [self keep_alignedSelector:_cmd invokeSelector:@selector(keepBottomAlignTo)];
+    [self keep_alignedSelector:_cmd invokeSelector:@selector(keepBottomAlignTo) value:KeepRequired(0)];
 }
 
 
 - (void)keepVerticallyAligned {
-    [self keep_alignedSelector:_cmd invokeSelector:@selector(keepVerticalAlignTo)];
+    [self keep_alignedSelector:_cmd invokeSelector:@selector(keepVerticalAlignTo) value:KeepRequired(0)];
 }
 
 
 - (void)keepHorizontallyAligned {
-    [self keep_alignedSelector:_cmd invokeSelector:@selector(keepHorizontalAlignTo)];
+    [self keep_alignedSelector:_cmd invokeSelector:@selector(keepHorizontalAlignTo) value:KeepRequired(0)];
 }
 
 
 - (void)keepBaselineAligned {
-    [self keep_alignedSelector:_cmd invokeSelector:@selector(keepBaselineAlignTo)];
+    [self keep_alignedSelector:_cmd invokeSelector:@selector(keepBaselineAlignTo) value:KeepRequired(0)];
 }
 
 
