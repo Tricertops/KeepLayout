@@ -241,12 +241,13 @@
                               subtitle:@"Using many NSArray attributes"
                             setupBlock:^KPLExampleStateBlock(UIView *container) {
                                 
-                                NSUInteger rowCount = 5;
-                                NSUInteger columnCount = 5;
+                                NSUInteger rowCount = 4;
+                                NSUInteger columnCount = 4;
                                 CGFloat padding = 10;
                                 
                                 // Arrays
                                 NSMutableArray *tiles = [[NSMutableArray alloc] init];
+                                NSMutableArray *cells = [[NSMutableArray alloc] init];
                                 
                                 NSMutableArray *columns = [[NSMutableArray alloc] init];
                                 for (NSUInteger c = 0; c < columnCount; c++) {
@@ -262,10 +263,13 @@
                                 // Populate arrays
                                 for (NSUInteger c = 0; c < columnCount; c++) {
                                     for (NSUInteger r = 0; r < rowCount; r++) {
-                                        UIView *view = createView(UIColor.blackColor, container);
+                                        UIView *view = createView(UIColor.whiteColor, container);
                                         [tiles addObject:view];
                                         [[columns objectAtIndex:c] addObject:view];
                                         [[rows objectAtIndex:r] addObject:view];
+                                        
+                                        UIView *cell = createView(UIColor.blackColor, view);
+                                        [cells addObject:cell];
                                     }
                                 }
                                 
@@ -273,18 +277,28 @@
                                 [tiles keepSizesEqual];
                                 tiles.keepInsets.min = KeepRequired(padding);
                                 
+                                [[[columns objectAtIndex:0] keepLeftInset] setEqual:KeepRequired(padding)];
                                 for (NSMutableArray *column in columns) {
-                                    [column keepVerticalOffsets:KeepHigh(padding)];
+                                    [column keepVerticalOffsets:KeepRequired(padding)];
                                     [column keepVerticallyAligned];
                                 }
+                                [[columns.lastObject keepRightInset] setEqual:KeepRequired(padding)];
                                 
+                                [[[rows objectAtIndex:0] keepTopInset] setEqual:KeepRequired(padding)];
                                 for (NSMutableArray *row in rows) {
-                                    [row keepHorizontalOffsets:KeepHigh(padding)];
+                                    [row keepHorizontalOffsets:KeepRequired(padding)];
                                     [row keepHorizontallyAligned];
                                 }
+                                [[rows.lastObject keepBottomInset] setEqual:KeepRequired(padding)];
                                 
+                                cells.keepInsets.min = KeepRequired(0);
+                                cells.keepInsets.equal = KeepHigh(0);
+                                [cells keepCentered];
                                 
-                                return nil;
+                                return ^(NSUInteger state) {
+                                    BOOL odd = (state % 2);
+                                    cells.keepAspectRatio.equal = (odd? KeepRequired(1) : KeepNone);
+                                };
                             }]];
     
     self.examples = @[ simpleExamples, complexExamples ];
