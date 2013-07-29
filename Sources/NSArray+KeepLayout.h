@@ -47,6 +47,11 @@
 - (KeepAttribute *(^)(UIView *))keepSizeTo;
 
 /// Convenience methods applied to whole array, in the order they are in array.
+- (void)keepWidthsEqualWithPriority:(KeepPriority)priority;
+- (void)keepHeightsEqualWithPriority:(KeepPriority)priority;
+- (void)keepSizesEqualWithPriority:(KeepPriority)priority;
+
+// Methods which invoke the above with `KeepPriorityRequired` value. Use of these is discouraged.
 - (void)keepWidthsEqual;
 - (void)keepWidthsEqualWithPriority:(KeepPriority)priority;
 - (void)keepHeightsEqual;
@@ -67,8 +72,10 @@
 - (KeepAttribute *)keepHorizontalInsets;
 - (KeepAttribute *)keepVerticalInsets;
 
-- (void)keepInsets:(UIEdgeInsets)insets;
 - (void)keepInsets:(UIEdgeInsets)insets priority:(KeepPriority)priority;
+
+// Method which invoke the above with `KeepPriorityRequired` value. Use of this is discouraged.
+- (void)keepInsets:(UIEdgeInsets)insets;
 
 
 
@@ -79,10 +86,12 @@
 
 - (KeepAttribute *)keepCenter;
 
-- (void)keepCentered;
 - (void)keepCenteredWithPriority:(KeepPriority)priority;
-- (void)keepCenter:(CGPoint)center;
 - (void)keepCenter:(CGPoint)center priority:(KeepPriority)priority;
+
+// Methods which invoke the above with `KeepPriorityRequired` value. Use of these is discouraged.
+- (void)keepCentered;
+- (void)keepCenter:(CGPoint)center;
 
 
 
@@ -112,6 +121,15 @@
 - (KeepAttribute *(^)(UIView *))keepBaselineAlignTo;
 
 /// Convenience methods applied to whole array, in the order they are in array.
+- (void)keepLeftAlignments:(KeepValue)value;
+- (void)keepRightAlignments:(KeepValue)value;
+- (void)keepTopAlignments:(KeepValue)value;
+- (void)keepBottomAlignments:(KeepValue)value;
+- (void)keepVerticalAlignments:(KeepValue)value;
+- (void)keepHorizontalAlignments:(KeepValue)value;
+- (void)keepBaselineAlignments:(KeepValue)value;
+
+// Methods which invoke the above with `KeepRequired(0)` value. Use of these is discouraged.
 - (void)keepLeftAligned;
 - (void)keepRightAligned;
 - (void)keepTopAligned;

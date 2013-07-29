@@ -33,8 +33,8 @@
 - (KeepAttribute *)keepSize;
 
 /// Convenience methods for setting both dimensions at once.
-- (void)keepSize:(CGSize)size; /// Uses Required priority
 - (void)keepSize:(CGSize)size priority:(KeepPriority)priority;
+- (void)keepSize:(CGSize)size; /// Uses Required priority. Use is discouraged.
 
 /// Attributes representing aspect ratio of receiver's dimensions. Values are multipliers of width/height.
 - (KeepAttribute *)keepAspectRatio;
@@ -63,8 +63,8 @@
 - (KeepAttribute *)keepVerticalInsets;
 
 /// Convenience methods for setting all dimensions at once.
-- (void)keepInsets:(UIEdgeInsets)insets; /// Uses Required priority
 - (void)keepInsets:(UIEdgeInsets)insets priority:(KeepPriority)priority;
+- (void)keepInsets:(UIEdgeInsets)insets; /// Uses Required priority. Use is discouraged.
 
 
 
@@ -80,10 +80,10 @@
 - (KeepAttribute *)keepCenter;
 
 /// Convenience methods for setting both centers at once.
-- (void)keepCentered; /// Uses Required priority
 - (void)keepCenteredWithPriority:(KeepPriority)priority;
-- (void)keepCenter:(CGPoint)center; /// Uses Required priority
+- (void)keepCentered; /// Uses Required priority. Use is discouraged.
 - (void)keepCenter:(CGPoint)center priority:(KeepPriority)priority;
+- (void)keepCenter:(CGPoint)center; /// Uses Required priority. Use is discouraged.
 
 
 
@@ -113,18 +113,18 @@
 - (KeepAttribute *(^)(UIView *))keepBottomAlignTo; /// Automatically inverts values.
 
 /// Convenience methods for setting all edge alignments at once.
-- (void)keepEdgeAlignTo:(UIView *)view;
-- (void)keepEdgeAlignTo:(UIView *)view insets:(UIEdgeInsets)insets;
 - (void)keepEdgeAlignTo:(UIView *)view insets:(UIEdgeInsets)insets withPriority:(KeepPriority)priority;
+- (void)keepEdgeAlignTo:(UIView *)view insets:(UIEdgeInsets)insets; /// Uses Required priority. Use is discouraged.
+- (void)keepEdgeAlignTo:(UIView *)view; /// Uses zero insets and Required priority.  Use is discouraged.
 
 /// Attributes representing center alignments of two views.
 - (KeepAttribute *(^)(UIView *))keepVerticalAlignTo;
 - (KeepAttribute *(^)(UIView *))keepHorizontalAlignTo; /// Automatically inverts values.
 
 /// Convenience methods for setting center (both axis) alignment.
-- (void)keepCenterAlignTo:(UIView *)view;
-- (void)keepCenterAlignTo:(UIView *)view offset:(UIOffset)offset;
 - (void)keepCenterAlignTo:(UIView *)view offset:(UIOffset)offset withPriority:(KeepPriority)priority;
+- (void)keepCenterAlignTo:(UIView *)view offset:(UIOffset)offset; /// Uses Required priority.  Use is discouraged.
+- (void)keepCenterAlignTo:(UIView *)view; /// Uses zero offset and Required priority.  Use is discouraged.
 
 /// Attribute representing baseline alignments of two views.
 /// Not all views have baseline.
