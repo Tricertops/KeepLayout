@@ -533,18 +533,26 @@
     KeepParameterAssert(delay >= 0);
     KeepParameterAssert(animations);
     
-    [[NSOperationQueue mainQueue] performSelector:@selector(addOperationWithBlock:)
-                                       withObject:^{
-                                           [UIView animateWithDuration:duration
-                                                                 delay:0
-                                                               options:options
-                                                            animations:^{
-                                                                animations();
-                                                                [self layoutIfNeeded];
-                                                            }
-                                                            completion:completion];
-                                       }
-                                       afterDelay:delay];
+    void (^block)(void) = ^{
+        [UIView animateWithDuration:duration
+                              delay:0
+                            options:options
+                         animations:^{
+                             animations();
+                             [self layoutIfNeeded];
+                         }
+                         completion:completion];
+    };
+    
+    if (duration > 0 || delay > 0) {
+        [[NSOperationQueue mainQueue] performSelector:@selector(addOperationWithBlock:)
+                                           withObject:block
+                                           afterDelay:delay];
+    }
+    else {
+        block();
+    }
+    
 }
 
 
