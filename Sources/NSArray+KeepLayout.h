@@ -53,11 +53,8 @@
 
 // Methods which invoke the above with `KeepPriorityRequired` value. Use of these is discouraged.
 - (void)keepWidthsEqual;
-- (void)keepWidthsEqualWithPriority:(KeepPriority)priority;
 - (void)keepHeightsEqual;
-//TODO: keepHeightsEqualWithPriority:
 - (void)keepSizesEqual;
-//TODO: keepSizesEqualWithPriority:
 
 
 
