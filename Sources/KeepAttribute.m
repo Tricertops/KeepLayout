@@ -340,8 +340,8 @@
 - (void)setNameForConstraint:(KeepLayoutConstraint *)constraint relation:(NSLayoutRelation)relation value:(KeepValue)value {
     NSDictionary *relationNames = @{
                                     @(NSLayoutRelationEqual) : @"equal to",
-                                    @(NSLayoutRelationEqual) : @"at least",
-                                    @(NSLayoutRelationEqual) : @"at most",
+                                    @(NSLayoutRelationGreaterThanOrEqual) : @"at least",
+                                    @(NSLayoutRelationLessThanOrEqual) : @"at most",
                                     };
     [constraint name:@"%@ %@ %@ with %@ priority",
      self.name,
