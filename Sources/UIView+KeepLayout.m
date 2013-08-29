@@ -547,7 +547,8 @@
     if (duration > 0 || delay > 0) {
         [[NSOperationQueue mainQueue] performSelector:@selector(addOperationWithBlock:)
                                            withObject:block
-                                           afterDelay:delay];
+                                           afterDelay:delay
+                                              inModes:@[NSRunLoopCommonModes]];
     }
     else {
         block();
