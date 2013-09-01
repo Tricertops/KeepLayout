@@ -12,12 +12,14 @@
 
 
 - (instancetype)name:(NSString *)format, ... {
+#ifdef DEBUG
     va_list arguments;
     va_start(arguments, format);
     
     self.name = [[NSString alloc] initWithFormat:format arguments:arguments];
     
     va_end(arguments);
+#endif
     return self;
 }
 
