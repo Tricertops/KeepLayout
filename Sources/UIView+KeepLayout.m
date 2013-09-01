@@ -519,12 +519,31 @@
 
 
 - (void)keepAnimatedWithDuration:(NSTimeInterval)duration layout:(void(^)(void))animations {
-    [self keepAnimatedWithDuration:duration delay:0 options:kNilOptions layout:animations completion:nil];
+    KeepParameterAssert(duration >= 0);
+    KeepParameterAssert(animations);
+    
+    [self keep_animationPerformWithDuration:duration delay:0 block:^{
+        [UIView animateWithDuration:duration
+                         animations:^{
+                             animations();
+                             [self layoutIfNeeded];
+                         }];
+    }];
 }
 
 
 - (void)keepAnimatedWithDuration:(NSTimeInterval)duration delay:(NSTimeInterval)delay layout:(void(^)(void))animations {
-    [self keepAnimatedWithDuration:duration delay:delay options:kNilOptions layout:animations completion:nil];
+    KeepParameterAssert(duration >= 0);
+    KeepParameterAssert(delay >= 0);
+    KeepParameterAssert(animations);
+    
+    [self keep_animationPerformWithDuration:duration delay:delay block:^{
+        [UIView animateWithDuration:duration
+                         animations:^{
+                             animations();
+                             [self layoutIfNeeded];
+                         }];
+    }];
 }
 
 
@@ -533,7 +552,7 @@
     KeepParameterAssert(delay >= 0);
     KeepParameterAssert(animations);
     
-    void (^block)(void) = ^{
+    [self keep_animationPerformWithDuration:duration delay:delay block:^{
         [UIView animateWithDuration:duration
                               delay:0
                             options:options
@@ -542,8 +561,31 @@
                              [self layoutIfNeeded];
                          }
                          completion:completion];
-    };
+    }];
+}
+
+
+- (void)keepAnimatedWithDuration:(NSTimeInterval)duration delay:(NSTimeInterval)delay usingSpringWithDamping:(CGFloat)dampingRatio initialSpringVelocity:(CGFloat)velocity options:(UIViewAnimationOptions)options layout:(void (^)(void))animations completion:(void (^)(BOOL finished))completion {
+    KeepParameterAssert(duration >= 0);
+    KeepParameterAssert(delay >= 0);
+    KeepParameterAssert(animations);
     
+    [self keep_animationPerformWithDuration:duration delay:delay block:^{
+        [UIView animateWithDuration:duration
+                              delay:delay
+             usingSpringWithDamping:dampingRatio
+              initialSpringVelocity:velocity
+                            options:options
+                         animations:^{
+                             animations();
+                             [self layoutIfNeeded];
+                         }
+                         completion:completion];
+    }];
+}
+
+
+- (void)keep_animationPerformWithDuration:(NSTimeInterval)duration delay:(NSTimeInterval)delay block:(void(^)(void))block {
     if (duration > 0 || delay > 0) {
         [[NSOperationQueue mainQueue] performSelector:@selector(addOperationWithBlock:)
                                            withObject:block
@@ -553,7 +595,14 @@
     else {
         block();
     }
-    
+}
+
+
+- (void)keepNotAnimated:(void (^)(void))layout {
+    [UIView performWithoutAnimation:^{
+        layout();
+        [self layoutIfNeeded];
+    }];
 }
 
 
