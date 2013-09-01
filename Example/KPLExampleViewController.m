@@ -62,9 +62,15 @@
     
     self.state++;
     
-    [self.view keepAnimatedWithDuration:0.35 layout:^{
-        self.exampleStateBlock(self.state);
-    }];
+    [self.view keepAnimatedWithDuration:0.75
+                                  delay:0
+                 usingSpringWithDamping:0.4
+                  initialSpringVelocity:0.8
+                                options:kNilOptions
+                                 layout:^{
+                                     self.exampleStateBlock(self.state);
+                                 }
+                             completion:nil];
 }
 
 

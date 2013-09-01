@@ -208,6 +208,8 @@ view.keepWidth.equal = KeepRequired(100);
 
 These are instance methods and must be called on parent view of all affected subviews. At the end of layout block this view receives `-layoutIfNeeded` method. Any changes to views out of the receiver's subview tree will not be animated.
 
+Spring animation from iOS 7 included.
+
 See [`UIView+KeepLayout.h`][2] for more.
 
 
