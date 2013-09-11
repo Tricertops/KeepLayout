@@ -31,7 +31,7 @@ extern NSString *KeepPriorityDescription(KeepPriority priority) {
     }
     
     if (priority) {
-        name = [name stringByAppendingFormat:@"(%@%i)", (priority > 0? @"+" : @""), priority];
+        name = [name stringByAppendingFormat:@"(%@%i)", (priority > 0? @"+" : @""), (uint32_t)priority];
     }
     
     return name;
