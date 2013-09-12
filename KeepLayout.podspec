@@ -1,13 +1,13 @@
 Pod::Spec.new do |s|
   s.name         = "KeepLayout"
-  s.version      = "1.1.1"
+  s.version      = "1.2.0"
   s.summary      = "Making Auto Layout easier to code."
   s.homepage     = "https://github.com/iMartinKiss/KeepLayout"
 
   s.license      = { :type => 'MIT', :file => 'LICENSE.md' }
   s.author       = 'Martin Kiss'
 
-  s.source       = { :git => "https://github.com/iMartinKiss/KeepLayout.git", :tag => "v1.1.1" }
+  s.source       = { :git => "https://github.com/iMartinKiss/KeepLayout.git", :tag => "v1.2.0" }
 
   s.platform     = :ios, '6.0'
 

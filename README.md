@@ -2,7 +2,6 @@
 
 Keep Layout is project **under active development** whose purpose is to make _Auto Layout_ much easier to use _from code_! No more _Interface Builder_ or _Visual Format_. _Keep Layout_ provides **simple, more readable and powerful API for creating and _accessing existing_ constraints**.
 
-_**Keep Layout** turned v1.0 recently and that means it is not backward compatible with older versions. This new release was written from scratch, it brings completely redesigned API, that is easier to write, easier to read and yet provides more possibilities._
 
 Before you start, you should be familiar with _Auto Layout_ topic. [How it works and what's the point?][1]
 
@@ -249,7 +248,7 @@ See [`UIView+KeepLayout.m`][6] for details.
 
 
 ---
-_Version 1.1.1_
+_Version 1.2.0_
 
 MIT License, Copyright © 2013 Martin Kiss
 
