@@ -110,12 +110,14 @@
 
 
 - (instancetype)name:(NSString *)format, ... {
+#ifdef DEBUG
     va_list arguments;
     va_start(arguments, format);
     
     self.name = [[NSString alloc] initWithFormat:format arguments:arguments];
     
     va_end(arguments);
+#endif
     return self;
 }
 
@@ -338,16 +340,14 @@
 
 
 - (void)setNameForConstraint:(KeepLayoutConstraint *)constraint relation:(NSLayoutRelation)relation value:(KeepValue)value {
+#ifdef DEBUG
     NSDictionary *relationNames = @{
                                     @(NSLayoutRelationEqual) : @"equal to",
                                     @(NSLayoutRelationGreaterThanOrEqual) : @"at least",
                                     @(NSLayoutRelationLessThanOrEqual) : @"at most",
                                     };
-    [constraint name:@"%@ %@ %@ with %@ priority",
-     self.name,
-     [relationNames objectForKey:@(relation)],
-     @(value.value),
-     KeepPriorityDescription(value.priority)];
+    [constraint name:@"%@ %@ %@ with %@ priority", self.name, [relationNames objectForKey:@(relation)], @(value.value), KeepPriorityDescription(value.priority)];
+#endif
 }
 
 
