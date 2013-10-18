@@ -251,6 +251,20 @@
 }
 
 
+- (void)keepHorizontallyCenteredWithPriority:(KeepPriority)priority {
+    [self keep_invoke:_cmd each:^(UIView *view) {
+        [view keepHorizontallyCenteredWithPriority:priority];
+    }];
+}
+
+
+- (void)keepVerticallyCenteredWithPriority:(KeepPriority)priority {
+    [self keep_invoke:_cmd each:^(UIView *view) {
+        [view keepVerticallyCenteredWithPriority:priority];
+    }];
+}
+
+
 - (void)keepCenter:(CGPoint)center priority:(KeepPriority)priority {
     [self keep_invoke:_cmd each:^(UIView *view) {
         [view keepCenter:center priority:priority];
@@ -260,6 +274,16 @@
 
 - (void)keepCentered {
     [self keepCenteredWithPriority:KeepPriorityRequired];
+}
+
+
+- (void)keepHorizontallyCentered {
+    [self keepHorizontallyCenteredWithPriority:KeepPriorityRequired];
+}
+
+
+- (void)keepVerticallyCentered {
+    [self keepVerticallyCenteredWithPriority:KeepPriorityRequired];
 }
 
 

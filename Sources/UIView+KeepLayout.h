@@ -82,6 +82,10 @@
 /// Convenience methods for setting both centers at once.
 - (void)keepCenteredWithPriority:(KeepPriority)priority;
 - (void)keepCentered; /// Uses Required priority. Use is discouraged.
+- (void)keepHorizontallyCenteredWithPriority:(KeepPriority)priority;
+- (void)keepHorizontallyCentered; /// Uses Required priority. Use is discouraged.
+- (void)keepVerticallyCenteredWithPriority:(KeepPriority)priority;
+- (void)keepVerticallyCentered; /// Uses Required priority. Use is discouraged.
 - (void)keepCenter:(CGPoint)center priority:(KeepPriority)priority;
 - (void)keepCenter:(CGPoint)center; /// Uses Required priority. Use is discouraged.
 

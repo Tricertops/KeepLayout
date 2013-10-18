@@ -313,6 +313,26 @@
 }
 
 
+- (void)keepHorizontallyCentered {
+    [self keepHorizontallyCenteredWithPriority:KeepPriorityRequired];
+}
+
+
+- (void)keepHorizontallyCenteredWithPriority:(KeepPriority)priority {
+    self.keepHorizontalCenter.equal = KeepValueMake(0.5, priority);
+}
+
+
+- (void)keepVerticallyCentered {
+    [self keepVerticallyCenteredWithPriority:KeepPriorityRequired];
+}
+
+
+- (void)keepVerticallyCenteredWithPriority:(KeepPriority)priority {
+    self.keepVerticalCenter.equal = KeepValueMake(0.5, priority);
+}
+
+
 - (void)keepCenter:(CGPoint)center {
     [self keepCenter:center priority:KeepPriorityRequired];
 }

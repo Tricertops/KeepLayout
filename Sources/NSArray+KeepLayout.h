@@ -84,10 +84,14 @@
 - (KeepAttribute *)keepCenter;
 
 - (void)keepCenteredWithPriority:(KeepPriority)priority;
+- (void)keepHorizontallyCenteredWithPriority:(KeepPriority)priority;
+- (void)keepVerticallyCenteredWithPriority:(KeepPriority)priority;
 - (void)keepCenter:(CGPoint)center priority:(KeepPriority)priority;
 
 // Methods which invoke the above with `KeepPriorityRequired` value. Use of these is discouraged.
 - (void)keepCentered;
+- (void)keepHorizontallyCentered;
+- (void)keepVerticallyCentered;
 - (void)keepCenter:(CGPoint)center;
 
 
