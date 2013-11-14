@@ -585,24 +585,42 @@
 }
 
 
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000   // Compiled with iOS 7 SDK
 - (void)keepAnimatedWithDuration:(NSTimeInterval)duration delay:(NSTimeInterval)delay usingSpringWithDamping:(CGFloat)dampingRatio initialSpringVelocity:(CGFloat)velocity options:(UIViewAnimationOptions)options layout:(void (^)(void))animations completion:(void (^)(BOOL finished))completion {
     KeepParameterAssert(duration >= 0);
     KeepParameterAssert(delay >= 0);
     KeepParameterAssert(animations);
     
-    [self keep_animationPerformWithDuration:duration delay:delay block:^{
-        [UIView animateWithDuration:duration
-                              delay:delay
-             usingSpringWithDamping:dampingRatio
-              initialSpringVelocity:velocity
-                            options:options
-                         animations:^{
-                             animations();
-                             [self layoutIfNeeded];
-                         }
-                         completion:completion];
-    }];
+    if ([UIView respondsToSelector:@selector(animateWithDuration:delay:usingSpringWithDamping:initialSpringVelocity:options:animations:completion:)]) {
+        // Running on iOS 7
+        [self keep_animationPerformWithDuration:duration delay:delay block:^{
+            [UIView animateWithDuration:duration
+                                  delay:0
+                 usingSpringWithDamping:dampingRatio
+                  initialSpringVelocity:velocity
+                                options:options
+                             animations:^{
+                                 animations();
+                                 [self layoutIfNeeded];
+                             }
+                             completion:completion];
+        }];
+    }
+    else {
+        // Running on iOS 6, fallback to non-spring animation
+        [self keep_animationPerformWithDuration:duration delay:delay block:^{
+            [UIView animateWithDuration:duration
+                                  delay:0
+                                options:options
+                             animations:^{
+                                 animations();
+                                 [self layoutIfNeeded];
+                             }
+                             completion:completion];
+        }];
+    }
 }
+#endif
 
 
 - (void)keep_animationPerformWithDuration:(NSTimeInterval)duration delay:(NSTimeInterval)delay block:(void(^)(void))block {
@@ -618,12 +636,23 @@
 }
 
 
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000   // Compiled with iOS 7 SDK
 - (void)keepNotAnimated:(void (^)(void))layout {
-    [UIView performWithoutAnimation:^{
+    
+    if ([UIView respondsToSelector:@selector(performWithoutAnimation:)]) {
+        // Running iOS 7
+        [UIView performWithoutAnimation:^{
+            layout();
+            [self layoutIfNeeded];
+        }];
+    }
+    else {
+        // Running iOS 6, just execute block
         layout();
         [self layoutIfNeeded];
-    }];
+    }
 }
+#endif
 
 
 
