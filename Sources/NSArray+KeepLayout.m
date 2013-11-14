@@ -114,21 +114,21 @@
 }
 
 
-- (KeepAttribute *(^)(UIView *))keepWidthTo {
+- (KeepRelatedAttributeBlock)keepWidthTo {
     return ^KeepAttribute *(UIView *view) {
         return [self keep_groupAttributeForSelector:_cmd relatedView:view];
     };
 }
 
 
-- (KeepAttribute *(^)(UIView *))keepHeightTo {
+- (KeepRelatedAttributeBlock)keepHeightTo {
     return ^KeepAttribute *(UIView *view) {
         return [self keep_groupAttributeForSelector:_cmd relatedView:view];
     };
 }
 
 
-- (KeepAttribute *(^)(UIView *))keepSizeTo {
+- (KeepRelatedAttributeBlock)keepSizeTo {
     return ^KeepAttribute *(UIView *view) {
         return [self keep_groupAttributeForSelector:_cmd relatedView:view];
     };
@@ -298,28 +298,28 @@
 #pragma mark Offsets
 
 
-- (KeepAttribute *(^)(UIView *))keepLeftOffset {
+- (KeepRelatedAttributeBlock)keepLeftOffset {
     return ^KeepAttribute *(UIView *view) {
         return [self keep_groupAttributeForSelector:_cmd relatedView:view];
     };
 }
 
 
-- (KeepAttribute *(^)(UIView *))keepRightOffset {
+- (KeepRelatedAttributeBlock)keepRightOffset {
     return ^KeepAttribute *(UIView *view) {
         return [self keep_groupAttributeForSelector:_cmd relatedView:view];
     };
 }
 
 
-- (KeepAttribute *(^)(UIView *))keepTopOffset {
+- (KeepRelatedAttributeBlock)keepTopOffset {
     return ^KeepAttribute *(UIView *view) {
         return [self keep_groupAttributeForSelector:_cmd relatedView:view];
     };
 }
 
 
-- (KeepAttribute *(^)(UIView *))keepBottomOffset {
+- (KeepRelatedAttributeBlock)keepBottomOffset {
     return ^KeepAttribute *(UIView *view) {
         return [self keep_groupAttributeForSelector:_cmd relatedView:view];
     };
@@ -346,49 +346,49 @@
 #pragma mark Alignments
 
 
-- (KeepAttribute *(^)(UIView *))keepLeftAlignTo {
+- (KeepRelatedAttributeBlock)keepLeftAlignTo {
     return ^KeepAttribute *(UIView *view) {
         return [self keep_groupAttributeForSelector:_cmd relatedView:view];
     };
 }
 
 
-- (KeepAttribute *(^)(UIView *))keepRightAlignTo {
+- (KeepRelatedAttributeBlock)keepRightAlignTo {
     return ^KeepAttribute *(UIView *view) {
         return [self keep_groupAttributeForSelector:_cmd relatedView:view];
     };
 }
 
 
-- (KeepAttribute *(^)(UIView *))keepTopAlignTo {
+- (KeepRelatedAttributeBlock)keepTopAlignTo {
     return ^KeepAttribute *(UIView *view) {
         return [self keep_groupAttributeForSelector:_cmd relatedView:view];
     };
 }
 
 
-- (KeepAttribute *(^)(UIView *))keepBottomAlignTo {
+- (KeepRelatedAttributeBlock)keepBottomAlignTo {
     return ^KeepAttribute *(UIView *view) {
         return [self keep_groupAttributeForSelector:_cmd relatedView:view];
     };
 }
 
 
-- (KeepAttribute *(^)(UIView *))keepVerticalAlignTo {
+- (KeepRelatedAttributeBlock)keepVerticalAlignTo {
     return ^KeepAttribute *(UIView *view) {
         return [self keep_groupAttributeForSelector:_cmd relatedView:view];
     };
 }
 
 
-- (KeepAttribute *(^)(UIView *))keepHorizontalAlignTo {
+- (KeepRelatedAttributeBlock)keepHorizontalAlignTo {
     return ^KeepAttribute *(UIView *view) {
         return [self keep_groupAttributeForSelector:_cmd relatedView:view];
     };
 }
 
 
-- (KeepAttribute *(^)(UIView *))keepBaselineAlignTo {
+- (KeepRelatedAttributeBlock)keepBaselineAlignTo {
     return ^KeepAttribute *(UIView *view) {
         return [self keep_groupAttributeForSelector:_cmd relatedView:view];
     };

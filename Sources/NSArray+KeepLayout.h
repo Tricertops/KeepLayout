@@ -11,6 +11,7 @@
 #import <CoreGraphics/CoreGraphics.h>
 
 #import "KeepTypes.h"
+#import "UIView+KeepLayout.h"
 
 @class KeepAttribute;
 
@@ -18,11 +19,13 @@
 
 
 
-/// Provides similar methods than UIView+KeepLayout. Works only on arrays of UIViews.
-/// Most of the methods invokes the same selector on contained views and returns group proxy attribute.
-/// Setting values of this group will set attributes to all attributes in the group.
-/// For method descriptions see method in UIView+KeepLayout with the same name.
-/// In addition, for every relative attribute there is convenience method, that applies on views in the array in the order.
+/**
+ Provides similar methods than UIView+KeepLayout. Works only on arrays of UIViews. For method descriptions see method in UIView+KeepLayout with the same name.
+ 
+ Most of the methods invokes the same selector on contained views and returns group proxy attribute. Setting values of this group will set attributes to all attributes in the group.
+ 
+ In addition, for every relative attribute there is convenience method, that applies on views in the array in the order.
+ **/
 @interface NSArray (KeepLayout)
 
 
@@ -31,20 +34,20 @@
 
 #pragma mark Dimensions
 
-- (KeepAttribute *)keepWidth;
-- (KeepAttribute *)keepHeight;
+@property (nonatomic, readonly) KeepAttribute *keepWidth;
+@property (nonatomic, readonly) KeepAttribute *keepHeight;
 
-- (KeepAttribute *)keepSize;
+@property (nonatomic, readonly) KeepAttribute *keepSize;
 
 - (void)keepSize:(CGSize)size;
 - (void)keepSize:(CGSize)size priority:(KeepPriority)priority;
 
-- (KeepAttribute *)keepAspectRatio;
+@property (nonatomic, readonly) KeepAttribute *keepAspectRatio;
 
-- (KeepAttribute *(^)(UIView *))keepWidthTo;
-- (KeepAttribute *(^)(UIView *))keepHeightTo;
+@property (nonatomic, readonly) KeepRelatedAttributeBlock keepWidthTo;
+@property (nonatomic, readonly) KeepRelatedAttributeBlock keepHeightTo;
 
-- (KeepAttribute *(^)(UIView *))keepSizeTo;
+@property (nonatomic, readonly) KeepRelatedAttributeBlock keepSizeTo;
 
 /// Convenience methods applied to whole array, in the order they are in array.
 - (void)keepWidthsEqualWithPriority:(KeepPriority)priority;
@@ -60,14 +63,14 @@
 
 #pragma mark Superview Insets
 
-- (KeepAttribute *)keepLeftInset;
-- (KeepAttribute *)keepRightInset;
-- (KeepAttribute *)keepTopInset;
-- (KeepAttribute *)keepBottomInset;
+@property (nonatomic, readonly) KeepAttribute *keepLeftInset;
+@property (nonatomic, readonly) KeepAttribute *keepRightInset;
+@property (nonatomic, readonly) KeepAttribute *keepTopInset;
+@property (nonatomic, readonly) KeepAttribute *keepBottomInset;
 
-- (KeepAttribute *)keepInsets;
-- (KeepAttribute *)keepHorizontalInsets;
-- (KeepAttribute *)keepVerticalInsets;
+@property (nonatomic, readonly) KeepAttribute *keepInsets;
+@property (nonatomic, readonly) KeepAttribute *keepHorizontalInsets;
+@property (nonatomic, readonly) KeepAttribute *keepVerticalInsets;
 
 - (void)keepInsets:(UIEdgeInsets)insets priority:(KeepPriority)priority;
 
@@ -78,10 +81,10 @@
 
 #pragma mark Center
 
-- (KeepAttribute *)keepHorizontalCenter;
-- (KeepAttribute *)keepVerticalCenter;
+@property (nonatomic, readonly) KeepAttribute *keepHorizontalCenter;
+@property (nonatomic, readonly) KeepAttribute *keepVerticalCenter;
 
-- (KeepAttribute *)keepCenter;
+@property (nonatomic, readonly) KeepAttribute *keepCenter;
 
 - (void)keepCenteredWithPriority:(KeepPriority)priority;
 - (void)keepHorizontallyCenteredWithPriority:(KeepPriority)priority;
@@ -98,10 +101,10 @@
 
 #pragma mark Offsets
 
-- (KeepAttribute *(^)(UIView *))keepLeftOffset;
-- (KeepAttribute *(^)(UIView *))keepRightOffset;
-- (KeepAttribute *(^)(UIView *))keepTopOffset;
-- (KeepAttribute *(^)(UIView *))keepBottomOffset;
+@property (nonatomic, readonly) KeepRelatedAttributeBlock keepLeftOffset;
+@property (nonatomic, readonly) KeepRelatedAttributeBlock keepRightOffset;
+@property (nonatomic, readonly) KeepRelatedAttributeBlock keepTopOffset;
+@property (nonatomic, readonly) KeepRelatedAttributeBlock keepBottomOffset;
 
 /// Convenience methods applied to whole array, in the order they are in array.
 - (void)keepHorizontalOffsets:(KeepValue)value;
@@ -111,15 +114,15 @@
 
 #pragma mark Alignments
 
-- (KeepAttribute *(^)(UIView *))keepLeftAlignTo;
-- (KeepAttribute *(^)(UIView *))keepRightAlignTo;
-- (KeepAttribute *(^)(UIView *))keepTopAlignTo;
-- (KeepAttribute *(^)(UIView *))keepBottomAlignTo;
+@property (nonatomic, readonly) KeepRelatedAttributeBlock keepLeftAlignTo;
+@property (nonatomic, readonly) KeepRelatedAttributeBlock keepRightAlignTo;
+@property (nonatomic, readonly) KeepRelatedAttributeBlock keepTopAlignTo;
+@property (nonatomic, readonly) KeepRelatedAttributeBlock keepBottomAlignTo;
 
-- (KeepAttribute *(^)(UIView *))keepVerticalAlignTo;
-- (KeepAttribute *(^)(UIView *))keepHorizontalAlignTo;
+@property (nonatomic, readonly) KeepRelatedAttributeBlock keepVerticalAlignTo;
+@property (nonatomic, readonly) KeepRelatedAttributeBlock keepHorizontalAlignTo;
 
-- (KeepAttribute *(^)(UIView *))keepBaselineAlignTo;
+@property (nonatomic, readonly) KeepRelatedAttributeBlock keepBaselineAlignTo;
 
 /// Convenience methods applied to whole array, in the order they are in array.
 - (void)keepLeftAlignments:(KeepValue)value;
