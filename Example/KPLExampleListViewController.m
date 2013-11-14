@@ -313,32 +313,47 @@
                                     }
                                 }
                                 
+                                 // Constraint counts assume 4x4 grid
                                 
-                                [tiles keepSizesEqual];
-                                tiles.keepInsets.min = KeepRequired(padding);
+                                [tiles keepSizesEqual]; // 30 constraints
+                                tiles.keepInsets.min = KeepRequired(padding); // 64 constraints
                                 
-                                [[[columns objectAtIndex:0] keepLeftInset] setEqual:KeepRequired(padding)];
+                                
+                                NSArray *firstColumn = columns.firstObject;
+                                firstColumn.keepLeftInset.equal = KeepRequired(padding); // 4 constraints
+                                
                                 for (NSMutableArray *column in columns) {
-                                    [column keepVerticalOffsets:KeepHigh(padding)];
-                                    [column keepVerticalAlignments:KeepHigh(0)];
+                                    [column keepVerticalOffsets:KeepHigh(padding)]; // 4 iterations * 3 constraints
+                                    [column keepVerticalAlignments:KeepHigh(0)]; // 4 iterations * 3 constraints
                                 }
-                                [[columns.lastObject keepRightInset] setEqual:KeepRequired(padding)];
                                 
-                                [[[rows objectAtIndex:0] keepTopInset] setEqual:KeepRequired(padding)];
+                                NSArray *lastColumn = columns.lastObject;
+                                lastColumn.keepRightInset.equal = KeepRequired(padding); // 4 constraints
+                                
+                                
+                                NSArray *firstRow = rows.firstObject;
+                                firstRow.keepTopInset.equal = KeepRequired(padding); // 4 constraints
+                                
                                 for (NSMutableArray *row in rows) {
-                                    [row keepHorizontalOffsets:KeepHigh(padding)];
-                                    [row keepHorizontalAlignments:KeepHigh(0)];
+                                    [row keepHorizontalOffsets:KeepHigh(padding)]; // 4 iterations * 3 constraints
+                                    [row keepHorizontalAlignments:KeepHigh(0)]; // 4 iterations * 3 constraints
                                 }
-                                [[rows.lastObject keepBottomInset] setEqual:KeepRequired(padding)];
                                 
-                                cells.keepInsets.min = KeepRequired(0);
-                                cells.keepInsets.equal = KeepHigh(0);
-                                [cells keepCentered];
+                                NSArray *lastRow = rows.lastObject;
+                                lastRow.keepBottomInset.equal = KeepRequired(padding); // 4 constraints
+                                
+                                
+                                cells.keepInsets.min = KeepRequired(0); // 64 constraints
+                                cells.keepInsets.equal = KeepHigh(0); // 64 constraints
+                                [cells keepCentered]; // 32 constraints
+                                
                                 
                                 return ^(NSUInteger state) {
                                     BOOL odd = (state % 2);
-                                    cells.keepAspectRatio.equal = (odd? KeepValueMake(1, KeepPriorityHigh+1) : KeepNone);
+                                    cells.keepAspectRatio.equal = (odd? KeepValueMake(1, KeepPriorityHigh+1) : KeepNone); // 16 constraints
                                 };
+                                
+                                // Total: 334 constraints in this example
                             }]];
     
     self.examples = @[ simpleExamples, complexExamples ];
