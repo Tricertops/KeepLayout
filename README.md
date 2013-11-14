@@ -248,7 +248,7 @@ See [`UIView+KeepLayout.m`][6] for details.
 
 
 ---
-_Version 1.2.0_
+_Version 1.2.2_
 
 MIT License, Copyright © 2013 Martin Kiss
 
