@@ -14,6 +14,8 @@
 @class KeepAttribute;
 
 
+typedef KeepAttribute *(^KeepRelatedAttributeBlock)(UIView *otherView);
+
 
 
 /**
@@ -24,7 +26,7 @@
  view.keepWidth.equal = KeepRequired(320);
  \endcode
  
- Usage of methods returning block that takes another view:
+ Usage of methods returning KeepRelatedAttributeBlock:
  \code
  view.keepWidthTo(anotherView).equal = KeepRequired(2); // 2x wider
  \endcode
@@ -41,19 +43,19 @@
 /// Attributes representing internal size of the receiver.
 
 /// Width of the receiver.
-- (KeepAttribute *)keepWidth;
+@property (nonatomic, readonly) KeepAttribute *keepWidth;
 
 /// Height of the receiver.
-- (KeepAttribute *)keepHeight;
+@property (nonatomic, readonly) KeepAttribute *keepHeight;
 
 /// Aspect Ratio of receiver's dimensions in the order Width/Height. For example 16/9 or 4/3.
-- (KeepAttribute *)keepAspectRatio;
+@property (nonatomic, readonly) KeepAttribute *keepAspectRatio;
 
 /// Relative Width to other view. Value is multiplier of the other view's dimension. Both views must be in the same hierarchy.
-- (KeepAttribute *(^)(UIView *))keepWidthTo;
+@property (nonatomic, readonly) KeepRelatedAttributeBlock keepWidthTo;
 
 /// Relative Height to other view. Value is multiplier of the other view's dimension. Both views must be in the same hierarchy.
-- (KeepAttribute *(^)(UIView *))keepHeightTo;
+@property (nonatomic, readonly) KeepRelatedAttributeBlock keepHeightTo;
 
 
 
@@ -61,10 +63,10 @@
 /// Convenience methods for setting both dimensions at once.
 
 /// Grouped proxy attribute for Width and Height.
-- (KeepAttribute *)keepSize;
+@property (nonatomic, readonly) KeepAttribute *keepSize;
 
 /// Grouped proxy attribute for Relative Width and Height. Values are multipliers of the other view's dimensions. Both views must be in the same hierarchy.
-- (KeepAttribute *(^)(UIView *))keepSizeTo;
+@property (nonatomic, readonly) KeepRelatedAttributeBlock keepSizeTo;
 
 /// Sets custom Width and Height at once with given priority.
 - (void)keepSize:(CGSize)size priority:(KeepPriority)priority;
@@ -81,16 +83,16 @@
 /// Attributes representing internal inset (margin or padding) of the receive to its current superview.
 
 /// Left Inset of the receiver in its current superview.
-- (KeepAttribute *)keepLeftInset;
+@property (nonatomic, readonly) KeepAttribute *keepLeftInset;
 
 /// Right Inset of the receiver in its current superview. Values are inverted to Right-to-Left direction.
-- (KeepAttribute *)keepRightInset;
+@property (nonatomic, readonly) KeepAttribute *keepRightInset;
 
 /// Top Inset of the receiver in its current superview.
-- (KeepAttribute *)keepTopInset;
+@property (nonatomic, readonly) KeepAttribute *keepTopInset;
 
 /// Bottom Inset of the receiver in its current superview. Values are inverted to Bottom-to-Top direction.
-- (KeepAttribute *)keepBottomInset;
+@property (nonatomic, readonly) KeepAttribute *keepBottomInset;
 
 
 
@@ -98,13 +100,13 @@
 /// Convenience methods for setting all insets at once.
 
 /// Grouped proxy attribute for Top, Bottom, Left and Right Inset.
-- (KeepAttribute *)keepInsets;
+@property (nonatomic, readonly) KeepAttribute *keepInsets;
 
 /// Grouped proxy attribute for Left and Right Inset.
-- (KeepAttribute *)keepHorizontalInsets;
+@property (nonatomic, readonly) KeepAttribute *keepHorizontalInsets;
 
 /// Grouped proxy attribute for Top and Bottom Inset.
-- (KeepAttribute *)keepVerticalInsets;
+@property (nonatomic, readonly) KeepAttribute *keepVerticalInsets;
 
 /// Sets custom Insets using given priority.
 - (void)keepInsets:(UIEdgeInsets)insets priority:(KeepPriority)priority;
@@ -121,10 +123,10 @@
 /// Attributes representing relative position of the receiver in its current superview.
 
 /// Horizontal Center of the receiver in its current superview (X axis). Value is multiplier of superview's width, so 0.5 is middle.
-- (KeepAttribute *)keepHorizontalCenter;
+@property (nonatomic, readonly) KeepAttribute *keepHorizontalCenter;
 
 /// Vertical Center of the receiver in its current superview (Y axis). Value is multiplier of superview's height, so 0.5 is middle.
-- (KeepAttribute *)keepVerticalCenter;
+@property (nonatomic, readonly) KeepAttribute *keepVerticalCenter;
 
 
 
@@ -132,7 +134,7 @@
 /// Convenience methods for both center axis at once or with default values.
 
 /// Grouped proxy attribute for Horizontal and Vertical Center. Value is multiplier of superview's dimensions, so 0.5 is middle.
-- (KeepAttribute *)keepCenter;
+@property (nonatomic, readonly) KeepAttribute *keepCenter;
 
 /// Sets both Center axis to 0.5 with given priority.
 - (void)keepCenteredWithPriority:(KeepPriority)priority;
@@ -167,16 +169,16 @@
 /// Attributes representing offset (padding or distance) of two views.
 
 /// Left Offset to other view. Views must be in the same view hierarchy.
-- (KeepAttribute *(^)(UIView *))keepLeftOffsetTo;
+@property (nonatomic, readonly) KeepRelatedAttributeBlock keepLeftOffsetTo;
 
 /// Right Offset to other view. Views must be in the same view hierarchy. Identical to Left Offset in reversed direction.
-- (KeepAttribute *(^)(UIView *))keepRightOffsetTo;
+@property (nonatomic, readonly) KeepRelatedAttributeBlock keepRightOffsetTo;
 
 /// Top Offset to other view. Views must be in the same view hierarchy.
-- (KeepAttribute *(^)(UIView *))keepTopOffsetTo;
+@property (nonatomic, readonly) KeepRelatedAttributeBlock keepTopOffsetTo;
 
 /// Bottom Offset to other view. Views must be in the same view hierarchy. Identical to Top Offset in reversed direction.
-- (KeepAttribute *(^)(UIView *))keepBottomOffsetTo;
+@property (nonatomic, readonly) KeepRelatedAttributeBlock keepBottomOffsetTo;
 
 
 
@@ -187,25 +189,25 @@
 /// Attributes representing alignment of two views. You align view usually to 0 offset, but this can be changed.
 
 /// Left Alignment with other view. Views must be in the same view hierarchy. Value is offset of the receiver from the other view.
-- (KeepAttribute *(^)(UIView *))keepLeftAlignTo;
+@property (nonatomic, readonly) KeepRelatedAttributeBlock keepLeftAlignTo;
 
 /// Right Alignment with other view. Views must be in the same view hierarchy. Value is offset of the receiver from the other view. Values are inverted to Right-to-Left direction.
-- (KeepAttribute *(^)(UIView *))keepRightAlignTo;
+@property (nonatomic, readonly) KeepRelatedAttributeBlock keepRightAlignTo;
 
 /// Top Alignment with other view. Views must be in the same view hierarchy. Value is offset of the receiver from the other view.
-- (KeepAttribute *(^)(UIView *))keepTopAlignTo;
+@property (nonatomic, readonly) KeepRelatedAttributeBlock keepTopAlignTo;
 
 /// Bottom Alignment with other view. Views must be in the same view hierarchy. Value is offset of the receiver from the other view. Values are inverted to Bottom-to-Top direction.
-- (KeepAttribute *(^)(UIView *))keepBottomAlignTo;
+@property (nonatomic, readonly) KeepRelatedAttributeBlock keepBottomAlignTo;
 
 /// Vertical Center Alignment with other view, modifies the X position. Views must be in the same view hierarchy. Value is offset of the receiver from the other view.
-- (KeepAttribute *(^)(UIView *))keepVerticalAlignTo;
+@property (nonatomic, readonly) KeepRelatedAttributeBlock keepVerticalAlignTo;
 
 /// Horizontal Center Alignment with other view, modifies the Y position. Views must be in the same view hierarchy. Value is offset of the receiver from the other view.
-- (KeepAttribute *(^)(UIView *))keepHorizontalAlignTo;
+@property (nonatomic, readonly) KeepRelatedAttributeBlock keepHorizontalAlignTo;
 
 /// Baseline Alignments with two views. Not all views have baseline. Values are inverted to Bottom-to-Top direction, so positive offset moves the receiver up.
-- (KeepAttribute *(^)(UIView *))keepBaselineAlignTo;
+@property (nonatomic, readonly) KeepRelatedAttributeBlock keepBaselineAlignTo;
 
 
 
