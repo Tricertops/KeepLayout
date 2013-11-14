@@ -75,7 +75,7 @@
      [[KPLExample alloc] initWithTitle:@"Equal Insets"
                              subtitle:@"1 line of code"
                            setupBlock:^KPLExampleStateBlock(UIView *container) {
-                               UIView *view = createView(UIColor.blackColor, container);
+                               UIView *view = createView(self.view.tintColor, container);
                                
                                // 1
                                view.keepInsets.equal = KeepRequired(10);
@@ -98,7 +98,7 @@
      [[KPLExample alloc] initWithTitle:@"Various Insets"
                                 subtitle:@"1 line of code"
                            setupBlock:^KPLExampleStateBlock(UIView *container) {
-                               UIView *view = createView(UIColor.blackColor, container);
+                               UIView *view = createView(self.view.tintColor, container);
                                
                                // 1
                                [view keepInsets:UIEdgeInsetsMake(10, 20, 30, 40)];
@@ -121,7 +121,7 @@
      [[KPLExample alloc] initWithTitle:@"Center & Size"
                                 subtitle:@"2 lines of code"
                            setupBlock:^KPLExampleStateBlock(UIView *container) {
-                               UIView *view = createView(UIColor.blackColor, container);
+                               UIView *view = createView(self.view.tintColor, container);
                                
                                // 1
                                [view keepSize:CGSizeMake(200, 200) priority:KeepPriorityHigh];
@@ -152,7 +152,7 @@
      [[KPLExample alloc] initWithTitle:@"Video 16:9"
                                 subtitle:@"3 lines of code"
                            setupBlock:^KPLExampleStateBlock(UIView *container) {
-                               UIView *black = createView(UIColor.blackColor, container);
+                               UIView *black = createView(self.view.tintColor, container);
                                
                                // 1
                                black.keepAspectRatio.equal = KeepRequired(16./9.);
@@ -181,13 +181,13 @@
      [[KPLExample alloc] initWithTitle:@"Everything"
                               subtitle:@"All attributes used"
                             setupBlock:^KPLExampleStateBlock(UIView *container) {
-                                UIView *center = createView(UIColor.blackColor, container);
-                                UIView *topStick = createView(UIColor.blackColor, container);
-                                UIView *bottomStick = createView(UIColor.blackColor, container);
-                                UIView *leftBox = createView(UIColor.blackColor, container);
-                                UIView *rightBox = createView(UIColor.blackColor, container);
-                                UIView *topLeftCorner = createView(UIColor.blackColor, container);
-                                UIView *bottomRightCorner = createView(UIColor.blackColor, container);
+                                UIView *center = createView(self.view.tintColor, container);
+                                UIView *topStick = createView(self.view.tintColor, container);
+                                UIView *bottomStick = createView(self.view.tintColor, container);
+                                UIView *leftBox = createView(self.view.tintColor, container);
+                                UIView *rightBox = createView(self.view.tintColor, container);
+                                UIView *topLeftCorner = createView(self.view.tintColor, container);
+                                UIView *bottomRightCorner = createView(self.view.tintColor, container);
                                 
                                 KeepValue offsetHigh = KeepHigh(10);
                                 KeepValue offsetRequired = KeepRequired(10);
@@ -275,7 +275,7 @@
                                         [[columns objectAtIndex:c] addObject:view];
                                         [[rows objectAtIndex:r] addObject:view];
                                         
-                                        UIView *cell = createView(UIColor.blackColor, view);
+                                        UIView *cell = createView(self.view.tintColor, view);
                                         [cells addObject:cell];
                                     }
                                 }
