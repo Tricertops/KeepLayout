@@ -355,6 +355,7 @@
 		5B3C509816B5304600D00BF3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Example/Prefix.pch;
 				INFOPLIST_FILE = "$(SRCROOT)/Example/Info.plist";
@@ -370,6 +371,7 @@
 		5B3C509916B5304600D00BF3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Example/Prefix.pch;
 				INFOPLIST_FILE = "$(SRCROOT)/Example/Info.plist";
