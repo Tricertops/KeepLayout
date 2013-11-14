@@ -175,6 +175,39 @@
                                    black.keepAspectRatio.equal = KeepRequired(odd? 9./16 : 16./9.);
                                };
                            }]];
+    [simpleExamples addObject:
+     [[KPLExample alloc] initWithTitle:@"Dynamic Text"
+                              subtitle:@"Reflow content when text changes"
+                            setupBlock:^KPLExampleStateBlock(UIView *container) {
+                                
+                                UIView *top = createView(self.view.tintColor, container);
+                                top.keepHorizontalInsets.equal = KeepRequired(10);
+                                top.keepTopInset.equal = KeepRequired(10);
+                                top.keepHeight.min = KeepRequired(80);
+                                
+                                UIView *bottom = createView(self.view.tintColor, container);
+                                bottom.keepHorizontalInsets.equal = KeepRequired(10);
+                                bottom.keepHeight.min = KeepRequired(30);
+                                bottom.keepBottomInset.equal = KeepRequired(10);
+                                
+                                UILabel *label = [[UILabel alloc] init];
+                                label.text = @"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+                                label.numberOfLines = 0;
+                                label.textAlignment = NSTextAlignmentCenter;
+                                [container addSubview:label];
+                                
+                                label.keepInsets.min = KeepRequired(10);
+                                label.keepHorizontalCenter.equal = KeepRequired(0.5);
+                                label.keepVerticalCenter.equal = KeepFitting(0.5);
+                                
+                                label.keepTopOffsetTo(top).min = KeepRequired(10);
+                                label.keepBottomOffsetTo(bottom).min = KeepRequired(10);
+                                
+                                return ^(NSUInteger state) {
+                                    BOOL odd = (state % 2);
+                                    label.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:(odd? 20 : 15)];
+                                };
+                            }]];
     
     NSMutableArray *complexExamples = [[NSMutableArray alloc] init];
     [complexExamples addObject:
