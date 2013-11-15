@@ -50,7 +50,7 @@
 + (KeepRemovableGroup *)removableChanges:(void(^)(void))block;
 
 
-#pragma mar Debugging
+#pragma mark Debugging
 /// Debugging helper. Name of attribute is a part of its `-description`
 @property (nonatomic, readwrite, copy) NSString *name;
 - (instancetype)name:(NSString *)format, ... NS_FORMAT_FUNCTION(1, 2);
