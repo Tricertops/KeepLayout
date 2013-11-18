@@ -75,7 +75,7 @@
      [[KPLExample alloc] initWithTitle:@"Equal Insets"
                              subtitle:@"1 line of code"
                            setupBlock:^KPLExampleStateBlock(UIView *container) {
-                               UIView *view = createView(UIColor.blackColor, container);
+                               UIView *view = createView(self.view.tintColor, container);
                                
                                // 1
                                view.keepInsets.equal = KeepRequired(10);
@@ -98,7 +98,7 @@
      [[KPLExample alloc] initWithTitle:@"Various Insets"
                                 subtitle:@"1 line of code"
                            setupBlock:^KPLExampleStateBlock(UIView *container) {
-                               UIView *view = createView(UIColor.blackColor, container);
+                               UIView *view = createView(self.view.tintColor, container);
                                
                                // 1
                                [view keepInsets:UIEdgeInsetsMake(10, 20, 30, 40)];
@@ -121,7 +121,7 @@
      [[KPLExample alloc] initWithTitle:@"Center & Size"
                                 subtitle:@"2 lines of code"
                            setupBlock:^KPLExampleStateBlock(UIView *container) {
-                               UIView *view = createView(UIColor.blackColor, container);
+                               UIView *view = createView(self.view.tintColor, container);
                                
                                // 1
                                [view keepSize:CGSizeMake(200, 200) priority:KeepPriorityHigh];
@@ -152,7 +152,7 @@
      [[KPLExample alloc] initWithTitle:@"Video 16:9"
                                 subtitle:@"3 lines of code"
                            setupBlock:^KPLExampleStateBlock(UIView *container) {
-                               UIView *black = createView(UIColor.blackColor, container);
+                               UIView *black = createView(self.view.tintColor, container);
                                
                                // 1
                                black.keepAspectRatio.equal = KeepRequired(16./9.);
@@ -175,19 +175,52 @@
                                    black.keepAspectRatio.equal = KeepRequired(odd? 9./16 : 16./9.);
                                };
                            }]];
+    [simpleExamples addObject:
+     [[KPLExample alloc] initWithTitle:@"Dynamic Text"
+                              subtitle:@"Reflow content when text changes"
+                            setupBlock:^KPLExampleStateBlock(UIView *container) {
+                                
+                                UIView *top = createView(self.view.tintColor, container);
+                                top.keepHorizontalInsets.equal = KeepRequired(10);
+                                top.keepTopInset.equal = KeepRequired(10);
+                                top.keepHeight.min = KeepRequired(80);
+                                
+                                UIView *bottom = createView(self.view.tintColor, container);
+                                bottom.keepHorizontalInsets.equal = KeepRequired(10);
+                                bottom.keepHeight.min = KeepRequired(30);
+                                bottom.keepBottomInset.equal = KeepRequired(10);
+                                
+                                UILabel *label = [[UILabel alloc] init];
+                                label.text = @"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+                                label.numberOfLines = 0;
+                                label.textAlignment = NSTextAlignmentCenter;
+                                [container addSubview:label];
+                                
+                                label.keepInsets.min = KeepRequired(10);
+                                label.keepHorizontalCenter.equal = KeepRequired(0.5);
+                                label.keepVerticalCenter.equal = KeepFitting(0.5);
+                                
+                                label.keepTopOffsetTo(top).min = KeepRequired(10);
+                                label.keepBottomOffsetTo(bottom).min = KeepRequired(10);
+                                
+                                return ^(NSUInteger state) {
+                                    BOOL odd = (state % 2);
+                                    label.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:(odd? 20 : 15)];
+                                };
+                            }]];
     
     NSMutableArray *complexExamples = [[NSMutableArray alloc] init];
     [complexExamples addObject:
      [[KPLExample alloc] initWithTitle:@"Everything"
                               subtitle:@"All attributes used"
                             setupBlock:^KPLExampleStateBlock(UIView *container) {
-                                UIView *center = createView(UIColor.blackColor, container);
-                                UIView *topStick = createView(UIColor.blackColor, container);
-                                UIView *bottomStick = createView(UIColor.blackColor, container);
-                                UIView *leftBox = createView(UIColor.blackColor, container);
-                                UIView *rightBox = createView(UIColor.blackColor, container);
-                                UIView *topLeftCorner = createView(UIColor.blackColor, container);
-                                UIView *bottomRightCorner = createView(UIColor.blackColor, container);
+                                UIView *center = createView(self.view.tintColor, container);
+                                UIView *topStick = createView(self.view.tintColor, container);
+                                UIView *bottomStick = createView(self.view.tintColor, container);
+                                UIView *leftBox = createView(self.view.tintColor, container);
+                                UIView *rightBox = createView(self.view.tintColor, container);
+                                UIView *topLeftCorner = createView(self.view.tintColor, container);
+                                UIView *bottomRightCorner = createView(self.view.tintColor, container);
                                 
                                 KeepValue offsetHigh = KeepHigh(10);
                                 KeepValue offsetRequired = KeepRequired(10);
@@ -275,37 +308,52 @@
                                         [[columns objectAtIndex:c] addObject:view];
                                         [[rows objectAtIndex:r] addObject:view];
                                         
-                                        UIView *cell = createView(UIColor.blackColor, view);
+                                        UIView *cell = createView(self.view.tintColor, view);
                                         [cells addObject:cell];
                                     }
                                 }
                                 
+                                 // Constraint counts assume 4x4 grid
                                 
-                                [tiles keepSizesEqual];
-                                tiles.keepInsets.min = KeepRequired(padding);
+                                [tiles keepSizesEqual]; // 30 constraints
+                                tiles.keepInsets.min = KeepRequired(padding); // 64 constraints
                                 
-                                [[[columns objectAtIndex:0] keepLeftInset] setEqual:KeepRequired(padding)];
+                                
+                                NSArray *firstColumn = columns.firstObject;
+                                firstColumn.keepLeftInset.equal = KeepRequired(padding); // 4 constraints
+                                
                                 for (NSMutableArray *column in columns) {
-                                    [column keepVerticalOffsets:KeepHigh(padding)];
-                                    [column keepVerticalAlignments:KeepHigh(0)];
+                                    [column keepVerticalOffsets:KeepHigh(padding)]; // 4 iterations * 3 constraints
+                                    [column keepVerticalAlignments:KeepHigh(0)]; // 4 iterations * 3 constraints
                                 }
-                                [[columns.lastObject keepRightInset] setEqual:KeepRequired(padding)];
                                 
-                                [[[rows objectAtIndex:0] keepTopInset] setEqual:KeepRequired(padding)];
+                                NSArray *lastColumn = columns.lastObject;
+                                lastColumn.keepRightInset.equal = KeepRequired(padding); // 4 constraints
+                                
+                                
+                                NSArray *firstRow = rows.firstObject;
+                                firstRow.keepTopInset.equal = KeepRequired(padding); // 4 constraints
+                                
                                 for (NSMutableArray *row in rows) {
-                                    [row keepHorizontalOffsets:KeepHigh(padding)];
-                                    [row keepHorizontalAlignments:KeepHigh(0)];
+                                    [row keepHorizontalOffsets:KeepHigh(padding)]; // 4 iterations * 3 constraints
+                                    [row keepHorizontalAlignments:KeepHigh(0)]; // 4 iterations * 3 constraints
                                 }
-                                [[rows.lastObject keepBottomInset] setEqual:KeepRequired(padding)];
                                 
-                                cells.keepInsets.min = KeepRequired(0);
-                                cells.keepInsets.equal = KeepHigh(0);
-                                [cells keepCentered];
+                                NSArray *lastRow = rows.lastObject;
+                                lastRow.keepBottomInset.equal = KeepRequired(padding); // 4 constraints
+                                
+                                
+                                cells.keepInsets.min = KeepRequired(0); // 64 constraints
+                                cells.keepInsets.equal = KeepHigh(0); // 64 constraints
+                                [cells keepCentered]; // 32 constraints
+                                
                                 
                                 return ^(NSUInteger state) {
                                     BOOL odd = (state % 2);
-                                    cells.keepAspectRatio.equal = (odd? KeepValueMake(1, KeepPriorityHigh+1) : KeepNone);
+                                    cells.keepAspectRatio.equal = (odd? KeepValueMake(1, KeepPriorityHigh+1) : KeepNone); // 16 constraints
                                 };
+                                
+                                // Total: 334 constraints in this example
                             }]];
     
     self.examples = @[ simpleExamples, complexExamples ];
