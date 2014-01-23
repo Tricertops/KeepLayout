@@ -1,9 +1,12 @@
 # Keep Layout
 
-Keep Layout is project **under active development** whose purpose is to make _Auto Layout_ much easier to use _from code_! No more _Interface Builder_ or _Visual Format_. _Keep Layout_ provides **simple, more readable and powerful API for creating and _accessing existing_ constraints**.
+Keep Layout makes _Auto Layout_ much easier to use _from code_! No more _Interface Builder_ or _Visual Format_. _Keep Layout_ provides **simple, more readable and powerful API for creating and _accessing existing_ constraints**.
 
 
 Before you start, you should be familiar with _Auto Layout_ topic. [How it works and what's the point?][1]
+
+
+_**Project Status**: All planned features are implemented and functional. Project is maintained and kept up to date with latest iOS. Feel free to submit Issues or Pull Requests._
 
 
 
