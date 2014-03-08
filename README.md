@@ -261,7 +261,7 @@ MIT License, Copyright © 2013 Martin Kiss
 
 
 
-[1]: https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/AutolayoutPG/Articles/Introduction.html
+[1]: https://developer.apple.com/library/ios/documentation/userexperience/conceptual/AutolayoutPG/Introduction/Introduction.html
 
 [2]: Sources/UIView+KeepLayout.h
 [3]: Sources/KeepTypes.h
