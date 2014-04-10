@@ -248,7 +248,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = KPL;
-				LastUpgradeCheck = 0450;
+				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "Martin Kiss";
 			};
 			buildConfigurationList = 5B3C507316B5304600D00BF3 /* Build configuration list for PBXProject "Keep Layout" */;
@@ -379,7 +379,6 @@
 		5B3C509816B5304600D00BF3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Example/Prefix.pch;
 				INFOPLIST_FILE = "$(SRCROOT)/Example/Info.plist";
@@ -395,7 +394,6 @@
 		5B3C509916B5304600D00BF3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Example/Prefix.pch;
 				INFOPLIST_FILE = "$(SRCROOT)/Example/Info.plist";
@@ -411,7 +409,6 @@
 		5B3C50AD16B530BE00D00BF3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				DSTROOT = /tmp/KeepLayout.dst;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -422,7 +419,6 @@
 		5B3C50AE16B530BE00D00BF3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				DSTROOT = /tmp/KeepLayout.dst;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
