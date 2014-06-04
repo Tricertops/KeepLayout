@@ -76,10 +76,12 @@ See [`KeepTypes.h`][3] for more.
 
 ## Putting it together – Examples
 
-Keep width of the view to be equal to 150 with High priority:
+Keep width of the view to be equal to 150:
 
 ```objc
-view.keepWidth.equal = KeepHigh(150);
+view.keepWidth.equal = KeepRequired(150);
+// Special shortcut, because this is the most used case:
+view.keepWidth.required = 150;
 ```
 
 Keep top inset to superview of the view to be at least 10, no excuses:
@@ -215,6 +217,20 @@ Spring animation from iOS 7 included.
 See [`UIView+KeepLayout.h`][2] for more.
 
 
+
+## Layout Guides
+
+KeepLayout adds lazy-loaded invisible `.keepLayoutView` to every `UIViewController` in a category. This view is aligned with Top and Bottom Layout Guide of the view controller, which means its size represents visible portion of the view controller. You can use this Layout View to align your views with translucent bars (navigation bar, toolbar, status bar or tab bar).
+
+```
+[imageView keepEdgeAlignTo:controller.keepLayoutView];
+// imageView will not be covered by UINavigationBar
+```
+
+See [`UIViewController+KeepLayout.h`][11] for more.
+
+
+
 ## Debugging
 
 Keep Layout uses its own `NSLayoutConstraint` subclass that overrides `-debugDescription` method. Once you get error message **_`Unable to simultaneously satisfy constraints.`_**, you will see nicely readable description of every constraint you have created. Example:
@@ -251,9 +267,9 @@ See [`UIView+KeepLayout.m`][6] for details.
 
 
 ---
-_Version 1.2.2_
+_Version 1.3.0_
 
-MIT License, Copyright © 2013 Martin Kiss
+MIT License, Copyright © 2013-2014 Martin Kiss
 
 `THE SOFTWARE IS PROVIDED "AS IS", and so on...` see [`LICENSE.md`][9] more.
 
@@ -268,6 +284,7 @@ MIT License, Copyright © 2013 Martin Kiss
 [4]: Sources/KeepAttribute.h
 [5]: Sources/NSArray+KeepLayout.h
 [10]: Sources/KeepLayoutConstraint.h
+[11]: Sources/UIViewController+KeepLayout.h
 
 [6]: Sources/UIView+KeepLayout.m
 [7]: Sources/KeepAttribute.m
