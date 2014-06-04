@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5B00E1FD193F9BD900535B19 /* UIViewController+KeepLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B00E1FC193F9BD900535B19 /* UIViewController+KeepLayout.m */; };
 		5B099AC718358167004A8257 /* Icon~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B099AC418358167004A8257 /* Icon~ipad.png */; };
 		5B099AC818358167004A8257 /* Icon@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B099AC518358167004A8257 /* Icon@2x~ipad.png */; };
 		5B099AC918358167004A8257 /* Icon@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B099AC618358167004A8257 /* Icon@2x~iphone.png */; };
@@ -58,6 +59,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		5B00E1FB193F9BD900535B19 /* UIViewController+KeepLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+KeepLayout.h"; sourceTree = "<group>"; };
+		5B00E1FC193F9BD900535B19 /* UIViewController+KeepLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+KeepLayout.m"; sourceTree = "<group>"; };
 		5B099AC418358167004A8257 /* Icon~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon~ipad.png"; sourceTree = "<group>"; };
 		5B099AC518358167004A8257 /* Icon@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x~ipad.png"; sourceTree = "<group>"; };
 		5B099AC618358167004A8257 /* Icon@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x~iphone.png"; sourceTree = "<group>"; };
@@ -199,6 +202,8 @@
 				5B208DC016B67381007ABFFE /* KeepAttribute.m */,
 				5B96279117984366005531F4 /* KeepLayoutConstraint.h */,
 				5B96279217984366005531F4 /* KeepLayoutConstraint.m */,
+				5B00E1FB193F9BD900535B19 /* UIViewController+KeepLayout.h */,
+				5B00E1FC193F9BD900535B19 /* UIViewController+KeepLayout.m */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -306,6 +311,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5B96279317984366005531F4 /* KeepLayoutConstraint.m in Sources */,
+				5B00E1FD193F9BD900535B19 /* UIViewController+KeepLayout.m in Sources */,
 				5B3C50B116B530F900D00BF3 /* UIView+KeepLayout.m in Sources */,
 				5B208DC116B67381007ABFFE /* KeepAttribute.m in Sources */,
 				5B19318317719A4E00A5747B /* KeepTypes.m in Sources */,
