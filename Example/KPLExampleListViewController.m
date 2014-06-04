@@ -74,7 +74,9 @@
     [simpleExamples addObject:
      [[KPLExample alloc] initWithTitle:@"Equal Insets"
                              subtitle:@"1 line of code"
-                           setupBlock:^KPLExampleStateBlock(UIView *container) {
+                           setupBlock:^KPLExampleStateBlock(UIViewController *controller) {
+                               UIView *container = controller.view;
+                               
                                UIView *view = createView(self.view.tintColor, container);
                                
                                // 1
@@ -97,7 +99,9 @@
     [simpleExamples addObject:
      [[KPLExample alloc] initWithTitle:@"Various Insets"
                                 subtitle:@"1 line of code"
-                           setupBlock:^KPLExampleStateBlock(UIView *container) {
+                           setupBlock:^KPLExampleStateBlock(UIViewController *controller) {
+                               UIView *container = controller.view;
+                               
                                UIView *view = createView(self.view.tintColor, container);
                                
                                // 1
@@ -120,7 +124,9 @@
     [simpleExamples addObject:
      [[KPLExample alloc] initWithTitle:@"Center & Size"
                                 subtitle:@"2 lines of code"
-                           setupBlock:^KPLExampleStateBlock(UIView *container) {
+                           setupBlock:^KPLExampleStateBlock(UIViewController *controller) {
+                               UIView *container = controller.view;
+                               
                                UIView *view = createView(self.view.tintColor, container);
                                
                                // 1
@@ -151,7 +157,9 @@
     [simpleExamples addObject:
      [[KPLExample alloc] initWithTitle:@"Video 16:9"
                                 subtitle:@"3 lines of code"
-                           setupBlock:^KPLExampleStateBlock(UIView *container) {
+                           setupBlock:^KPLExampleStateBlock(UIViewController *controller) {
+                               UIView *container = controller.view;
+                               
                                UIView *black = createView(self.view.tintColor, container);
                                
                                // 1
@@ -178,7 +186,8 @@
     [simpleExamples addObject:
      [[KPLExample alloc] initWithTitle:@"Dynamic Text"
                               subtitle:@"Reflow content when text changes"
-                            setupBlock:^KPLExampleStateBlock(UIView *container) {
+                            setupBlock:^KPLExampleStateBlock(UIViewController *controller) {
+                                UIView *container = controller.view;
                                 
                                 UIView *top = createView(self.view.tintColor, container);
                                 top.keepHorizontalInsets.equal = KeepRequired(10);
@@ -213,7 +222,9 @@
     [complexExamples addObject:
      [[KPLExample alloc] initWithTitle:@"Everything"
                               subtitle:@"All attributes used"
-                            setupBlock:^KPLExampleStateBlock(UIView *container) {
+                            setupBlock:^KPLExampleStateBlock(UIViewController *controller) {
+                                UIView *container = controller.view;
+                                
                                 UIView *center = createView(self.view.tintColor, container);
                                 UIView *topStick = createView(self.view.tintColor, container);
                                 UIView *bottomStick = createView(self.view.tintColor, container);
@@ -279,7 +290,8 @@
     [complexExamples addObject:
      [[KPLExample alloc] initWithTitle:@"Tiles"
                               subtitle:@"Using many NSArray attributes"
-                            setupBlock:^KPLExampleStateBlock(UIView *container) {
+                            setupBlock:^KPLExampleStateBlock(UIViewController *controller) {
+                                UIView *container = controller.view;
                                 
                                 NSUInteger rowCount = 4;
                                 NSUInteger columnCount = 4;
