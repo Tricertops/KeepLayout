@@ -7,11 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
 #import <CoreGraphics/CoreGraphics.h>
 
 #import "KeepTypes.h"
-#import "UIView+KeepLayout.h"
+#import "View+KeepLayout.h"
 
 @class KeepAttribute;
 
@@ -122,10 +121,10 @@
 #pragma mark Superview Insets: Forwarded
 
 /// Forwards to contained views.
-- (void)keepInsets:(UIEdgeInsets)insets priority:(KeepPriority)priority;
+- (void)keepInsets:(KIT_VIEW_EDGE_INSETS)insets priority:(KeepPriority)priority;
 
 /// Forwards to contained views. Use is discouraged.
-- (void)keepInsets:(UIEdgeInsets)insets;
+- (void)keepInsets:(KIT_VIEW_EDGE_INSETS)insets;
 
 
 

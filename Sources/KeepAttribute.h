@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreGraphics/CoreGraphics.h>
-#import <UIKit/UIKit.h>
 
 #import "KeepTypes.h"
 
@@ -68,9 +67,9 @@
 @interface KeepSimpleAttribute : KeepAttribute
 
 /// Properties that don't change in time.
-- (instancetype)initWithView:(UIView *)view
+- (instancetype)initWithView:(KIT_VIEW_CLASS *)view
              layoutAttribute:(NSLayoutAttribute)layoutAttribute
-                 relatedView:(UIView *)relatedView
+                 relatedView:(KIT_VIEW_CLASS *)relatedView
       relatedLayoutAttribute:(NSLayoutAttribute)relatedLayoutAttribute
                  coefficient:(CGFloat)coefficient;
 /// Multiplier of values: equal, min and max

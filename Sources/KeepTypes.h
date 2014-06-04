@@ -5,12 +5,8 @@
 //  Created by Martin Kiss on 28.1.13.
 //  Copyright (c) 2013 Triceratops. All rights reserved.
 //
-
-#import <Foundation/Foundation.h>
+#import "KeepDefines.h"
 #import <CoreGraphics/CoreGraphics.h>
-#import <UIKit/UIKit.h>
-
-
 
 #define KeepAssert(CONDITION, DESCRIPTION...)   NSAssert((CONDITION), @"Keep Layout: " DESCRIPTION)
 #define KeepParameterAssert(CONDITION)          NSAssert((CONDITION), @"Keep Layout: " @"Invalid parameter not satisfying: %s", #CONDITION)
@@ -21,12 +17,22 @@
 
 #pragma mark Priority
 /// Use custom names.
+#if TARGET_OS_IPHONE
 typedef enum : NSInteger {
     KeepPriorityRequired = UILayoutPriorityRequired,
     KeepPriorityHigh = UILayoutPriorityDefaultHigh,
     KeepPriorityLow = UILayoutPriorityDefaultLow,
     KeepPriorityFitting = UILayoutPriorityFittingSizeLevel,
 } KeepPriority;
+#else
+typedef enum : NSInteger {
+	KeepPriorityRequired = NSLayoutPriorityRequired,
+	KeepPriorityHigh = NSLayoutPriorityDefaultHigh,
+	KeepPriorityLow = NSLayoutPriorityDefaultLow,
+	KeepPriorityFitting = NSLayoutPriorityFittingSizeCompression,
+} KeepPriority;
+#endif
+
 
 extern NSString *KeepPriorityDescription(KeepPriority);
 

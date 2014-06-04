@@ -7,7 +7,7 @@
 //
 
 #import "KeepAttribute.h"
-#import "UIView+KeepLayout.h"
+#import "View+KeepLayout.h"
 #import "KeepLayoutConstraint.h"
 
 
@@ -80,16 +80,16 @@
 + (KeepGroupAttribute *)group:(KeepAttribute *)first, ... NS_REQUIRES_NIL_TERMINATION {
     va_list list;
     va_start(list, first);
-    
+
     NSMutableArray *attributes = [[NSMutableArray alloc] init];
     KeepAttribute *attribute = first;
     while (attribute) {
         [attributes addObject:attribute];
         attribute = va_arg(list, KeepAttribute *);
     }
-    
+
     va_end(list);
-    
+
     return [[KeepGroupAttribute alloc] initWithAttributes:attributes];
 }
 
@@ -113,9 +113,9 @@
 #ifdef DEBUG
     va_list arguments;
     va_start(arguments, format);
-    
+
     self.name = [[NSString alloc] initWithFormat:format arguments:arguments];
-    
+
     va_end(arguments);
 #endif
     return self;
@@ -152,11 +152,11 @@
 
 @interface KeepSimpleAttribute ()
 
-@property (nonatomic, readwrite, weak) UIView *view;
+@property (nonatomic, readwrite, weak) KIT_VIEW_CLASS *view;
 @property (nonatomic, readwrite, assign) NSLayoutAttribute layoutAttribute;
-@property (nonatomic, readwrite, weak) UIView *relatedView;
+@property (nonatomic, readwrite, weak) KIT_VIEW_CLASS *relatedView;
 @property (nonatomic, readwrite, assign) NSLayoutAttribute relatedLayoutAttribute;
-@property (nonatomic, readwrite, weak) UIView *constraintView;
+@property (nonatomic, readwrite, weak) KIT_VIEW_CLASS *constraintView;
 
 @property (nonatomic, readwrite, assign) CGFloat coefficient;
 
@@ -164,9 +164,9 @@
 @property (nonatomic, readwrite, strong) KeepLayoutConstraint *maxConstraint;
 @property (nonatomic, readwrite, strong) KeepLayoutConstraint *minConstraint;
 
-- (instancetype)initWithView:(UIView *)view
+- (instancetype)initWithView:(KIT_VIEW_CLASS *)view
              layoutAttribute:(NSLayoutAttribute)layoutAttribute
-                 relatedView:(UIView *)relatedView
+                 relatedView:(KIT_VIEW_CLASS *)relatedView
       relatedLayoutAttribute:(NSLayoutAttribute)superviewLayoutAttribute
                  coefficient:(CGFloat)coefficient;
 - (KeepLayoutConstraint *)createConstraintWithRelation:(NSLayoutRelation)relation value:(KeepValue)value;
@@ -199,9 +199,9 @@
 }
 
 
-- (instancetype)initWithView:(UIView *)view
+- (instancetype)initWithView:(KIT_VIEW_CLASS *)view
              layoutAttribute:(NSLayoutAttribute)layoutAttribute
-                 relatedView:(UIView *)relatedView
+                 relatedView:(KIT_VIEW_CLASS *)relatedView
       relatedLayoutAttribute:(NSLayoutAttribute)relatedLayoutAttribute
                  coefficient:(CGFloat)coefficient {
     self = [super init];
@@ -209,12 +209,12 @@
             NSParameterAssert(view);
             NSParameterAssert(layoutAttribute != NSLayoutAttributeNotAnAttribute);
             NSParameterAssert(coefficient);
-        
+
         NSAssert(self.class != KeepSimpleAttribute.class, @"%@ is abstract class", self.class);
         if (self.class == KeepSimpleAttribute.class) {
             return nil;
         }
-        
+
         self.view = view;
         self.layoutAttribute = layoutAttribute;
         self.relatedView = relatedView;
@@ -268,14 +268,14 @@
 
 - (void)setEqual:(KeepValue)equal {
     [super setEqual:equal];
-    
+
     if (KeepValueIsNone(equal)) {
         [self removeConstraint:self.equalConstraint]; self.equalConstraint = nil;
         return;
     }
-    
+
     NSLayoutRelation relation = NSLayoutRelationEqual;
-    
+
     if ( ! self.equalConstraint) {
         self.equalConstraint = [self createConstraintWithRelation:relation value:equal];
         [self setNameForConstraint:self.equalConstraint relation:relation value:equal];
@@ -285,21 +285,21 @@
         [self applyValue:equal forConstraint:self.equalConstraint relation:relation];
         [self setNameForConstraint:self.equalConstraint relation:relation value:equal];
     }
-    
+
     [[KeepRemovableGroup current] addAttribute:self forRelation:relation];
 }
 
 
 - (void)setMax:(KeepValue)max {
     [super setMax:max];
-    
+
     if (KeepValueIsNone(max)) {
         [self removeConstraint:self.maxConstraint]; self.maxConstraint = nil;
         return;
     }
-    
+
     NSLayoutRelation relation = NSLayoutRelationLessThanOrEqual;
-    
+
     if ( ! self.maxConstraint) {
         self.maxConstraint = [self createConstraintWithRelation:relation value:max];
         [self setNameForConstraint:self.maxConstraint relation:relation value:max];
@@ -309,21 +309,21 @@
         [self applyValue:max forConstraint:self.maxConstraint relation:relation];
         [self setNameForConstraint:self.maxConstraint relation:relation value:max];
     }
-    
+
     [[KeepRemovableGroup current] addAttribute:self forRelation:relation];
 }
 
 
 - (void)setMin:(KeepValue)min {
     [super setMin:min];
-    
+
     if (KeepValueIsNone(min)) {
         [self removeConstraint:self.minConstraint]; self.minConstraint = nil;
         return;
     }
-    
+
     NSLayoutRelation relation = NSLayoutRelationGreaterThanOrEqual;
-    
+
     if ( ! self.minConstraint) {
         self.minConstraint = [self createConstraintWithRelation:relation value:min];
         [self setNameForConstraint:self.minConstraint relation:relation value:min];
@@ -333,7 +333,7 @@
         [self applyValue:min forConstraint:self.minConstraint relation:relation];
         [self setNameForConstraint:self.minConstraint relation:relation value:min];
     }
-    
+
     [[KeepRemovableGroup current] addAttribute:self forRelation:relation];
 }
 
@@ -440,7 +440,7 @@
     // Since multiplier is not read/write proeperty, we need to re-add the whole constraint again.
     [self removeConstraint:constraint];
     constraint = [self createConstraintWithRelation:constraint.relation value:value];
-    
+
     // TODO: Better solution
     switch (relation) {
         case NSLayoutRelationEqual:
@@ -504,7 +504,7 @@
     self = [super init];
     if (self) {
         NSParameterAssert(attributes);
-        
+
         self.attributes = attributes;
     }
     return self;

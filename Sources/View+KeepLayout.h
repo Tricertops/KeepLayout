@@ -7,14 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
 #import <CoreGraphics/CoreGraphics.h>
+#import "KeepDefines.h"
 #import "KeepTypes.h"
 
 @class KeepAttribute;
 
 
-typedef KeepAttribute *(^KeepRelatedAttributeBlock)(UIView *otherView);
+typedef KeepAttribute *(^KeepRelatedAttributeBlock)(KIT_VIEW_CLASS *otherView);
 
 
 
@@ -32,7 +32,7 @@ typedef KeepAttribute *(^KeepRelatedAttributeBlock)(UIView *otherView);
  \endcode
  
  **/
-@interface UIView (KeepLayout)
+@interface KIT_VIEW_CLASS (KeepLayout)
 
 
 
@@ -109,10 +109,10 @@ typedef KeepAttribute *(^KeepRelatedAttributeBlock)(UIView *otherView);
 @property (nonatomic, readonly) KeepAttribute *keepVerticalInsets;
 
 /// Sets custom Insets using given priority.
-- (void)keepInsets:(UIEdgeInsets)insets priority:(KeepPriority)priority;
+- (void)keepInsets:(KIT_VIEW_EDGE_INSETS)insets priority:(KeepPriority)priority;
 
 /// Sets custom Insets using Required priority. Use is discouraged.
-- (void)keepInsets:(UIEdgeInsets)insets;
+- (void)keepInsets:(KIT_VIEW_EDGE_INSETS)insets;
 
 
 
@@ -215,22 +215,22 @@ typedef KeepAttribute *(^KeepRelatedAttributeBlock)(UIView *otherView);
 /// Convenience methods for setting multiple alignments at once.
 
 /// Sets all 4 edge alignments with other view with given insets and priority.
-- (void)keepEdgeAlignTo:(UIView *)view insets:(UIEdgeInsets)insets withPriority:(KeepPriority)priority;
+- (void)keepEdgeAlignTo:(KIT_VIEW_CLASS *)view insets:(KIT_VIEW_EDGE_INSETS)insets withPriority:(KeepPriority)priority;
 
 /// Sets all 4 edge alignments with other view with given insets and Required priority. Use is discouraged.
-- (void)keepEdgeAlignTo:(UIView *)view insets:(UIEdgeInsets)insets;
+- (void)keepEdgeAlignTo:(KIT_VIEW_CLASS *)view insets:(KIT_VIEW_EDGE_INSETS)insets;
 
 /// Sets all 4 edge alignments with other view with zero insets and Required priority. Use is discouraged.
-- (void)keepEdgeAlignTo:(UIView *)view;
+- (void)keepEdgeAlignTo:(KIT_VIEW_CLASS *)view;
 
 /// Sets both center alignments with other view view given offset and priority.
-- (void)keepCenterAlignTo:(UIView *)view offset:(UIOffset)offset withPriority:(KeepPriority)priority;
+- (void)keepCenterAlignTo:(KIT_VIEW_CLASS *)view offset:(KIT_VIEW_OFFSET)offset withPriority:(KeepPriority)priority;
 
 /// Sets both center alignments with other view view given offset and Required priority.
-- (void)keepCenterAlignTo:(UIView *)view offset:(UIOffset)offset;
+- (void)keepCenterAlignTo:(KIT_VIEW_CLASS *)view offset:(KIT_VIEW_OFFSET)offset;
 
 /// Sets both center alignments with other view view zero offset and Required priority.
-- (void)keepCenterAlignTo:(UIView *)view;
+- (void)keepCenterAlignTo:(KIT_VIEW_CLASS *)view;
 
 
 
@@ -239,7 +239,7 @@ typedef KeepAttribute *(^KeepRelatedAttributeBlock)(UIView *otherView);
 #pragma mark -
 #pragma mark Animations
 /// Animation methods allowing you to modify all above attributes (or even constraints directly) animatedly. All animations are scheduled on main queue with given or zero delay. The layout code itself is executed after the delay, which is different than in UIView animation methods. This behavior is needed, because of different nature of constraint-based layouting and allows you to schedule animations in the same update cycle as your main layout.
-
+#if TARGET_OS_IPHONE
 /// Animate layout changes. Receiver automatically calls `-layoutIfNeeded` after the animation block. Animation is scheduled on Main Queue with zero delay, so the block not executed immediatelly.
 - (void)keepAnimatedWithDuration:(NSTimeInterval)duration layout:(void(^)(void))animations;
 
@@ -248,6 +248,7 @@ typedef KeepAttribute *(^KeepRelatedAttributeBlock)(UIView *otherView);
 
 /// Animate layout changes with delay, options and completion. Receiver automatically calls `-layoutIfNeeded` after the animation block. Animation is scheduled on Main Queue with given delay.
 - (void)keepAnimatedWithDuration:(NSTimeInterval)duration delay:(NSTimeInterval)delay options:(UIViewAnimationOptions)options layout:(void(^)(void))animations completion:(void(^)(BOOL finished))completion;
+#endif
 
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000   // Compiled with iOS 7 SDK
 /// Animate layout changes with spring behavior, delay, options and completion. Receiver automatically calls `-layoutIfNeeded` after the animation block. Animation is scheduled on Main Queue with given delay.
@@ -265,7 +266,7 @@ typedef KeepAttribute *(^KeepRelatedAttributeBlock)(UIView *otherView);
 #pragma mark Common Superview
 
 /// Traverses superviews and returns the first common for both views.
-- (UIView *)commonSuperview:(UIView *)anotherView;
+- (KIT_VIEW_CLASS *)commonSuperview:(KIT_VIEW_CLASS *)anotherView;
 
 
 

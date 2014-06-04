@@ -7,6 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		589B082D193FA9810061D204 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 589B082B193FA9810061D204 /* InfoPlist.strings */; };
+		589B082F193FA9810061D204 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 589B082E193FA9810061D204 /* main.m */; };
+		589B0836193FA9810061D204 /* KPLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 589B0835193FA9810061D204 /* KPLAppDelegate.m */; };
+		589B0839193FA9810061D204 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 589B0837193FA9810061D204 /* MainMenu.xib */; };
+		589B083B193FA9810061D204 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 589B083A193FA9810061D204 /* Images.xcassets */; };
+		589B0855193FA9C40061D204 /* KPLExampleWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 589B0854193FA9C40061D204 /* KPLExampleWindowController.m */; };
+		589B0858193FAB480061D204 /* libKeepLayout.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 589B07FC193FA8850061D204 /* libKeepLayout.a */; };
+		589B0859193FACB90061D204 /* KeepTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B19318217719A4E00A5747B /* KeepTypes.m */; };
+		589B085A193FACB90061D204 /* NSArray+KeepLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B6D195E1776F32000FA2E3E /* NSArray+KeepLayout.m */; };
+		589B085B193FACB90061D204 /* KeepAttribute.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B208DC016B67381007ABFFE /* KeepAttribute.m */; };
+		589B085C193FACB90061D204 /* KeepLayoutConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B96279217984366005531F4 /* KeepLayoutConstraint.m */; };
+		589B085D193FACB90061D204 /* View+KeepLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = BE213C2DC1AB26F46C932E30 /* View+KeepLayout.m */; };
+		589B085F193FAFCA0061D204 /* KeepDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = 589B085E193FAFCA0061D204 /* KeepDefines.h */; };
+		589B0861193FB1D60061D204 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 589B0860193FB1D60061D204 /* AppKit.framework */; };
+		589B0863193FB1DC0061D204 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 589B0862193FB1DC0061D204 /* CoreGraphics.framework */; };
+		589B0865193FB1E20061D204 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 589B0864193FB1E20061D204 /* Foundation.framework */; };
+		589B0867193FB21D0061D204 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 589B0860193FB1D60061D204 /* AppKit.framework */; };
+		589B0868193FB2220061D204 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 589B0864193FB1E20061D204 /* Foundation.framework */; };
+		589B0869193FB2270061D204 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 589B0862193FB1DC0061D204 /* CoreGraphics.framework */; };
 		5B099AC718358167004A8257 /* Icon~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B099AC418358167004A8257 /* Icon~ipad.png */; };
 		5B099AC818358167004A8257 /* Icon@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B099AC518358167004A8257 /* Icon@2x~ipad.png */; };
 		5B099AC918358167004A8257 /* Icon@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B099AC618358167004A8257 /* Icon@2x~iphone.png */; };
@@ -26,16 +45,23 @@
 		5B3C509216B5304600D00BF3 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B3C509116B5304600D00BF3 /* Default@2x.png */; };
 		5B3C509416B5304600D00BF3 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B3C509316B5304600D00BF3 /* Default-568h@2x.png */; };
 		5B3C50A416B530BE00D00BF3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B3C507F16B5304600D00BF3 /* Foundation.framework */; };
-		5B3C50B116B530F900D00BF3 /* UIView+KeepLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B3C50B016B530F900D00BF3 /* UIView+KeepLayout.m */; };
 		5B3C50B416B5313200D00BF3 /* libKeepLayout.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B3C50A316B530BE00D00BF3 /* libKeepLayout.a */; };
 		5B6D195F1776F32000FA2E3E /* NSArray+KeepLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B6D195E1776F32000FA2E3E /* NSArray+KeepLayout.m */; };
 		5B6D196217777E4200FA2E3E /* KPLExampleListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B6D196117777E4200FA2E3E /* KPLExampleListViewController.m */; };
 		5B6D196517777E5100FA2E3E /* KPLExampleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B6D196417777E5100FA2E3E /* KPLExampleViewController.m */; };
 		5B6D19681777811600FA2E3E /* KPLExample.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B6D19671777811600FA2E3E /* KPLExample.m */; };
 		5B96279317984366005531F4 /* KeepLayoutConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B96279217984366005531F4 /* KeepLayoutConstraint.m */; };
+		BE213F00DAAAB6064FA3F450 /* View+KeepLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = BE213C2DC1AB26F46C932E30 /* View+KeepLayout.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		589B0856193FAB400061D204 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5B3C507016B5304600D00BF3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 589B07FB193FA8850061D204;
+			remoteInfo = "KeepLayout-OSX";
+		};
 		5B3C50B216B5312E00D00BF3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 5B3C507016B5304600D00BF3 /* Project object */;
@@ -58,6 +84,26 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		589B07FC193FA8850061D204 /* libKeepLayout.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libKeepLayout.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		589B07FD193FA8850061D204 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
+		589B0800193FA8850061D204 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		589B0801193FA8850061D204 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		589B0802193FA8850061D204 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		589B080E193FA8850061D204 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		589B0826193FA9810061D204 /* Example-OSX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Example-OSX.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		589B082A193FA9810061D204 /* Example-OSX-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Example-OSX-Info.plist"; sourceTree = "<group>"; };
+		589B082C193FA9810061D204 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		589B082E193FA9810061D204 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		589B0834193FA9810061D204 /* KPLAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KPLAppDelegate.h; sourceTree = "<group>"; };
+		589B0835193FA9810061D204 /* KPLAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KPLAppDelegate.m; sourceTree = "<group>"; };
+		589B0838193FA9810061D204 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		589B083A193FA9810061D204 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		589B0853193FA9C40061D204 /* KPLExampleWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPLExampleWindowController.h; sourceTree = "<group>"; };
+		589B0854193FA9C40061D204 /* KPLExampleWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPLExampleWindowController.m; sourceTree = "<group>"; };
+		589B085E193FAFCA0061D204 /* KeepDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeepDefines.h; sourceTree = "<group>"; };
+		589B0860193FB1D60061D204 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/AppKit.framework; sourceTree = DEVELOPER_DIR; };
+		589B0862193FB1DC0061D204 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
+		589B0864193FB1E20061D204 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		5B099AC418358167004A8257 /* Icon~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon~ipad.png"; sourceTree = "<group>"; };
 		5B099AC518358167004A8257 /* Icon@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x~ipad.png"; sourceTree = "<group>"; };
 		5B099AC618358167004A8257 /* Icon@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x~iphone.png"; sourceTree = "<group>"; };
@@ -70,7 +116,7 @@
 		5B208DC016B67381007ABFFE /* KeepAttribute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeepAttribute.m; sourceTree = "<group>"; };
 		5B208DC316B67391007ABFFE /* KeepLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeepLayout.h; sourceTree = "<group>"; };
 		5B208DDE16B6EFFB007ABFFE /* KeepTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeepTypes.h; sourceTree = "<group>"; };
-		5B3C507916B5304600D00BF3 /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5B3C507916B5304600D00BF3 /* Example-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Example-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B3C507D16B5304600D00BF3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5B3C507F16B5304600D00BF3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5B3C508116B5304600D00BF3 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -81,8 +127,6 @@
 		5B3C509116B5304600D00BF3 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		5B3C509316B5304600D00BF3 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		5B3C50A316B530BE00D00BF3 /* libKeepLayout.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libKeepLayout.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		5B3C50AF16B530F900D00BF3 /* UIView+KeepLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+KeepLayout.h"; sourceTree = "<group>"; };
-		5B3C50B016B530F900D00BF3 /* UIView+KeepLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+KeepLayout.m"; sourceTree = "<group>"; };
 		5B3C50B516B531C700D00BF3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5B6D195D1776F32000FA2E3E /* NSArray+KeepLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+KeepLayout.h"; sourceTree = "<group>"; };
 		5B6D195E1776F32000FA2E3E /* NSArray+KeepLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+KeepLayout.m"; sourceTree = "<group>"; };
@@ -94,9 +138,32 @@
 		5B6D19671777811600FA2E3E /* KPLExample.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPLExample.m; sourceTree = "<group>"; };
 		5B96279117984366005531F4 /* KeepLayoutConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeepLayoutConstraint.h; sourceTree = "<group>"; };
 		5B96279217984366005531F4 /* KeepLayoutConstraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeepLayoutConstraint.m; sourceTree = "<group>"; };
+		BE213C2DC1AB26F46C932E30 /* View+KeepLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "View+KeepLayout.m"; sourceTree = "<group>"; };
+		BE213C2E0BFD08B0167121BD /* View+KeepLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "View+KeepLayout.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		589B07F9193FA8850061D204 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				589B0865193FB1E20061D204 /* Foundation.framework in Frameworks */,
+				589B0863193FB1DC0061D204 /* CoreGraphics.framework in Frameworks */,
+				589B0861193FB1D60061D204 /* AppKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		589B0823193FA9810061D204 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				589B0858193FAB480061D204 /* libKeepLayout.a in Frameworks */,
+				589B0869193FB2270061D204 /* CoreGraphics.framework in Frameworks */,
+				589B0868193FB2220061D204 /* Foundation.framework in Frameworks */,
+				589B0867193FB21D0061D204 /* AppKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5B3C507616B5304600D00BF3 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -121,11 +188,46 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		589B07FF193FA8850061D204 /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				589B0800193FA8850061D204 /* Foundation.framework */,
+				589B0801193FA8850061D204 /* CoreData.framework */,
+				589B0802193FA8850061D204 /* AppKit.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		589B0828193FA9810061D204 /* Example-OSX */ = {
+			isa = PBXGroup;
+			children = (
+				589B0834193FA9810061D204 /* KPLAppDelegate.h */,
+				589B0835193FA9810061D204 /* KPLAppDelegate.m */,
+				589B0853193FA9C40061D204 /* KPLExampleWindowController.h */,
+				589B0854193FA9C40061D204 /* KPLExampleWindowController.m */,
+				589B0837193FA9810061D204 /* MainMenu.xib */,
+				589B083A193FA9810061D204 /* Images.xcassets */,
+				589B0829193FA9810061D204 /* Supporting Files */,
+			);
+			path = "Example-OSX";
+			sourceTree = "<group>";
+		};
+		589B0829193FA9810061D204 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				589B082A193FA9810061D204 /* Example-OSX-Info.plist */,
+				589B082B193FA9810061D204 /* InfoPlist.strings */,
+				589B082E193FA9810061D204 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		5B3C506E16B5304600D00BF3 = {
 			isa = PBXGroup;
 			children = (
 				5B3C50A516B530BE00D00BF3 /* Sources */,
-				5B3C508316B5304600D00BF3 /* Example */,
+				5B3C508316B5304600D00BF3 /* Example-iOS */,
+				589B0828193FA9810061D204 /* Example-OSX */,
 				5B3C507C16B5304600D00BF3 /* Frameworks */,
 				5B3C507A16B5304600D00BF3 /* Products */,
 			);
@@ -134,8 +236,10 @@
 		5B3C507A16B5304600D00BF3 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				5B3C507916B5304600D00BF3 /* Example.app */,
+				5B3C507916B5304600D00BF3 /* Example-iOS.app */,
 				5B3C50A316B530BE00D00BF3 /* libKeepLayout.a */,
+				589B07FC193FA8850061D204 /* libKeepLayout.a */,
+				589B0826193FA9810061D204 /* Example-OSX.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -143,14 +247,20 @@
 		5B3C507C16B5304600D00BF3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				589B0864193FB1E20061D204 /* Foundation.framework */,
+				589B0862193FB1DC0061D204 /* CoreGraphics.framework */,
+				589B0860193FB1D60061D204 /* AppKit.framework */,
 				5B3C507D16B5304600D00BF3 /* UIKit.framework */,
 				5B3C507F16B5304600D00BF3 /* Foundation.framework */,
 				5B3C508116B5304600D00BF3 /* CoreGraphics.framework */,
+				589B07FD193FA8850061D204 /* Cocoa.framework */,
+				589B080E193FA8850061D204 /* XCTest.framework */,
+				589B07FF193FA8850061D204 /* Other Frameworks */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		5B3C508316B5304600D00BF3 /* Example */ = {
+		5B3C508316B5304600D00BF3 /* Example-iOS */ = {
 			isa = PBXGroup;
 			children = (
 				5B3C508C16B5304600D00BF3 /* KPLAppDelegate.h */,
@@ -163,6 +273,7 @@
 				5B6D19671777811600FA2E3E /* KPLExample.m */,
 				5B3C508416B5304600D00BF3 /* Supporting Files */,
 			);
+			name = "Example-iOS";
 			path = Example;
 			sourceTree = "<group>";
 		};
@@ -190,25 +301,72 @@
 			children = (
 				5B208DC316B67391007ABFFE /* KeepLayout.h */,
 				5B208DDE16B6EFFB007ABFFE /* KeepTypes.h */,
+				589B085E193FAFCA0061D204 /* KeepDefines.h */,
 				5B19318217719A4E00A5747B /* KeepTypes.m */,
-				5B3C50AF16B530F900D00BF3 /* UIView+KeepLayout.h */,
-				5B3C50B016B530F900D00BF3 /* UIView+KeepLayout.m */,
 				5B6D195D1776F32000FA2E3E /* NSArray+KeepLayout.h */,
 				5B6D195E1776F32000FA2E3E /* NSArray+KeepLayout.m */,
 				5B208DBF16B67381007ABFFE /* KeepAttribute.h */,
 				5B208DC016B67381007ABFFE /* KeepAttribute.m */,
 				5B96279117984366005531F4 /* KeepLayoutConstraint.h */,
 				5B96279217984366005531F4 /* KeepLayoutConstraint.m */,
+				BE213C2DC1AB26F46C932E30 /* View+KeepLayout.m */,
+				BE213C2E0BFD08B0167121BD /* View+KeepLayout.h */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		589B07FA193FA8850061D204 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				589B085F193FAFCA0061D204 /* KeepDefines.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
-		5B3C507816B5304600D00BF3 /* Example */ = {
+		589B07FB193FA8850061D204 /* KeepLayout-OSX */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5B3C509716B5304600D00BF3 /* Build configuration list for PBXNativeTarget "Example" */;
+			buildConfigurationList = 589B081C193FA8860061D204 /* Build configuration list for PBXNativeTarget "KeepLayout-OSX" */;
+			buildPhases = (
+				589B07F8193FA8850061D204 /* Sources */,
+				589B07F9193FA8850061D204 /* Frameworks */,
+				589B07FA193FA8850061D204 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "KeepLayout-OSX";
+			productName = "KeepLayout-OSX";
+			productReference = 589B07FC193FA8850061D204 /* libKeepLayout.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		589B0825193FA9810061D204 /* Example-OSX */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 589B084D193FA9810061D204 /* Build configuration list for PBXNativeTarget "Example-OSX" */;
+			buildPhases = (
+				589B0822193FA9810061D204 /* Sources */,
+				589B0823193FA9810061D204 /* Frameworks */,
+				589B0824193FA9810061D204 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				589B0857193FAB400061D204 /* PBXTargetDependency */,
+			);
+			name = "Example-OSX";
+			productName = "Example-OSX";
+			productReference = 589B0826193FA9810061D204 /* Example-OSX.app */;
+			productType = "com.apple.product-type.application";
+		};
+		5B3C507816B5304600D00BF3 /* Example-iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5B3C509716B5304600D00BF3 /* Build configuration list for PBXNativeTarget "Example-iOS" */;
 			buildPhases = (
 				5B3C507516B5304600D00BF3 /* Sources */,
 				5B3C507616B5304600D00BF3 /* Frameworks */,
@@ -219,14 +377,14 @@
 			dependencies = (
 				5B3C50B316B5312E00D00BF3 /* PBXTargetDependency */,
 			);
-			name = Example;
+			name = "Example-iOS";
 			productName = "Keep Layout";
-			productReference = 5B3C507916B5304600D00BF3 /* Example.app */;
+			productReference = 5B3C507916B5304600D00BF3 /* Example-iOS.app */;
 			productType = "com.apple.product-type.application";
 		};
-		5B3C50A216B530BE00D00BF3 /* KeepLayout */ = {
+		5B3C50A216B530BE00D00BF3 /* KeepLayout-iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5B3C50AC16B530BE00D00BF3 /* Build configuration list for PBXNativeTarget "KeepLayout" */;
+			buildConfigurationList = 5B3C50AC16B530BE00D00BF3 /* Build configuration list for PBXNativeTarget "KeepLayout-iOS" */;
 			buildPhases = (
 				5B3C509F16B530BE00D00BF3 /* Sources */,
 				5B3C50A016B530BE00D00BF3 /* Frameworks */,
@@ -236,7 +394,7 @@
 			);
 			dependencies = (
 			);
-			name = KeepLayout;
+			name = "KeepLayout-iOS";
 			productName = KeepLayout;
 			productReference = 5B3C50A316B530BE00D00BF3 /* libKeepLayout.a */;
 			productType = "com.apple.product-type.library.static";
@@ -257,19 +415,32 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = 5B3C506E16B5304600D00BF3;
 			productRefGroup = 5B3C507A16B5304600D00BF3 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				5B3C50A216B530BE00D00BF3 /* KeepLayout */,
-				5B3C507816B5304600D00BF3 /* Example */,
+				5B3C50A216B530BE00D00BF3 /* KeepLayout-iOS */,
+				5B3C507816B5304600D00BF3 /* Example-iOS */,
+				589B07FB193FA8850061D204 /* KeepLayout-OSX */,
+				589B0825193FA9810061D204 /* Example-OSX */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		589B0824193FA9810061D204 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				589B082D193FA9810061D204 /* InfoPlist.strings in Resources */,
+				589B083B193FA9810061D204 /* Images.xcassets in Resources */,
+				589B0839193FA9810061D204 /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5B3C507716B5304600D00BF3 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -289,6 +460,28 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		589B07F8193FA8850061D204 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				589B0859193FACB90061D204 /* KeepTypes.m in Sources */,
+				589B085A193FACB90061D204 /* NSArray+KeepLayout.m in Sources */,
+				589B085B193FACB90061D204 /* KeepAttribute.m in Sources */,
+				589B085C193FACB90061D204 /* KeepLayoutConstraint.m in Sources */,
+				589B085D193FACB90061D204 /* View+KeepLayout.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		589B0822193FA9810061D204 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				589B0836193FA9810061D204 /* KPLAppDelegate.m in Sources */,
+				589B0855193FA9C40061D204 /* KPLExampleWindowController.m in Sources */,
+				589B082F193FA9810061D204 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5B3C507516B5304600D00BF3 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -306,24 +499,184 @@
 			buildActionMask = 2147483647;
 			files = (
 				5B96279317984366005531F4 /* KeepLayoutConstraint.m in Sources */,
-				5B3C50B116B530F900D00BF3 /* UIView+KeepLayout.m in Sources */,
 				5B208DC116B67381007ABFFE /* KeepAttribute.m in Sources */,
 				5B19318317719A4E00A5747B /* KeepTypes.m in Sources */,
 				5B6D195F1776F32000FA2E3E /* NSArray+KeepLayout.m in Sources */,
+				BE213F00DAAAB6064FA3F450 /* View+KeepLayout.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		589B0857193FAB400061D204 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 589B07FB193FA8850061D204 /* KeepLayout-OSX */;
+			targetProxy = 589B0856193FAB400061D204 /* PBXContainerItemProxy */;
+		};
 		5B3C50B316B5312E00D00BF3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 5B3C50A216B530BE00D00BF3 /* KeepLayout */;
+			target = 5B3C50A216B530BE00D00BF3 /* KeepLayout-iOS */;
 			targetProxy = 5B3C50B216B5312E00D00BF3 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
+/* Begin PBXVariantGroup section */
+		589B082B193FA9810061D204 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				589B082C193FA9810061D204 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		589B0837193FA9810061D204 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				589B0838193FA9810061D204 /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
+		589B081D193FA8860061D204 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				PRODUCT_NAME = KeepLayout;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		589B081E193FA8860061D204 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				PRODUCT_NAME = KeepLayout;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		589B084E193FA9810061D204 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				INFOPLIST_FILE = "Example-OSX/Example-OSX-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		589B084F193FA9810061D204 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				INFOPLIST_FILE = "Example-OSX/Example-OSX-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
 		5B3C509516B5304600D00BF3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -347,6 +700,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -369,6 +723,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -382,6 +737,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Example/Prefix.pch;
 				INFOPLIST_FILE = "$(SRCROOT)/Example/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-all_load",
@@ -397,6 +753,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Example/Prefix.pch;
 				INFOPLIST_FILE = "$(SRCROOT)/Example/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-all_load",
@@ -411,7 +768,7 @@
 			buildSettings = {
 				DSTROOT = /tmp/KeepLayout.dst;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = KeepLayout;
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
@@ -421,7 +778,7 @@
 			buildSettings = {
 				DSTROOT = /tmp/KeepLayout.dst;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = KeepLayout;
 				SKIP_INSTALL = YES;
 			};
 			name = Release;
@@ -429,6 +786,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		589B081C193FA8860061D204 /* Build configuration list for PBXNativeTarget "KeepLayout-OSX" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				589B081D193FA8860061D204 /* Debug */,
+				589B081E193FA8860061D204 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		589B084D193FA9810061D204 /* Build configuration list for PBXNativeTarget "Example-OSX" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				589B084E193FA9810061D204 /* Debug */,
+				589B084F193FA9810061D204 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		5B3C507316B5304600D00BF3 /* Build configuration list for PBXProject "Keep Layout" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -438,7 +813,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5B3C509716B5304600D00BF3 /* Build configuration list for PBXNativeTarget "Example" */ = {
+		5B3C509716B5304600D00BF3 /* Build configuration list for PBXNativeTarget "Example-iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5B3C509816B5304600D00BF3 /* Debug */,
@@ -447,7 +822,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5B3C50AC16B530BE00D00BF3 /* Build configuration list for PBXNativeTarget "KeepLayout" */ = {
+		5B3C50AC16B530BE00D00BF3 /* Build configuration list for PBXNativeTarget "KeepLayout-iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5B3C50AD16B530BE00D00BF3 /* Debug */,

@@ -8,7 +8,7 @@
 
 #import "NSArray+KeepLayout.h"
 #import "KeepAttribute.h"
-#import "UIView+KeepLayout.h"
+#import "View+KeepLayout.h"
 
 
 
@@ -24,8 +24,8 @@
 
 
 - (BOOL)keep_onlyContainsUIViews {
-    for (UIView *view in self) {
-        if ( ! [view isKindOfClass:[UIView class]]) {
+    for (KIT_VIEW_CLASS *view in self) {
+        if ( ! [view isKindOfClass:[KIT_VIEW_CLASS class]]) {
             return NO;
         }
     }
@@ -34,41 +34,41 @@
 
 
 - (KeepGroupAttribute *)keep_groupAttributeForSelector:(SEL)selector {
-    KeepAssert([self keep_onlyContainsUIViews], @"%@ can only be called on array of UIView objects", NSStringFromSelector(selector));
+    KeepAssert([self keep_onlyContainsUIViews], @"%@ can only be called on array of KIT_VIEW_CLASS objects", NSStringFromSelector(selector));
     
     return [[KeepGroupAttribute alloc] initWithAttributes:[self valueForKeyPath:NSStringFromSelector(selector)]];
 }
 
 
-- (KeepGroupAttribute *)keep_groupAttributeForSelector:(SEL)selector relatedView:(UIView *)relatedView {
-    KeepAssert([self keep_onlyContainsUIViews], @"%@ can only be called on array of UIView objects", NSStringFromSelector(selector));
+- (KeepGroupAttribute *)keep_groupAttributeForSelector:(SEL)selector relatedView:(KIT_VIEW_CLASS *)relatedView {
+    KeepAssert([self keep_onlyContainsUIViews], @"%@ can only be called on array of KIT_VIEW_CLASS objects", NSStringFromSelector(selector));
     
     NSMutableArray *builder = [[NSMutableArray alloc] initWithCapacity:self.count];
-    for (UIView *view in self) {
-        KeepAttribute *(^block)(UIView *) = [view valueForKeyPath:NSStringFromSelector(selector)];
+    for (KIT_VIEW_CLASS *view in self) {
+        KeepAttribute *(^block)(KIT_VIEW_CLASS *) = [view valueForKeyPath:NSStringFromSelector(selector)];
         [builder addObject:block(relatedView)];
     }
     return [[KeepGroupAttribute alloc] initWithAttributes:builder];
 }
 
 
-- (void)keep_invoke:(SEL)selector each:(void(^)(UIView *view))block {
-    KeepAssert([self keep_onlyContainsUIViews], @"%@ can only be called on array of UIView objects", NSStringFromSelector(selector));
+- (void)keep_invoke:(SEL)selector each:(void(^)(KIT_VIEW_CLASS *view))block {
+    KeepAssert([self keep_onlyContainsUIViews], @"%@ can only be called on array of KIT_VIEW_CLASS objects", NSStringFromSelector(selector));
     
-    for (UIView *view in self) {
+    for (KIT_VIEW_CLASS *view in self) {
         block(view);
     }
 }
 
 
-- (void)keep_invoke:(SEL)selector eachTwo:(void(^)(UIView *this, UIView *next))block {
-    KeepAssert([self keep_onlyContainsUIViews], @"%@ can only be called on array of UIView objects", NSStringFromSelector(selector));
+- (void)keep_invoke:(SEL)selector eachTwo:(void(^)(KIT_VIEW_CLASS *this, KIT_VIEW_CLASS *next))block {
+    KeepAssert([self keep_onlyContainsUIViews], @"%@ can only be called on array of KIT_VIEW_CLASS objects", NSStringFromSelector(selector));
     
     if (self.count < 2) return;
     
     for (NSUInteger index = 0; index < self.count - 1; index++) {
-        UIView *this = [self objectAtIndex:index];
-        UIView *next = [self objectAtIndex:index + 1];
+        KIT_VIEW_CLASS *this = [self objectAtIndex:index];
+        KIT_VIEW_CLASS *next = [self objectAtIndex:index + 1];
         block(this, next);
     }
 }
@@ -96,14 +96,14 @@
 
 
 - (void)keepSize:(CGSize)size {
-    [self keep_invoke:_cmd each:^(UIView *view) {
+    [self keep_invoke:_cmd each:^(KIT_VIEW_CLASS *view) {
         [view keepSize:size];
     }];
 }
 
 
 - (void)keepSize:(CGSize)size priority:(KeepPriority)priority {
-    [self keep_invoke:_cmd each:^(UIView *view) {
+    [self keep_invoke:_cmd each:^(KIT_VIEW_CLASS *view) {
         [view keepSize:size priority:priority];
     }];
 }
@@ -115,42 +115,42 @@
 
 
 - (KeepRelatedAttributeBlock)keepWidthTo {
-    return ^KeepAttribute *(UIView *view) {
+    return ^KeepAttribute *(KIT_VIEW_CLASS *view) {
         return [self keep_groupAttributeForSelector:_cmd relatedView:view];
     };
 }
 
 
 - (KeepRelatedAttributeBlock)keepHeightTo {
-    return ^KeepAttribute *(UIView *view) {
+    return ^KeepAttribute *(KIT_VIEW_CLASS *view) {
         return [self keep_groupAttributeForSelector:_cmd relatedView:view];
     };
 }
 
 
 - (KeepRelatedAttributeBlock)keepSizeTo {
-    return ^KeepAttribute *(UIView *view) {
+    return ^KeepAttribute *(KIT_VIEW_CLASS *view) {
         return [self keep_groupAttributeForSelector:_cmd relatedView:view];
     };
 }
 
 
 - (void)keepWidthsEqualWithPriority:(KeepPriority)priority {
-    [self keep_invoke:_cmd eachTwo:^(UIView *this, UIView *next) {
+    [self keep_invoke:_cmd eachTwo:^(KIT_VIEW_CLASS *this, KIT_VIEW_CLASS *next) {
         this.keepWidthTo(next).equal = KeepValueMake(1, priority);
     }];
 }
 
 
 - (void)keepHeightsEqualWithPriority:(KeepPriority)priority {
-    [self keep_invoke:_cmd eachTwo:^(UIView *this, UIView *next) {
+    [self keep_invoke:_cmd eachTwo:^(KIT_VIEW_CLASS *this, KIT_VIEW_CLASS *next) {
         this.keepHeightTo(next).equal = KeepValueMake(1, priority);
     }];
 }
 
 
 - (void)keepSizesEqualWithPriority:(KeepPriority)priority {
-    [self keep_invoke:_cmd eachTwo:^(UIView *this, UIView *next) {
+    [self keep_invoke:_cmd eachTwo:^(KIT_VIEW_CLASS *this, KIT_VIEW_CLASS *next) {
         this.keepSizeTo(next).equal = KeepValueMake(1, priority);
     }];
 }
@@ -212,14 +212,14 @@
 }
 
 
-- (void)keepInsets:(UIEdgeInsets)insets priority:(KeepPriority)priority {
-    [self keep_invoke:_cmd each:^(UIView *view) {
+- (void)keepInsets:(KIT_VIEW_EDGE_INSETS)insets priority:(KeepPriority)priority {
+    [self keep_invoke:_cmd each:^(KIT_VIEW_CLASS *view) {
         [view keepInsets:insets priority:priority];
     }];
 }
 
 
-- (void)keepInsets:(UIEdgeInsets)insets {
+- (void)keepInsets:(KIT_VIEW_EDGE_INSETS)insets {
     [self keepInsets:insets priority:KeepPriorityRequired];
 }
 
@@ -245,28 +245,28 @@
 
 
 - (void)keepCenteredWithPriority:(KeepPriority)priority {
-    [self keep_invoke:_cmd each:^(UIView *view) {
+    [self keep_invoke:_cmd each:^(KIT_VIEW_CLASS *view) {
         [view keepCenteredWithPriority:priority];
     }];
 }
 
 
 - (void)keepHorizontallyCenteredWithPriority:(KeepPriority)priority {
-    [self keep_invoke:_cmd each:^(UIView *view) {
+    [self keep_invoke:_cmd each:^(KIT_VIEW_CLASS *view) {
         [view keepHorizontallyCenteredWithPriority:priority];
     }];
 }
 
 
 - (void)keepVerticallyCenteredWithPriority:(KeepPriority)priority {
-    [self keep_invoke:_cmd each:^(UIView *view) {
+    [self keep_invoke:_cmd each:^(KIT_VIEW_CLASS *view) {
         [view keepVerticallyCenteredWithPriority:priority];
     }];
 }
 
 
 - (void)keepCenter:(CGPoint)center priority:(KeepPriority)priority {
-    [self keep_invoke:_cmd each:^(UIView *view) {
+    [self keep_invoke:_cmd each:^(KIT_VIEW_CLASS *view) {
         [view keepCenter:center priority:priority];
     }];
 }
@@ -299,42 +299,42 @@
 
 
 - (KeepRelatedAttributeBlock)keepLeftOffset {
-    return ^KeepAttribute *(UIView *view) {
+    return ^KeepAttribute *(KIT_VIEW_CLASS *view) {
         return [self keep_groupAttributeForSelector:_cmd relatedView:view];
     };
 }
 
 
 - (KeepRelatedAttributeBlock)keepRightOffset {
-    return ^KeepAttribute *(UIView *view) {
+    return ^KeepAttribute *(KIT_VIEW_CLASS *view) {
         return [self keep_groupAttributeForSelector:_cmd relatedView:view];
     };
 }
 
 
 - (KeepRelatedAttributeBlock)keepTopOffset {
-    return ^KeepAttribute *(UIView *view) {
+    return ^KeepAttribute *(KIT_VIEW_CLASS *view) {
         return [self keep_groupAttributeForSelector:_cmd relatedView:view];
     };
 }
 
 
 - (KeepRelatedAttributeBlock)keepBottomOffset {
-    return ^KeepAttribute *(UIView *view) {
+    return ^KeepAttribute *(KIT_VIEW_CLASS *view) {
         return [self keep_groupAttributeForSelector:_cmd relatedView:view];
     };
 }
 
 
 - (void)keepHorizontalOffsets:(KeepValue)value {
-    [self keep_invoke:_cmd eachTwo:^(UIView *this, UIView *next) {
+    [self keep_invoke:_cmd eachTwo:^(KIT_VIEW_CLASS *this, KIT_VIEW_CLASS *next) {
         this.keepRightOffsetTo(next).equal = value;
     }];
 }
 
 
 - (void)keepVerticalOffsets:(KeepValue)value {
-    [self keep_invoke:_cmd eachTwo:^(UIView *this, UIView *next) {
+    [self keep_invoke:_cmd eachTwo:^(KIT_VIEW_CLASS *this, KIT_VIEW_CLASS *next) {
         this.keepBottomOffsetTo(next).equal = value;
     }];
 }
@@ -347,57 +347,57 @@
 
 
 - (KeepRelatedAttributeBlock)keepLeftAlignTo {
-    return ^KeepAttribute *(UIView *view) {
+    return ^KeepAttribute *(KIT_VIEW_CLASS *view) {
         return [self keep_groupAttributeForSelector:_cmd relatedView:view];
     };
 }
 
 
 - (KeepRelatedAttributeBlock)keepRightAlignTo {
-    return ^KeepAttribute *(UIView *view) {
+    return ^KeepAttribute *(KIT_VIEW_CLASS *view) {
         return [self keep_groupAttributeForSelector:_cmd relatedView:view];
     };
 }
 
 
 - (KeepRelatedAttributeBlock)keepTopAlignTo {
-    return ^KeepAttribute *(UIView *view) {
+    return ^KeepAttribute *(KIT_VIEW_CLASS *view) {
         return [self keep_groupAttributeForSelector:_cmd relatedView:view];
     };
 }
 
 
 - (KeepRelatedAttributeBlock)keepBottomAlignTo {
-    return ^KeepAttribute *(UIView *view) {
+    return ^KeepAttribute *(KIT_VIEW_CLASS *view) {
         return [self keep_groupAttributeForSelector:_cmd relatedView:view];
     };
 }
 
 
 - (KeepRelatedAttributeBlock)keepVerticalAlignTo {
-    return ^KeepAttribute *(UIView *view) {
+    return ^KeepAttribute *(KIT_VIEW_CLASS *view) {
         return [self keep_groupAttributeForSelector:_cmd relatedView:view];
     };
 }
 
 
 - (KeepRelatedAttributeBlock)keepHorizontalAlignTo {
-    return ^KeepAttribute *(UIView *view) {
+    return ^KeepAttribute *(KIT_VIEW_CLASS *view) {
         return [self keep_groupAttributeForSelector:_cmd relatedView:view];
     };
 }
 
 
 - (KeepRelatedAttributeBlock)keepBaselineAlignTo {
-    return ^KeepAttribute *(UIView *view) {
+    return ^KeepAttribute *(KIT_VIEW_CLASS *view) {
         return [self keep_groupAttributeForSelector:_cmd relatedView:view];
     };
 }
 
 
 - (void)keep_alignedSelector:(SEL)selector invokeSelector:(SEL)invokeSelector value:(KeepValue)value {
-    [self keep_invoke:selector eachTwo:^(UIView *this, UIView *next) {
-        KeepAttribute *(^block)(UIView *) = [this valueForKey:NSStringFromSelector(invokeSelector)];
+    [self keep_invoke:selector eachTwo:^(KIT_VIEW_CLASS *this, KIT_VIEW_CLASS *next) {
+        KeepAttribute *(^block)(KIT_VIEW_CLASS *) = [this valueForKey:NSStringFromSelector(invokeSelector)];
         KeepAttribute *attribute = block(next);
         attribute.equal = value;
     }];

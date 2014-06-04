@@ -5,11 +5,7 @@
 //  Created by Martin Kiss on 18.7.13.
 //  Copyright (c) 2013 Martin Kiss. All rights reserved.
 //
-
-#import <UIKit/UIKit.h>
-
-
-
+#import "KeepDefines.h"
 @interface KeepLayoutConstraint : NSLayoutConstraint
 
 

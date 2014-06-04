@@ -1,12 +1,12 @@
 //
-//  UIView+KeepLayout.m
+//  KIT_VIEW_CLASS+KeepLayout.m
 //  Geografia
 //
 //  Created by Martin Kiss on 21.10.12.
 //  Copyright (c) 2012 iMartin Kiss. All rights reserved.
 //
 
-#import "UIView+KeepLayout.h"
+#import "View+KeepLayout.h"
 #import "KeepAttribute.h"
 #import <objc/runtime.h>
 
@@ -14,7 +14,7 @@
 
 
 
-@implementation UIView (KeepLayout)
+@implementation KIT_VIEW_CLASS (KeepLayout)
 
 
 
@@ -49,10 +49,10 @@
 }
 
 
-- (void)keep_willMoveToSuperview:(UIView *)future {
+- (void)keep_willMoveToSuperview:(KIT_VIEW_CLASS *)future {
     [self keep_willMoveToSuperview:future];
     
-    UIView *current = self.superview;
+    KIT_VIEW_CLASS *current = self.superview;
     if (current && current != future) {
         [self keep_clearSuperviewInsets];
         [self keep_clearSuperviewPosition];
@@ -78,7 +78,7 @@
 }
 
 
-- (KeepAttribute *)keep_attributeForSelector:(SEL)selector relatedView:(UIView *)relatedView creationBlock:(KeepAttribute *(^)())creationBlock {
+- (KeepAttribute *)keep_attributeForSelector:(SEL)selector relatedView:(KIT_VIEW_CLASS *)relatedView creationBlock:(KeepAttribute *(^)())creationBlock {
     NSParameterAssert(selector);
     NSParameterAssert(relatedView);
     
@@ -131,7 +131,7 @@
 }
 
 
-- (KeepAttribute *)keep_dimensionForSelector:(SEL)selector dimensionAttribute:(NSLayoutAttribute)dimensionAttribute relatedView:(UIView *)relatedView name:(NSString *)name {
+- (KeepAttribute *)keep_dimensionForSelector:(SEL)selector dimensionAttribute:(NSLayoutAttribute)dimensionAttribute relatedView:(KIT_VIEW_CLASS *)relatedView name:(NSString *)name {
     KeepParameterAssert(selector);
     KeepParameterAssert(dimensionAttribute == NSLayoutAttributeWidth
                         || dimensionAttribute == NSLayoutAttributeHeight);
@@ -201,21 +201,21 @@
 
 
 - (KeepRelatedAttributeBlock)keepWidthTo {
-    return ^KeepAttribute *(UIView *view) {
+    return ^KeepAttribute *(KIT_VIEW_CLASS *view) {
         return [self keep_dimensionForSelector:_cmd dimensionAttribute:NSLayoutAttributeWidth relatedView:view name:@"width"];
     };
 }
 
 
 - (KeepRelatedAttributeBlock)keepHeightTo {
-    return ^KeepAttribute *(UIView *view) {
+    return ^KeepAttribute *(KIT_VIEW_CLASS *view) {
         return [self keep_dimensionForSelector:_cmd dimensionAttribute:NSLayoutAttributeHeight relatedView:view name:@"height"];
     };
 }
 
 
 - (KeepRelatedAttributeBlock)keepSizeTo {
-    return ^KeepAttribute *(UIView *view) {
+    return ^KeepAttribute *(KIT_VIEW_CLASS *view) {
         return [[KeepAttribute group:
                  self.keepWidthTo(view),
                  self.keepHeightTo(view),
@@ -309,12 +309,12 @@
 }
 
 
-- (void)keepInsets:(UIEdgeInsets)insets {
+- (void)keepInsets:(KIT_VIEW_EDGE_INSETS)insets {
     [self keepInsets:insets priority:KeepPriorityRequired];
 }
 
 
-- (void)keepInsets:(UIEdgeInsets)insets priority:(KeepPriority)priority {
+- (void)keepInsets:(KIT_VIEW_EDGE_INSETS)insets priority:(KeepPriority)priority {
     self.keepLeftInset.equal = KeepValueMake(insets.left, priority);
     self.keepRightInset.equal = KeepValueMake(insets.right, priority);
     self.keepTopInset.equal = KeepValueMake(insets.top, priority);
@@ -420,7 +420,7 @@
 #pragma mark Offsets
 
 
-- (KeepAttribute *)keep_offsetForSelector:(SEL)selector edgeAttribute:(NSLayoutAttribute)edgeAttribute relatedView:(UIView *)relatedView name:(NSString *)name {
+- (KeepAttribute *)keep_offsetForSelector:(SEL)selector edgeAttribute:(NSLayoutAttribute)edgeAttribute relatedView:(KIT_VIEW_CLASS *)relatedView name:(NSString *)name {
     KeepParameterAssert(selector);
     KeepParameterAssert(edgeAttribute == NSLayoutAttributeLeft
                         || edgeAttribute == NSLayoutAttributeRight
@@ -453,28 +453,28 @@
 
 
 - (KeepRelatedAttributeBlock)keepLeftOffsetTo {
-    return ^KeepAttribute *(UIView *view) {
+    return ^KeepAttribute *(KIT_VIEW_CLASS *view) {
         return [self keep_offsetForSelector:_cmd edgeAttribute:NSLayoutAttributeLeft relatedView:view name:@"left offset"];
     };
 }
 
 
 - (KeepRelatedAttributeBlock)keepRightOffsetTo {
-    return ^KeepAttribute *(UIView *view) {
+    return ^KeepAttribute *(KIT_VIEW_CLASS *view) {
         return view.keepLeftOffsetTo(self);
     };
 }
 
 
 - (KeepRelatedAttributeBlock)keepTopOffsetTo {
-    return ^KeepAttribute *(UIView *view) {
+    return ^KeepAttribute *(KIT_VIEW_CLASS *view) {
         return [self keep_offsetForSelector:_cmd edgeAttribute:NSLayoutAttributeTop relatedView:view name:@"top offset"];
     };
 }
 
 
 - (KeepRelatedAttributeBlock)keepBottomOffsetTo {
-    return ^KeepAttribute *(UIView *view) {
+    return ^KeepAttribute *(KIT_VIEW_CLASS *view) {
         return view.keepTopOffsetTo(self);
     };
 }
@@ -486,7 +486,7 @@
 #pragma mark Alignments
 
 
-- (KeepAttribute *)keep_alignForSelector:(SEL)selector alignAttribute:(NSLayoutAttribute)alignAttribute relatedView:(UIView *)relatedView coefficient:(CGFloat)coefficient name:(NSString *)name {
+- (KeepAttribute *)keep_alignForSelector:(SEL)selector alignAttribute:(NSLayoutAttribute)alignAttribute relatedView:(KIT_VIEW_CLASS *)relatedView coefficient:(CGFloat)coefficient name:(NSString *)name {
     KeepParameterAssert(selector);
     KeepParameterAssert(alignAttribute == NSLayoutAttributeLeft
                         || alignAttribute == NSLayoutAttributeRight
@@ -520,44 +520,44 @@
 
 
 - (KeepRelatedAttributeBlock)keepLeftAlignTo {
-    return ^KeepAttribute *(UIView *view) {
+    return ^KeepAttribute *(KIT_VIEW_CLASS *view) {
         return [self keep_alignForSelector:_cmd alignAttribute:NSLayoutAttributeLeft relatedView:view coefficient:1 name:@"left alignment"];
     };
 }
 
 
 - (KeepRelatedAttributeBlock)keepRightAlignTo {
-    return ^KeepAttribute *(UIView *view) {
+    return ^KeepAttribute *(KIT_VIEW_CLASS *view) {
         return [self keep_alignForSelector:_cmd alignAttribute:NSLayoutAttributeRight relatedView:view coefficient:-1 name:@"right alignment"];
     };
 }
 
 
 - (KeepRelatedAttributeBlock)keepTopAlignTo {
-    return ^KeepAttribute *(UIView *view) {
+    return ^KeepAttribute *(KIT_VIEW_CLASS *view) {
         return [self keep_alignForSelector:_cmd alignAttribute:NSLayoutAttributeTop relatedView:view coefficient:1 name:@"top alignment"];
     };
 }
 
 
 - (KeepRelatedAttributeBlock)keepBottomAlignTo {
-    return ^KeepAttribute *(UIView *view) {
+    return ^KeepAttribute *(KIT_VIEW_CLASS *view) {
         return [self keep_alignForSelector:_cmd alignAttribute:NSLayoutAttributeBottom relatedView:view coefficient:-1 name:@"bottom alignment"];
     };
 }
 
 
-- (void)keepEdgeAlignTo:(UIView *)view {
-    [self keepEdgeAlignTo:view insets:UIEdgeInsetsZero];
+- (void)keepEdgeAlignTo:(KIT_VIEW_CLASS *)view {
+    [self keepEdgeAlignTo:view insets:KIT_VIEW_EDGE_INSETS_ZERO];
 }
 
 
-- (void)keepEdgeAlignTo:(UIView *)view insets:(UIEdgeInsets)insets {
+- (void)keepEdgeAlignTo:(KIT_VIEW_CLASS *)view insets:(KIT_VIEW_EDGE_INSETS)insets {
     [self keepEdgeAlignTo:view insets:insets withPriority:KeepPriorityRequired];
 }
 
 
-- (void)keepEdgeAlignTo:(UIView *)view insets:(UIEdgeInsets)insets withPriority:(KeepPriority)priority {
+- (void)keepEdgeAlignTo:(KIT_VIEW_CLASS *)view insets:(KIT_VIEW_EDGE_INSETS)insets withPriority:(KeepPriority)priority {
     self.keepLeftAlignTo(view).equal = KeepValueMake(insets.left, priority);
     self.keepRightAlignTo(view).equal = KeepValueMake(insets.right, priority);
     self.keepTopAlignTo(view).equal = KeepValueMake(insets.top, priority);
@@ -566,37 +566,37 @@
 
 
 - (KeepRelatedAttributeBlock)keepVerticalAlignTo {
-    return ^KeepAttribute *(UIView *view) {
+    return ^KeepAttribute *(KIT_VIEW_CLASS *view) {
         return [self keep_alignForSelector:_cmd alignAttribute:NSLayoutAttributeCenterX relatedView:view coefficient:1 name:@"vertical center alignment"];
     };
 }
 
 
 - (KeepRelatedAttributeBlock)keepHorizontalAlignTo {
-    return ^KeepAttribute *(UIView *view) {
+    return ^KeepAttribute *(KIT_VIEW_CLASS *view) {
         return [self keep_alignForSelector:_cmd alignAttribute:NSLayoutAttributeCenterY relatedView:view coefficient:1 name:@"horizontal center alignment"];
     };
 }
 
 
-- (void)keepCenterAlignTo:(UIView *)view {
-    [self keepCenterAlignTo:view offset:UIOffsetZero];
+- (void)keepCenterAlignTo:(KIT_VIEW_CLASS *)view {
+    [self keepCenterAlignTo:view offset:KIT_VIEW_OFFSET_ZERO];
 }
 
 
-- (void)keepCenterAlignTo:(UIView *)view offset:(UIOffset)offset {
+- (void)keepCenterAlignTo:(KIT_VIEW_CLASS *)view offset:(KIT_VIEW_OFFSET)offset {
     [self keepCenterAlignTo:view offset:offset withPriority:KeepPriorityRequired];
 }
 
 
-- (void)keepCenterAlignTo:(UIView *)view offset:(UIOffset)offset withPriority:(KeepPriority)priority {
+- (void)keepCenterAlignTo:(KIT_VIEW_CLASS *)view offset:(KIT_VIEW_OFFSET)offset withPriority:(KeepPriority)priority {
     self.keepHorizontalAlignTo(view).equal = KeepValueMake(offset.horizontal, priority);
     self.keepVerticalAlignTo(view).equal = KeepValueMake(offset.vertical, priority);
 }
 
 
 - (KeepRelatedAttributeBlock)keepBaselineAlignTo {
-    return ^KeepAttribute *(UIView *view) {
+    return ^KeepAttribute *(KIT_VIEW_CLASS *view) {
         return [self keep_alignForSelector:_cmd alignAttribute:NSLayoutAttributeBaseline relatedView:view coefficient:-1 name:@"baseline alignment"];
     };
 }
@@ -607,13 +607,13 @@
 
 #pragma mark Animating Constraints
 
-
+#if TARGET_OS_IPHONE
 - (void)keepAnimatedWithDuration:(NSTimeInterval)duration layout:(void(^)(void))animations {
     KeepParameterAssert(duration >= 0);
     KeepParameterAssert(animations);
     
     [self keep_animationPerformWithDuration:duration delay:0 block:^{
-        [UIView animateWithDuration:duration
+        [KIT_VIEW_CLASS animateWithDuration:duration
                          animations:^{
                              animations();
                              [self layoutIfNeeded];
@@ -628,7 +628,7 @@
     KeepParameterAssert(animations);
     
     [self keep_animationPerformWithDuration:duration delay:delay block:^{
-        [UIView animateWithDuration:duration
+        [KIT_VIEW_CLASS animateWithDuration:duration
                          animations:^{
                              animations();
                              [self layoutIfNeeded];
@@ -643,7 +643,7 @@
     KeepParameterAssert(animations);
     
     [self keep_animationPerformWithDuration:duration delay:delay block:^{
-        [UIView animateWithDuration:duration
+        [KIT_VIEW_CLASS animateWithDuration:duration
                               delay:0
                             options:options
                          animations:^{
@@ -653,7 +653,7 @@
                          completion:completion];
     }];
 }
-
+#endif
 
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000   // Compiled with iOS 7 SDK
 - (void)keepAnimatedWithDuration:(NSTimeInterval)duration delay:(NSTimeInterval)delay usingSpringWithDamping:(CGFloat)dampingRatio initialSpringVelocity:(CGFloat)velocity options:(UIViewAnimationOptions)options layout:(void (^)(void))animations completion:(void (^)(BOOL finished))completion {
@@ -661,10 +661,10 @@
     KeepParameterAssert(delay >= 0);
     KeepParameterAssert(animations);
     
-    if ([UIView respondsToSelector:@selector(animateWithDuration:delay:usingSpringWithDamping:initialSpringVelocity:options:animations:completion:)]) {
+    if ([KIT_VIEW_CLASS respondsToSelector:@selector(animateWithDuration:delay:usingSpringWithDamping:initialSpringVelocity:options:animations:completion:)]) {
         // Running on iOS 7
         [self keep_animationPerformWithDuration:duration delay:delay block:^{
-            [UIView animateWithDuration:duration
+            [KIT_VIEW_CLASS animateWithDuration:duration
                                   delay:0
                  usingSpringWithDamping:dampingRatio
                   initialSpringVelocity:velocity
@@ -679,7 +679,7 @@
     else {
         // Running on iOS 6, fallback to non-spring animation
         [self keep_animationPerformWithDuration:duration delay:delay block:^{
-            [UIView animateWithDuration:duration
+            [KIT_VIEW_CLASS animateWithDuration:duration
                                   delay:0
                                 options:options
                              animations:^{
@@ -709,9 +709,9 @@
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000   // Compiled with iOS 7 SDK
 - (void)keepNotAnimated:(void (^)(void))layout {
     
-    if ([UIView respondsToSelector:@selector(performWithoutAnimation:)]) {
+    if ([KIT_VIEW_CLASS respondsToSelector:@selector(performWithoutAnimation:)]) {
         // Running iOS 7
-        [UIView performWithoutAnimation:^{
+        [KIT_VIEW_CLASS performWithoutAnimation:^{
             layout();
             [self layoutIfNeeded];
         }];
@@ -731,17 +731,29 @@
 #pragma mark Common Superview
 
 
-- (UIView *)commonSuperview:(UIView *)anotherView {
-    UIView *superview = self;
-    while (superview) {
-        if ([anotherView isDescendantOfView:superview]) {
-            break; // The `superview` is common for both views.
-        }
-        superview = superview.superview;
-    }
-    return superview;
+- (KIT_VIEW_CLASS *)commonSuperview:(KIT_VIEW_CLASS *)anotherView
+{
+	NSArray *mySuperviews = [self superviewsOfView:self];
+	NSArray *otherSuperviews = [self superviewsOfView:anotherView];
+	for (KIT_VIEW_CLASS *view in mySuperviews)
+	{
+		if ([otherSuperviews containsObject:view])
+			return view;
+	}
+	return nil;
 }
 
+- (NSArray *)superviewsOfView:(KIT_VIEW_CLASS*)view
+{
+	NSMutableArray *superviews = [NSMutableArray new];
+	[superviews addObject:view];
+	while (view.superview)
+	{
+		[superviews addObject:view.superview];
+		view = view.superview;
+	}
+	return superviews;
+}
 
 
 
@@ -750,15 +762,15 @@
 
 
 - (void)addConstraintToCommonSuperview:(NSLayoutConstraint *)constraint {
-    UIView *relatedLayoutView = constraint.secondItem;
-    UIView *commonView = (relatedLayoutView? [self commonSuperview:relatedLayoutView] : self);
+    KIT_VIEW_CLASS *relatedLayoutView = constraint.secondItem;
+    KIT_VIEW_CLASS *commonView = (relatedLayoutView? [self commonSuperview:relatedLayoutView] : self);
     [commonView addConstraint:constraint];
 }
 
 
 - (void)removeConstraintFromCommonSuperview:(NSLayoutConstraint *)constraint {
-    UIView *relatedLayoutView = constraint.secondItem;
-    UIView *commonView = (relatedLayoutView? [self commonSuperview:relatedLayoutView] : self);
+    KIT_VIEW_CLASS *relatedLayoutView = constraint.secondItem;
+    KIT_VIEW_CLASS *commonView = (relatedLayoutView? [self commonSuperview:relatedLayoutView] : self);
     [commonView removeConstraint:constraint];
 }
 
