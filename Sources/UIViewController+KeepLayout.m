@@ -16,6 +16,12 @@
 
 
 
+@interface KeepLayoutGuidesView : UIView @end
+
+
+
+
+
 @implementation UIViewController (KeepLayout)
 
 
@@ -24,7 +30,7 @@
     UIView *layoutView = objc_getAssociatedObject(self, _cmd);
     if (layoutView) return layoutView;
     
-    layoutView = [UIView new];
+    layoutView = [KeepLayoutGuidesView new];
     layoutView.hidden = YES;
     layoutView.userInteractionEnabled = NO;
     layoutView.backgroundColor = [UIColor clearColor];
@@ -55,6 +61,27 @@
     return layoutView;
 }
 
+
+
+@end
+
+
+
+
+
+@implementation KeepLayoutGuidesView
+
+
+- (void)addSubview:(UIView *)view {
+    KeepAssert(NO, @"This is special view that doesn't support adding subviews. Get over it.");
+    [super addSubview:view];
+}
+
+
+- (void)insertSubview:(UIView *)view atIndex:(NSInteger)index {
+    KeepAssert(NO, @"This is special view that doesn't support adding subviews. Get over it.");
+    [super addSubview:view];
+}
 
 
 @end
