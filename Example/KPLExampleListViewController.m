@@ -217,6 +217,33 @@
                                     label.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:(odd? 20 : 15)];
                                 };
                             }]];
+    [simpleExamples addObject:
+     [[KPLExample alloc] initWithTitle:@"Layout Guides"
+                              subtitle:@"Align views with translucent bars"
+                            setupBlock:^KPLExampleStateBlock(UIViewController *controller) {
+                                UIView *container = controller.view;
+                                
+                                UIView *background = createView([self.view.tintColor colorWithAlphaComponent:0.25], container);
+                                background.layer.borderColor = self.view.tintColor.CGColor;
+                                background.layer.borderWidth = 5;
+                                
+                                UIView *square = createView(self.view.tintColor, container);
+                                square.keepSize.equal = KeepRequired(100);
+                                square.keepHorizontalCenter.equal = KeepRequired(0.5);
+                                square.keepTopAlignTo(controller.keepLayoutView).equal = KeepRequired(10);
+                                
+                                [background keepEdgeAlignTo:controller.keepLayoutView];
+                                
+                                return ^(NSUInteger state) {
+                                    // This is abusing state block...
+                                    if (state == 0) return;
+                                    
+                                    [controller.navigationController setNavigationBarHidden:YES animated:YES];
+                                    [[NSOperationQueue mainQueue] performSelector:@selector(addOperationWithBlock:) withObject:^{
+                                        [controller.navigationController setNavigationBarHidden:NO animated:YES];
+                                    } afterDelay:1];
+                                };
+                            }]];
     
     NSMutableArray *complexExamples = [[NSMutableArray alloc] init];
     [complexExamples addObject:
