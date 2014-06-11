@@ -1,9 +1,12 @@
 # Keep Layout
 
-Keep Layout is project **under active development** whose purpose is to make _Auto Layout_ much easier to use _from code_! No more _Interface Builder_ or _Visual Format_. _Keep Layout_ provides **simple, more readable and powerful API for creating and _accessing existing_ constraints**.
+Keep Layout makes _Auto Layout_ much easier to use _from code_! No more _Interface Builder_ or _Visual Format_. _Keep Layout_ provides **simple, more readable and powerful API for creating and _accessing existing_ constraints**.
 
 
 Before you start, you should be familiar with _Auto Layout_ topic. [How it works and what's the point?][1]
+
+
+_**Project Status**: All planned features are implemented and functional. Project is maintained and kept up to date with latest iOS. Feel free to submit Issues or Pull Requests._
 
 
 
@@ -73,10 +76,12 @@ See [`KeepTypes.h`][3] for more.
 
 ## Putting it together – Examples
 
-Keep width of the view to be equal to 150 with High priority:
+Keep width of the view to be equal to 150:
 
 ```objc
-view.keepWidth.equal = KeepHigh(150);
+view.keepWidth.equal = KeepRequired(150);
+// Special shortcut, because this is the most used case:
+view.keepWidth.required = 150;
 ```
 
 Keep top inset to superview of the view to be at least 10, no excuses:
@@ -212,6 +217,20 @@ Spring animation from iOS 7 included.
 See [`UIView+KeepLayout.h`][2] for more.
 
 
+
+## Layout Guides
+
+KeepLayout adds lazy-loaded invisible `.keepLayoutView` to every `UIViewController` in a category. This view is aligned with Top and Bottom Layout Guide of the view controller, which means its size represents visible portion of the view controller. You can use this Layout View to align your views with translucent bars (navigation bar, toolbar, status bar or tab bar).
+
+```
+[imageView keepEdgeAlignTo:controller.keepLayoutView];
+// imageView will not be covered by UINavigationBar
+```
+
+See [`UIViewController+KeepLayout.h`][11] for more.
+
+
+
 ## Debugging
 
 Keep Layout uses its own `NSLayoutConstraint` subclass that overrides `-debugDescription` method. Once you get error message **_`Unable to simultaneously satisfy constraints.`_**, you will see nicely readable description of every constraint you have created. Example:
@@ -248,9 +267,9 @@ See [`UIView+KeepLayout.m`][6] for details.
 
 
 ---
-_Version 1.2.2_
+_Version 1.3.0_
 
-MIT License, Copyright © 2013 Martin Kiss
+MIT License, Copyright © 2013-2014 Martin Kiss
 
 `THE SOFTWARE IS PROVIDED "AS IS", and so on...` see [`LICENSE.md`][9] more.
 
@@ -258,13 +277,14 @@ MIT License, Copyright © 2013 Martin Kiss
 
 
 
-[1]: https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/AutolayoutPG/Articles/Introduction.html
+[1]: https://developer.apple.com/library/ios/documentation/userexperience/conceptual/AutolayoutPG/Introduction/Introduction.html
 
 [2]: Sources/UIView+KeepLayout.h
 [3]: Sources/KeepTypes.h
 [4]: Sources/KeepAttribute.h
 [5]: Sources/NSArray+KeepLayout.h
 [10]: Sources/KeepLayoutConstraint.h
+[11]: Sources/UIViewController+KeepLayout.h
 
 [6]: Sources/UIView+KeepLayout.m
 [7]: Sources/KeepAttribute.m

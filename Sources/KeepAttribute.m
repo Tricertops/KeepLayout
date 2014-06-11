@@ -63,6 +63,17 @@
 }
 
 
+- (CGFloat)required {
+    KeepValue equal = self.equal;
+    return (equal.priority == KeepPriorityRequired? equal.value : NAN);
+}
+
+
+- (void)setRequired:(CGFloat)value {
+    self.equal = KeepRequired(value);
+}
+
+
 #pragma mark Remove
 
 
