@@ -20,6 +20,49 @@
 
 
 
+#pragma mark Swizzle
+
+
++ (void)load {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        
+        SEL originalSelector = @selector(willMoveToSuperview:);
+        SEL replacementSelector = @selector(keep_willMoveToSuperview:);
+        
+        Method originalMethod = class_getInstanceMethod(self, originalSelector);
+        Method replacementMethod = class_getInstanceMethod(self, replacementSelector);
+        
+        BOOL didAdd = class_addMethod(self,
+                                      originalSelector,
+                                      method_getImplementation(replacementMethod),
+                                      method_getTypeEncoding(replacementMethod));
+        if (didAdd) {
+            class_replaceMethod(self,
+                                replacementSelector,
+                                method_getImplementation(originalMethod),
+                                method_getTypeEncoding(originalMethod));
+        } else {
+            method_exchangeImplementations(originalMethod, replacementMethod);
+        }
+    });
+}
+
+
+- (void)keep_willMoveToSuperview:(UIView *)future {
+    [self keep_willMoveToSuperview:future];
+    
+    UIView *current = self.superview;
+    if (current && current != future) {
+        [self keep_clearSuperviewInsets];
+        [self keep_clearSuperviewPosition];
+    }
+}
+
+
+
+
+
 #pragma mark Associations
 
 
@@ -50,6 +93,16 @@
         [attributesByRelatedView setObject:attribute forKey:relatedView];
     }
     return attribute;
+}
+
+
+- (void)keep_clearAttribute:(SEL)selector {
+    NSParameterAssert(selector);
+    
+    KeepAttribute *attribute = objc_getAssociatedObject(self, selector);
+    [attribute remove];
+    
+    objc_setAssociatedObject(self, selector, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 
@@ -200,6 +253,16 @@
     }];
 }
 
+
+- (void)keep_clearSuperviewInsets {
+    // Clears all superview insets ever created. Works after removing from superview.
+    [self keep_clearAttribute:@selector(keepTopInset)];
+    [self keep_clearAttribute:@selector(keepLeftInset)];
+    [self keep_clearAttribute:@selector(keepRightInset)];
+    [self keep_clearAttribute:@selector(keepBottomInset)];
+}
+
+
 - (KeepAttribute *)keepLeftInset {
     return [self keep_insetForSelector:_cmd edgeAttribute:NSLayoutAttributeLeft coefficient:1 name:@"left inset"];
 }
@@ -282,6 +345,13 @@
         self.translatesAutoresizingMaskIntoConstraints = NO;
         return attribute;
     }];
+}
+
+
+- (void)keep_clearSuperviewPosition {
+    // Clears all superview constrains ever created. Works after removing from superview.
+    [self keep_clearAttribute:@selector(keepHorizontalCenter)];
+    [self keep_clearAttribute:@selector(keepVerticalCenter)];
 }
 
 

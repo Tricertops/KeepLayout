@@ -7,7 +7,7 @@
 //
 
 typedef void (^KPLExampleStateBlock)(NSUInteger state);
-typedef KPLExampleStateBlock (^KPLExampleSetupBlock)(UIView *container);
+typedef KPLExampleStateBlock (^KPLExampleSetupBlock)(UIViewController *container);
 
 
 @interface KPLExample : NSObject
