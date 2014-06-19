@@ -19,7 +19,6 @@
 		5B208DC116B67381007ABFFE /* KeepAttribute.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B208DC016B67381007ABFFE /* KeepAttribute.m */; };
 		5B208DC916B678C7007ABFFE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B3C508116B5304600D00BF3 /* CoreGraphics.framework */; };
 		5B208DCA16B678CB007ABFFE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B3C507D16B5304600D00BF3 /* UIKit.framework */; };
-		5B2A083819538A550059E0BE /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B2A083719538A550059E0BE /* Cocoa.framework */; };
 		5B2A087119538AB20059E0BE /* KeepAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B2A086C19538AB20059E0BE /* KeepAppDelegate.m */; };
 		5B2A087319538AB20059E0BE /* Main.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B2A086E19538AB20059E0BE /* Main.xib */; };
 		5B2A087819538AD80059E0BE /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5B2A087519538AD80059E0BE /* Info.plist */; };
@@ -79,10 +78,6 @@
 		5B208DC316B67391007ABFFE /* KeepLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeepLayout.h; sourceTree = "<group>"; };
 		5B208DDE16B6EFFB007ABFFE /* KeepTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeepTypes.h; sourceTree = "<group>"; };
 		5B2A083619538A550059E0BE /* Keep Layout.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Keep Layout.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		5B2A083719538A550059E0BE /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
-		5B2A083A19538A550059E0BE /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
-		5B2A083B19538A550059E0BE /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		5B2A083C19538A550059E0BE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5B2A085619538A560059E0BE /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		5B2A086B19538AB20059E0BE /* KeepAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeepAppDelegate.h; sourceTree = "<group>"; };
 		5B2A086C19538AB20059E0BE /* KeepAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeepAppDelegate.m; sourceTree = "<group>"; };
@@ -121,7 +116,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5B2A083819538A550059E0BE /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -149,16 +143,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		5B2A083919538A550059E0BE /* Other Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				5B2A083A19538A550059E0BE /* AppKit.framework */,
-				5B2A083B19538A550059E0BE /* CoreData.framework */,
-				5B2A083C19538A550059E0BE /* Foundation.framework */,
-			);
-			name = "Other Frameworks";
-			sourceTree = "<group>";
-		};
 		5B2A086919538AB20059E0BE /* Example AppKit */ = {
 			isa = PBXGroup;
 			children = (
@@ -207,9 +191,7 @@
 				5B3C507D16B5304600D00BF3 /* UIKit.framework */,
 				5B3C507F16B5304600D00BF3 /* Foundation.framework */,
 				5B3C508116B5304600D00BF3 /* CoreGraphics.framework */,
-				5B2A083719538A550059E0BE /* Cocoa.framework */,
 				5B2A085619538A560059E0BE /* XCTest.framework */,
-				5B2A083919538A550059E0BE /* Other Frameworks */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
