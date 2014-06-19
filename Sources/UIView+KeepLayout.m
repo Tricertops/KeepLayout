@@ -637,6 +637,21 @@
 }
 
 
+- (void)keepAnimatedWithDuration:(NSTimeInterval)duration layout:(void (^)(void))animations completion:(void (^)(BOOL))completion {
+	KeepParameterAssert(duration >= 0);
+    KeepParameterAssert(animations);
+    
+    [self keep_animationPerformWithDuration:duration delay:0 block:^{
+        [UIView animateWithDuration:duration
+                         animations:^{
+                             animations();
+                             [self layoutIfNeeded];
+                         }
+                         completion:completion];
+    }];
+}
+
+
 - (void)keepAnimatedWithDuration:(NSTimeInterval)duration delay:(NSTimeInterval)delay options:(UIViewAnimationOptions)options layout:(void(^)(void))animations completion:(void(^)(BOOL finished))completion {
     KeepParameterAssert(duration >= 0);
     KeepParameterAssert(delay >= 0);

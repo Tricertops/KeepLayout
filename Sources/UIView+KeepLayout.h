@@ -246,6 +246,9 @@ typedef KeepAttribute *(^KeepRelatedAttributeBlock)(UIView *otherView);
 /// Animate layout changes with delay. Receiver automatically calls `-layoutIfNeeded` after the animation block. Animation is scheduled on Main Queue with given delay.
 - (void)keepAnimatedWithDuration:(NSTimeInterval)duration delay:(NSTimeInterval)delay layout:(void(^)(void))animations;
 
+/// Animate layout changes with completion. Receiver automatically calls `-layoutIfNeeded` after the animation block. Animation is scheduled on Main Queue with zero delay, so the block not executed immediatelly.
+- (void)keepAnimatedWithDuration:(NSTimeInterval)duration layout:(void(^)(void))animations completion:(void(^)(BOOL finished))completion;
+
 /// Animate layout changes with delay, options and completion. Receiver automatically calls `-layoutIfNeeded` after the animation block. Animation is scheduled on Main Queue with given delay.
 - (void)keepAnimatedWithDuration:(NSTimeInterval)duration delay:(NSTimeInterval)delay options:(UIViewAnimationOptions)options layout:(void(^)(void))animations completion:(void(^)(BOOL finished))completion;
 
