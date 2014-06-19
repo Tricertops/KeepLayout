@@ -78,7 +78,7 @@
 		5B208DC016B67381007ABFFE /* KeepAttribute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeepAttribute.m; sourceTree = "<group>"; };
 		5B208DC316B67391007ABFFE /* KeepLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeepLayout.h; sourceTree = "<group>"; };
 		5B208DDE16B6EFFB007ABFFE /* KeepTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeepTypes.h; sourceTree = "<group>"; };
-		5B2A083619538A550059E0BE /* Example AppKit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Example AppKit.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5B2A083619538A550059E0BE /* Keep Layout.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Keep Layout.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B2A083719538A550059E0BE /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
 		5B2A083A19538A550059E0BE /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		5B2A083B19538A550059E0BE /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -196,7 +196,7 @@
 			children = (
 				5B3C507916B5304600D00BF3 /* Example.app */,
 				5B3C50A316B530BE00D00BF3 /* libKeepLayout.a */,
-				5B2A083619538A550059E0BE /* Example AppKit.app */,
+				5B2A083619538A550059E0BE /* Keep Layout.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -286,7 +286,7 @@
 			);
 			name = "Example AppKit";
 			productName = "Example AppKit";
-			productReference = 5B2A083619538A550059E0BE /* Example AppKit.app */;
+			productReference = 5B2A083619538A550059E0BE /* Keep Layout.app */;
 			productType = "com.apple.product-type.application";
 		};
 		5B3C507816B5304600D00BF3 /* Example */ = {
@@ -458,7 +458,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Example AppKit/Supporting Files/Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Keep Layout";
 				SDKROOT = macosx;
 				WRAPPER_EXTENSION = app;
 			};
@@ -492,7 +492,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Example AppKit/Supporting Files/Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Keep Layout";
 				SDKROOT = macosx;
 				WRAPPER_EXTENSION = app;
 			};
@@ -610,6 +610,7 @@
 				5B2A086519538A560059E0BE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		5B3C507316B5304600D00BF3 /* Build configuration list for PBXProject "Keep Layout" */ = {
 			isa = XCConfigurationList;
