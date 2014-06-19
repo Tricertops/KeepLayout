@@ -11,7 +11,7 @@
 @class KeepAttribute;
 
 
-typedef KeepAttribute *(^KeepRelatedAttributeBlock)(UIView *otherView);
+typedef KeepAttribute *(^KeepRelatedAttributeBlock)(KPView *otherView);
 
 
 
@@ -29,7 +29,7 @@ typedef KeepAttribute *(^KeepRelatedAttributeBlock)(UIView *otherView);
  \endcode
  
  **/
-@interface UIView (KeepLayout)
+@interface KPView (KeepLayout)
 
 
 
@@ -106,10 +106,10 @@ typedef KeepAttribute *(^KeepRelatedAttributeBlock)(UIView *otherView);
 @property (nonatomic, readonly) KeepAttribute *keepVerticalInsets;
 
 /// Sets custom Insets using given priority.
-- (void)keepInsets:(UIEdgeInsets)insets priority:(KeepPriority)priority;
+- (void)keepInsets:(KPEdgeInsets)insets priority:(KeepPriority)priority;
 
 /// Sets custom Insets using Required priority. Use is discouraged.
-- (void)keepInsets:(UIEdgeInsets)insets;
+- (void)keepInsets:(KPEdgeInsets)insets;
 
 
 
@@ -212,22 +212,22 @@ typedef KeepAttribute *(^KeepRelatedAttributeBlock)(UIView *otherView);
 /// Convenience methods for setting multiple alignments at once.
 
 /// Sets all 4 edge alignments with other view with given insets and priority.
-- (void)keepEdgeAlignTo:(UIView *)view insets:(UIEdgeInsets)insets withPriority:(KeepPriority)priority;
+- (void)keepEdgeAlignTo:(KPView *)view insets:(KPEdgeInsets)insets withPriority:(KeepPriority)priority;
 
 /// Sets all 4 edge alignments with other view with given insets and Required priority. Use is discouraged.
-- (void)keepEdgeAlignTo:(UIView *)view insets:(UIEdgeInsets)insets;
+- (void)keepEdgeAlignTo:(KPView *)view insets:(KPEdgeInsets)insets;
 
 /// Sets all 4 edge alignments with other view with zero insets and Required priority. Use is discouraged.
-- (void)keepEdgeAlignTo:(UIView *)view;
+- (void)keepEdgeAlignTo:(KPView *)view;
 
 /// Sets both center alignments with other view view given offset and priority.
-- (void)keepCenterAlignTo:(UIView *)view offset:(UIOffset)offset withPriority:(KeepPriority)priority;
+- (void)keepCenterAlignTo:(KPView *)view offset:(KPOffset)offset withPriority:(KeepPriority)priority;
 
 /// Sets both center alignments with other view view given offset and Required priority.
-- (void)keepCenterAlignTo:(UIView *)view offset:(UIOffset)offset;
+- (void)keepCenterAlignTo:(KPView *)view offset:(KPOffset)offset;
 
 /// Sets both center alignments with other view view zero offset and Required priority.
-- (void)keepCenterAlignTo:(UIView *)view;
+- (void)keepCenterAlignTo:(KPView *)view;
 
 
 
@@ -235,6 +235,7 @@ typedef KeepAttribute *(^KeepRelatedAttributeBlock)(UIView *otherView);
 
 #pragma mark -
 #pragma mark Animations
+#if TARGET_OS_IPHONE
 /// Animation methods allowing you to modify all above attributes (or even constraints directly) animatedly. All animations are scheduled on main queue with given or zero delay. The layout code itself is executed after the delay, which is different than in UIView animation methods. This behavior is needed, because of different nature of constraint-based layouting and allows you to schedule animations in the same update cycle as your main layout.
 
 /// Animate layout changes. Receiver automatically calls `-layoutIfNeeded` after the animation block. Animation is scheduled on Main Queue with zero delay, so the block not executed immediatelly.
@@ -256,6 +257,7 @@ typedef KeepAttribute *(^KeepRelatedAttributeBlock)(UIView *otherView);
 /// Prevent animating layout changes in the block. Due to different nature of constraint-based layouting, this may not work as you may expect.
 - (void)keepNotAnimated:(void (^)(void))layout;
 #endif
+#endif // TARGET_OS_IPHONE
 
 
 
@@ -265,7 +267,7 @@ typedef KeepAttribute *(^KeepRelatedAttributeBlock)(UIView *otherView);
 #pragma mark Common Superview
 
 /// Traverses superviews and returns the first common for both views.
-- (UIView *)commonSuperview:(UIView *)anotherView;
+- (KPView *)commonSuperview:(KPView *)anotherView;
 
 
 
