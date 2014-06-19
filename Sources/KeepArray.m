@@ -1,12 +1,12 @@
 //
-//  NSArray+KeepLayout.m
+//  KeepArray.m
 //  Keep Layout
 //
 //  Created by Martin Kiss on 23.6.13.
 //  Copyright (c) 2013 Triceratops. All rights reserved.
 //
 
-#import "NSArray+KeepLayout.h"
+#import "KeepArray.h"
 #import "KeepAttribute.h"
 #import "KeepView.h"
 

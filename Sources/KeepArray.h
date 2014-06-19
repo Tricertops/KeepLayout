@@ -1,5 +1,5 @@
 //
-//  NSArray+KeepLayout.h
+//  KeepArray.h
 //  Keep Layout
 //
 //  Created by Martin Kiss on 23.6.13.
