@@ -6,7 +6,7 @@ Keep Layout makes _Auto Layout_ much easier to use _from code_! No more _Interfa
 Before you start, you should be familiar with _Auto Layout_ topic. [How it works and what's the point?][1]
 
 
-_**Project Status**: All planned features are implemented and functional. Project is maintained and kept up to date with latest iOS. Feel free to submit Issues or Pull Requests._
+_**Project Status**: All planned features are implemented and functional. Project is maintained and kept up to date with latest iOS/OS X. Feel free to submit Issues or Pull Requests._
 
 
 
@@ -20,7 +20,7 @@ Every view has several _attributes_ that are represented by `KeepAttribute` clas
   - Offsets to other views: **top**, **bottom**, **left**, **right**
   - Alignments with other views: **top**, **bottom**, **left**, **right**, **horizontal**, **vertical**, **baseline**
  
-They can be accessed by calling methods on `UIView` object with one of these format:
+They can be accessed by calling methods on `UIView`/`NSView` object with one of these format:
 
 ```objc
 - (KeepLayout *)keep<AttributeName>;
@@ -43,7 +43,7 @@ viewOne.keepLeftAlign(viewTwo) == viewTwo.keepLeftAlign(viewOne)
 viewOne.keepLeftOffset(viewTwo) == viewTwo.keepRightOffset(viewOne)
 ```
 
-See [`UIView+KeepLayout.h`][2] for more.
+See [`KeepView.h`][2] for more.
 
 
 
@@ -128,7 +128,7 @@ view.keepInsets  // group of all four insets
 view.keepCenter  // group of both axis of position
 ```
 
-See [`UIView+KeepLayout.h`][2] or [`KeepAttribute.h`][4] for more .
+See [`KeepView.h`][2] or [`KeepAttribute.h`][4] for more .
 
 
 
@@ -168,13 +168,13 @@ For the most used cases there are convenience methods. Nothing you could write y
 [view keepCentered];
 ```
 
-See [`UIView+KeepLayout.h`][2] for more.
+See [`KeepView.h`][2] for more.
 
 
 
 ## Array Attributes – What?
 
-Most of the methods added to `UIView` class can also be called on any **array on views**. Such call creates grouped attribute of all contained view attributes:
+Most of the methods added to `UIView`/`NSView` class can also be called on any **array on views**. Such call creates grouped attribute of all contained view attributes:
 
 ```objc
 NSArray *views = @[ viewOne, viewTwo, viewThree ];
@@ -212,9 +212,9 @@ view.keepWidth.equal = KeepRequired(100);
 
 These are instance methods and must be called on parent view of all affected subviews. At the end of layout block this view receives `-layoutIfNeeded` method. Any changes to views out of the receiver's subview tree will not be animated.
 
-Spring animation from iOS 7 included.
+Spring animation from iOS 7 included, animations on OS X are not supported yet.
 
-See [`UIView+KeepLayout.h`][2] for more.
+See [`KeepView.h`][2] for more.
 
 
 
@@ -262,7 +262,7 @@ Array methods usually call the same selector on contained views and return group
 See [`NSArray+KeepLayout.m`][8] for details.
 
 Animation delay is implemented as real execution delay, not just delay for animating the changes. This differs from `UIView` block animations and allows you to set up animations in the same update cycle as your initial layout.  
-See [`UIView+KeepLayout.m`][6] for details.
+See [`KeepView.m`][6] for details.
 
 
 
@@ -279,14 +279,14 @@ MIT License, Copyright © 2013-2014 Martin Kiss
 
 [1]: https://developer.apple.com/library/ios/documentation/userexperience/conceptual/AutolayoutPG/Introduction/Introduction.html
 
-[2]: Sources/UIView+KeepLayout.h
+[2]: Sources/KeepView.h
 [3]: Sources/KeepTypes.h
 [4]: Sources/KeepAttribute.h
 [5]: Sources/NSArray+KeepLayout.h
 [10]: Sources/KeepLayoutConstraint.h
 [11]: Sources/UIViewController+KeepLayout.h
 
-[6]: Sources/UIView+KeepLayout.m
+[6]: Sources/KeepView.m
 [7]: Sources/KeepAttribute.m
 [8]: Sources/NSArray+KeepLayout.m
 [9]: LICENSE.md
