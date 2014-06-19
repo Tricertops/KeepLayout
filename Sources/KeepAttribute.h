@@ -66,9 +66,9 @@
 @interface KeepSimpleAttribute : KeepAttribute
 
 /// Properties that don't change in time.
-- (instancetype)initWithView:(UIView *)view
+- (instancetype)initWithView:(KPView *)view
              layoutAttribute:(NSLayoutAttribute)layoutAttribute
-                 relatedView:(UIView *)relatedView
+                 relatedView:(KPView *)relatedView
       relatedLayoutAttribute:(NSLayoutAttribute)relatedLayoutAttribute
                  coefficient:(CGFloat)coefficient;
 /// Multiplier of values: equal, min and max

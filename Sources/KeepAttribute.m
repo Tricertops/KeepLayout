@@ -163,11 +163,11 @@
 
 @interface KeepSimpleAttribute ()
 
-@property (nonatomic, readwrite, weak) UIView *view;
+@property (nonatomic, readwrite, weak) KPView *view;
 @property (nonatomic, readwrite, assign) NSLayoutAttribute layoutAttribute;
-@property (nonatomic, readwrite, weak) UIView *relatedView;
+@property (nonatomic, readwrite, weak) KPView *relatedView;
 @property (nonatomic, readwrite, assign) NSLayoutAttribute relatedLayoutAttribute;
-@property (nonatomic, readwrite, weak) UIView *constraintView;
+@property (nonatomic, readwrite, weak) KPView *constraintView;
 
 @property (nonatomic, readwrite, assign) CGFloat coefficient;
 
@@ -175,9 +175,9 @@
 @property (nonatomic, readwrite, strong) KeepLayoutConstraint *maxConstraint;
 @property (nonatomic, readwrite, strong) KeepLayoutConstraint *minConstraint;
 
-- (instancetype)initWithView:(UIView *)view
+- (instancetype)initWithView:(KPView *)view
              layoutAttribute:(NSLayoutAttribute)layoutAttribute
-                 relatedView:(UIView *)relatedView
+                 relatedView:(KPView *)relatedView
       relatedLayoutAttribute:(NSLayoutAttribute)superviewLayoutAttribute
                  coefficient:(CGFloat)coefficient;
 - (KeepLayoutConstraint *)createConstraintWithRelation:(NSLayoutRelation)relation value:(KeepValue)value;
@@ -210,9 +210,9 @@
 }
 
 
-- (instancetype)initWithView:(UIView *)view
+- (instancetype)initWithView:(KPView *)view
              layoutAttribute:(NSLayoutAttribute)layoutAttribute
-                 relatedView:(UIView *)relatedView
+                 relatedView:(KPView *)relatedView
       relatedLayoutAttribute:(NSLayoutAttribute)relatedLayoutAttribute
                  coefficient:(CGFloat)coefficient {
     self = [super init];
