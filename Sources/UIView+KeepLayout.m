@@ -27,7 +27,11 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         
+#if TARGET_OS_IPHONE
         SEL originalSelector = @selector(willMoveToSuperview:);
+#else
+        SEL originalSelector = @selector(viewWillMoveToSuperview:);
+#endif
         SEL replacementSelector = @selector(keep_willMoveToSuperview:);
         
         Method originalMethod = class_getInstanceMethod(self, originalSelector);
@@ -752,7 +756,12 @@
 - (KPView *)commonSuperview:(KPView *)anotherView {
     KPView *superview = self;
     while (superview) {
-        if ([anotherView isDescendantOfView:superview]) {
+#if TARGET_OS_IPHONE
+        BOOL isDescendant = [anotherView isDescendantOfView:superview];
+#else
+        BOOL isDescendant = [anotherView isDescendantOf:superview];
+#endif
+        if (isDescendant) {
             break; // The `superview` is common for both views.
         }
         superview = superview.superview;
