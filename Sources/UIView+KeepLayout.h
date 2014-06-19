@@ -6,9 +6,6 @@
 //  Copyright (c) 2012 iMartin Kiss. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
-#import <CoreGraphics/CoreGraphics.h>
 #import "KeepTypes.h"
 
 @class KeepAttribute;

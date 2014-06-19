@@ -6,10 +6,6 @@
 //  Copyright (c) 2013 Triceratops. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
-#import <CoreGraphics/CoreGraphics.h>
-
 #import "KeepTypes.h"
 #import "UIView+KeepLayout.h"
 
