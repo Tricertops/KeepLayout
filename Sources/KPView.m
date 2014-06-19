@@ -1,12 +1,12 @@
 //
-//  UIView+KeepLayout.m
-//  Geografia
+//  KPView.m
+//  Keep Layout
 //
 //  Created by Martin Kiss on 21.10.12.
 //  Copyright (c) 2012 iMartin Kiss. All rights reserved.
 //
 
-#import "UIView+KeepLayout.h"
+#import "KPView.h"
 #import "KeepAttribute.h"
 #import <objc/runtime.h>
 

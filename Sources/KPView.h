@@ -1,6 +1,6 @@
 //
-//  UIView+KeepLayout.h
-//  Geografia
+//  KPView.h
+//  Keep Layout
 //
 //  Created by Martin Kiss on 21.10.12.
 //  Copyright (c) 2012 iMartin Kiss. All rights reserved.
