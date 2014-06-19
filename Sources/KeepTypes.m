@@ -10,6 +10,18 @@
 
 
 
+#if TARGET_OS_IPHONE
+
+
+#else
+
+const KPEdgeInsets KPEdgeInsetsZero = (KPEdgeInsets){.top = 0, .left = 0, .bottom = 0, .right = 0};
+const KPOffset KPOffsetZero = (KPOffset){.horizontal = 0, .vertical = 0};
+
+#endif
+
+
+
 extern NSString *KeepPriorityDescription(KeepPriority priority) {
     NSString *name = @"";
     
@@ -94,3 +106,5 @@ NSString *KeepValueDescription(KeepValue value) {
     }
     return description;
 }
+
+

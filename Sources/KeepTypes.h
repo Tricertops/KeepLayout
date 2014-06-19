@@ -20,9 +20,9 @@
 
 #import <UIKit/UIKit.h>
 #define KPView                  UIView
-#define KPViewAnimationOptions  UIViewAnimationOptions
 #define KPEdgeInsets            UIEdgeInsets
 #define KPEdgeInsetsZero        UIEdgeInsetsZero
+
 #define KPOffset                UIOffset
 #define KPOffsetZero            UIOffsetZero
 
@@ -38,9 +38,9 @@ typedef enum : NSInteger {
 
 #import <AppKit/AppKit.h>
 #define KPView                  NSView
-#define KPViewAnimationOptions  NSViewAnimationOptions
 #define KPEdgeInsets            NSEdgeInsets
-#define KPEdgeInsetsZero        NSEdgeInsetsZero
+
+extern const KPEdgeInsets KPEdgeInsetsZero;
 
 typedef struct KPOffset {
     CGFloat horizontal, vertical;
