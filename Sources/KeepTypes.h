@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreGraphics/CoreGraphics.h>
-#import <UIKit/UIKit.h>
 
 
 
@@ -17,9 +16,16 @@
 
 
 
+#if TARGET_OS_IPHONE
 
+#import <UIKit/UIKit.h>
+#define KPView                  UIView
+#define KPViewAnimationOptions  UIViewAnimationOptions
+#define KPEdgeInsets            UIEdgeInsets
+#define KPEdgeInsetsZero        UIEdgeInsetsZero
+#define KPOffset                UIOffset
+#define KPOffsetZero            UIOffsetZero
 
-#pragma mark Priority
 /// Use custom names.
 typedef enum : NSInteger {
     KeepPriorityRequired = UILayoutPriorityRequired,
@@ -27,6 +33,37 @@ typedef enum : NSInteger {
     KeepPriorityLow = UILayoutPriorityDefaultLow,
     KeepPriorityFitting = UILayoutPriorityFittingSizeLevel,
 } KeepPriority;
+
+#else
+
+#import <AppKit/AppKit.h>
+#define KPView                  NSView
+#define KPViewAnimationOptions  NSViewAnimationOptions
+#define KPEdgeInsets            NSEdgeInsets
+#define KPEdgeInsetsZero        NSEdgeInsetsZero
+
+typedef struct KPOffset {
+    CGFloat horizontal, vertical;
+} KPOffset;
+
+static inline KPOffset KPOffsetMake(CGFloat horizontal, CGFloat vertical) {
+    KPOffset offset = {horizontal, vertical};
+    return offset;
+}
+
+extern const KPOffset KPOffsetZero;
+
+/// Use custom names.
+typedef enum : NSInteger {
+    KeepPriorityRequired = NSLayoutPriorityRequired,
+    KeepPriorityHigh = NSLayoutPriorityDefaultHigh,
+    KeepPriorityLow = NSLayoutPriorityDefaultLow,
+    KeepPriorityFitting = NSLayoutPriorityFittingSizeCompression,
+} KeepPriority;
+
+#endif
+
+
 
 extern NSString *KeepPriorityDescription(KeepPriority);
 
