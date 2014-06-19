@@ -1,5 +1,5 @@
 //
-//  KPView.h
+//  KeepView.h
 //  Keep Layout
 //
 //  Created by Martin Kiss on 21.10.12.

@@ -7,7 +7,7 @@
 //
 
 #import "KeepTypes.h"
-#import "KPView.h"
+#import "KeepView.h"
 
 @class KeepAttribute;
 
@@ -16,7 +16,7 @@
 
 
 /**
- Provides similar methods than KPView. Works only on arrays of UIViews/NSViews. For method descriptions see method in KPView.h with the same name.
+ Provides similar methods than KPView. Works only on arrays of UIViews/NSViews. For method descriptions see method in KeepView.h with the same name.
  
  Most of the methods invokes the same selector on contained views and returns group proxy attribute. Setting values of this group will set attributes to all attributes in the group.
  

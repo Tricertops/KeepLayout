@@ -1,12 +1,12 @@
 //
-//  KPView.m
+//  KeepView.m
 //  Keep Layout
 //
 //  Created by Martin Kiss on 21.10.12.
 //  Copyright (c) 2012 iMartin Kiss. All rights reserved.
 //
 
-#import "KPView.h"
+#import "KeepView.h"
 #import "KeepAttribute.h"
 #import <objc/runtime.h>
 

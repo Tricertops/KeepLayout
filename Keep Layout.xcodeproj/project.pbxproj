@@ -16,7 +16,7 @@
 		5B099AD0183581F9004A8257 /* Default-Portrait.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B099ACC183581F9004A8257 /* Default-Portrait.png */; };
 		5B099AD1183581F9004A8257 /* Default-Portrait@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B099ACD183581F9004A8257 /* Default-Portrait@2x.png */; };
 		5B0AF624195392C20041E966 /* KeepTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B19318217719A4E00A5747B /* KeepTypes.m */; };
-		5B0AF625195392C20041E966 /* KPView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B3C50B016B530F900D00BF3 /* KPView.m */; };
+		5B0AF625195392C20041E966 /* KeepView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B3C50B016B530F900D00BF3 /* KeepView.m */; };
 		5B0AF626195392C20041E966 /* NSArray+KeepLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B6D195E1776F32000FA2E3E /* NSArray+KeepLayout.m */; };
 		5B0AF627195392C20041E966 /* KeepAttribute.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B208DC016B67381007ABFFE /* KeepAttribute.m */; };
 		5B0AF628195392C20041E966 /* KeepLayoutConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B96279217984366005531F4 /* KeepLayoutConstraint.m */; };
@@ -36,7 +36,7 @@
 		5B3C509216B5304600D00BF3 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B3C509116B5304600D00BF3 /* Default@2x.png */; };
 		5B3C509416B5304600D00BF3 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B3C509316B5304600D00BF3 /* Default-568h@2x.png */; };
 		5B3C50A416B530BE00D00BF3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B3C507F16B5304600D00BF3 /* Foundation.framework */; };
-		5B3C50B116B530F900D00BF3 /* KPView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B3C50B016B530F900D00BF3 /* KPView.m */; };
+		5B3C50B116B530F900D00BF3 /* KeepView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B3C50B016B530F900D00BF3 /* KeepView.m */; };
 		5B3C50B416B5313200D00BF3 /* libKeepLayout.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B3C50A316B530BE00D00BF3 /* libKeepLayout.a */; };
 		5B6D195F1776F32000FA2E3E /* NSArray+KeepLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B6D195E1776F32000FA2E3E /* NSArray+KeepLayout.m */; };
 		5B6D196217777E4200FA2E3E /* KPLExampleListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B6D196117777E4200FA2E3E /* KPLExampleListViewController.m */; };
@@ -109,8 +109,8 @@
 		5B3C509116B5304600D00BF3 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		5B3C509316B5304600D00BF3 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		5B3C50A316B530BE00D00BF3 /* libKeepLayout.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libKeepLayout.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		5B3C50AF16B530F900D00BF3 /* KPView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPView.h; sourceTree = "<group>"; };
-		5B3C50B016B530F900D00BF3 /* KPView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPView.m; sourceTree = "<group>"; };
+		5B3C50AF16B530F900D00BF3 /* KeepView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeepView.h; sourceTree = "<group>"; };
+		5B3C50B016B530F900D00BF3 /* KeepView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeepView.m; sourceTree = "<group>"; };
 		5B3C50B516B531C700D00BF3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5B6D195D1776F32000FA2E3E /* NSArray+KeepLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+KeepLayout.h"; sourceTree = "<group>"; };
 		5B6D195E1776F32000FA2E3E /* NSArray+KeepLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+KeepLayout.m"; sourceTree = "<group>"; };
@@ -259,8 +259,8 @@
 				5B208DC316B67391007ABFFE /* KeepLayout.h */,
 				5B208DDE16B6EFFB007ABFFE /* KeepTypes.h */,
 				5B19318217719A4E00A5747B /* KeepTypes.m */,
-				5B3C50AF16B530F900D00BF3 /* KPView.h */,
-				5B3C50B016B530F900D00BF3 /* KPView.m */,
+				5B3C50AF16B530F900D00BF3 /* KeepView.h */,
+				5B3C50B016B530F900D00BF3 /* KeepView.m */,
 				5B6D195D1776F32000FA2E3E /* NSArray+KeepLayout.h */,
 				5B6D195E1776F32000FA2E3E /* NSArray+KeepLayout.m */,
 				5B208DBF16B67381007ABFFE /* KeepAttribute.h */,
@@ -420,7 +420,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5B0AF624195392C20041E966 /* KeepTypes.m in Sources */,
-				5B0AF625195392C20041E966 /* KPView.m in Sources */,
+				5B0AF625195392C20041E966 /* KeepView.m in Sources */,
 				5B0AF626195392C20041E966 /* NSArray+KeepLayout.m in Sources */,
 				5B0AF627195392C20041E966 /* KeepAttribute.m in Sources */,
 				5B0AF628195392C20041E966 /* KeepLayoutConstraint.m in Sources */,
@@ -454,7 +454,7 @@
 			files = (
 				5B96279317984366005531F4 /* KeepLayoutConstraint.m in Sources */,
 				5B00E1FD193F9BD900535B19 /* UIViewController+KeepLayout.m in Sources */,
-				5B3C50B116B530F900D00BF3 /* KPView.m in Sources */,
+				5B3C50B116B530F900D00BF3 /* KeepView.m in Sources */,
 				5B208DC116B67381007ABFFE /* KeepAttribute.m in Sources */,
 				5B19318317719A4E00A5747B /* KeepTypes.m in Sources */,
 				5B6D195F1776F32000FA2E3E /* NSArray+KeepLayout.m in Sources */,
