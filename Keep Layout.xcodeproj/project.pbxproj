@@ -15,13 +15,19 @@
 		5B099ACF183581F9004A8257 /* Default-Landscape@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B099ACB183581F9004A8257 /* Default-Landscape@2x.png */; };
 		5B099AD0183581F9004A8257 /* Default-Portrait.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B099ACC183581F9004A8257 /* Default-Portrait.png */; };
 		5B099AD1183581F9004A8257 /* Default-Portrait@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B099ACD183581F9004A8257 /* Default-Portrait@2x.png */; };
+		5B0AF624195392C20041E966 /* KeepTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B19318217719A4E00A5747B /* KeepTypes.m */; };
+		5B0AF625195392C20041E966 /* UIView+KeepLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B3C50B016B530F900D00BF3 /* UIView+KeepLayout.m */; };
+		5B0AF626195392C20041E966 /* NSArray+KeepLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B6D195E1776F32000FA2E3E /* NSArray+KeepLayout.m */; };
+		5B0AF627195392C20041E966 /* KeepAttribute.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B208DC016B67381007ABFFE /* KeepAttribute.m */; };
+		5B0AF628195392C20041E966 /* KeepLayoutConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B96279217984366005531F4 /* KeepLayoutConstraint.m */; };
+		5B0AF629195392C20041E966 /* UIViewController+KeepLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B00E1FC193F9BD900535B19 /* UIViewController+KeepLayout.m */; };
+		5B0AF62C195392D00041E966 /* libKeepLayout-AppKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B0AF5FF195392A30041E966 /* libKeepLayout-AppKit.a */; };
 		5B19318317719A4E00A5747B /* KeepTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B19318217719A4E00A5747B /* KeepTypes.m */; };
 		5B208DC116B67381007ABFFE /* KeepAttribute.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B208DC016B67381007ABFFE /* KeepAttribute.m */; };
 		5B208DC916B678C7007ABFFE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B3C508116B5304600D00BF3 /* CoreGraphics.framework */; };
 		5B208DCA16B678CB007ABFFE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B3C507D16B5304600D00BF3 /* UIKit.framework */; };
 		5B2A087119538AB20059E0BE /* KeepAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B2A086C19538AB20059E0BE /* KeepAppDelegate.m */; };
 		5B2A087319538AB20059E0BE /* Main.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B2A086E19538AB20059E0BE /* Main.xib */; };
-		5B2A087819538AD80059E0BE /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5B2A087519538AD80059E0BE /* Info.plist */; };
 		5B2A087919538AD80059E0BE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B2A087619538AD80059E0BE /* main.m */; };
 		5B3C507E16B5304600D00BF3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B3C507D16B5304600D00BF3 /* UIKit.framework */; };
 		5B3C508016B5304600D00BF3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B3C507F16B5304600D00BF3 /* Foundation.framework */; };
@@ -41,6 +47,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		5B0AF62A195392CB0041E966 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5B3C507016B5304600D00BF3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5B0AF5FE195392A30041E966;
+			remoteInfo = "KeepLayout for AppKit";
+		};
 		5B3C50B216B5312E00D00BF3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 5B3C507016B5304600D00BF3 /* Project object */;
@@ -72,6 +85,7 @@
 		5B099ACB183581F9004A8257 /* Default-Landscape@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape@2x.png"; sourceTree = "<group>"; };
 		5B099ACC183581F9004A8257 /* Default-Portrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait.png"; sourceTree = "<group>"; };
 		5B099ACD183581F9004A8257 /* Default-Portrait@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait@2x.png"; sourceTree = "<group>"; };
+		5B0AF5FF195392A30041E966 /* libKeepLayout-AppKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libKeepLayout-AppKit.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B19318217719A4E00A5747B /* KeepTypes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeepTypes.m; sourceTree = "<group>"; };
 		5B208DBF16B67381007ABFFE /* KeepAttribute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeepAttribute.h; sourceTree = "<group>"; };
 		5B208DC016B67381007ABFFE /* KeepAttribute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeepAttribute.m; sourceTree = "<group>"; };
@@ -112,10 +126,18 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		5B0AF5FC195392A30041E966 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5B2A083319538A550059E0BE /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5B0AF62C195392D00041E966 /* libKeepLayout-AppKit.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -181,6 +203,7 @@
 				5B3C507916B5304600D00BF3 /* Example.app */,
 				5B3C50A316B530BE00D00BF3 /* libKeepLayout.a */,
 				5B2A083619538A550059E0BE /* Keep Layout.app */,
+				5B0AF5FF195392A30041E966 /* libKeepLayout-AppKit.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -253,7 +276,34 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		5B0AF5FD195392A30041E966 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
+		5B0AF5FE195392A30041E966 /* KeepLayout for AppKit */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5B0AF61E195392A40041E966 /* Build configuration list for PBXNativeTarget "KeepLayout for AppKit" */;
+			buildPhases = (
+				5B0AF5FB195392A30041E966 /* Sources */,
+				5B0AF5FC195392A30041E966 /* Frameworks */,
+				5B0AF5FD195392A30041E966 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "KeepLayout for AppKit";
+			productName = "KeepLayout for AppKit";
+			productReference = 5B0AF5FF195392A30041E966 /* libKeepLayout-AppKit.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		5B2A083519538A550059E0BE /* Example AppKit */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5B2A086319538A560059E0BE /* Build configuration list for PBXNativeTarget "Example AppKit" */;
@@ -265,6 +315,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				5B0AF62B195392CB0041E966 /* PBXTargetDependency */,
 			);
 			name = "Example AppKit";
 			productName = "Example AppKit";
@@ -331,6 +382,7 @@
 			targets = (
 				5B3C50A216B530BE00D00BF3 /* KeepLayout */,
 				5B3C507816B5304600D00BF3 /* Example */,
+				5B0AF5FE195392A30041E966 /* KeepLayout for AppKit */,
 				5B2A083519538A550059E0BE /* Example AppKit */,
 			);
 		};
@@ -342,7 +394,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5B2A087319538AB20059E0BE /* Main.xib in Resources */,
-				5B2A087819538AD80059E0BE /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -365,6 +416,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		5B0AF5FB195392A30041E966 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5B0AF624195392C20041E966 /* KeepTypes.m in Sources */,
+				5B0AF625195392C20041E966 /* UIView+KeepLayout.m in Sources */,
+				5B0AF626195392C20041E966 /* NSArray+KeepLayout.m in Sources */,
+				5B0AF627195392C20041E966 /* KeepAttribute.m in Sources */,
+				5B0AF628195392C20041E966 /* KeepLayoutConstraint.m in Sources */,
+				5B0AF629195392C20041E966 /* UIViewController+KeepLayout.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5B2A083219538A550059E0BE /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -402,6 +466,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		5B0AF62B195392CB0041E966 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5B0AF5FE195392A30041E966 /* KeepLayout for AppKit */;
+			targetProxy = 5B0AF62A195392CB0041E966 /* PBXContainerItemProxy */;
+		};
 		5B3C50B316B5312E00D00BF3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 5B3C50A216B530BE00D00BF3 /* KeepLayout */;
@@ -410,6 +479,64 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		5B0AF61F195392A40041E966 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				PRODUCT_NAME = "KeepLayout-AppKit";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		5B0AF620195392A40041E966 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				PRODUCT_NAME = "KeepLayout-AppKit";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
 		5B2A086419538A560059E0BE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -585,6 +712,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		5B0AF61E195392A40041E966 /* Build configuration list for PBXNativeTarget "KeepLayout for AppKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5B0AF61F195392A40041E966 /* Debug */,
+				5B0AF620195392A40041E966 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		5B2A086319538A560059E0BE /* Build configuration list for PBXNativeTarget "Example AppKit" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
