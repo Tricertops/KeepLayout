@@ -590,8 +590,8 @@
 
 
 - (void)keepCenterAlignTo:(UIView *)view offset:(UIOffset)offset withPriority:(KeepPriority)priority {
-    self.keepHorizontalAlignTo(view).equal = KeepValueMake(offset.horizontal, priority);
-    self.keepVerticalAlignTo(view).equal = KeepValueMake(offset.vertical, priority);
+    self.keepHorizontalAlignTo(view).equal = KeepValueMake(offset.vertical, priority);
+    self.keepVerticalAlignTo(view).equal = KeepValueMake(offset.horizontal, priority);
 }
 
 
