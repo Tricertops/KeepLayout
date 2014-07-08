@@ -21,12 +21,11 @@
 
 #pragma mark Priority
 /// Use custom names.
-typedef enum : NSInteger {
-    KeepPriorityRequired = (int)UILayoutPriorityRequired,
-    KeepPriorityHigh = (int)UILayoutPriorityDefaultHigh,
-    KeepPriorityLow = (int)UILayoutPriorityDefaultLow,
-    KeepPriorityFitting = (int)UILayoutPriorityFittingSizeLevel,
-} KeepPriority;
+typedef float KeepPriority;
+static const KeepPriority KeepPriorityRequired = UILayoutPriorityRequired;
+static const KeepPriority KeepPriorityHigh = UILayoutPriorityDefaultHigh;
+static const KeepPriority KeepPriorityLow = UILayoutPriorityDefaultLow;
+static const KeepPriority KeepPriorityFitting = UILayoutPriorityFittingSizeLevel;
 
 extern NSString *KeepPriorityDescription(KeepPriority);
 
