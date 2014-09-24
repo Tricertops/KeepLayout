@@ -181,16 +181,16 @@
 #pragma mark Offsets: Grouped
 
 /// Grouped attribute for Left Offset of contained views.
-@property (nonatomic, readonly) KeepRelatedAttributeBlock keepLeftOffset;
+@property (nonatomic, readonly) KeepRelatedAttributeBlock keepLeftOffsetTo;
 
 /// Grouped attribute for Right Offset of contained views.
-@property (nonatomic, readonly) KeepRelatedAttributeBlock keepRightOffset;
+@property (nonatomic, readonly) KeepRelatedAttributeBlock keepRightOffsetTo;
 
 /// Grouped attribute for Top Offset of contained views.
-@property (nonatomic, readonly) KeepRelatedAttributeBlock keepTopOffset;
+@property (nonatomic, readonly) KeepRelatedAttributeBlock keepTopOffsetTo;
 
 /// Grouped attribute for Bottom Offset of contained views.
-@property (nonatomic, readonly) KeepRelatedAttributeBlock keepBottomOffset;
+@property (nonatomic, readonly) KeepRelatedAttributeBlock keepBottomOffsetTo;
 
 
 

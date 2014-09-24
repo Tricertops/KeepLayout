@@ -308,28 +308,28 @@
 #pragma mark Offsets
 
 
-- (KeepRelatedAttributeBlock)keepLeftOffset {
+- (KeepRelatedAttributeBlock)keepLeftOffsetTo {
     return ^KeepAttribute *(KPView *view) {
         return [self keep_groupAttributeForSelector:_cmd relatedView:view];
     };
 }
 
 
-- (KeepRelatedAttributeBlock)keepRightOffset {
+- (KeepRelatedAttributeBlock)keepRightOffsetTo {
     return ^KeepAttribute *(KPView *view) {
         return [self keep_groupAttributeForSelector:_cmd relatedView:view];
     };
 }
 
 
-- (KeepRelatedAttributeBlock)keepTopOffset {
+- (KeepRelatedAttributeBlock)keepTopOffsetTo {
     return ^KeepAttribute *(KPView *view) {
         return [self keep_groupAttributeForSelector:_cmd relatedView:view];
     };
 }
 
 
-- (KeepRelatedAttributeBlock)keepBottomOffset {
+- (KeepRelatedAttributeBlock)keepBottomOffsetTo {
     return ^KeepAttribute *(KPView *view) {
         return [self keep_groupAttributeForSelector:_cmd relatedView:view];
     };
