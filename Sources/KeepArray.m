@@ -357,6 +357,13 @@
 }
 
 
+- (void)keepLeadingOffsets:(KeepValue)value {
+    [self keep_invoke:_cmd eachTwo:^(KPView *this, KPView *next) {
+        this.keepTrailingOffsetTo(next).equal = value;
+    }];
+}
+
+
 - (void)keepVerticalOffsets:(KeepValue)value {
     [self keep_invoke:_cmd eachTwo:^(KPView *this, KPView *next) {
         this.keepBottomOffsetTo(next).equal = value;

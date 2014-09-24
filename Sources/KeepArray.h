@@ -206,6 +206,9 @@
 /// All contained views will share the same Horizontal Offset (left to right) using given priority. First view will keep Right Offset to second view and so on.
 - (void)keepHorizontalOffsets:(KeepValue)value;
 
+/// All contained views will share the same Leading Offset (depends on writing direction) using given priority. First view will keep Leading Offset to second view and so on.
+- (void)keepLeadingOffsets:(KeepValue)value;
+
 /// All contained views will share the same Vertical Offset (top to bottom) using given priority. First view will keep Bottom Offset to second view and so on.
 - (void)keepVerticalOffsets:(KeepValue)value;
 
