@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreGraphics/CoreGraphics.h>
-#import <UIKit/UIKit.h>
 
 
 
@@ -17,15 +16,52 @@
 
 
 
+#if TARGET_OS_IPHONE
 
+#import <UIKit/UIKit.h>
+#define KPView                  UIView
+#define KPEdgeInsets            UIEdgeInsets
+#define KPEdgeInsetsZero        UIEdgeInsetsZero
 
-#pragma mark Priority
+#define KPOffset                UIOffset
+#define KPOffsetZero            UIOffsetZero
+
 /// Use custom names.
 typedef float KeepPriority;
 static const KeepPriority KeepPriorityRequired = UILayoutPriorityRequired;
 static const KeepPriority KeepPriorityHigh = UILayoutPriorityDefaultHigh;
 static const KeepPriority KeepPriorityLow = UILayoutPriorityDefaultLow;
 static const KeepPriority KeepPriorityFitting = UILayoutPriorityFittingSizeLevel;
+
+#else
+
+#import <AppKit/AppKit.h>
+#define KPView                  NSView
+#define KPEdgeInsets            NSEdgeInsets
+
+extern const KPEdgeInsets KPEdgeInsetsZero;
+
+typedef struct KPOffset {
+    CGFloat horizontal, vertical;
+} KPOffset;
+
+static inline KPOffset KPOffsetMake(CGFloat horizontal, CGFloat vertical) {
+    KPOffset offset = {horizontal, vertical};
+    return offset;
+}
+
+extern const KPOffset KPOffsetZero;
+
+/// Use custom names.
+typedef float KeepPriority;
+static const KeepPriority KeepPriorityRequired = NSLayoutPriorityRequired;
+static const KeepPriority KeepPriorityHigh = NSLayoutPriorityDefaultHigh;
+static const KeepPriority KeepPriorityLow = NSLayoutPriorityDefaultLow;
+static const KeepPriority KeepPriorityFitting = NSLayoutPriorityFittingSizeCompression;
+
+#endif
+
+
 
 extern NSString *KeepPriorityDescription(KeepPriority);
 

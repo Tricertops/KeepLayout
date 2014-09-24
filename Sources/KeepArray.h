@@ -1,17 +1,13 @@
 //
-//  NSArray+KeepLayout.h
+//  KeepArray.h
 //  Keep Layout
 //
 //  Created by Martin Kiss on 23.6.13.
 //  Copyright (c) 2013 Triceratops. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
-#import <CoreGraphics/CoreGraphics.h>
-
 #import "KeepTypes.h"
-#import "UIView+KeepLayout.h"
+#import "KeepView.h"
 
 @class KeepAttribute;
 
@@ -20,7 +16,7 @@
 
 
 /**
- Provides similar methods than UIView+KeepLayout. Works only on arrays of UIViews. For method descriptions see method in UIView+KeepLayout with the same name.
+ Provides similar methods than KPView. Works only on arrays of UIViews/NSViews. For method descriptions see method in KeepView.h with the same name.
  
  Most of the methods invokes the same selector on contained views and returns group proxy attribute. Setting values of this group will set attributes to all attributes in the group.
  
@@ -122,10 +118,10 @@
 #pragma mark Superview Insets: Forwarded
 
 /// Forwards to contained views.
-- (void)keepInsets:(UIEdgeInsets)insets priority:(KeepPriority)priority;
+- (void)keepInsets:(KPEdgeInsets)insets priority:(KeepPriority)priority;
 
 /// Forwards to contained views. Use is discouraged.
-- (void)keepInsets:(UIEdgeInsets)insets;
+- (void)keepInsets:(KPEdgeInsets)insets;
 
 
 
