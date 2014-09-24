@@ -244,7 +244,13 @@
 @property (nonatomic, readonly) KeepRelatedAttributeBlock keepHorizontalAlignTo;
 
 /// Grouped attribute for Baseline Alignment of contained views.
-@property (nonatomic, readonly) KeepRelatedAttributeBlock keepBaselineAlignTo;
+@property (nonatomic, readonly) KeepRelatedAttributeBlock keepBaselineAlignTo __deprecated_msg("You should use .keepFirstBaselineAlignTo or .keepLastBaselineAlignTo");
+
+/// Grouped attribute for First Baseline Alignment of contained views.
+@property (nonatomic, readonly) KeepRelatedAttributeBlock keepFirstBaselineAlignTo;
+
+/// Grouped attribute for Last Baseline Alignment of contained views.
+@property (nonatomic, readonly) KeepRelatedAttributeBlock keepLastBaselineAlignTo;
 
 
 #pragma mark Alignments: Batch Convenience
@@ -298,11 +304,23 @@
 /// All contained views will horizontally aligned. First view will keep Horizontal Center Alignment with second view and so on.
 - (void)keepHorizontallyAligned;
 
-/// All contained views will share the same Baseline Alignment. First view will keep Baseline Center Alignment (with offset) with second view and so on.
-- (void)keepBaselineAlignments:(KeepValue)value;
+/// All contained views will share the same Baseline Alignment. First view will keep Baseline Alignment (with offset) with second view and so on.
+- (void)keepBaselineAlignments:(KeepValue)value __deprecated_msg("You should use -keepFirstBaselineAlignments: or -keepLastBaselineAlignments:");
 
-/// All contained views will baseline aligned. First view will keep baseline Alignment with second view and so on.
-- (void)keepBaselineAligned;
+/// All contained views will be baseline aligned. First view will keep Baseline Alignment with second view and so on.
+- (void)keepBaselineAligned __deprecated_msg("You should use -keepFirstBaselineAligned or -keepLastBaselineAligned");
+
+/// All contained views will share the same First Baseline Alignment. First view will keep First Baseline Alignment (with offset) with second view and so on.
+- (void)keepFirstBaselineAlignments:(KeepValue)value;
+
+/// All contained views will be aligned to their first baseline. First view will keep First Baseline Alignment with second view and so on.
+- (void)keepFirstBaselineAligned;
+
+/// All contained views will share the same Last Baseline Alignment. First view will keep Last Baseline Alignment (with offset) with second view and so on.
+- (void)keepLastBaselineAlignments:(KeepValue)value;
+
+/// All contained views will aligned to their last baseline. First view will keep Last Baseline Alignment with second view and so on.
+- (void)keepLastBaselineAligned;
 
 
 

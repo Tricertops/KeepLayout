@@ -221,8 +221,14 @@ typedef KeepAttribute *(^KeepRelatedAttributeBlock)(KPView *otherView);
 /// Horizontal Center Alignment with other view, modifies the Y position. Views must be in the same view hierarchy. Value is offset of the receiver from the other view.
 @property (nonatomic, readonly) KeepRelatedAttributeBlock keepHorizontalAlignTo;
 
-/// Baseline Alignments with two views. Not all views have baseline. Values are inverted to Bottom-to-Top direction, so positive offset moves the receiver up.
-@property (nonatomic, readonly) KeepRelatedAttributeBlock keepBaselineAlignTo;
+/// Baseline Alignments with two views. Not all views have baselines. Values are inverted to Bottom-to-Top direction, so positive offset moves the receiver up.
+@property (nonatomic, readonly) KeepRelatedAttributeBlock keepBaselineAlignTo __deprecated_msg("You should use .keepFirstBaselineAlignTo or .keepLastBaselineAlignTo");
+
+/// First Baseline Alignments of two views. Not all views have baselines. Values are inverted to Bottom-to-Top direction, so positive offset moves the receiver up.
+@property (nonatomic, readonly) KeepRelatedAttributeBlock keepFirstBaselineAlignTo;
+
+/// Last Baseline Alignments of two views. Not all views have baselines. Values are inverted to Bottom-to-Top direction, so positive offset moves the receiver up.
+@property (nonatomic, readonly) KeepRelatedAttributeBlock keepLastBaselineAlignTo;
 
 
 

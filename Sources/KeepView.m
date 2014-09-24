@@ -528,6 +528,8 @@
                         || alignAttribute == NSLayoutAttributeTrailing
                         || alignAttribute == NSLayoutAttributeCenterX
                         || alignAttribute == NSLayoutAttributeBaseline
+                        || alignAttribute == NSLayoutAttributeFirstBaseline
+                        || alignAttribute == NSLayoutAttributeLastBaseline
                         || alignAttribute == NSLayoutAttributeCenterY);
     KeepParameterAssert(relatedView);
     KeepParameterAssert(name);
@@ -644,6 +646,20 @@
 - (KeepRelatedAttributeBlock)keepBaselineAlignTo {
     return ^KeepAttribute *(KPView *view) {
         return [self keep_alignForSelector:_cmd alignAttribute:NSLayoutAttributeBaseline relatedView:view coefficient:-1 name:@"baseline alignment"];
+    };
+}
+
+
+- (KeepRelatedAttributeBlock)keepFirstBaselineAlignTo {
+    return ^KeepAttribute *(KPView *view) {
+        return [self keep_alignForSelector:_cmd alignAttribute:NSLayoutAttributeFirstBaseline relatedView:view coefficient:-1 name:@"first baseline alignment"];
+    };
+}
+
+
+- (KeepRelatedAttributeBlock)keepLastBaselineAlignTo {
+    return ^KeepAttribute *(KPView *view) {
+        return [self keep_alignForSelector:_cmd alignAttribute:NSLayoutAttributeLastBaseline relatedView:view coefficient:-1 name:@"last baseline alignment"];
     };
 }
 

@@ -440,6 +440,20 @@
 }
 
 
+- (KeepRelatedAttributeBlock)keepFirstBaselineAlignTo {
+    return ^KeepAttribute *(KPView *view) {
+        return [self keep_groupAttributeForSelector:_cmd relatedView:view];
+    };
+}
+
+
+- (KeepRelatedAttributeBlock)keepLastBaselineAlignTo {
+    return ^KeepAttribute *(KPView *view) {
+        return [self keep_groupAttributeForSelector:_cmd relatedView:view];
+    };
+}
+
+
 - (void)keep_alignedSelector:(SEL)selector invokeSelector:(SEL)invokeSelector value:(KeepValue)value {
     [self keep_invoke:selector eachTwo:^(KPView *this, KPView *next) {
         KeepAttribute *(^block)(KPView *) = [this valueForKey:NSStringFromSelector(invokeSelector)];
@@ -494,6 +508,16 @@
 }
 
 
+- (void)keepFirstBaselineAlignments:(KeepValue)value {
+    [self keep_alignedSelector:_cmd invokeSelector:@selector(keepFirstBaselineAlignTo) value:value];
+}
+
+
+- (void)keepLastBaselineAlignments:(KeepValue)value {
+    [self keep_alignedSelector:_cmd invokeSelector:@selector(keepLastBaselineAlignTo) value:value];
+}
+
+
 - (void)keepLeftAligned {
     [self keep_alignedSelector:_cmd invokeSelector:@selector(keepLeftAlignTo) value:KeepRequired(0)];
 }
@@ -536,6 +560,16 @@
 
 - (void)keepBaselineAligned {
     [self keep_alignedSelector:_cmd invokeSelector:@selector(keepBaselineAlignTo) value:KeepRequired(0)];
+}
+
+
+- (void)keepFirstBaselineAligned {
+    [self keep_alignedSelector:_cmd invokeSelector:@selector(keepFirstBaselineAlignTo) value:KeepRequired(0)];
+}
+
+
+- (void)keepLastBaselineAligned {
+    [self keep_alignedSelector:_cmd invokeSelector:@selector(keepLastBaselineAlignTo) value:KeepRequired(0)];
 }
 
 
