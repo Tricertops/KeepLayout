@@ -187,6 +187,16 @@
 }
 
 
+- (KeepAttribute *)keepLeadingInset {
+    return [self keep_groupAttributeForSelector:_cmd];
+}
+
+
+- (KeepAttribute *)keepTrailingInset {
+    return [self keep_groupAttributeForSelector:_cmd];
+}
+
+
 - (KeepAttribute *)keepTopInset {
     return [self keep_groupAttributeForSelector:_cmd];
 }

@@ -98,6 +98,12 @@
 /// Grouped attribute for Right Inset of contained views.
 @property (nonatomic, readonly) KeepAttribute *keepRightInset;
 
+/// Grouped attribute for Leading Inset of contained views.
+@property (nonatomic, readonly) KeepAttribute *keepLeadingInset;
+
+/// Grouped attribute for Trailing Inset of contained views.
+@property (nonatomic, readonly) KeepAttribute *keepTrailingInset;
+
 /// Grouped attribute for Top Inset of contained views.
 @property (nonatomic, readonly) KeepAttribute *keepTopInset;
 

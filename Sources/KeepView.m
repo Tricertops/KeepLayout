@@ -264,6 +264,8 @@
     [self keep_clearAttribute:@selector(keepLeftInset)];
     [self keep_clearAttribute:@selector(keepRightInset)];
     [self keep_clearAttribute:@selector(keepBottomInset)];
+    [self keep_clearAttribute:@selector(keepLeadingInset)];
+    [self keep_clearAttribute:@selector(keepTrailingInset)];
 }
 
 
@@ -274,6 +276,16 @@
 
 - (KeepAttribute *)keepRightInset {
     return [self keep_insetForSelector:_cmd edgeAttribute:NSLayoutAttributeRight coefficient:-1 name:@"right inset"];
+}
+
+
+- (KeepAttribute *)keepLeadingInset {
+    return [self keep_insetForSelector:_cmd edgeAttribute:NSLayoutAttributeLeading coefficient:1 name:@"leading inset"];
+}
+
+
+- (KeepAttribute *)keepTrailingInset {
+    return [self keep_insetForSelector:_cmd edgeAttribute:NSLayoutAttributeTrailing coefficient:-1 name:@"trailing inset"];
 }
 
 

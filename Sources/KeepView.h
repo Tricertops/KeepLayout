@@ -85,6 +85,12 @@ typedef KeepAttribute *(^KeepRelatedAttributeBlock)(KPView *otherView);
 /// Right Inset of the receiver in its current superview. Values are inverted to Right-to-Left direction.
 @property (nonatomic, readonly) KeepAttribute *keepRightInset;
 
+/// Leading Inset of the receiver in its current superview. Depends on writing direction.
+@property (nonatomic, readonly) KeepAttribute *keepLeadingInset;
+
+/// Trailing Inset of the receiver in its current superview. Values are inverted to Right-to-Left direction. Depends on writing direction.
+@property (nonatomic, readonly) KeepAttribute *keepTrailingInset;
+
 /// Top Inset of the receiver in its current superview.
 @property (nonatomic, readonly) KeepAttribute *keepTopInset;
 
