@@ -391,6 +391,20 @@
 }
 
 
+- (KeepRelatedAttributeBlock)keepLeadingAlignTo {
+    return ^KeepAttribute *(KPView *view) {
+        return [self keep_groupAttributeForSelector:_cmd relatedView:view];
+    };
+}
+
+
+- (KeepRelatedAttributeBlock)keepTrailingAlignTo {
+    return ^KeepAttribute *(KPView *view) {
+        return [self keep_groupAttributeForSelector:_cmd relatedView:view];
+    };
+}
+
+
 - (KeepRelatedAttributeBlock)keepTopAlignTo {
     return ^KeepAttribute *(KPView *view) {
         return [self keep_groupAttributeForSelector:_cmd relatedView:view];
@@ -445,6 +459,16 @@
 }
 
 
+- (void)keepLeadingAlignments:(KeepValue)value {
+    [self keep_alignedSelector:_cmd invokeSelector:@selector(keepLeadingAlignTo) value:value];
+}
+
+
+- (void)keepTrailingAlignments:(KeepValue)value {
+    [self keep_alignedSelector:_cmd invokeSelector:@selector(keepTrailingAlignTo) value:value];
+}
+
+
 - (void)keepTopAlignments:(KeepValue)value {
     [self keep_alignedSelector:_cmd invokeSelector:@selector(keepTopAlignTo) value:value];
 }
@@ -477,6 +501,16 @@
 
 - (void)keepRightAligned {
     [self keep_alignedSelector:_cmd invokeSelector:@selector(keepRightAlignTo) value:KeepRequired(0)];
+}
+
+
+- (void)keepLeadingAligned {
+    [self keep_alignedSelector:_cmd invokeSelector:@selector(keepLeadingAlignTo) value:KeepRequired(0)];
+}
+
+
+- (void)keepTrailingAligned {
+    [self keep_alignedSelector:_cmd invokeSelector:@selector(keepTrailingAlignTo) value:KeepRequired(0)];
 }
 
 

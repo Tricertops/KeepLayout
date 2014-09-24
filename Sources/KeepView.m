@@ -565,6 +565,20 @@
 }
 
 
+- (KeepRelatedAttributeBlock)keepLeadingAlignTo {
+    return ^KeepAttribute *(KPView *view) {
+        return [self keep_alignForSelector:_cmd alignAttribute:NSLayoutAttributeLeading relatedView:view coefficient:1 name:@"leading alignment"];
+    };
+}
+
+
+- (KeepRelatedAttributeBlock)keepTrailingAlignTo {
+    return ^KeepAttribute *(KPView *view) {
+        return [self keep_alignForSelector:_cmd alignAttribute:NSLayoutAttributeTrailing relatedView:view coefficient:-1 name:@"trailing alignment"];
+    };
+}
+
+
 - (KeepRelatedAttributeBlock)keepTopAlignTo {
     return ^KeepAttribute *(KPView *view) {
         return [self keep_alignForSelector:_cmd alignAttribute:NSLayoutAttributeTop relatedView:view coefficient:1 name:@"top alignment"];

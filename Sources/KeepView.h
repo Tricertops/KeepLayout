@@ -203,6 +203,12 @@ typedef KeepAttribute *(^KeepRelatedAttributeBlock)(KPView *otherView);
 /// Right Alignment with other view. Views must be in the same view hierarchy. Value is offset of the receiver from the other view. Values are inverted to Right-to-Left direction.
 @property (nonatomic, readonly) KeepRelatedAttributeBlock keepRightAlignTo;
 
+/// Leading Alignment with other view. Views must be in the same view hierarchy. Value is offset of the receiver from the other view. Depends on writing direction.
+@property (nonatomic, readonly) KeepRelatedAttributeBlock keepLeadingAlignTo;
+
+/// Trailing Alignment with other view. Views must be in the same view hierarchy. Value is offset of the receiver from the other view. Values are inverted to Right-to-Left direction. Depends on writing direction.
+@property (nonatomic, readonly) KeepRelatedAttributeBlock keepTrailingAlignTo;
+
 /// Top Alignment with other view. Views must be in the same view hierarchy. Value is offset of the receiver from the other view.
 @property (nonatomic, readonly) KeepRelatedAttributeBlock keepTopAlignTo;
 

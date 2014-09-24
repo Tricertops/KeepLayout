@@ -225,6 +225,12 @@
 /// Grouped attribute for Right Alignment of contained views.
 @property (nonatomic, readonly) KeepRelatedAttributeBlock keepRightAlignTo;
 
+/// Grouped attribute for Leading Alignment of contained views.
+@property (nonatomic, readonly) KeepRelatedAttributeBlock keepLeadingAlignTo;
+
+/// Grouped attribute for Trailing Alignment of contained views.
+@property (nonatomic, readonly) KeepRelatedAttributeBlock keepTrailingAlignTo;
+
 /// Grouped attribute for Top Alignment of contained views.
 @property (nonatomic, readonly) KeepRelatedAttributeBlock keepTopAlignTo;
 
@@ -255,6 +261,18 @@
 
 /// All contained views will be aligned to the right. First view will keep Right Alignment with second view and so on.
 - (void)keepRightAligned;
+
+/// All contained views will share the same Leading Alignment. First view will keep Leading Alignment (with offset) with second view and so on.
+- (void)keepLeadingAlignments:(KeepValue)value;
+
+/// All contained views will be aligned to the leading side. First view will keep Leading Alignment with second view and so on.
+- (void)keepLeadingAligned;
+
+/// All contained views will share the same Trailing Alignment. First view will keep Trailing Alignment (with offset) with second view and so on.
+- (void)keepTrailingAlignments:(KeepValue)value;
+
+/// All contained views will be aligned to the trailing side. First view will keep Trailing Alignment with second view and so on.
+- (void)keepTrailingAligned;
 
 /// All contained views will share the same Top Alignment. First view will keep Top Alignment (with offset) with second view and so on.
 - (void)keepTopAlignments:(KeepValue)value;
