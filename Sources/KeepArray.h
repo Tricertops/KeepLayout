@@ -186,6 +186,12 @@
 /// Grouped attribute for Right Offset of contained views.
 @property (nonatomic, readonly) KeepRelatedAttributeBlock keepRightOffsetTo;
 
+/// Grouped attribute for Leading Offset of contained views.
+@property (nonatomic, readonly) KeepRelatedAttributeBlock keepLeadingOffsetTo;
+
+/// Grouped attribute for Trailing Offset of contained views.
+@property (nonatomic, readonly) KeepRelatedAttributeBlock keepTrailingOffsetTo;
+
 /// Grouped attribute for Top Offset of contained views.
 @property (nonatomic, readonly) KeepRelatedAttributeBlock keepTopOffsetTo;
 

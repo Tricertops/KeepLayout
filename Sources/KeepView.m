@@ -454,6 +454,8 @@
                                         @(NSLayoutAttributeRight): @(NSLayoutAttributeLeft),
                                         @(NSLayoutAttributeTop): @(NSLayoutAttributeBottom),
                                         @(NSLayoutAttributeBottom): @(NSLayoutAttributeTop),
+                                        @(NSLayoutAttributeLeading): @(NSLayoutAttributeTrailing),
+                                        @(NSLayoutAttributeTrailing): @(NSLayoutAttributeLeading),
                                         };
         KeepAttribute *attribute =  [[[KeepConstantAttribute alloc] initWithView:self
                                                                  layoutAttribute:edgeAttribute
@@ -478,6 +480,20 @@
 - (KeepRelatedAttributeBlock)keepRightOffsetTo {
     return ^KeepAttribute *(KPView *view) {
         return view.keepLeftOffsetTo(self);
+    };
+}
+
+
+- (KeepRelatedAttributeBlock)keepLeadingOffsetTo {
+    return ^KeepAttribute *(KPView *view) {
+        return [self keep_offsetForSelector:_cmd edgeAttribute:NSLayoutAttributeLeading relatedView:view name:@"leading offset"];
+    };
+}
+
+
+- (KeepRelatedAttributeBlock)keepTrailingOffsetTo {
+    return ^KeepAttribute *(KPView *view) {
+        return view.keepLeadingOffsetTo(self);
     };
 }
 

@@ -322,6 +322,20 @@
 }
 
 
+- (KeepRelatedAttributeBlock)keepLeadingOffsetTo {
+    return ^KeepAttribute *(KPView *view) {
+        return [self keep_groupAttributeForSelector:_cmd relatedView:view];
+    };
+}
+
+
+- (KeepRelatedAttributeBlock)keepTrailingOffsetTo {
+    return ^KeepAttribute *(KPView *view) {
+        return [self keep_groupAttributeForSelector:_cmd relatedView:view];
+    };
+}
+
+
 - (KeepRelatedAttributeBlock)keepTopOffsetTo {
     return ^KeepAttribute *(KPView *view) {
         return [self keep_groupAttributeForSelector:_cmd relatedView:view];

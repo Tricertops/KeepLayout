@@ -177,6 +177,12 @@ typedef KeepAttribute *(^KeepRelatedAttributeBlock)(KPView *otherView);
 /// Right Offset to other view. Views must be in the same view hierarchy. Identical to Left Offset in reversed direction.
 @property (nonatomic, readonly) KeepRelatedAttributeBlock keepRightOffsetTo;
 
+/// Leading Offset to other view. Views must be in the same view hierarchy. Depends on writing direction.
+@property (nonatomic, readonly) KeepRelatedAttributeBlock keepLeadingOffsetTo;
+
+/// Trailing Offset to other view. Views must be in the same view hierarchy. Identical to Leading Offset in reversed direction. Depends on writing direction.
+@property (nonatomic, readonly) KeepRelatedAttributeBlock keepTrailingOffsetTo;
+
 /// Top Offset to other view. Views must be in the same view hierarchy.
 @property (nonatomic, readonly) KeepRelatedAttributeBlock keepTopOffsetTo;
 
