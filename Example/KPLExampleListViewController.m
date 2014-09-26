@@ -394,6 +394,49 @@
                                 
                                 // Total: 334 constraints in this example
                             }]];
+    [complexExamples addObject:
+     [[KPLExample alloc] initWithTitle:@"Aspect Fit"
+                              subtitle:@"Multiple Aspect Ratios"
+                            setupBlock:^KPLExampleStateBlock(UIViewController *controller) {
+                                UIView *container = controller.view;
+                                
+                                UIView *topHalf = createView(UIColor.clearColor, container);
+                                UIView *topBar = createView(self.view.tintColor, container);
+                                [topHalf addSubview:topBar];
+                                
+                                UIView *bottomHalf = createView(UIColor.clearColor, container);
+                                UIView *bottomBar = createView(self.view.tintColor, container);
+                                [bottomHalf addSubview:bottomBar];
+                                
+                                //! Keep halves edge-to-edge
+                                topHalf.keepTopInset.required = 0;
+                                topHalf.keepHorizontalInsets.required = 0;
+                                bottomHalf.keepHorizontalInsets.required = 0;
+                                bottomHalf.keepBottomInset.required = 0;
+                                //! Keep halves equaly high and touching
+                                topHalf.keepBottomOffsetTo(bottomHalf).required = 0;
+                                topHalf.keepHeightTo(bottomHalf).required = 1;
+                                
+                                //! Keep to bar horizontaly 1:4, centered
+                                topBar.keepAspectRatio.required = 0.25;
+                                [topBar keepCentered];
+                                //! Keep size as much close to fill, but aspect ratio has higher priority
+                                topBar.keepSizeTo(topHalf).equal = KeepHigh(1);
+                                topBar.keepInsets.min = KeepRequired(0);
+                                
+                                //! Keep to bar horizontaly 4:1, centered
+                                bottomBar.keepAspectRatio.required = 4;
+                                [bottomBar keepCentered];
+                                //! Keep size as much close to fill, but aspect ratio has higher priority
+                                bottomBar.keepSizeTo(bottomHalf).equal = KeepHigh(1);
+                                bottomBar.keepInsets.min = KeepRequired(0);
+                                
+                                //! On action, invert the aspect ratios
+                                return ^(NSUInteger state) {
+                                    topBar.keepAspectRatio.required = (state%2? 2 : 0.25);
+                                    bottomBar.keepAspectRatio.required = (state%2? 0.5 : 4);
+                                };
+                            }]];
     
     self.examples = @[ simpleExamples, complexExamples ];
 }
