@@ -83,7 +83,7 @@ Keep width of the view to be equal to 150:
 view.keepWidth.equal = 150;
 ```
 
-Keep top inset to superview of the view to be at least 10, no excuses:
+Keep top inset to superview of the view to be at least 10:
 
 ```objc
 view.keepTopInset.min = 10;
@@ -118,12 +118,13 @@ KeepAttribute *leftInsets = [KeepAttribute group:
 leftInsets.equal = KeepRequired(10);
 ```
 
-However there are already some accessors to few of them:
+However there are already some accessors to some of them:
 
 ```objc
 view.keepSize    // group of both Width and Height
 view.keepInsets  // group of all four insets
 view.keepCenter  // group of both axis of position
+view.keepEdgeAlignTo  // group of alignments to all four edges
 ```
 
 See [`KeepView.h`][2] or [`KeepAttribute.h`][4] for more .
@@ -137,8 +138,8 @@ _Removable Groups_ is a way to remove multiple attributes (or their values) at o
 ```objc
 // Create removable group
 removableLayout = [KeepAttribute removableChanges:^{
-    self.view.keepWidth.min = KeepHigh(320); // Set minimum width limit.
-    self.view.keepVerticalInsets.equal = KeepRequired(0); // Vertically stretch to fit.
+    self.view.keepWidth.min = 320 +keepHigh; // Set minimum width limit.
+    self.view.keepVerticalInsets.equal = 0; // Vertically stretch to fit.
 }];
 // Group now contains all attributes that were changed in the block.
 
@@ -170,7 +171,7 @@ See [`KeepView.h`][2] for more.
 
 
 
-## Array Attributes – What?
+## Array Attributes – _What?_
 
 Most of the methods added to `UIView`/`NSView` class can also be called on any **array on views**. Such call creates grouped attribute of all contained view attributes:
 
@@ -189,6 +190,8 @@ NSArray *views = @[ viewOne, viewTwo, viewThree ];
 [views keepHorizontalOffsets:20];
 [views keepTopAligned];
 ```
+
+You just created 6 new layout constraints, did you notice?
 
 See [`NSArray+KeepLayout.h`][5] for more.
 
@@ -218,7 +221,7 @@ See [`KeepView.h`][2] for more.
 
 ## Layout Guides
 
-KeepLayout adds lazy-loaded invisible `.keepLayoutView` to every `UIViewController` in a category. This view is aligned with Top and Bottom Layout Guide of the view controller, which means its size represents visible portion of the view controller. You can use this Layout View to align your views with translucent bars (navigation bar, toolbar, status bar or tab bar).
+KeepLayout adds lazy-loaded invisible `.keepLayoutView` to every `UIViewController` in a category. This view is aligned with Top & Bottom Layout Guide and Left & Right Margins of the view controller, which means its size represents visible portion of the view controller. You can use this Layout View to align your views with translucent bars (navigation bar, toolbar, status bar or tab bar).
 
 ```objc
 imageView.keepEdgeAlignTo(controller.keepLayoutView).equal = 0;
