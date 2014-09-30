@@ -68,15 +68,15 @@ extern NSString *KeepPriorityDescription(KeepPriority);
 
 
 #pragma mark Value
-/// Represents a value with associated priority. Used as values for attributes and underlaying constraints.
-typedef struct {
-    CGFloat value;
-    KeepPriority priority;
-} KeepValue;
+/// Represents a value with associated priority (imaginary part). Used as values for attributes and underlaying constraints. Complex type is used to provide compatibility with scalars.
+typedef _Complex double KeepValue;
+
+/// Extracts priority (imaginary part). The value itself can be obtained by casting to double.
+extern double KeepValueGetPriority(KeepValue);
 
 /// Value, that represents no value. KeepValueIsNone will return YES.
 extern const KeepValue KeepNone;
-/// Returns YES for any value that has real value of CGFLOAT_MIN or priority 0.
+/// Returns YES for any value that has real value of NAN.
 extern BOOL KeepValueIsNone(KeepValue);
 
 /// Constructor with arbitrary priority

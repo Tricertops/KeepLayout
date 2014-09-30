@@ -65,7 +65,7 @@
 
 - (CGFloat)required {
     KeepValue equal = self.equal;
-    return (equal.priority == KeepPriorityRequired? equal.value : NAN);
+    return (KeepValueGetPriority(equal) == KeepPriorityRequired? equal : NAN);
 }
 
 
@@ -357,7 +357,7 @@
                                     @(NSLayoutRelationGreaterThanOrEqual) : @"at least",
                                     @(NSLayoutRelationLessThanOrEqual) : @"at most",
                                     };
-    [constraint name:@"%@ %@ %@ with %@ priority", self.name, [relationNames objectForKey:@(relation)], @(value.value), KeepPriorityDescription(value.priority)];
+    [constraint name:@"%@ %@ %@ with %@ priority", self.name, [relationNames objectForKey:@(relation)], @((double)value), KeepPriorityDescription(KeepValueGetPriority(value))];
 #endif
 }
 
@@ -396,16 +396,16 @@
     KeepLayoutConstraint *constraint = [KeepLayoutConstraint constraintWithItem:self.view attribute:self.layoutAttribute
                                                                     relatedBy:relation
                                                                        toItem:self.relatedView attribute:self.relatedLayoutAttribute
-                                                                   multiplier:1 constant:value.value * self.coefficient];
-    constraint.priority = value.priority;
+                                                                   multiplier:1 constant:value * self.coefficient];
+    constraint.priority = KeepValueGetPriority(value);
     return constraint;
 }
 
 
 - (void)applyValue:(KeepValue)value forConstraint:(KeepLayoutConstraint *)constraint relation:(NSLayoutRelation)relation {
-    constraint.constant = value.value * self.coefficient;
-    if (constraint.priority != value.priority) {
-        constraint.priority = value.priority;
+    constraint.constant = value * self.coefficient;
+    if (constraint.priority != KeepValueGetPriority(value)) {
+        constraint.priority = KeepValueGetPriority(value);
     }
 }
 
@@ -441,8 +441,8 @@
     KeepLayoutConstraint *constraint = [KeepLayoutConstraint constraintWithItem:self.view attribute:self.layoutAttribute
                                                                     relatedBy:relation
                                                                        toItem:self.relatedView attribute:self.relatedLayoutAttribute
-                                                                   multiplier:value.value * self.coefficient constant:0];
-    constraint.priority = value.priority;
+                                                                   multiplier:value * self.coefficient constant:0];
+    constraint.priority = KeepValueGetPriority(value);
     return constraint;
 }
 
