@@ -134,6 +134,50 @@
 
 
 #pragma mark -
+#pragma mark Superview Margin Insets: Grouped
+
+/// Grouped attribute for Left Margin Inset of contained views.
+@property (nonatomic, readonly) KeepAttribute *keepLeftMarginInset;
+
+/// Grouped attribute for Right Margin Inset of contained views.
+@property (nonatomic, readonly) KeepAttribute *keepRightMarginInset;
+
+/// Grouped attribute for Leading Margin Inset of contained views.
+@property (nonatomic, readonly) KeepAttribute *keepLeadingMarginInset;
+
+/// Grouped attribute for Trailing Margin Inset of contained views.
+@property (nonatomic, readonly) KeepAttribute *keepTrailingMarginInset;
+
+/// Grouped attribute for Top Margin Inset of contained views.
+@property (nonatomic, readonly) KeepAttribute *keepTopMarginInset;
+
+/// Grouped attribute for Bottom Margin Inset of contained views.
+@property (nonatomic, readonly) KeepAttribute *keepBottomMarginInset;
+
+/// Grouped attribute for All Margin Insets of contained views.
+@property (nonatomic, readonly) KeepAttribute *keepMarginInsets;
+
+/// Grouped attribute for Horizontal Margin Insets of contained views.
+@property (nonatomic, readonly) KeepAttribute *keepHorizontalMarginInsets;
+
+/// Grouped attribute for Vertical Margin Insets of contained views.
+@property (nonatomic, readonly) KeepAttribute *keepVerticalMarginInsets;
+
+
+
+#pragma mark Superview Margin Insets: Forwarded
+
+/// Forwards to contained views.
+- (void)keepMarginInsets:(KPEdgeInsets)insets priority:(KeepPriority)priority;
+
+/// Forwards to contained views. Use is discouraged.
+- (void)keepMarginInsets:(KPEdgeInsets)insets;
+
+
+
+
+
+#pragma mark -
 #pragma mark Center: Grouped
 
 /// Grouped attribute for Horizontal Center of contained views.

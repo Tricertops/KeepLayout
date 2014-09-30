@@ -241,15 +241,33 @@
                         || edgeAttribute == NSLayoutAttributeTop
                         || edgeAttribute == NSLayoutAttributeBottom
                         || edgeAttribute == NSLayoutAttributeLeading
-                        || edgeAttribute == NSLayoutAttributeTrailing);
+                        || edgeAttribute == NSLayoutAttributeTrailing
+                        || edgeAttribute == NSLayoutAttributeLeftMargin
+                        || edgeAttribute == NSLayoutAttributeRightMargin
+                        || edgeAttribute == NSLayoutAttributeTopMargin
+                        || edgeAttribute == NSLayoutAttributeBottomMargin
+                        || edgeAttribute == NSLayoutAttributeLeadingMargin
+                        || edgeAttribute == NSLayoutAttributeTrailingMargin
+                        );
     KeepParameterAssert(name);
     KeepAssert(self.superview, @"Calling %@ allowed only when superview exists", NSStringFromSelector(selector));
     
     return [self keep_attributeForSelector:selector creationBlock:^KeepAttribute *{
+        NSDictionary *nonMarginAttributes = @{
+                                              @(NSLayoutAttributeLeftMargin): @(NSLayoutAttributeLeft),
+                                              @(NSLayoutAttributeRightMargin): @(NSLayoutAttributeRight),
+                                              @(NSLayoutAttributeTopMargin): @(NSLayoutAttributeTop),
+                                              @(NSLayoutAttributeBottomMargin): @(NSLayoutAttributeBottom),
+                                              @(NSLayoutAttributeLeadingMargin): @(NSLayoutAttributeLeading),
+                                              @(NSLayoutAttributeTrailingMargin): @(NSLayoutAttributeTrailing),
+                                              };
+        NSLayoutAttribute superviewEdgeAttribute = edgeAttribute;
+        NSLayoutAttribute selfEdgeAttribute = [[nonMarginAttributes objectForKey:@(edgeAttribute)] integerValue] ?: edgeAttribute;
+        
         KeepAttribute *attribute = [[[KeepConstantAttribute alloc] initWithView:self
-                                                                layoutAttribute:edgeAttribute
+                                                                layoutAttribute:selfEdgeAttribute
                                                                     relatedView:self.superview
-                                                         relatedLayoutAttribute:edgeAttribute
+                                                         relatedLayoutAttribute:superviewEdgeAttribute
                                                                     coefficient:coefficient]
                                     name:@"%@ of <%@ %p> to superview <%@ %p>", name, self.class, self, self.superview.class, self.superview];
         self.translatesAutoresizingMaskIntoConstraints = NO;
@@ -260,12 +278,20 @@
 
 - (void)keep_clearSuperviewInsets {
     // Clears all superview insets ever created. Works after removing from superview.
+    
     [self keep_clearAttribute:@selector(keepTopInset)];
     [self keep_clearAttribute:@selector(keepLeftInset)];
     [self keep_clearAttribute:@selector(keepRightInset)];
     [self keep_clearAttribute:@selector(keepBottomInset)];
     [self keep_clearAttribute:@selector(keepLeadingInset)];
     [self keep_clearAttribute:@selector(keepTrailingInset)];
+    
+    [self keep_clearAttribute:@selector(keepTopMarginInset)];
+    [self keep_clearAttribute:@selector(keepLeftMarginInset)];
+    [self keep_clearAttribute:@selector(keepRightMarginInset)];
+    [self keep_clearAttribute:@selector(keepBottomMarginInset)];
+    [self keep_clearAttribute:@selector(keepLeadingMarginInset)];
+    [self keep_clearAttribute:@selector(keepTrailingMarginInset)];
 }
 
 
@@ -336,6 +362,82 @@
     self.keepTopInset.equal = KeepValueMake(insets.top, priority);
     self.keepBottomInset.equal = KeepValueMake(insets.bottom, priority);
 }
+
+
+
+
+
+#pragma mark Superview Margin Insets
+
+
+- (KeepAttribute *)keepLeftMarginInset {
+    return [self keep_insetForSelector:_cmd edgeAttribute:NSLayoutAttributeLeftMargin coefficient:1 name:@"left margin inset"];
+}
+
+
+- (KeepAttribute *)keepRightMarginInset {
+    return [self keep_insetForSelector:_cmd edgeAttribute:NSLayoutAttributeRightMargin coefficient:-1 name:@"right margin inset"];
+}
+
+
+- (KeepAttribute *)keepLeadingMarginInset {
+    return [self keep_insetForSelector:_cmd edgeAttribute:NSLayoutAttributeLeadingMargin coefficient:1 name:@"leading margin inset"];
+}
+
+
+- (KeepAttribute *)keepTrailingMarginInset {
+    return [self keep_insetForSelector:_cmd edgeAttribute:NSLayoutAttributeTrailingMargin coefficient:-1 name:@"trailing margin inset"];
+}
+
+
+- (KeepAttribute *)keepTopMarginInset {
+    return [self keep_insetForSelector:_cmd edgeAttribute:NSLayoutAttributeTopMargin coefficient:1 name:@"top margin inset"];
+}
+
+
+- (KeepAttribute *)keepBottomMarginInset {
+    return [self keep_insetForSelector:_cmd edgeAttribute:NSLayoutAttributeBottomMargin coefficient:-1 name:@"bottom margin inset"];
+}
+
+
+- (KeepAttribute *)keepMarginInsets {
+    return [[[KeepGroupAttribute alloc] initWithAttributes:@[
+                                                             self.keepTopMarginInset,
+                                                             self.keepBottomMarginInset,
+                                                             self.keepLeftMarginInset,
+                                                             self.keepRightMarginInset ]]
+            name:@"all margin insets of <%@ %p> to superview <%@ %p>", self.class, self, self.superview.class, self.superview];
+}
+
+
+- (KeepAttribute *)keepHorizontalMarginInsets {
+    return [[[KeepGroupAttribute alloc] initWithAttributes:@[
+                                                             self.keepLeftMarginInset,
+                                                             self.keepRightMarginInset ]]
+            name:@"horizontal margin insets of <%@ %p> to superview <%@ %p>", self.class, self, self.superview.class, self.superview];
+}
+
+
+- (KeepAttribute *)keepVerticalMarginInsets {
+    return [[[KeepGroupAttribute alloc] initWithAttributes:@[
+                                                             self.keepTopMarginInset,
+                                                             self.keepBottomMarginInset ]]
+            name:@"vertical margin insets of <%@ %p> to superview <%@ %p>", self.class, self, self.superview.class, self.superview];
+}
+
+
+- (void)keepMarginInsets:(KPEdgeInsets)insets {
+    [self keepMarginInsets:insets priority:KeepPriorityRequired];
+}
+
+
+- (void)keepMarginInsets:(KPEdgeInsets)insets priority:(KeepPriority)priority {
+    self.keepLeftMarginInset.equal = KeepValueMake(insets.left, priority);
+    self.keepRightMarginInset.equal = KeepValueMake(insets.right, priority);
+    self.keepTopMarginInset.equal = KeepValueMake(insets.top, priority);
+    self.keepBottomMarginInset.equal = KeepValueMake(insets.bottom, priority);
+}
+
 
 
 

@@ -237,6 +237,69 @@
 
 
 
+#pragma mark Superview Margin Insets
+
+
+- (KeepAttribute *)keepLeftMarginInset {
+    return [self keep_groupAttributeForSelector:_cmd];
+}
+
+
+- (KeepAttribute *)keepRightMarginInset {
+    return [self keep_groupAttributeForSelector:_cmd];
+}
+
+
+- (KeepAttribute *)keepLeadingMarginInset {
+    return [self keep_groupAttributeForSelector:_cmd];
+}
+
+
+- (KeepAttribute *)keepTrailingMarginInset {
+    return [self keep_groupAttributeForSelector:_cmd];
+}
+
+
+- (KeepAttribute *)keepTopMarginInset {
+    return [self keep_groupAttributeForSelector:_cmd];
+}
+
+
+- (KeepAttribute *)keepBottomMarginInset {
+    return [self keep_groupAttributeForSelector:_cmd];
+}
+
+
+- (KeepAttribute *)keepMarginInsets {
+    return [self keep_groupAttributeForSelector:_cmd];
+}
+
+
+- (KeepAttribute *)keepHorizontalMarginInsets {
+    return [self keep_groupAttributeForSelector:_cmd];
+}
+
+
+- (KeepAttribute *)keepVerticalMarginInsets {
+    return [self keep_groupAttributeForSelector:_cmd];
+}
+
+
+- (void)keepMarginInsets:(KPEdgeInsets)insets priority:(KeepPriority)priority {
+    [self keep_invoke:_cmd each:^(KPView *view) {
+        [view keepMarginInsets:insets priority:priority];
+    }];
+}
+
+
+- (void)keepMarginInsets:(KPEdgeInsets)insets {
+    [self keepMarginInsets:insets priority:KeepPriorityRequired];
+}
+
+
+
+
+
 #pragma mark Center
 
 - (KeepAttribute *)keepHorizontalCenter {

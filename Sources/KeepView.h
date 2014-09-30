@@ -77,7 +77,7 @@ typedef KeepAttribute *(^KeepRelatedAttributeBlock)(KPView *otherView);
 
 #pragma mark -
 #pragma mark Superview Insets: Core
-/// Attributes representing internal inset (margin or padding) of the receive to its current superview.
+/// Attributes representing internal inset of the receiver to its current superview.
 
 /// Left Inset of the receiver in its current superview.
 @property (nonatomic, readonly) KeepAttribute *keepLeftInset;
@@ -116,6 +116,52 @@ typedef KeepAttribute *(^KeepRelatedAttributeBlock)(KPView *otherView);
 
 /// Sets custom Insets using Required priority. Use is discouraged.
 - (void)keepInsets:(KPEdgeInsets)insets;
+
+
+
+
+
+#pragma mark -
+#pragma mark Superview Margin Insets: Core
+/// Attributes representing internal inset of the receive to its current superview, taking into account its margin insets.
+
+/// Left Margin Inset of the receiver in its current superview.
+@property (nonatomic, readonly) KeepAttribute *keepLeftMarginInset;
+
+/// Right Margin Inset of the receiver in its current superview. Values are inverted to Right-to-Left direction.
+@property (nonatomic, readonly) KeepAttribute *keepRightMarginInset;
+
+/// Leading Margin Inset of the receiver in its current superview. Depends on writing direction.
+@property (nonatomic, readonly) KeepAttribute *keepLeadingMarginInset;
+
+/// Trailing Margin Inset of the receiver in its current superview. Values are inverted to Right-to-Left direction. Depends on writing direction.
+@property (nonatomic, readonly) KeepAttribute *keepTrailingMarginInset;
+
+/// Top Margin Inset of the receiver in its current superview.
+@property (nonatomic, readonly) KeepAttribute *keepTopMarginInset;
+
+/// Bottom Margin Inset of the receiver in its current superview. Values are inverted to Bottom-to-Top direction.
+@property (nonatomic, readonly) KeepAttribute *keepBottomMarginInset;
+
+
+
+#pragma mark Superview Margin Insets: Convenience
+/// Convenience methods for setting all margin insets at once.
+
+/// Grouped proxy attribute for Top, Bottom, Left and Right Margin Inset.
+@property (nonatomic, readonly) KeepAttribute *keepMarginInsets;
+
+/// Grouped proxy attribute for Left and Right Margin Inset.
+@property (nonatomic, readonly) KeepAttribute *keepHorizontalMarginInsets;
+
+/// Grouped proxy attribute for Top and Bottom Margin Inset.
+@property (nonatomic, readonly) KeepAttribute *keepVerticalMarginInsets;
+
+/// Sets custom Margin Insets using given priority.
+- (void)keepMarginInsets:(KPEdgeInsets)insets priority:(KeepPriority)priority;
+
+/// Sets custom Margin Insets using Required priority. Use is discouraged.
+- (void)keepMarginInsets:(KPEdgeInsets)insets;
 
 
 
