@@ -59,6 +59,19 @@ double KeepValueGetPriority(KeepValue value) {
 }
 
 
+KeepValue KeepValueSetDefaultPriority(KeepValue value, KeepPriority priority) {
+    if (KeepValueGetPriority(value) <= 0) {
+        return KeepValueMake(value, priority);
+    }
+    else {
+        return value;
+    }
+}
+
+
+
+
+
 const KeepValue KeepNone = { NAN, 0 };
 
 

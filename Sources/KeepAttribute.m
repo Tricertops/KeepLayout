@@ -277,19 +277,8 @@
 #pragma mark Values
 
 
-- (KeepValue)valueFromNew:(KeepValue)newValue previous:(KeepValue)previousValue {
-    if ( ! KeepValueIsNone(newValue) && KeepValueGetPriority(newValue) == 0) {
-        // Zero priority specified, use required.
-        return KeepValueMake(newValue, KeepPriorityRequired);
-    }
-    else {
-        return newValue; // Non-zero priority specified.
-    }
-}
-
-
 - (void)setEqual:(KeepValue)equal {
-    equal = [self valueFromNew:equal previous:self.equal];
+    equal = KeepValueSetDefaultPriority(equal, KeepPriorityRequired);
     [super setEqual:equal];
     
     if (KeepValueIsNone(equal)) {
@@ -314,7 +303,7 @@
 
 
 - (void)setMax:(KeepValue)max {
-    max = [self valueFromNew:max previous:self.max];
+    max = KeepValueSetDefaultPriority(max, KeepPriorityRequired);
     [super setMax:max];
     
     if (KeepValueIsNone(max)) {
@@ -339,7 +328,7 @@
 
 
 - (void)setMin:(KeepValue)min {
-    min = [self valueFromNew:min previous:self.min];
+    min = KeepValueSetDefaultPriority(min, KeepPriorityRequired);
     [super setMin:min];
     
     if (KeepValueIsNone(min)) {

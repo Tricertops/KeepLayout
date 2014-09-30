@@ -72,6 +72,8 @@ typedef _Complex double KeepValue;
 
 /// Extracts priority (imaginary part). The value itself can be obtained by casting to double.
 extern double KeepValueGetPriority(KeepValue);
+/// If the priority is 0, sets the priority provided.
+extern KeepValue KeepValueSetDefaultPriority(KeepValue, KeepPriority);
 
 /// Value, that represents no value. KeepValueIsNone will return YES.
 extern const KeepValue KeepNone;
