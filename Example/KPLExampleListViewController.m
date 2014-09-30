@@ -84,10 +84,10 @@
                                
                                // Equivalent:
                                /*
-                                black.keepTopInset.equal = KeepRequired(10);
-                                black.keepBottomInset.equal = KeepRequired(10);
-                                black.keepLeftInset.equal = KeepRequired(10);
-                                black.keepRightInset.equal = KeepRequired(10);
+                                view.keepTopInset.equal = KeepRequired(10);
+                                view.keepBottomInset.equal = KeepRequired(10);
+                                view.keepLeftInset.equal = KeepRequired(10);
+                                view.keepRightInset.equal = KeepRequired(10);
                                 */
                                
                                // Animating insets
@@ -109,10 +109,10 @@
                                
                                // Equivalent:
                                /*
-                                black.keepTopInset.equal = KeepRequired(10);
-                                black.keepBottomInset.equal = KeepRequired(30);
-                                black.keepLeftInset.equal = KeepRequired(20);
-                                black.keepRightInset.equal = KeepRequired(40);
+                                view.keepTopInset.equal = KeepRequired(10);
+                                view.keepBottomInset.equal = KeepRequired(30);
+                                view.keepLeftInset.equal = KeepRequired(20);
+                                view.keepRightInset.equal = KeepRequired(40);
                                 */
                                
                                // Animating insets
@@ -134,8 +134,8 @@
                                
                                // Equivalent:
                                /*
-                                black.keepWidth.equal = KeepRequired(100);
-                                black.keepHeight.equal = KeepRequired(200);
+                                view.keepWidth.equal = KeepRequired(100);
+                                view.keepHeight.equal = KeepRequired(200);
                                 */
                                
                                // 2
@@ -143,8 +143,8 @@
                                
                                // Equivalent:
                                /*
-                                black.keepHorizontalCenter.equal = KeepRequired(0.5);
-                                black.keepVerticalCenter.equal = KeepRequired(0.5);
+                                view.keepHorizontalCenter.equal = KeepRequired(0.5);
+                                view.keepVerticalCenter.equal = KeepRequired(0.5);
                                 */
                                
                                // Animating center, which changes size
