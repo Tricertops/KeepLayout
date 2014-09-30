@@ -134,8 +134,8 @@
                                
                                // Equivalent:
                                /*
-                                view.keepWidth.equal = KeepHigh(100);
-                                view.keepHeight.equal = KeepHigh(200);
+                                view.keepWidth.equal = 100 keepHigh;
+                                view.keepHeight.equal = 200 keepHigh;
                                 */
                                
                                // 2
@@ -173,7 +173,7 @@
                                
                                // Equivalent:
                                /*
-                                black.keepInsets.equal = KeepHigh(10);
+                                black.keepInsets.equal = 10 keepHigh;
                                 black.keepInsets.min = 10;
                                 */
                                
@@ -207,7 +207,7 @@
                                 
                                 label.keepInsets.min = 10;
                                 label.keepHorizontalCenter.equal = 0.5;
-                                label.keepVerticalCenter.equal = KeepFitting(0.5);
+                                label.keepVerticalCenter.equal = 0.5 keepFitting;
                                 
                                 label.keepTopOffsetTo(top).min = 10;
                                 label.keepBottomOffsetTo(bottom).min = 10;
@@ -264,7 +264,7 @@
                                 UIView *topLeftCorner = createView(self.view.tintColor, container);
                                 UIView *bottomRightCorner = createView(self.view.tintColor, container);
                                 
-                                KeepValue offsetHigh = KeepHigh(10);
+                                KeepValue offsetHigh = 10 keepHigh;
                                 KeepValue offsetRequired = 10;
                                 KeepValue thickness = 30;
                                 
@@ -366,8 +366,8 @@
                                 firstColumn.keepLeftInset.equal = padding; // 4 constraints
                                 
                                 for (NSMutableArray *column in columns) {
-                                    [column keepVerticalOffsets:KeepHigh(padding)]; // 4 iterations * 3 constraints
-                                    [column keepVerticalAlignments:KeepHigh(0)]; // 4 iterations * 3 constraints
+                                    [column keepVerticalOffsets:padding +keepHigh]; // 4 iterations * 3 constraints
+                                    [column keepVerticalAlignments:0 +keepHigh]; // 4 iterations * 3 constraints
                                 }
                                 
                                 NSArray *lastColumn = columns.lastObject;
@@ -378,8 +378,8 @@
                                 firstRow.keepTopInset.equal = padding; // 4 constraints
                                 
                                 for (NSMutableArray *row in rows) {
-                                    [row keepHorizontalOffsets:KeepHigh(padding)]; // 4 iterations * 3 constraints
-                                    [row keepHorizontalAlignments:KeepHigh(0)]; // 4 iterations * 3 constraints
+                                    [row keepHorizontalOffsets:padding +keepHigh]; // 4 iterations * 3 constraints
+                                    [row keepHorizontalAlignments:0 +keepHigh]; // 4 iterations * 3 constraints
                                 }
                                 
                                 NSArray *lastRow = rows.lastObject;
@@ -387,7 +387,7 @@
                                 
                                 
                                 cells.keepInsets.min = 0; // 64 constraints
-                                cells.keepInsets.equal = KeepHigh(0); // 64 constraints
+                                cells.keepInsets.equal = 0 keepHigh; // 64 constraints
                                 [cells keepCentered]; // 32 constraints
                                 
                                 
@@ -425,14 +425,14 @@
                                 topBar.keepAspectRatio.equal = 0.25;
                                 [topBar keepCentered];
                                 //! Keep size as much close to fill, but aspect ratio has higher priority
-                                topBar.keepSizeTo(topHalf).equal = KeepHigh(1);
+                                topBar.keepSizeTo(topHalf).equal = 1 keepHigh;
                                 topBar.keepInsets.min = 0;
                                 
                                 //! Keep to bar horizontaly 4:1, centered
                                 bottomBar.keepAspectRatio.equal = 4;
                                 [bottomBar keepCentered];
                                 //! Keep size as much close to fill, but aspect ratio has higher priority
-                                bottomBar.keepSizeTo(bottomHalf).equal = KeepHigh(1);
+                                bottomBar.keepSizeTo(bottomHalf).equal = 1 keepHigh;
                                 bottomBar.keepInsets.min = 0;
                                 
                                 //! On action, invert the aspect ratios

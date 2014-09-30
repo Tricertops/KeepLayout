@@ -75,6 +75,13 @@ extern double KeepValueGetPriority(KeepValue);
 /// If the priority is 0, sets the priority provided.
 extern KeepValue KeepValueSetDefaultPriority(KeepValue, KeepPriority);
 
+/// Use these macros to build KeepValues easily: x = 10 keepHigh;
+#define keepAt(Priority)    +(Priority * 1i)
+#define keepRequired        keepAt(KeepPriorityRequired)
+#define keepHigh            keepAt(KeepPriorityHigh)
+#define keepLow             keepAt(KeepPriorityLow)
+#define keepFitting         keepAt(KeepPriorityFitting)
+
 /// Value, that represents no value. KeepValueIsNone will return YES.
 extern const KeepValue KeepNone;
 /// Returns YES for any value that has real value of NAN.
