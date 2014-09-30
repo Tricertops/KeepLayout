@@ -596,57 +596,57 @@
 
 
 - (void)keepLeftAligned {
-    [self keep_alignedSelector:_cmd invokeSelector:@selector(keepLeftAlignTo) value:KeepRequired(0)];
+    [self keep_alignedSelector:_cmd invokeSelector:@selector(keepLeftAlignTo) value:0];
 }
 
 
 - (void)keepRightAligned {
-    [self keep_alignedSelector:_cmd invokeSelector:@selector(keepRightAlignTo) value:KeepRequired(0)];
+    [self keep_alignedSelector:_cmd invokeSelector:@selector(keepRightAlignTo) value:0];
 }
 
 
 - (void)keepLeadingAligned {
-    [self keep_alignedSelector:_cmd invokeSelector:@selector(keepLeadingAlignTo) value:KeepRequired(0)];
+    [self keep_alignedSelector:_cmd invokeSelector:@selector(keepLeadingAlignTo) value:0];
 }
 
 
 - (void)keepTrailingAligned {
-    [self keep_alignedSelector:_cmd invokeSelector:@selector(keepTrailingAlignTo) value:KeepRequired(0)];
+    [self keep_alignedSelector:_cmd invokeSelector:@selector(keepTrailingAlignTo) value:0];
 }
 
 
 - (void)keepTopAligned {
-    [self keep_alignedSelector:_cmd invokeSelector:@selector(keepTopAlignTo) value:KeepRequired(0)];
+    [self keep_alignedSelector:_cmd invokeSelector:@selector(keepTopAlignTo) value:0];
 }
 
 
 - (void)keepBottomAligned {
-    [self keep_alignedSelector:_cmd invokeSelector:@selector(keepBottomAlignTo) value:KeepRequired(0)];
+    [self keep_alignedSelector:_cmd invokeSelector:@selector(keepBottomAlignTo) value:0];
 }
 
 
 - (void)keepVerticallyAligned {
-    [self keep_alignedSelector:_cmd invokeSelector:@selector(keepVerticalAlignTo) value:KeepRequired(0)];
+    [self keep_alignedSelector:_cmd invokeSelector:@selector(keepVerticalAlignTo) value:0];
 }
 
 
 - (void)keepHorizontallyAligned {
-    [self keep_alignedSelector:_cmd invokeSelector:@selector(keepHorizontalAlignTo) value:KeepRequired(0)];
+    [self keep_alignedSelector:_cmd invokeSelector:@selector(keepHorizontalAlignTo) value:0];
 }
 
 
 - (void)keepBaselineAligned {
-    [self keep_alignedSelector:_cmd invokeSelector:@selector(keepBaselineAlignTo) value:KeepRequired(0)];
+    [self keep_alignedSelector:_cmd invokeSelector:@selector(keepBaselineAlignTo) value:0];
 }
 
 
 - (void)keepFirstBaselineAligned {
-    [self keep_alignedSelector:_cmd invokeSelector:@selector(keepFirstBaselineAlignTo) value:KeepRequired(0)];
+    [self keep_alignedSelector:_cmd invokeSelector:@selector(keepFirstBaselineAlignTo) value:0];
 }
 
 
 - (void)keepLastBaselineAligned {
-    [self keep_alignedSelector:_cmd invokeSelector:@selector(keepLastBaselineAlignTo) value:KeepRequired(0)];
+    [self keep_alignedSelector:_cmd invokeSelector:@selector(keepLastBaselineAlignTo) value:0];
 }
 
 

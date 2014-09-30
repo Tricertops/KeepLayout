@@ -7,6 +7,7 @@
 //
 
 #import "KeepTypes.h"
+#import <complex.h>
 
 
 
@@ -52,14 +53,31 @@ extern NSString *KeepPriorityDescription(KeepPriority priority) {
 
 
 
-const KeepValue KeepNone = {
-    .value = CGFLOAT_MIN,
-    .priority = 0,
-};
+
+double KeepValueGetPriority(KeepValue value) {
+    return cimag(value);
+}
+
+
+KeepValue KeepValueSetDefaultPriority(KeepValue value, KeepPriority priority) {
+    if (KeepValueGetPriority(value) <= 0) {
+        return KeepValueMake(value, priority);
+    }
+    else {
+        return value;
+    }
+}
+
+
+
+
+
+const KeepValue KeepNone = { NAN, 0 };
 
 
 BOOL KeepValueIsNone(KeepValue keepValue) {
-    return (keepValue.value == CGFLOAT_MIN || keepValue.priority <= 0);
+    double value = keepValue;
+    return isnan(value);
 }
 
 
@@ -67,10 +85,7 @@ BOOL KeepValueIsNone(KeepValue keepValue) {
 
 
 KeepValue KeepValueMake(CGFloat value, KeepPriority priority) {
-    return (KeepValue) {
-        .value = value,
-        .priority = priority,
-    };
+    return (KeepValue) { value, priority };
 }
 
 
@@ -100,9 +115,10 @@ KeepValue KeepFitting(CGFloat value) {
 NSString *KeepValueDescription(KeepValue value) {
     if (KeepValueIsNone(value)) return @"none";
     
-    NSString *description = @(value.value).stringValue;
-    if (value.priority != KeepPriorityRequired) {
-        description = [description stringByAppendingFormat:@"@%@", @(value.priority).stringValue];
+    NSString *description = @((double)value).stringValue;
+    KeepPriority priority = KeepValueGetPriority(value);
+    if (priority != KeepPriorityRequired) {
+        description = [description stringByAppendingFormat:@"@%@", @(priority).stringValue];
     }
     return description;
 }

@@ -28,12 +28,12 @@
 @property (nonatomic, readwrite, assign) KeepValue max; /// Constraint with relation GreaterThanOrEqual
 @property (nonatomic, readwrite, assign) KeepValue min; /// Constraint with relation LessThanOrEqual
 
-@property (nonatomic, readwrite, assign) CGFloat required; /// Proxy for Equal relation with Required priority.
+@property (nonatomic, readwrite, assign) CGFloat required __deprecated_msg("Assign number directly to .equal = x; Magic!"); /// Proxy for Equal relation with Required priority.
 
-- (void)keepAt:(CGFloat)equalHigh min:(CGFloat)minRequired;
-- (void)keepAt:(CGFloat)equalHigh max:(CGFloat)maxRequired;
-- (void)keepAt:(CGFloat)equalHigh min:(CGFloat)minRequired max:(CGFloat)maxRequired;
-- (void)keepMin:(CGFloat)minRequired max:(CGFloat)maxRequired;
+- (void)keepAt:(KeepValue)equal min:(KeepValue)min;
+- (void)keepAt:(KeepValue)equal max:(KeepValue)max;
+- (void)keepAt:(KeepValue)equal min:(KeepValue)min max:(KeepValue)max;
+- (void)keepMin:(KeepValue)min max:(KeepValue)max;
 
 
 #pragma mark Remove

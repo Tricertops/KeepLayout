@@ -38,34 +38,34 @@
 #pragma mark Values
 
 
-- (void)keepAt:(CGFloat)equalHigh min:(CGFloat)minRequired {
-    self.equal = KeepHigh(equalHigh);
-    self.min = KeepRequired(minRequired);
+- (void)keepAt:(KeepValue)equal min:(KeepValue)min {
+    self.equal = KeepValueSetDefaultPriority(equal, KeepPriorityHigh);
+    self.min = min;
 }
 
 
-- (void)keepAt:(CGFloat)equalHigh max:(CGFloat)maxRequired {
-    self.equal = KeepHigh(equalHigh);
-    self.max = KeepRequired(maxRequired);
+- (void)keepAt:(KeepValue)equal max:(KeepValue)max {
+    self.equal = KeepValueSetDefaultPriority(equal, KeepPriorityHigh);
+    self.max = max;
 }
 
 
-- (void)keepAt:(CGFloat)equalHigh min:(CGFloat)minRequired max:(CGFloat)maxRequired {
-    self.equal = KeepHigh(equalHigh);
-    self.min = KeepRequired(minRequired);
-    self.max = KeepRequired(maxRequired);
+- (void)keepAt:(KeepValue)equal min:(KeepValue)min max:(KeepValue)max {
+    self.equal = KeepValueSetDefaultPriority(equal, KeepPriorityHigh);
+    self.min = min;
+    self.max = max;
 }
 
 
-- (void)keepMin:(CGFloat)minRequired max:(CGFloat)maxRequired {
-    self.min = KeepRequired(minRequired);
-    self.max = KeepRequired(maxRequired);
+- (void)keepMin:(KeepValue)min max:(KeepValue)max {
+    self.min = min;
+    self.max = max;
 }
 
 
 - (CGFloat)required {
     KeepValue equal = self.equal;
-    return (equal.priority == KeepPriorityRequired? equal.value : NAN);
+    return (KeepValueGetPriority(equal) == KeepPriorityRequired? equal : NAN);
 }
 
 
@@ -278,6 +278,7 @@
 
 
 - (void)setEqual:(KeepValue)equal {
+    equal = KeepValueSetDefaultPriority(equal, KeepPriorityRequired);
     [super setEqual:equal];
     
     if (KeepValueIsNone(equal)) {
@@ -302,6 +303,7 @@
 
 
 - (void)setMax:(KeepValue)max {
+    max = KeepValueSetDefaultPriority(max, KeepPriorityRequired);
     [super setMax:max];
     
     if (KeepValueIsNone(max)) {
@@ -326,6 +328,7 @@
 
 
 - (void)setMin:(KeepValue)min {
+    min = KeepValueSetDefaultPriority(min, KeepPriorityRequired);
     [super setMin:min];
     
     if (KeepValueIsNone(min)) {
@@ -357,7 +360,7 @@
                                     @(NSLayoutRelationGreaterThanOrEqual) : @"at least",
                                     @(NSLayoutRelationLessThanOrEqual) : @"at most",
                                     };
-    [constraint name:@"%@ %@ %@ with %@ priority", self.name, [relationNames objectForKey:@(relation)], @(value.value), KeepPriorityDescription(value.priority)];
+    [constraint name:@"%@ %@ %@ with %@ priority", self.name, [relationNames objectForKey:@(relation)], @((double)value), KeepPriorityDescription(KeepValueGetPriority(value))];
 #endif
 }
 
@@ -396,16 +399,16 @@
     KeepLayoutConstraint *constraint = [KeepLayoutConstraint constraintWithItem:self.view attribute:self.layoutAttribute
                                                                     relatedBy:relation
                                                                        toItem:self.relatedView attribute:self.relatedLayoutAttribute
-                                                                   multiplier:1 constant:value.value * self.coefficient];
-    constraint.priority = value.priority;
+                                                                   multiplier:1 constant:value * self.coefficient];
+    constraint.priority = KeepValueGetPriority(value);
     return constraint;
 }
 
 
 - (void)applyValue:(KeepValue)value forConstraint:(KeepLayoutConstraint *)constraint relation:(NSLayoutRelation)relation {
-    constraint.constant = value.value * self.coefficient;
-    if (constraint.priority != value.priority) {
-        constraint.priority = value.priority;
+    constraint.constant = value * self.coefficient;
+    if (constraint.priority != KeepValueGetPriority(value)) {
+        constraint.priority = KeepValueGetPriority(value);
     }
 }
 
@@ -441,8 +444,8 @@
     KeepLayoutConstraint *constraint = [KeepLayoutConstraint constraintWithItem:self.view attribute:self.layoutAttribute
                                                                     relatedBy:relation
                                                                        toItem:self.relatedView attribute:self.relatedLayoutAttribute
-                                                                   multiplier:value.value * self.coefficient constant:0];
-    constraint.priority = value.priority;
+                                                                   multiplier:value * self.coefficient constant:0];
+    constraint.priority = KeepValueGetPriority(value);
     return constraint;
 }
 

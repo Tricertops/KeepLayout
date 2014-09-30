@@ -80,20 +80,20 @@
                                UIView *view = createView(self.view.tintColor, container);
                                
                                // 1
-                               view.keepInsets.required = 10;
+                               view.keepInsets.equal = 10;
                                
                                // Equivalent:
                                /*
-                                view.keepTopInset.equal = KeepRequired(10);
-                                view.keepBottomInset.equal = KeepRequired(10);
-                                view.keepLeftInset.equal = KeepRequired(10);
-                                view.keepRightInset.equal = KeepRequired(10);
+                                view.keepTopInset.equal = 10;
+                                view.keepBottomInset.equal = 10;
+                                view.keepLeftInset.equal = 10;
+                                view.keepRightInset.equal = 10;
                                 */
                                
                                // Animating insets
                                return ^(NSUInteger state) {
                                    BOOL odd = (state % 2);
-                                   view.keepInsets.required = (odd? 80 : 10);
+                                   view.keepInsets.equal = (odd? 80 : 10);
                                };
                            }]];
     [simpleExamples addObject:
@@ -109,10 +109,10 @@
                                
                                // Equivalent:
                                /*
-                                view.keepTopInset.equal = KeepRequired(10);
-                                view.keepBottomInset.equal = KeepRequired(30);
-                                view.keepLeftInset.equal = KeepRequired(20);
-                                view.keepRightInset.equal = KeepRequired(40);
+                                view.keepTopInset.equal = 10;
+                                view.keepBottomInset.equal = 30;
+                                view.keepLeftInset.equal = 20;
+                                view.keepRightInset.equal = 40;
                                 */
                                
                                // Animating insets
@@ -134,8 +134,8 @@
                                
                                // Equivalent:
                                /*
-                                view.keepWidth.equal = KeepRequired(100);
-                                view.keepHeight.equal = KeepRequired(200);
+                                view.keepWidth.equal = 100 keepHigh;
+                                view.keepHeight.equal = 200 keepHigh;
                                 */
                                
                                // 2
@@ -143,15 +143,15 @@
                                
                                // Equivalent:
                                /*
-                                view.keepHorizontalCenter.equal = KeepRequired(0.5);
-                                view.keepVerticalCenter.equal = KeepRequired(0.5);
+                                view.keepHorizontalCenter.equal = 0.5;
+                                view.keepVerticalCenter.equal = 0.5;
                                 */
                                
                                // Animating center, which changes size
-                               view.keepInsets.min = KeepRequired(10);
+                               view.keepInsets.min = 10;
                                return ^(NSUInteger state) {
                                    BOOL odd = (state % 2);
-                                   view.keepHorizontalCenter.required = (odd? 0.1 : 0.5);
+                                   view.keepHorizontalCenter.equal = (odd? 0.1 : 0.5);
                                };
                            }]];
     [simpleExamples addObject:
@@ -163,7 +163,7 @@
                                UIView *black = createView(self.view.tintColor, container);
                                
                                // 1
-                               black.keepAspectRatio.required = 16./9.;
+                               black.keepAspectRatio.equal = 16./9.;
                                
                                // 2
                                [black keepCentered];
@@ -173,14 +173,14 @@
                                
                                // Equivalent:
                                /*
-                                black.keepInsets.equal = KeepHigh(10);
-                                black.keepInsets.min = KeepRequired(10);
+                                black.keepInsets.equal = 10 keepHigh;
+                                black.keepInsets.min = 10;
                                 */
                                
                                // Animating horizontal or vertical aspect ratio
                                return ^(NSUInteger state) {
                                    BOOL odd = (state % 2);
-                                   black.keepAspectRatio.required = (odd? 9./16 : 16./9.);
+                                   black.keepAspectRatio.equal = (odd? 9./16 : 16./9.);
                                };
                            }]];
     [simpleExamples addObject:
@@ -190,14 +190,14 @@
                                 UIView *container = controller.view;
                                 
                                 UIView *top = createView(self.view.tintColor, container);
-                                top.keepHorizontalInsets.required = 10;
-                                top.keepTopInset.required = 10;
-                                top.keepHeight.required = 80;
+                                top.keepHorizontalInsets.equal = 10;
+                                top.keepTopInset.equal = 10;
+                                top.keepHeight.equal = 80;
                                 
                                 UIView *bottom = createView(self.view.tintColor, container);
-                                bottom.keepHorizontalInsets.required = 10;
-                                bottom.keepHeight.required = 30;
-                                bottom.keepBottomInset.required = 10;
+                                bottom.keepHorizontalInsets.equal = 10;
+                                bottom.keepHeight.equal = 30;
+                                bottom.keepBottomInset.equal = 10;
                                 
                                 UILabel *label = [[UILabel alloc] init];
                                 label.text = @"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
@@ -205,12 +205,12 @@
                                 label.textAlignment = NSTextAlignmentCenter;
                                 [container addSubview:label];
                                 
-                                label.keepInsets.min = KeepRequired(10);
-                                label.keepHorizontalCenter.equal = KeepRequired(0.5);
-                                label.keepVerticalCenter.equal = KeepFitting(0.5);
+                                label.keepInsets.min = 10;
+                                label.keepHorizontalCenter.equal = 0.5;
+                                label.keepVerticalCenter.equal = 0.5 keepFitting;
                                 
-                                label.keepTopOffsetTo(top).min = KeepRequired(10);
-                                label.keepBottomOffsetTo(bottom).min = KeepRequired(10);
+                                label.keepTopOffsetTo(top).min = 10;
+                                label.keepBottomOffsetTo(bottom).min = 10;
                                 
                                 return ^(NSUInteger state) {
                                     BOOL odd = (state % 2);
@@ -232,10 +232,10 @@
                                 label.backgroundColor = [UIColor whiteColor];
                                 [view addSubview:label];
                                 
-                                label.keepInsets.required = 5;
+                                label.keepInsets.equal = 5;
                                 
                                 //! The .keepLayoutView is lazily created invisible subview, that respects .topLayoutGuide, .bottomLayoutGuide and view’s -layoutMargins
-                                view.keepEdgeAlignTo(controller.keepLayoutView).required = 0;
+                                view.keepEdgeAlignTo(controller.keepLayoutView).equal = 0;
                                 
                                 
                                 return ^(NSUInteger state) {
@@ -264,14 +264,14 @@
                                 UIView *topLeftCorner = createView(self.view.tintColor, container);
                                 UIView *bottomRightCorner = createView(self.view.tintColor, container);
                                 
-                                KeepValue offsetHigh = KeepHigh(10);
-                                KeepValue offsetRequired = KeepRequired(10);
-                                KeepValue thickness = KeepRequired(30);
+                                KeepValue offsetHigh = 10 keepHigh;
+                                KeepValue offsetRequired = 10;
+                                KeepValue thickness = 30;
                                 
                                 NSArray *views = @[ center, topStick, bottomStick, leftBox, rightBox, topLeftCorner, bottomRightCorner ];
                                 views.keepInsets.min = offsetRequired;
 
-                                center.keepCenter.equal = KeepRequired(0.5);
+                                center.keepCenter.equal = 0.5;
                                 
                                 center.keepTopOffsetTo(topStick).equal = offsetHigh;
                                 center.keepBottomOffsetTo(bottomStick).equal = offsetHigh;
@@ -283,38 +283,38 @@
                                 topStick.keepTopInset.equal = offsetRequired;
                                 bottomStick.keepBottomInset.equal = offsetRequired;
                                 
-                                leftBox.keepAspectRatio.equal = KeepRequired(1);
-                                rightBox.keepAspectRatio.equal = KeepRequired(1);
+                                leftBox.keepAspectRatio.equal = 1;
+                                rightBox.keepAspectRatio.equal = 1;
                                 
                                 topStick.keepWidth.equal = thickness;
                                 bottomStick.keepWidth.equal = thickness;
                                 
-                                center.keepTopAlignTo(leftBox).equal = KeepRequired(0);
-                                center.keepBottomAlignTo(rightBox).equal = KeepRequired(0);
+                                center.keepTopAlignTo(leftBox).equal = 0;
+                                center.keepBottomAlignTo(rightBox).equal = 0;
                                 
                                 topLeftCorner.keepHeight.equal = thickness;
-                                topLeftCorner.keepRightOffsetTo(center).equal = KeepRequired(0);
-                                topLeftCorner.keepHorizontalAlignTo(topStick).equal = KeepRequired(0);
+                                topLeftCorner.keepRightOffsetTo(center).equal = 0;
+                                topLeftCorner.keepHorizontalAlignTo(topStick).equal = 0;
                                 topLeftCorner.keepLeftAlignTo(leftBox).equal = offsetRequired;
                                 
                                 bottomRightCorner.keepHeight.equal = thickness;
-                                bottomRightCorner.keepLeftOffsetTo(center).equal = KeepRequired(0);
-                                bottomRightCorner.keepHorizontalAlignTo(bottomStick).equal = KeepRequired(0);
+                                bottomRightCorner.keepLeftOffsetTo(center).equal = 0;
+                                bottomRightCorner.keepHorizontalAlignTo(bottomStick).equal = 0;
                                 bottomRightCorner.keepRightAlignTo(rightBox).equal = offsetRequired;
                                 
-                                center.keepWidthTo(leftBox).equal = KeepRequired(1);
-                                leftBox.keepWidthTo(rightBox).equal = KeepRequired(1);
+                                center.keepWidthTo(leftBox).equal = 1;
+                                leftBox.keepWidthTo(rightBox).equal = 1;
                                 
-                                center.keepHeightTo(topStick).equal = KeepRequired(1);
-                                topStick.keepHeightTo(bottomStick).equal = KeepRequired(1);
+                                center.keepHeightTo(topStick).equal = 1;
+                                topStick.keepHeightTo(bottomStick).equal = 1;
                                 
                                 NSArray *vertical = @[ topStick, center, bottomStick ];
                                 [vertical keepVerticallyAligned];
                                 
                                 return ^(NSUInteger state) {
                                     BOOL odd = (state % 2);
-                                    center.keepWidthTo(leftBox).equal = KeepRequired(odd? 2 : 1);
-                                    center.keepHeightTo(topStick).equal = KeepRequired(odd? 2 : 1);
+                                    center.keepWidthTo(leftBox).equal = (odd? 2 : 1);
+                                    center.keepHeightTo(topStick).equal = (odd? 2 : 1);
                                 };
                             }]];
     
@@ -359,35 +359,35 @@
                                  // Constraint counts assume 4x4 grid
                                 
                                 [tiles keepSizesEqual]; // 30 constraints
-                                tiles.keepInsets.min = KeepRequired(padding); // 64 constraints
+                                tiles.keepInsets.min = padding; // 64 constraints
                                 
                                 
                                 NSArray *firstColumn = columns.firstObject;
-                                firstColumn.keepLeftInset.required = padding; // 4 constraints
+                                firstColumn.keepLeftInset.equal = padding; // 4 constraints
                                 
                                 for (NSMutableArray *column in columns) {
-                                    [column keepVerticalOffsets:KeepHigh(padding)]; // 4 iterations * 3 constraints
-                                    [column keepVerticalAlignments:KeepHigh(0)]; // 4 iterations * 3 constraints
+                                    [column keepVerticalOffsets:padding +keepHigh]; // 4 iterations * 3 constraints
+                                    [column keepVerticalAlignments:0 +keepHigh]; // 4 iterations * 3 constraints
                                 }
                                 
                                 NSArray *lastColumn = columns.lastObject;
-                                lastColumn.keepRightInset.required = padding; // 4 constraints
+                                lastColumn.keepRightInset.equal = padding; // 4 constraints
                                 
                                 
                                 NSArray *firstRow = rows.firstObject;
-                                firstRow.keepTopInset.required = padding; // 4 constraints
+                                firstRow.keepTopInset.equal = padding; // 4 constraints
                                 
                                 for (NSMutableArray *row in rows) {
-                                    [row keepHorizontalOffsets:KeepHigh(padding)]; // 4 iterations * 3 constraints
-                                    [row keepHorizontalAlignments:KeepHigh(0)]; // 4 iterations * 3 constraints
+                                    [row keepHorizontalOffsets:padding +keepHigh]; // 4 iterations * 3 constraints
+                                    [row keepHorizontalAlignments:0 +keepHigh]; // 4 iterations * 3 constraints
                                 }
                                 
                                 NSArray *lastRow = rows.lastObject;
-                                lastRow.keepBottomInset.required = padding; // 4 constraints
+                                lastRow.keepBottomInset.equal = padding; // 4 constraints
                                 
                                 
-                                cells.keepInsets.min = KeepRequired(0); // 64 constraints
-                                cells.keepInsets.equal = KeepHigh(0); // 64 constraints
+                                cells.keepInsets.min = 0; // 64 constraints
+                                cells.keepInsets.equal = 0 keepHigh; // 64 constraints
                                 [cells keepCentered]; // 32 constraints
                                 
                                 
@@ -413,32 +413,32 @@
                                 [bottomHalf addSubview:bottomBar];
                                 
                                 //! Keep halves edge-to-edge
-                                topHalf.keepTopInset.required = 0;
-                                topHalf.keepHorizontalInsets.required = 0;
-                                bottomHalf.keepHorizontalInsets.required = 0;
-                                bottomHalf.keepBottomInset.required = 0;
+                                topHalf.keepTopInset.equal = 0;
+                                topHalf.keepHorizontalInsets.equal = 0;
+                                bottomHalf.keepHorizontalInsets.equal = 0;
+                                bottomHalf.keepBottomInset.equal = 0;
                                 //! Keep halves equaly high and touching
-                                topHalf.keepBottomOffsetTo(bottomHalf).required = 0;
-                                topHalf.keepHeightTo(bottomHalf).required = 1;
+                                topHalf.keepBottomOffsetTo(bottomHalf).equal = 0;
+                                topHalf.keepHeightTo(bottomHalf).equal = 1;
                                 
                                 //! Keep to bar horizontaly 1:4, centered
-                                topBar.keepAspectRatio.required = 0.25;
+                                topBar.keepAspectRatio.equal = 0.25;
                                 [topBar keepCentered];
                                 //! Keep size as much close to fill, but aspect ratio has higher priority
-                                topBar.keepSizeTo(topHalf).equal = KeepHigh(1);
-                                topBar.keepInsets.min = KeepRequired(0);
+                                topBar.keepSizeTo(topHalf).equal = 1 keepHigh;
+                                topBar.keepInsets.min = 0;
                                 
                                 //! Keep to bar horizontaly 4:1, centered
-                                bottomBar.keepAspectRatio.required = 4;
+                                bottomBar.keepAspectRatio.equal = 4;
                                 [bottomBar keepCentered];
                                 //! Keep size as much close to fill, but aspect ratio has higher priority
-                                bottomBar.keepSizeTo(bottomHalf).equal = KeepHigh(1);
-                                bottomBar.keepInsets.min = KeepRequired(0);
+                                bottomBar.keepSizeTo(bottomHalf).equal = 1 keepHigh;
+                                bottomBar.keepInsets.min = 0;
                                 
                                 //! On action, invert the aspect ratios
                                 return ^(NSUInteger state) {
-                                    topBar.keepAspectRatio.required = (state%2? 2 : 0.25);
-                                    bottomBar.keepAspectRatio.required = (state%2? 0.5 : 4);
+                                    topBar.keepAspectRatio.equal = (state%2? 2 : 0.25);
+                                    bottomBar.keepAspectRatio.equal = (state%2? 0.5 : 4);
                                 };
                             }]];
     

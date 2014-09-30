@@ -62,27 +62,35 @@ static const KeepPriority KeepPriorityFitting = NSLayoutPriorityFittingSizeCompr
 #endif
 
 
-
 extern NSString *KeepPriorityDescription(KeepPriority);
 
 
 
 #pragma mark Value
-/// Represents a value with associated priority. Used as values for attributes and underlaying constraints.
-typedef struct {
-    CGFloat value;
-    KeepPriority priority;
-} KeepValue;
+/// Represents a value with associated priority (imaginary part). Used as values for attributes and underlaying constraints. Complex type is used to provide compatibility with scalars.
+typedef _Complex double KeepValue;
+
+/// Extracts priority (imaginary part). The value itself can be obtained by casting to double.
+extern double KeepValueGetPriority(KeepValue);
+/// If the priority is 0, sets the priority provided.
+extern KeepValue KeepValueSetDefaultPriority(KeepValue, KeepPriority);
+
+/// Use these macros to build KeepValues easily: x = 10 keepHigh;
+#define keepAt(Priority)    +(Priority * 1i)
+#define keepRequired        keepAt(KeepPriorityRequired)
+#define keepHigh            keepAt(KeepPriorityHigh)
+#define keepLow             keepAt(KeepPriorityLow)
+#define keepFitting         keepAt(KeepPriorityFitting)
 
 /// Value, that represents no value. KeepValueIsNone will return YES.
 extern const KeepValue KeepNone;
-/// Returns YES for any value that has real value of CGFLOAT_MIN or priority 0.
+/// Returns YES for any value that has real value of NAN.
 extern BOOL KeepValueIsNone(KeepValue);
 
 /// Constructor with arbitrary priority
 extern KeepValue KeepValueMake(CGFloat, KeepPriority);
 /// Constructors for 4 basic priorities
-extern KeepValue KeepRequired(CGFloat);
+extern KeepValue KeepRequired(CGFloat) __deprecated_msg("You don’t need this. Just assign the number directly. Magic!");
 extern KeepValue KeepHigh(CGFloat);
 extern KeepValue KeepLow(CGFloat);
 extern KeepValue KeepFitting(CGFloat);
