@@ -38,28 +38,28 @@
 #pragma mark Values
 
 
-- (void)keepAt:(CGFloat)equalHigh min:(CGFloat)minRequired {
-    self.equal = KeepHigh(equalHigh);
-    self.min = KeepRequired(minRequired);
+- (void)keepAt:(KeepValue)equal min:(KeepValue)min {
+    self.equal = KeepValueSetDefaultPriority(equal, KeepPriorityHigh);
+    self.min = min;
 }
 
 
-- (void)keepAt:(CGFloat)equalHigh max:(CGFloat)maxRequired {
-    self.equal = KeepHigh(equalHigh);
-    self.max = KeepRequired(maxRequired);
+- (void)keepAt:(KeepValue)equal max:(KeepValue)max {
+    self.equal = KeepValueSetDefaultPriority(equal, KeepPriorityHigh);
+    self.max = max;
 }
 
 
-- (void)keepAt:(CGFloat)equalHigh min:(CGFloat)minRequired max:(CGFloat)maxRequired {
-    self.equal = KeepHigh(equalHigh);
-    self.min = KeepRequired(minRequired);
-    self.max = KeepRequired(maxRequired);
+- (void)keepAt:(KeepValue)equal min:(KeepValue)min max:(KeepValue)max {
+    self.equal = KeepValueSetDefaultPriority(equal, KeepPriorityHigh);
+    self.min = min;
+    self.max = max;
 }
 
 
-- (void)keepMin:(CGFloat)minRequired max:(CGFloat)maxRequired {
-    self.min = KeepRequired(minRequired);
-    self.max = KeepRequired(maxRequired);
+- (void)keepMin:(KeepValue)min max:(KeepValue)max {
+    self.min = min;
+    self.max = max;
 }
 
 
