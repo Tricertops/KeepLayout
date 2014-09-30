@@ -62,7 +62,6 @@ static const KeepPriority KeepPriorityFitting = NSLayoutPriorityFittingSizeCompr
 #endif
 
 
-static const KeepPriority KeepPriorityDefault = KeepPriorityRequired;
 extern NSString *KeepPriorityDescription(KeepPriority);
 
 
@@ -82,7 +81,7 @@ extern BOOL KeepValueIsNone(KeepValue);
 /// Constructor with arbitrary priority
 extern KeepValue KeepValueMake(CGFloat, KeepPriority);
 /// Constructors for 4 basic priorities
-extern KeepValue KeepRequired(CGFloat);
+extern KeepValue KeepRequired(CGFloat) __deprecated_msg("You don’t need this. Just assign the number directly. Magic!");
 extern KeepValue KeepHigh(CGFloat);
 extern KeepValue KeepLow(CGFloat);
 extern KeepValue KeepFitting(CGFloat);
