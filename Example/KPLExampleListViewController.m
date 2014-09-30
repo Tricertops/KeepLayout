@@ -218,21 +218,25 @@
                                 };
                             }]];
     [simpleExamples addObject:
-     [[KPLExample alloc] initWithTitle:@"Layout Guides"
-                              subtitle:@"Align views with translucent bars"
+     [[KPLExample alloc] initWithTitle:@"Margins & Layout Guides"
+                              subtitle:@"View Controller’s content rectangle"
                             setupBlock:^KPLExampleStateBlock(UIViewController *controller) {
                                 UIView *container = controller.view;
                                 
-                                UIView *background = createView([self.view.tintColor colorWithAlphaComponent:0.25], container);
-                                background.layer.borderColor = self.view.tintColor.CGColor;
-                                background.layer.borderWidth = 5;
+                                UIView *view = createView(self.view.tintColor, container);
+                                UILabel *label = [UILabel new];
+                                label.numberOfLines = 0;
+                                label.textAlignment = NSTextAlignmentCenter;
+                                label.font = [UIFont systemFontOfSize:[UIFont buttonFontSize]];
+                                label.text = @"You should place content of you View Controller in this rectangle.";
+                                label.backgroundColor = [UIColor whiteColor];
+                                [view addSubview:label];
                                 
-                                UIView *square = createView(self.view.tintColor, container);
-                                square.keepSize.required = 100;
-                                square.keepHorizontalCenter.required = 0.5;
-                                square.keepTopAlignTo(controller.keepLayoutView).required = 10;
+                                label.keepInsets.required = 5;
                                 
-                                [background keepEdgeAlignTo:controller.keepLayoutView];
+                                //! The .keepLayoutView is lazily created invisible subview, that respects .topLayoutGuide, .bottomLayoutGuide and view’s -layoutMargins
+                                [view keepEdgeAlignTo:controller.keepLayoutView];
+                                
                                 
                                 return ^(NSUInteger state) {
                                     // This is abusing state block...

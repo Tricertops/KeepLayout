@@ -36,7 +36,7 @@
     layoutView.backgroundColor = [UIColor clearColor];
     [self.view insertSubview:layoutView atIndex:0];
     
-    layoutView.keepHorizontalInsets.equal = KeepRequired(0);
+    layoutView.keepHorizontalMarginInsets.equal = KeepRequired(0);
     
     KeepLayoutConstraint *topAlign = [KeepLayoutConstraint constraintWithItem:layoutView
                                                                     attribute:NSLayoutAttributeTop
