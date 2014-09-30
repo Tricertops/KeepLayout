@@ -281,7 +281,7 @@
     if ( ! KeepValueIsNone(newValue) && KeepValueGetPriority(newValue) == 0) {
         // Zero priority specified, inherit priority from previous value.
         KeepPriority previousPriority = KeepValueGetPriority(previousValue);
-        return KeepValueMake(newValue, previousPriority ?: KeepPriorityRequired);
+        return KeepValueMake(newValue, previousPriority ?: KeepPriorityDefault);
     }
     else {
         return newValue; // Non-zero priority specified.

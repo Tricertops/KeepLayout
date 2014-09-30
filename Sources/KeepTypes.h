@@ -62,7 +62,7 @@ static const KeepPriority KeepPriorityFitting = NSLayoutPriorityFittingSizeCompr
 #endif
 
 
-
+static const KeepPriority KeepPriorityDefault = KeepPriorityRequired;
 extern NSString *KeepPriorityDescription(KeepPriority);
 
 
