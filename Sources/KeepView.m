@@ -697,6 +697,28 @@
 }
 
 
+- (KeepRelatedAttributeBlock)keepEdgeAlignTo {
+    return ^KeepAttribute *(KPView *view) {
+        return [KeepAttribute group:
+                self.keepTopAlignTo(view),
+                self.keepLeftAlignTo(view),
+                self.keepRightAlignTo(view),
+                self.keepBottomAlignTo(view),
+                nil];
+    };
+}
+
+
+- (KeepRelatedAttributeBlock)keepCenterAlignTo {
+    return ^KeepAttribute *(KPView *view) {
+        return [KeepAttribute group:
+                self.keepVerticalAlignTo(view),
+                self.keepHorizontalAlignTo(view),
+                nil];
+    };
+}
+
+
 - (void)keepEdgeAlignTo:(KPView *)view {
     [self keepEdgeAlignTo:view insets:KPEdgeInsetsZero];
 }

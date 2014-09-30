@@ -281,11 +281,17 @@
 /// Grouped attribute for Bottom Alignment of contained views.
 @property (nonatomic, readonly) KeepRelatedAttributeBlock keepBottomAlignTo;
 
+/// Grouped attribute for All 4 Edge Alignments of contained views.
+@property (nonatomic, readonly) KeepRelatedAttributeBlock keepEdgeAlignTo;
+
 /// Grouped attribute for Vertical Center Alignment of contained views.
 @property (nonatomic, readonly) KeepRelatedAttributeBlock keepVerticalAlignTo;
 
 /// Grouped attribute for Horizontal Center Alignment of contained views.
 @property (nonatomic, readonly) KeepRelatedAttributeBlock keepHorizontalAlignTo;
+
+/// Grouped attribute for Both Center Axis Alignment of contained views.
+@property (nonatomic, readonly) KeepRelatedAttributeBlock keepCenterAlignTo;
 
 /// Grouped attribute for Baseline Alignment of contained views.
 @property (nonatomic, readonly) KeepRelatedAttributeBlock keepBaselineAlignTo __deprecated_msg("You should use .keepFirstBaselineAlignTo or .keepLastBaselineAlignTo");

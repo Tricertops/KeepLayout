@@ -281,23 +281,29 @@ typedef KeepAttribute *(^KeepRelatedAttributeBlock)(KPView *otherView);
 #pragma mark Alignments: Convenience
 /// Convenience methods for setting multiple alignments at once.
 
+/// Grouped proxy attribute for Top, Left, Bottom and Right Alignment with other view.
+@property (nonatomic, readonly) KeepRelatedAttributeBlock keepEdgeAlignTo;
+
+/// Grouped proxy attribute for Center X and Center Y Alignment with other view.
+@property (nonatomic, readonly) KeepRelatedAttributeBlock keepCenterAlignTo;
+
 /// Sets all 4 edge alignments with other view with given insets and priority.
-- (void)keepEdgeAlignTo:(KPView *)view insets:(KPEdgeInsets)insets withPriority:(KeepPriority)priority;
+- (void)keepEdgeAlignTo:(KPView *)view insets:(KPEdgeInsets)insets withPriority:(KeepPriority)priority __deprecated_msg("Use .keepEdgeAlignTo(view) instead");
 
 /// Sets all 4 edge alignments with other view with given insets and Required priority. Use is discouraged.
-- (void)keepEdgeAlignTo:(KPView *)view insets:(KPEdgeInsets)insets;
+- (void)keepEdgeAlignTo:(KPView *)view insets:(KPEdgeInsets)insets __deprecated_msg("Use .keepEdgeAlignTo(view).required instead");
 
 /// Sets all 4 edge alignments with other view with zero insets and Required priority. Use is discouraged.
-- (void)keepEdgeAlignTo:(KPView *)view;
+- (void)keepEdgeAlignTo:(KPView *)view __deprecated_msg("Use .keepEdgeAlignTo(view).required = 0; instead");
 
 /// Sets both center alignments with other view view given offset and priority.
-- (void)keepCenterAlignTo:(KPView *)view offset:(KPOffset)offset withPriority:(KeepPriority)priority;
+- (void)keepCenterAlignTo:(KPView *)view offset:(KPOffset)offset withPriority:(KeepPriority)priority __deprecated_msg("Use .keepCenterAlignTo(view) instead");
 
 /// Sets both center alignments with other view view given offset and Required priority.
-- (void)keepCenterAlignTo:(KPView *)view offset:(KPOffset)offset;
+- (void)keepCenterAlignTo:(KPView *)view offset:(KPOffset)offset __deprecated_msg("Use .keepCenterAlignTo(view).required instead");
 
 /// Sets both center alignments with other view view zero offset and Required priority.
-- (void)keepCenterAlignTo:(KPView *)view;
+- (void)keepCenterAlignTo:(KPView *)view __deprecated_msg("Use .keepCenterAlignTo(view).required = 0; instead");
 
 
 

@@ -235,7 +235,7 @@
                                 label.keepInsets.required = 5;
                                 
                                 //! The .keepLayoutView is lazily created invisible subview, that respects .topLayoutGuide, .bottomLayoutGuide and view’s -layoutMargins
-                                [view keepEdgeAlignTo:controller.keepLayoutView];
+                                view.keepEdgeAlignTo(controller.keepLayoutView).required = 0;
                                 
                                 
                                 return ^(NSUInteger state) {

@@ -482,6 +482,13 @@
 }
 
 
+- (KeepRelatedAttributeBlock)keepEdgeAlignTo {
+    return ^KeepAttribute *(KPView *view) {
+        return [self keep_groupAttributeForSelector:_cmd relatedView:view];
+    };
+}
+
+
 - (KeepRelatedAttributeBlock)keepVerticalAlignTo {
     return ^KeepAttribute *(KPView *view) {
         return [self keep_groupAttributeForSelector:_cmd relatedView:view];
@@ -490,6 +497,13 @@
 
 
 - (KeepRelatedAttributeBlock)keepHorizontalAlignTo {
+    return ^KeepAttribute *(KPView *view) {
+        return [self keep_groupAttributeForSelector:_cmd relatedView:view];
+    };
+}
+
+
+- (KeepRelatedAttributeBlock)keepCenterAlignTo {
     return ^KeepAttribute *(KPView *view) {
         return [self keep_groupAttributeForSelector:_cmd relatedView:view];
     };
