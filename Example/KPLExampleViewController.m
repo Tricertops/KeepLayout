@@ -52,7 +52,7 @@
     self.view.clipsToBounds = YES;
     
     self.exampleStateBlock = self.example.setupBlock(self);
-    self.exampleStateBlock(self.state);
+    if (self.exampleStateBlock) self.exampleStateBlock(self.state);
     
     self.navigationItem.rightBarButtonItem.enabled = (self.exampleStateBlock != nil);
 }
