@@ -59,6 +59,17 @@ static const KeepPriority KeepPriorityHigh = NSLayoutPriorityDefaultHigh;
 static const KeepPriority KeepPriorityLow = NSLayoutPriorityDefaultLow;
 static const KeepPriority KeepPriorityFitting = NSLayoutPriorityFittingSizeCompression;
 
+/// OS X doesn’t have margins.
+#define NSLayoutAttributeTopMargin      NSLayoutAttributeTop
+#define NSLayoutAttributeLeftMargin     NSLayoutAttributeLeft
+#define NSLayoutAttributeRightMargin    NSLayoutAttributeRight
+#define NSLayoutAttributeBottomMargin   NSLayoutAttributeBottom
+#define NSLayoutAttributeLeadingMargin  NSLayoutAttributeLeading
+#define NSLayoutAttributeTrailingMargin NSLayoutAttributeTrailing
+
+#define NSLayoutAttributeFirstBaseline  NSLayoutAttributeBaseline
+#define NSLayoutAttributeLastBaseline   NSLayoutAttributeBaseline
+
 #endif
 
 
