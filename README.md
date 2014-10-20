@@ -115,7 +115,7 @@ KeepAttribute *leftInsets = [KeepAttribute group:
                              viewTwo.keepLeftInset,
                              viewThree.keepLeftInset,
                              nil];
-leftInsets.equal = KeepRequired(10);
+leftInsets.equal = 10;
 ```
 
 However there are already some accessors to some of them:
@@ -204,10 +204,10 @@ Constraints can be animated. You can use simple `UIView` block animation, but yo
 Or you can use one of the provided methods so you don't need to care:
 
 ```objc
-view.keepWidth.equal = KeepRequired(100);
+view.keepWidth.equal = 100;
 
 [view.superview keepAnimatedWithDuration:1 layout:^{
-    view.keepWidth.equal = KeepRequired(200);
+    view.keepWidth.equal = 200;
 }];
 ```
 
