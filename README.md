@@ -54,6 +54,8 @@ Attributes have three properties: **equal**, **min** and **max**. These are not 
 
 Priority is _Required_ by default, but you can specify arbitrary priority using provided macros:
 
+> **Simplified syntax is not supported in Swift, use KeepRequired() and related functions!**
+
 ```objc
 KeepValue value = 42; // value 42 at priority 1000
 value = 42 +keepHigh; // value 42 at priority 750
@@ -76,6 +78,8 @@ See [`KeepTypes.h`][3] for more.
 
 
 ## Putting it together – Examples
+
+> **Simplified syntax is not supported in Swift, use KeepRequired() and related functions!**
 
 Keep width of the view to be equal to 150:
 
@@ -109,6 +113,8 @@ You will often want to set multiple attributes to the same value. For this we ha
 
 You can create groups at your own:
 
+> **Simplified syntax is not supported in Swift, use KeepRequired() and related functions!**
+
 ```objc
 KeepAttribute *leftInsets = [KeepAttribute group:
                              viewOne.keepLeftInset,
@@ -134,6 +140,8 @@ See [`KeepView.h`][2] or [`KeepAttribute.h`][4] for more .
 ## Removable Groups
 
 _Removable Groups_ is a way to remove multiple attributes (or their values) at once. With this you can quickly change one desired set of constraints (= layout) to another.
+
+> **Simplified syntax is not supported in Swift, use KeepRequired() and related functions!**
 
 ```objc
 // Create removable group
@@ -175,6 +183,8 @@ See [`KeepView.h`][2] for more.
 
 Most of the methods added to `UIView`/`NSView` class can also be called on any **array on views**. Such call creates grouped attribute of all contained view attributes:
 
+> **Simplified syntax is not supported in Swift, use KeepRequired() and related functions!**
+
 ```objc
 NSArray *views = @[ viewOne, viewTwo, viewThree ];
 views.keepInsets.min = 10;
@@ -202,6 +212,8 @@ See [`NSArray+KeepLayout.h`][5] for more.
 Constraints can be animated. You can use simple `UIView` block animation, but you need to call `-layoutIfNeeded` at the end of animation block. That triggers `-layoutSubviews` which applies new constraints.
 
 Or you can use one of the provided methods so you don't need to care:
+
+> **Simplified syntax is not supported in Swift, use KeepRequired() and related functions!**
 
 ```objc
 view.keepWidth.equal = 100;
