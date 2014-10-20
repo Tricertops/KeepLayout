@@ -8,6 +8,7 @@ Before you start, you should be familiar with _Auto Layout_ topic. [How it works
 
 _**Project Status**: All planned features are implemented and functional. Project is maintained and kept up to date with latest iOS/OS X. Feel free to submit Issues or Pull Requests._
 
+_**Swift Adoperts**: Some cool features introduced recently broke compatibility with Swift. Check out the Swift [compatible branch](https://github.com/iMartinKiss/KeepLayout/tree/swift-legacy). This branch will be updated along with the `master`._
 
 
 ## Attributes
