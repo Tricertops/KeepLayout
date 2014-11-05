@@ -87,7 +87,7 @@ extern double KeepValueGetPriority(KeepValue);
 extern KeepValue KeepValueSetDefaultPriority(KeepValue, KeepPriority);
 
 /// Use these macros to build KeepValues easily: x = 10 keepHigh;
-#define keepAt(Priority)    +(Priority * 1i)
+#define keepAt(Priority)    +((Priority) * 1i)
 #define keepRequired        keepAt(KeepPriorityRequired)
 #define keepHigh            keepAt(KeepPriorityHigh)
 #define keepLow             keepAt(KeepPriorityLow)
