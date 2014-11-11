@@ -1,4 +1,4 @@
-# Keep Layout
+# Keep Layout <a href="http://flattr.com/thing/1767350/iMartinKissKeepLayout-on-GitHub" target="_blank"><img src="http://api.flattr.com/button/flattr-badge-large.png" alt="Flattr this" title="Flattr this" border="0" /></a>
 
 Keep Layout makes _Auto Layout_ much easier to use _from code_! No more _Interface Builder_ or _Visual Format_. _Keep Layout_ provides **simple, more readable and powerful API for creating and _accessing existing_ constraints**.
 
