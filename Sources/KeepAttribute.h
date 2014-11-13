@@ -36,9 +36,12 @@
 - (void)keepMin:(KeepValue)min max:(KeepValue)max;
 
 
-#pragma mark Remove
-/// Removes all constraints managed by this attribute from view hierarchy.
-- (void)remove;
+#pragma mark Activation
+/// Whether at least one constraint is active.
+@property (nonatomic, readonly) BOOL isActive;
+/// Disables all managed constraints.
+- (void)deactivate;
+- (void)remove __deprecated_msg("Use -deactivate");
 
 
 #pragma mark Grouping
@@ -111,7 +114,10 @@
 + (void)setCurrent:(KeepRemovableGroup *)current;
 - (void)addAttribute:(KeepAttribute *)attribute forRelation:(NSLayoutRelation)relation;
 
-- (void)remove;
+/// Disables all managed attributes.
+- (void)deactivate;
+- (void)remove __deprecated_msg("Use -deactivate");
+
 
 @end
 

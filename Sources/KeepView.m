@@ -104,7 +104,7 @@
     NSParameterAssert(selector);
     
     KeepAttribute *attribute = objc_getAssociatedObject(self, selector);
-    [attribute remove];
+    [attribute deactivate];
     
     objc_setAssociatedObject(self, selector, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
