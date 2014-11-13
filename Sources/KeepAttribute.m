@@ -65,7 +65,7 @@
 
 - (CGFloat)required {
     KeepValue equal = self.equal;
-    return (KeepValueGetPriority(equal) == KeepPriorityRequired? equal : NAN);
+    return (KeepValueGetPriority(equal) == KeepPriorityRequired? equal.value : NAN);
 }
 
 
@@ -397,7 +397,7 @@
     else if ( ! isRequired) {
         constraint.priority = KeepValueGetPriority(value);
     }
-    constraint.constant = value * self.coefficient;
+    constraint.constant = value.value * self.coefficient;
     
     return constraint;
 }
@@ -434,7 +434,7 @@
     KeepLayoutConstraint *constraint = [KeepLayoutConstraint constraintWithItem:self.view attribute:self.layoutAttribute
                                                                     relatedBy:relation
                                                                        toItem:self.relatedView attribute:self.relatedLayoutAttribute
-                                                                   multiplier:value * self.coefficient constant:0];
+                                                                   multiplier:value.value * self.coefficient constant:0];
     constraint.priority = KeepValueGetPriority(value);
     return constraint;
 }

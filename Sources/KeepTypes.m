@@ -55,10 +55,7 @@ extern NSString *KeepPriorityDescription(KeepPriority priority) {
 
 
 
-const KeepValue KeepNone = {
-    .value = CGFLOAT_MIN,
-    .priority = 0,
-};
+
 
 
 
@@ -66,7 +63,7 @@ KeepValue KeepValueSetDefaultPriority(KeepValue value, KeepPriority priority) {
     if (KeepValueIsNone(value)) return KeepNone;
     
     if (KeepValueGetPriority(value) == 0) {
-        return KeepValueMake(value, priority);
+        return KeepValueMake(value.value, priority);
     }
     else {
         return value;
@@ -74,10 +71,18 @@ KeepValue KeepValueSetDefaultPriority(KeepValue value, KeepPriority priority) {
 }
 
 
+KeepPriority KeepValueGetPriority(KeepValue value) {
+    return value.priority;
+}
 
 
 
-const KeepValue KeepNone = { NAN, 0 };
+
+
+const KeepValue KeepNone = {
+    .value = CGFLOAT_MIN,
+    .priority = 0,
+};
 
 
 BOOL KeepValueIsNone(KeepValue keepValue) {

@@ -98,6 +98,9 @@ extern KeepValue KeepHigh(CGFloat);
 extern KeepValue KeepLow(CGFloat);
 extern KeepValue KeepFitting(CGFloat);
 
+extern KeepValue KeepValueSetDefaultPriority(KeepValue, KeepPriority);
+extern KeepPriority KeepValueGetPriority(KeepValue);
+
 /// Debug description (example “42@750”, or just “42” if priority is Required)
 extern NSString *KeepValueDescription(KeepValue);
 
