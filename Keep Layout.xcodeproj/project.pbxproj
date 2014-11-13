@@ -43,6 +43,7 @@
 		5B6D196517777E5100FA2E3E /* KPLExampleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B6D196417777E5100FA2E3E /* KPLExampleViewController.m */; };
 		5B6D19681777811600FA2E3E /* KPLExample.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B6D19671777811600FA2E3E /* KPLExample.m */; };
 		5B96279317984366005531F4 /* KeepLayoutConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B96279217984366005531F4 /* KeepLayoutConstraint.m */; };
+		5BB485AC1A14D3D800AB82BE /* UIScrollView+KeepLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BB485AB1A14D3D800AB82BE /* UIScrollView+KeepLayout.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -122,6 +123,8 @@
 		5B6D19671777811600FA2E3E /* KPLExample.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPLExample.m; sourceTree = "<group>"; };
 		5B96279117984366005531F4 /* KeepLayoutConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeepLayoutConstraint.h; sourceTree = "<group>"; };
 		5B96279217984366005531F4 /* KeepLayoutConstraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeepLayoutConstraint.m; sourceTree = "<group>"; };
+		5BB485AA1A14D3D800AB82BE /* UIScrollView+KeepLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+KeepLayout.h"; sourceTree = "<group>"; };
+		5BB485AB1A14D3D800AB82BE /* UIScrollView+KeepLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+KeepLayout.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -269,6 +272,8 @@
 				5B96279217984366005531F4 /* KeepLayoutConstraint.m */,
 				5B00E1FB193F9BD900535B19 /* UIViewController+KeepLayout.h */,
 				5B00E1FC193F9BD900535B19 /* UIViewController+KeepLayout.m */,
+				5BB485AA1A14D3D800AB82BE /* UIScrollView+KeepLayout.h */,
+				5BB485AB1A14D3D800AB82BE /* UIScrollView+KeepLayout.m */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -455,6 +460,7 @@
 				5B96279317984366005531F4 /* KeepLayoutConstraint.m in Sources */,
 				5B00E1FD193F9BD900535B19 /* UIViewController+KeepLayout.m in Sources */,
 				5B3C50B116B530F900D00BF3 /* KeepView.m in Sources */,
+				5BB485AC1A14D3D800AB82BE /* UIScrollView+KeepLayout.m in Sources */,
 				5B208DC116B67381007ABFFE /* KeepAttribute.m in Sources */,
 				5B19318317719A4E00A5747B /* KeepTypes.m in Sources */,
 				5B6D195F1776F32000FA2E3E /* KeepArray.m in Sources */,
