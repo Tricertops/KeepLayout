@@ -26,7 +26,6 @@ extern NSString *KeepPriorityDescription(KeepPriority priority) {
     NSString *name = @"";
     
     if (priority > KeepPriorityRequired || isnan(priority) || priority <= 0) {
-        priority = 0;
         name = @"undefined";
     }
     else if (priority >= (KeepPriorityRequired + KeepPriorityHigh) / 2) {
