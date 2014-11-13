@@ -86,11 +86,6 @@
 }
 
 
-- (void)activate {
-    NSAssert(NO, @"-[%@ %@] is abstract", KeepAttribute.class, NSStringFromSelector(_cmd));
-}
-
-
 - (void)deactivate {
     NSAssert(NO, @"-[%@ %@] is abstract", KeepAttribute.class, NSStringFromSelector(_cmd));
 }
@@ -639,9 +634,9 @@
 @interface KeepRemovableGroup ()
 
 
-@property (nonatomic, readwrite, strong) NSMutableSet *equalAttributes;
-@property (nonatomic, readwrite, strong) NSMutableSet *minAttributes;
-@property (nonatomic, readwrite, strong) NSMutableSet *maxAttributes;
+@property (nonatomic, readonly, strong) NSMutableSet *equalAttributes;
+@property (nonatomic, readonly, strong) NSMutableSet *minAttributes;
+@property (nonatomic, readonly, strong) NSMutableSet *maxAttributes;
 
 
 @end
@@ -662,9 +657,9 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        self.equalAttributes = [[NSMutableSet alloc] init];
-        self.minAttributes = [[NSMutableSet alloc] init];
-        self.maxAttributes = [[NSMutableSet alloc] init];
+        self->_equalAttributes = [[NSMutableSet alloc] init];
+        self->_minAttributes = [[NSMutableSet alloc] init];
+        self->_maxAttributes = [[NSMutableSet alloc] init];
     }
     return self;
 }
