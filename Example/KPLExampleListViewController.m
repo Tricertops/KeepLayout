@@ -441,6 +441,48 @@
                                     bottomBar.keepAspectRatio.equal = (state%2? 0.5 : 4);
                                 };
                             }]];
+    [complexExamples addObject:
+     [[KPLExample alloc] initWithTitle:@"Atomic Layout"
+                              subtitle:@"Deactivation of Atomic Layout Groups"
+                            setupBlock:^KPLExampleStateBlock(UIViewController *controller) {
+                                UIView *container = controller.view;
+                                
+                                UIView *first = createView(self.view.tintColor, container);
+                                UIView *second = createView(self.view.tintColor, container);
+                                first.keepSizeTo(second).equal = 1;
+                                
+                                CGFloat padding = 40;
+                                
+                                __block KeepAtomic *atomic = nil;
+                                
+                                return ^(NSUInteger state) {
+                                    [atomic deactivate];
+                                    if (state % 2 == 0) {
+                                        atomic = [KeepAtomic layout:^{
+                                            first.keepHorizontalInsets.equal = padding;
+                                            first.keepTopAlignTo(controller.keepLayoutView).equal = padding;
+                                            
+                                            first.keepBottomOffsetTo(second).equal = padding;
+                                            
+                                            second.keepHorizontalInsets.equal = padding;
+                                            second.keepBottomInset.equal = padding;
+                                        }];
+                                    }
+                                    else {
+                                        atomic = [KeepAtomic layout:^{
+                                            first.keepTopAlignTo(controller.keepLayoutView).equal = padding;
+                                            first.keepBottomAlignTo(controller.keepLayoutView).equal = padding;
+                                            first.keepLeftInset.equal = padding;
+                                            
+                                            first.keepRightOffsetTo(second).equal = padding;
+                                            
+                                            second.keepTopAlignTo(controller.keepLayoutView).equal = padding;
+                                            second.keepBottomAlignTo(controller.keepLayoutView).equal = padding;
+                                            second.keepRightInset.equal = padding;
+                                        }];
+                                    }
+                                };
+                            }]];
     
     self.examples = @[ simpleExamples, complexExamples ];
 }
