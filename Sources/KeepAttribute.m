@@ -120,11 +120,7 @@
 
 
 + (KeepRemovableGroup *)removableChanges:(void(^)(void))block {
-    KeepRemovableGroup *removableGroup = [[KeepRemovableGroup alloc] init];
-    [KeepRemovableGroup setCurrent:removableGroup];
-    block();
-    [KeepRemovableGroup setCurrent:nil];
-    return removableGroup;
+    return (KeepRemovableGroup *)[KeepAtomic layout:block];
 }
 
 
@@ -196,6 +192,17 @@
 - (KeepLayoutConstraint *)createConstraintWithRelation:(NSLayoutRelation)relation value:(KeepValue)value;
 - (KeepLayoutConstraint *)applyValue:(KeepValue)value forConstraint:(KeepLayoutConstraint *)constraint relation:(NSLayoutRelation)relation;
 - (void)setNameForConstraint:(KeepLayoutConstraint *)constraint relation:(NSLayoutRelation)relation value:(KeepValue)value;
+- (void)activateConstraint:(KeepLayoutConstraint *)constraint active:(BOOL)active;
+
+@end
+
+
+
+@interface KeepAtomic ()
+
++ (instancetype)current;
+- (void)addAttribute:(KeepAttribute *)attribute forRelation:(NSLayoutRelation)relation;
+- (void)addConstraint:(KeepLayoutConstraint *)constraint active:(BOOL)active;
 
 @end
 
@@ -270,6 +277,19 @@
 }
 
 
+- (void)activateConstraint:(KeepLayoutConstraint *)constraint active:(BOOL)active {
+    if (constraint.keepActive != active) {
+        KeepAtomic *atomic = [KeepAtomic current];
+        if (atomic) {
+            [atomic addConstraint:constraint active:active];
+        }
+        else {
+            constraint.keepActive = active;
+        }
+    }
+}
+
+
 - (void)deactivate {
     self.equal = KeepNone;
     self.max = KeepNone;
@@ -291,20 +311,20 @@
 - (KeepLayoutConstraint *)adjustConstraint:(KeepLayoutConstraint *)constraint forRelation:(NSLayoutRelation)relation value:(KeepValue)value {
     BOOL isNone = KeepValueIsNone(value);
     if (isNone) {
-        constraint.keepActive = NO;
+        [self activateConstraint:constraint active:NO];
         constraint = nil;
     }
     else {
         value = KeepValueSetDefaultPriority(value, KeepPriorityRequired);
         if ( ! constraint) {
             constraint = [self createConstraintWithRelation:relation value:value];
-            constraint.keepActive = YES;
+            [self activateConstraint:constraint active:YES];
         }
         else {
             constraint = [self applyValue:value forConstraint:constraint relation:relation];
         }
         [self setNameForConstraint:constraint relation:relation value:value];
-        [[KeepRemovableGroup current] addAttribute:self forRelation:relation];
+        [[KeepAtomic current] addAttribute:self forRelation:relation];
     }
     return constraint;
 }
@@ -389,9 +409,9 @@
     BOOL isRequired = (KeepValueGetPriority(value) == KeepPriorityRequired);
     if (isRequired != wasRequired) {
         /// “Priorities may not change from non-required to required or visa versa.”
-        constraint.keepActive = NO;
+        [self activateConstraint:constraint active:NO];
         constraint = [self createConstraintWithRelation:relation value:value];
-        constraint.keepActive = YES;
+        [self activateConstraint:constraint active:YES];
         
     }
     else if ( ! isRequired) {
@@ -441,9 +461,9 @@
 
 
 - (KeepLayoutConstraint *)applyValue:(KeepValue)value forConstraint:(KeepLayoutConstraint *)constraint relation:(NSLayoutRelation)relation {
-    constraint.keepActive = NO;
+    [self activateConstraint:constraint active:NO];
     constraint = [self createConstraintWithRelation:relation value:value];
-    constraint.keepActive = YES;
+    [self activateConstraint:constraint active:YES];
     return constraint;
 }
 
@@ -593,13 +613,14 @@
 #pragma mark -
 
 
-@interface KeepRemovableGroup ()
-
+@interface KeepAtomic ()
 
 @property (nonatomic, readonly, strong) NSMutableSet *equalAttributes;
 @property (nonatomic, readonly, strong) NSMutableSet *minAttributes;
 @property (nonatomic, readonly, strong) NSMutableSet *maxAttributes;
 
+@property (nonatomic, readonly, strong) NSMutableArray *activeConstraints;
+@property (nonatomic, readonly, strong) NSMutableArray *inactiveConstraints;
 
 @end
 
@@ -607,7 +628,7 @@
 
 
 
-@implementation KeepRemovableGroup
+@implementation KeepAtomic
 
 
 
@@ -622,8 +643,25 @@
         self->_equalAttributes = [[NSMutableSet alloc] init];
         self->_minAttributes = [[NSMutableSet alloc] init];
         self->_maxAttributes = [[NSMutableSet alloc] init];
+        
+        self->_activeConstraints = [NSMutableArray new];
+        self->_inactiveConstraints = [NSMutableArray new];
+        
     }
     return self;
+}
+
+
++ (KeepAtomic *)layout:(void (^)(void))block {
+    KeepAtomic *atomic = [KeepAtomic new];
+    [KeepAtomic setCurrent:atomic];
+    block();
+    [KeepAtomic setCurrent:nil];
+    [NSLayoutConstraint keepConstraints:atomic.activeConstraints active:YES];
+    [NSLayoutConstraint keepConstraints:atomic.inactiveConstraints active:NO];
+    [atomic.activeConstraints removeAllObjects];
+    [atomic.inactiveConstraints removeAllObjects];
+    return atomic;
 }
 
 
@@ -633,16 +671,24 @@
 #pragma mark Building
 
 
-static KeepRemovableGroup *staticCurrent = nil;
+static NSMutableArray *KeepAtomicStack = nil;
 
 
-+ (KeepRemovableGroup *)current {
-    return staticCurrent;
++ (KeepAtomic *)current {
+    return KeepAtomicStack.lastObject;
 }
 
 
-+ (void)setCurrent:(KeepRemovableGroup *)current {
-    staticCurrent = current;
++ (void)setCurrent:(KeepAtomic *)current {
+    if ( ! KeepAtomicStack) {
+        KeepAtomicStack = [NSMutableArray array];
+    }
+    if (current) {
+        [KeepAtomicStack addObject:current];
+    }
+    else {
+        [KeepAtomicStack removeLastObject];
+    }
 }
 
 
@@ -655,6 +701,16 @@ static KeepRemovableGroup *staticCurrent = nil;
 }
 
 
+- (void)addConstraint:(KeepLayoutConstraint *)constraint active:(BOOL)active {
+    if (active) {
+        [self.activeConstraints addObject:constraint];
+    }
+    else {
+        [self.inactiveConstraints addObject:constraint];
+    }
+}
+
+
 
 
 
@@ -662,9 +718,14 @@ static KeepRemovableGroup *staticCurrent = nil;
 
 
 - (void)deactivate {
-    for (KeepAttribute *attribute in self.equalAttributes) attribute.equal = KeepNone;
-    for (KeepAttribute *attribute in self.minAttributes) attribute.min = KeepNone;
-    for (KeepAttribute *attribute in self.maxAttributes) attribute.max = KeepNone;
+    [KeepAtomic layout:^{
+        for (KeepAttribute *attribute in self.equalAttributes) attribute.equal = KeepNone;
+        for (KeepAttribute *attribute in self.minAttributes) attribute.min = KeepNone;
+        for (KeepAttribute *attribute in self.maxAttributes) attribute.max = KeepNone;
+    }];
+    [self.equalAttributes removeAllObjects];
+    [self.minAttributes removeAllObjects];
+    [self.maxAttributes removeAllObjects];
 }
 
 
