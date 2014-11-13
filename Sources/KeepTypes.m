@@ -60,7 +60,9 @@ double KeepValueGetPriority(KeepValue value) {
 
 
 KeepValue KeepValueSetDefaultPriority(KeepValue value, KeepPriority priority) {
-    if (KeepValueGetPriority(value) <= 0) {
+    if (KeepValueIsNone(value)) return KeepNone;
+    
+    if (KeepValueGetPriority(value) == 0) {
         return KeepValueMake(value, priority);
     }
     else {
