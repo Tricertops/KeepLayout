@@ -13,4 +13,5 @@
 
 #if TARGET_OS_IPHONE
 #import "UIViewController+KeepLayout.h"
+#import "UIScrollView+KeepLayout.h"
 #endif
