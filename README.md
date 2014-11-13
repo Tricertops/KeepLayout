@@ -77,7 +77,7 @@ See [`KeepTypes.h`][3] for more.
 
 
 
-## Putting it together – Examples
+## Examples
 
 > **Simplified syntax is not supported in Swift, use KeepRequired() and related functions!**
 
@@ -137,29 +137,28 @@ See [`KeepView.h`][2] or [`KeepAttribute.h`][4] for more .
 
 
 
-## Removable Groups
+## Atomic Groups
 
-_Removable Groups_ is a way to remove multiple attributes (or their values) at once. With this you can quickly change one desired set of constraints (= layout) to another.
+_Atomic Groups_ are a way to deactivate multiple attributes at once. With atomic group you can quickly change one desired set of constraints (= layout) to another.
 
 > **Simplified syntax is not supported in Swift, use KeepRequired() and related functions!**
 
 ```objc
-// Create removable group
-removableLayout = [KeepAttribute removableChanges:^{
+// Create atomic group
+KeepAtomic *layout = [KeepAtomic layout:^{
     self.view.keepWidth.min = 320 +keepHigh; // Set minimum width limit.
     self.view.keepVerticalInsets.equal = 0; // Vertically stretch to fit.
 }];
-// Group now contains all attributes that were changed in the block.
 
-[removableLayout remove];
+[layout deactivate];
 // self.view no longer has minimum width of 320 and is no longer stretched vertically.
 ```
 
-You can also remove these manually using:
+You can also deactivate them manually using:
 
 ```objc
 self.view.keepWidth.min = KeepNone; // Removes minimum width constraint.
-[self.view.keepWidth remove]; // Removes all constraints for width.
+[self.view.keepWidth deactivate]; // Removes all constraints for width.
 ```
 
 See [`KeepAttribute.h`][4] for details.
