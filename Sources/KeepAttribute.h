@@ -39,11 +39,8 @@
 #pragma mark Activation
 /// Whether at least one constraint is active.
 @property (nonatomic, readonly) BOOL isActive;
-/// Enables all managed constraints, if they were disabled.
-- (void)activate;
 /// Disables all managed constraints.
 - (void)deactivate;
-/// Removes all constraints managed by this attribute from view hierarchy.
 - (void)remove __deprecated_msg("Use -deactivate");
 
 
@@ -117,7 +114,10 @@
 + (void)setCurrent:(KeepRemovableGroup *)current;
 - (void)addAttribute:(KeepAttribute *)attribute forRelation:(NSLayoutRelation)relation;
 
-- (void)remove;
+/// Disables all managed attributes.
+- (void)deactivate;
+- (void)remove __deprecated_msg("Use -deactivate");
+
 
 @end
 
