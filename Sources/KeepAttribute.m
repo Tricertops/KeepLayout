@@ -266,7 +266,7 @@
 
 
 - (BOOL)isActive {
-    return (self.equalConstraint.active || self.maxConstraint.active || self.minConstraint.active);
+    return (self.equalConstraint.keepActive || self.maxConstraint.keepActive || self.minConstraint.keepActive);
 }
 
 
@@ -291,14 +291,14 @@
 - (KeepLayoutConstraint *)adjustConstraint:(KeepLayoutConstraint *)constraint forRelation:(NSLayoutRelation)relation value:(KeepValue)value {
     BOOL isNone = KeepValueIsNone(value);
     if (isNone) {
-        constraint.active = NO;
+        constraint.keepActive = NO;
         constraint = nil;
     }
     else {
         value = KeepValueSetDefaultPriority(value, KeepPriorityRequired);
         if ( ! constraint) {
             constraint = [self createConstraintWithRelation:relation value:value];
-            constraint.active = YES;
+            constraint.keepActive = YES;
         }
         else {
             constraint = [self applyValue:value forConstraint:constraint relation:relation];
@@ -389,9 +389,9 @@
     BOOL isRequired = (KeepValueGetPriority(value) == KeepPriorityRequired);
     if (isRequired != wasRequired) {
         /// “Priorities may not change from non-required to required or visa versa.”
-        constraint.active = NO;
+        constraint.keepActive = NO;
         constraint = [self createConstraintWithRelation:relation value:value];
-        constraint.active = YES;
+        constraint.keepActive = YES;
         
     }
     else if ( ! isRequired) {
@@ -441,9 +441,9 @@
 
 
 - (KeepLayoutConstraint *)applyValue:(KeepValue)value forConstraint:(KeepLayoutConstraint *)constraint relation:(NSLayoutRelation)relation {
-    constraint.active = NO;
+    constraint.keepActive = NO;
     constraint = [self createConstraintWithRelation:relation value:value];
-    constraint.active = YES;
+    constraint.keepActive = YES;
     return constraint;
 }
 
