@@ -45,11 +45,6 @@
 - (BOOL)keepHorizontalScrollDisabled {
     UIView *disablingView = [self keepScrollDisablingView];
     KeepValue value = disablingView.keepWidthTo(self).equal;
-    
-    if (__real__ value == 0) {
-        
-    }
-    
     return ! KeepValueIsNone(value);
 }
 
