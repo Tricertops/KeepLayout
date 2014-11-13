@@ -339,4 +339,33 @@ typedef KeepAttribute *(^KeepRelatedAttributeBlock)(KPView *otherView);
 
 
 
+#pragma mark -
+#pragma mark Common Superview
+
+/// Traverses superviews and returns the first common for both views.
+- (KPView *)commonSuperview:(KPView *)anotherView;
+
+
+
+
+
+#pragma mark Convenience Auto Layout
+/// Methods not used by Keep Layout directly, but are provided for convenience purpose.
+
+/// Finds common superview for all participated views and adds a single constraint to it.
+- (void)addConstraintToCommonSuperview:(NSLayoutConstraint *)constraint;
+
+/// Finds common superview for all participated views and removes a single constraint from it.
+- (void)removeConstraintFromCommonSuperview:(NSLayoutConstraint *)constraint;
+
+/// Finds common superview for all participated views and adds all given constraint to it.
+- (void)addConstraintsToCommonSuperview:(id<NSFastEnumeration>)constraints;
+
+/// Finds common superview for all participated views and removes all given constraint from it.
+- (void)removeConstraintsFromCommonSuperview:(id<NSFastEnumeration>)constraints;
+
+
+
+
+
 @end

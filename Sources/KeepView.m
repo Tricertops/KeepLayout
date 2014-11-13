@@ -8,6 +8,7 @@
 
 #import "KeepView.h"
 #import "KeepAttribute.h"
+#import "KeepLayoutConstraint.h"
 #import <objc/runtime.h>
 
 
@@ -936,6 +937,8 @@
 
 
 - (KPView *)commonSuperview:(KPView *)anotherView {
+    if ( ! anotherView) return self;
+    
     KPView *superview = self;
     while (superview) {
 #if TARGET_OS_IPHONE
@@ -959,16 +962,12 @@
 
 
 - (void)addConstraintToCommonSuperview:(NSLayoutConstraint *)constraint {
-    KPView *relatedLayoutView = constraint.secondItem;
-    KPView *commonView = (relatedLayoutView? [self commonSuperview:relatedLayoutView] : self);
-    [commonView addConstraint:constraint];
+    [constraint setKeepActive:YES];
 }
 
 
 - (void)removeConstraintFromCommonSuperview:(NSLayoutConstraint *)constraint {
-    KPView *relatedLayoutView = constraint.secondItem;
-    KPView *commonView = (relatedLayoutView? [self commonSuperview:relatedLayoutView] : self);
-    [commonView removeConstraint:constraint];
+    [constraint setKeepActive:NO];
 }
 
 
