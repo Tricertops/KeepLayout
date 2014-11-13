@@ -25,7 +25,11 @@ const KPOffset KPOffsetZero = (KPOffset){.horizontal = 0, .vertical = 0};
 extern NSString *KeepPriorityDescription(KeepPriority priority) {
     NSString *name = @"";
     
-    if (priority >= (KeepPriorityRequired + KeepPriorityHigh) / 2) {
+    if (priority > KeepPriorityRequired || isnan(priority) || priority <= 0) {
+        priority = 0;
+        name = @"undefined";
+    }
+    else if (priority >= (KeepPriorityRequired + KeepPriorityHigh) / 2) {
         priority -= KeepPriorityRequired;
         name = @"required";
     }
@@ -43,7 +47,7 @@ extern NSString *KeepPriorityDescription(KeepPriority priority) {
     }
     
     if (priority) {
-        name = [name stringByAppendingFormat:@"(%@%i)", (priority > 0? @"+" : @""), (uint32_t)priority];
+        name = [name stringByAppendingFormat:@"(%+g)", priority];
     }
     
     return name;
