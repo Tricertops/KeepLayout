@@ -10,6 +10,7 @@
 
 
 
+@class KeepAtomic;
 @class KeepRemovableGroup;
 
 
@@ -47,8 +48,8 @@
 #pragma mark Grouping
 /// Allows you to create groups of attributes. Grouped attribute forwards all methods to its children.
 + (KeepAttribute *)group:(KeepAttribute *)first, ... NS_REQUIRES_NIL_TERMINATION;
-/// Executes block and return group of all changed attributes. Call -remove on returned object to discard all changed attribute values.
-+ (KeepRemovableGroup *)removableChanges:(void(^)(void))block;
+
++ (KeepRemovableGroup *)removableChanges:(void(^)(void))block __deprecated_msg("Use +[KeepAtomic layout:]");
 
 
 #pragma mark Debugging
@@ -57,6 +58,26 @@
 - (instancetype)name:(NSString *)format, ... NS_FORMAT_FUNCTION(1, 2);
 
 
+
+@end
+
+
+
+@interface KeepAtomic : NSObject
+
+/// Executes block and returns group of all changed attributes.
++ (KeepAtomic *)layout:(void(^)(void))block;
+/// Disables all managed constraints.
+- (void)deactivate;
+
+@end
+
+
+
+
+
+__deprecated_msg("Use KeepAtomic")
+@interface KeepRemovableGroup : KeepAtomic
 
 @end
 
@@ -104,21 +125,5 @@
 
 @end
 
-
-
-/// Private class.
-/// The `+removableChanges:` method returns instance of this class.
-@interface KeepRemovableGroup : NSObject
-
-+ (KeepRemovableGroup *)current;
-+ (void)setCurrent:(KeepRemovableGroup *)current;
-- (void)addAttribute:(KeepAttribute *)attribute forRelation:(NSLayoutRelation)relation;
-
-/// Disables all managed attributes.
-- (void)deactivate;
-- (void)remove __deprecated_msg("Use -deactivate");
-
-
-@end
 
 
