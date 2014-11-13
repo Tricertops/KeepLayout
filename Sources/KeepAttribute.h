@@ -36,9 +36,15 @@
 - (void)keepMin:(CGFloat)minRequired max:(CGFloat)maxRequired;
 
 
-#pragma mark Remove
+#pragma mark Activation
+/// Whether at least one constraint is active.
+@property (nonatomic, readonly) BOOL isActive;
+/// Enables all managed constraints, if they were disabled.
+- (void)activate;
+/// Disables all managed constraints.
+- (void)deactivate;
 /// Removes all constraints managed by this attribute from view hierarchy.
-- (void)remove;
+- (void)remove __deprecated_msg("Use -deactivate");
 
 
 #pragma mark Grouping

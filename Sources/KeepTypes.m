@@ -58,6 +58,25 @@ const KeepValue KeepNone = {
 };
 
 
+
+KeepValue KeepValueSetDefaultPriority(KeepValue value, KeepPriority priority) {
+    if (KeepValueIsNone(value)) return KeepNone;
+    
+    if (KeepValueGetPriority(value) == 0) {
+        return KeepValueMake(value, priority);
+    }
+    else {
+        return value;
+    }
+}
+
+
+
+
+
+const KeepValue KeepNone = { NAN, 0 };
+
+
 BOOL KeepValueIsNone(KeepValue keepValue) {
     return (keepValue.value == CGFLOAT_MIN || keepValue.priority <= 0);
 }

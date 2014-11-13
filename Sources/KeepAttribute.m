@@ -74,11 +74,30 @@
 }
 
 
-#pragma mark Remove
+
+
+
+#pragma mark Activation
+
+
+- (BOOL)isActive {
+    NSAssert(NO, @"-[%@ %@] is abstract", KeepAttribute.class, NSStringFromSelector(_cmd));
+    return NO;
+}
+
+
+- (void)activate {
+    NSAssert(NO, @"-[%@ %@] is abstract", KeepAttribute.class, NSStringFromSelector(_cmd));
+}
+
+
+- (void)deactivate {
+    NSAssert(NO, @"-[%@ %@] is abstract", KeepAttribute.class, NSStringFromSelector(_cmd));
+}
 
 
 - (void)remove {
-    NSAssert(NO, @"-[%@ %@] is abstract", KeepAttribute.class, NSStringFromSelector(_cmd));
+    [self deactivate];
 }
 
 
@@ -167,7 +186,6 @@
 @property (nonatomic, readwrite, assign) NSLayoutAttribute layoutAttribute;
 @property (nonatomic, readwrite, weak) KPView *relatedView;
 @property (nonatomic, readwrite, assign) NSLayoutAttribute relatedLayoutAttribute;
-@property (nonatomic, readwrite, weak) KPView *constraintView;
 
 @property (nonatomic, readwrite, assign) CGFloat coefficient;
 
@@ -230,7 +248,6 @@
         self.layoutAttribute = layoutAttribute;
         self.relatedView = relatedView;
         self.relatedLayoutAttribute = relatedLayoutAttribute;
-        self.constraintView = (relatedView? [view commonSuperview:relatedView] : view);
         self.coefficient = coefficient;
     }
     return self;
@@ -259,15 +276,20 @@
 }
 
 
-- (void)removeConstraint:(KeepLayoutConstraint *)constraint {
-    [self.constraintView removeConstraint:constraint];
+- (BOOL)isActive {
+    return (self.equalConstraint.active || self.maxConstraint.active || self.minConstraint.active);
+}
+
+
+- (void)deactivate {
+    self.equal = KeepNone;
+    self.max = KeepNone;
+    self.min = KeepNone;
 }
 
 
 - (void)remove {
-    [self removeConstraint:self.equalConstraint]; self.equalConstraint = nil;
-    [self removeConstraint:self.maxConstraint]; self.maxConstraint = nil;
-    [self removeConstraint:self.minConstraint]; self.minConstraint = nil;
+    [self deactivate];
 }
 
 
@@ -578,11 +600,23 @@
 
 
 
-#pragma mark Remove
+#pragma mark Activation
 
 
-- (void)remove {
-    for (KeepAttribute *attribute in self.attributes) [attribute remove];
+- (BOOL)isActive {
+    for (KeepAttribute *attribute in self.attributes) {
+        if (attribute.isActive) {
+            return YES;
+        }
+    }
+    return NO;
+}
+
+
+- (void)deactivate {
+    for (KeepAttribute *attribute in self.attributes) {
+        [attribute deactivate];
+    }
 }
 
 
@@ -667,13 +701,18 @@ static KeepRemovableGroup *staticCurrent = nil;
 
 
 
-#pragma mark Setting Values
+#pragma mark Activation
 
 
-- (void)remove {
+- (void)deactivate {
     for (KeepAttribute *attribute in self.equalAttributes) attribute.equal = KeepNone;
     for (KeepAttribute *attribute in self.minAttributes) attribute.min = KeepNone;
     for (KeepAttribute *attribute in self.maxAttributes) attribute.max = KeepNone;
+}
+
+
+- (void)remove {
+    [self deactivate];
 }
 
 
