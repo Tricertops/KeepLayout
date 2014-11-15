@@ -920,9 +920,14 @@
         }];
     }
     else {
-        // Running iOS 6, just execute block
+        // Running iOS 6, use legacy methods
+        BOOL wereAnimationsEnabled = [UIView areAnimationsEnabled];
+        [UIView setAnimationsEnabled: NO];
+        
         layout();
         [self layoutIfNeeded];
+        
+        [UIView setAnimationsEnabled: wereAnimationsEnabled];
     }
 }
 #endif
