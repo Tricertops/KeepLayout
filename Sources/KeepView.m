@@ -72,7 +72,7 @@
 
 
 - (KeepAttribute *)keep_attributeForSelector:(SEL)selector creationBlock:(KeepAttribute *(^)(void))creationBlock {
-    NSParameterAssert(selector);
+    KeepParameterAssert(selector);
     
     KeepAttribute *attribute = objc_getAssociatedObject(self, selector);
     if ( ! attribute && creationBlock) {
@@ -84,8 +84,8 @@
 
 
 - (KeepAttribute *)keep_attributeForSelector:(SEL)selector relatedView:(KPView *)relatedView creationBlock:(KeepAttribute *(^)())creationBlock {
-    NSParameterAssert(selector);
-    NSParameterAssert(relatedView);
+    KeepParameterAssert(selector);
+    KeepParameterAssert(relatedView);
     
     NSMapTable *attributesByRelatedView = objc_getAssociatedObject(self, selector);
     if ( ! attributesByRelatedView) {
@@ -102,7 +102,7 @@
 
 
 - (void)keep_clearAttribute:(SEL)selector {
-    NSParameterAssert(selector);
+    KeepParameterAssert(selector);
     
     KeepAttribute *attribute = objc_getAssociatedObject(self, selector);
     [attribute deactivate];
