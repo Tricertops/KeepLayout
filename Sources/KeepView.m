@@ -58,7 +58,7 @@
     [self keep_willMoveToSuperview:future];
     
     KPView *current = self.superview;
-    if (current && current != future) {
+    if (future && current != future) {
         [self keep_clearSuperviewInsets];
         [self keep_clearSuperviewPosition];
     }
