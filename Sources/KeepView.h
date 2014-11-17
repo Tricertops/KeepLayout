@@ -329,10 +329,11 @@ typedef KeepAttribute *(^KeepRelatedAttributeBlock)(KPView *otherView);
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000   // Compiled with iOS 7 SDK
 /// Animate layout changes with spring behavior, delay, options and completion. Receiver automatically calls `-layoutIfNeeded` after the animation block. Animation is scheduled on Main Queue with given delay.
 - (void)keepAnimatedWithDuration:(NSTimeInterval)duration delay:(NSTimeInterval)delay usingSpringWithDamping:(CGFloat)dampingRatio initialSpringVelocity:(CGFloat)velocity options:(UIViewAnimationOptions)options layout:(void (^)(void))animations completion:(void (^)(BOOL finished))completion;
+#endif
 
 /// Prevent animating layout changes in the block. Due to different nature of constraint-based layouting, this may not work as you may expect.
 - (void)keepNotAnimated:(void (^)(void))layout;
-#endif
+
 #endif // TARGET_OS_IPHONE
 
 
