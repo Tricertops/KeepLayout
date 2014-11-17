@@ -909,9 +909,9 @@
 }
 
 
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000   // Compiled with iOS 7 SDK
 - (void)keepNotAnimated:(void (^)(void))layout {
     
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000   // Compiled with iOS 7 SDK
     if ([UIView respondsToSelector:@selector(performWithoutAnimation:)]) {
         // Running iOS 7
         [UIView performWithoutAnimation:^{
@@ -919,8 +919,10 @@
             [self layoutIfNeeded];
         }];
     }
-    else {
-        // Running iOS 6, use legacy methods
+    else
+#endif
+    {
+        // Running iOS 6 or earlier, use legacy methods
         BOOL wereAnimationsEnabled = [UIView areAnimationsEnabled];
         [UIView setAnimationsEnabled: NO];
         
@@ -930,7 +932,6 @@
         [UIView setAnimationsEnabled: wereAnimationsEnabled];
     }
 }
-#endif
 
 #endif // TARGET_OS_IPHONE
 
