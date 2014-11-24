@@ -10,6 +10,8 @@ _**Project Status**: All planned features are implemented and functional. Projec
 
 _**Swift Adoperts**: Some cool features introduced recently broke compatibility with Swift. Check out the Swift [compatible branch](https://github.com/iMartinKiss/KeepLayout/tree/swift-legacy). This branch will be updated along with the `master`._
 
+_**Origins:** This library was originally made for [this app here](https://itunes.apple.com/app/geography-of-the-world/id391081388?mt=8&ct=KeepLayout), especially for its iPad interface._
+
 
 ## Attributes
 
