@@ -657,8 +657,8 @@
     [KeepAtomic setCurrent:atomic];
     block();
     [KeepAtomic setCurrent:nil];
-    [NSLayoutConstraint keepConstraints:atomic.activeConstraints active:YES];
     [NSLayoutConstraint keepConstraints:atomic.inactiveConstraints active:NO];
+    [NSLayoutConstraint keepConstraints:atomic.activeConstraints active:YES];
     [atomic.activeConstraints removeAllObjects];
     [atomic.inactiveConstraints removeAllObjects];
     return atomic;
