@@ -62,15 +62,7 @@
 
 
 - (void)setKeepActive:(BOOL)keepActive {
-    UIView *firstView = self.firstItem;
-    UIView *secondView = self.secondItem;
-    KPView *common = [firstView commonSuperview:secondView];
-    if (keepActive) {
-        [common addConstraint:self];
-    }
-    else {
-        [common removeConstraint:self];
-    }
+    [KeepLayoutConstraint keepConstraints:@[self] active:keepActive];
 }
 
 
@@ -85,7 +77,15 @@
     }
     else {
         for (NSLayoutConstraint *constraint in constraints) {
-            constraint.keepActive = active;
+            UIView *firstView = constraint.firstItem;
+            UIView *secondView = constraint.secondItem;
+            KPView *common = [firstView commonSuperview:secondView];
+            if (active) {
+                [common addConstraint:constraint];
+            }
+            else {
+                [common removeConstraint:constraint];
+            }
         }
     }
 }
