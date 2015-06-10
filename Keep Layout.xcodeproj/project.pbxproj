@@ -368,7 +368,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = KPL;
-				LastUpgradeCheck = 0600;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Martin Kiss";
 			};
 			buildConfigurationList = 5B3C507316B5304600D00BF3 /* Build configuration list for PBXProject "Keep Layout" */;
@@ -573,6 +573,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Example AppKit/Supporting Files/Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Triceratops.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "Keep Layout";
 				SDKROOT = macosx;
 				WRAPPER_EXTENSION = app;
@@ -607,6 +608,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Example AppKit/Supporting Files/Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Triceratops.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "Keep Layout";
 				SDKROOT = macosx;
 				WRAPPER_EXTENSION = app;
@@ -624,6 +626,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -675,6 +678,7 @@
 					"-ObjC",
 					"-all_load",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Triceratops.KeepLayout.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -690,6 +694,7 @@
 					"-ObjC",
 					"-all_load",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Triceratops.KeepLayout.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
