@@ -53,9 +53,11 @@ typedef KeepAttribute *(^KeepRelatedAttributeBlock)(UIView *otherView);
 
 /// Relative Width to other view. Value is multiplier of the other view's dimension. Both views must be in the same hierarchy.
 @property (nonatomic, readonly) KeepRelatedAttributeBlock keepWidthTo;
+@property (nonatomic, readonly) KeepRelatedAttributeBlock keepWidthToHeightOf;
 
 /// Relative Height to other view. Value is multiplier of the other view's dimension. Both views must be in the same hierarchy.
 @property (nonatomic, readonly) KeepRelatedAttributeBlock keepHeightTo;
+@property (nonatomic, readonly) KeepRelatedAttributeBlock keepHeightToWidthOf;
 
 
 
