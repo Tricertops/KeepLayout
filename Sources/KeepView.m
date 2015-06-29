@@ -137,28 +137,32 @@
 
 
 - (KeepAttribute *)keep_dimensionForSelector:(SEL)selector dimensionAttribute:(NSLayoutAttribute)dimensionAttribute relatedView:(KPView *)relatedView name:(NSString *)name {
-    KeepParameterAssert(selector);
-    KeepParameterAssert(dimensionAttribute == NSLayoutAttributeWidth
-                        || dimensionAttribute == NSLayoutAttributeHeight);
-    KeepParameterAssert(relatedView);
-    KeepParameterAssert(name);
-    KeepAssert([self commonSuperview:relatedView], @"%@ requires both views to be in common hierarchy", NSStringFromSelector(selector));
-    
-    return [self keep_attributeForSelector:selector relatedView:relatedView creationBlock:^KeepAttribute *{
-        KeepAttribute *attribute = [[KeepMultiplierAttribute alloc] initWithView:self
-                                                                 layoutAttribute:dimensionAttribute
-                                                                     relatedView:relatedView
-                                                          relatedLayoutAttribute:dimensionAttribute
-                                                                     coefficient:1];
-        [attribute name:@"%@ of <%@ %p> to <%@ %p>", name, self.class, self, relatedView.class, relatedView];
-        self.translatesAutoresizingMaskIntoConstraints = NO;
-        relatedView.translatesAutoresizingMaskIntoConstraints = NO;
-        // Establish inverse relation
-        [relatedView keep_attributeForSelector:_cmd relatedView:self creationBlock:^KeepAttribute *{
-            return attribute;
-        }];
-        return attribute;
-    }];
+	return [self keep_dimensionForSelector:selector dimensionAttribute:dimensionAttribute relatedView:relatedView relatedDimensionAttribute:dimensionAttribute name:name];
+}
+
+- (KeepAttribute *)keep_dimensionForSelector:(SEL)selector dimensionAttribute:(NSLayoutAttribute)dimensionAttribute relatedView:(KPView *)relatedView relatedDimensionAttribute:(NSLayoutAttribute)relatedDimensionAttribute name:(NSString *)name {
+	KeepParameterAssert(selector);
+	KeepParameterAssert(dimensionAttribute == NSLayoutAttributeWidth
+						|| dimensionAttribute == NSLayoutAttributeHeight);
+	KeepParameterAssert(relatedView);
+	KeepParameterAssert(name);
+	KeepAssert([self commonSuperview:relatedView], @"%@ requires both views to be in common hierarchy", NSStringFromSelector(selector));
+	
+	return [self keep_attributeForSelector:selector relatedView:relatedView creationBlock:^KeepAttribute *{
+		KeepAttribute *attribute = [[KeepMultiplierAttribute alloc] initWithView:self
+																 layoutAttribute:dimensionAttribute
+																	 relatedView:relatedView
+														  relatedLayoutAttribute:relatedDimensionAttribute
+																	 coefficient:1];
+		[attribute name:@"%@ of <%@ %p> to <%@ %p>", name, self.class, self, relatedView.class, relatedView];
+		self.translatesAutoresizingMaskIntoConstraints = NO;
+		relatedView.translatesAutoresizingMaskIntoConstraints = NO;
+		// Establish inverse relation
+		[relatedView keep_attributeForSelector:_cmd relatedView:self creationBlock:^KeepAttribute *{
+			return attribute;
+		}];
+		return attribute;
+	}];
 }
 
 
@@ -211,11 +215,23 @@
     };
 }
 
+- (KeepRelatedAttributeBlock)keepWidthToHeightOf {
+	return ^KeepAttribute *(KPView *view) {
+		return [self keep_dimensionForSelector:_cmd dimensionAttribute:NSLayoutAttributeWidth relatedView:view relatedDimensionAttribute:NSLayoutAttributeHeight name:@"width to height"];
+	};
+}
+
 
 - (KeepRelatedAttributeBlock)keepHeightTo {
     return ^KeepAttribute *(KPView *view) {
         return [self keep_dimensionForSelector:_cmd dimensionAttribute:NSLayoutAttributeHeight relatedView:view name:@"height"];
     };
+}
+
+- (KeepRelatedAttributeBlock)keepHeightToWidthOf {
+	return ^KeepAttribute *(KPView *view) {
+		return [self keep_dimensionForSelector:_cmd dimensionAttribute:NSLayoutAttributeHeight relatedView:view relatedDimensionAttribute:NSLayoutAttributeWidth name:@"height to width"];
+	};
 }
 
 
