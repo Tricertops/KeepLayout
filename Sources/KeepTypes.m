@@ -7,13 +7,29 @@
 //
 
 #import "KeepTypes.h"
+#import <complex.h>
+
+
+
+#if TARGET_OS_IPHONE
+
+
+#else
+
+const KPEdgeInsets KPEdgeInsetsZero = (KPEdgeInsets){.top = 0, .left = 0, .bottom = 0, .right = 0};
+const KPOffset KPOffsetZero = (KPOffset){.horizontal = 0, .vertical = 0};
+
+#endif
 
 
 
 extern NSString *KeepPriorityDescription(KeepPriority priority) {
     NSString *name = @"";
     
-    if (priority >= (KeepPriorityRequired + KeepPriorityHigh) / 2) {
+    if (priority > KeepPriorityRequired || isnan(priority) || priority <= 0) {
+        name = @"undefined";
+    }
+    else if (priority >= (KeepPriorityRequired + KeepPriorityHigh) / 2) {
         priority -= KeepPriorityRequired;
         name = @"required";
     }
@@ -31,7 +47,7 @@ extern NSString *KeepPriorityDescription(KeepPriority priority) {
     }
     
     if (priority) {
-        name = [name stringByAppendingFormat:@"(%@%i)", (priority > 0? @"+" : @""), (uint32_t)priority];
+        name = [name stringByAppendingFormat:@"(%+g)", priority];
     }
     
     return name;
@@ -40,14 +56,33 @@ extern NSString *KeepPriorityDescription(KeepPriority priority) {
 
 
 
-const KeepValue KeepNone = {
-    .value = CGFLOAT_MIN,
-    .priority = 0,
-};
+
+double KeepValueGetPriority(KeepValue value) {
+    return cimag(value);
+}
+
+
+KeepValue KeepValueSetDefaultPriority(KeepValue value, KeepPriority priority) {
+    if (KeepValueIsNone(value)) return KeepNone;
+    
+    if (KeepValueGetPriority(value) == 0) {
+        return KeepValueMake(value, priority);
+    }
+    else {
+        return value;
+    }
+}
+
+
+
+
+
+const KeepValue KeepNone = { NAN, 0 };
 
 
 BOOL KeepValueIsNone(KeepValue keepValue) {
-    return (keepValue.value == CGFLOAT_MIN || keepValue.priority <= 0);
+    double value = keepValue;
+    return isnan(value);
 }
 
 
@@ -55,10 +90,7 @@ BOOL KeepValueIsNone(KeepValue keepValue) {
 
 
 KeepValue KeepValueMake(CGFloat value, KeepPriority priority) {
-    return (KeepValue) {
-        .value = value,
-        .priority = priority,
-    };
+    return (KeepValue) { value, priority };
 }
 
 
@@ -88,9 +120,12 @@ KeepValue KeepFitting(CGFloat value) {
 NSString *KeepValueDescription(KeepValue value) {
     if (KeepValueIsNone(value)) return @"none";
     
-    NSString *description = @(value.value).stringValue;
-    if (value.priority != KeepPriorityRequired) {
-        description = [description stringByAppendingFormat:@"@%@", @(value.priority).stringValue];
+    NSString *description = @((double)value).stringValue;
+    KeepPriority priority = KeepValueGetPriority(value);
+    if (priority != KeepPriorityRequired) {
+        description = [description stringByAppendingFormat:@"@%@", @(priority).stringValue];
     }
     return description;
 }
+
+

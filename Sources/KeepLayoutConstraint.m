@@ -7,6 +7,11 @@
 //
 
 #import "KeepLayoutConstraint.h"
+#import "KeepView.h"
+
+
+
+
 
 @implementation KeepLayoutConstraint
 
@@ -34,3 +39,59 @@
 
 
 @end
+
+
+
+
+
+@implementation NSLayoutConstraint (Activation)
+
+
+
+- (BOOL)isKeepActive {
+    if ([self respondsToSelector:@selector(active)]) {
+        return self.active;
+    }
+    else {
+        UIView *firstView = self.firstItem;
+        UIView *secondView = self.secondItem;
+        KPView *common = [firstView commonSuperview:secondView];
+        return [common.constraints containsObject:self];
+    }
+}
+
+
+- (void)setKeepActive:(BOOL)keepActive {
+    [KeepLayoutConstraint keepConstraints:@[self] active:keepActive];
+}
+
+
++ (void)keepConstraints:(NSArray *)constraints active:(BOOL)active {
+    if ([self respondsToSelector:@selector(activateConstraints:)]) {
+        if (active) {
+            [self activateConstraints:constraints];
+        }
+        else {
+            [self deactivateConstraints:constraints];
+        }
+    }
+    else {
+        for (NSLayoutConstraint *constraint in constraints) {
+            UIView *firstView = constraint.firstItem;
+            UIView *secondView = constraint.secondItem;
+            KPView *common = [firstView commonSuperview:secondView];
+            if (active) {
+                [common addConstraint:constraint];
+            }
+            else {
+                [common removeConstraint:constraint];
+            }
+        }
+    }
+}
+
+
+
+@end
+
+

@@ -6,14 +6,11 @@
 //  Copyright (c) 2013 Triceratops. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import <CoreGraphics/CoreGraphics.h>
-#import <UIKit/UIKit.h>
-
 #import "KeepTypes.h"
 
 
 
+@class KeepAtomic;
 @class KeepRemovableGroup;
 
 
@@ -32,24 +29,27 @@
 @property (nonatomic, readwrite, assign) KeepValue max; /// Constraint with relation GreaterThanOrEqual
 @property (nonatomic, readwrite, assign) KeepValue min; /// Constraint with relation LessThanOrEqual
 
-@property (nonatomic, readwrite, assign) CGFloat required; /// Proxy for Equal relation with Required priority.
+@property (nonatomic, readwrite, assign) CGFloat required __deprecated_msg("Assign number directly to .equal = x; Magic!"); /// Proxy for Equal relation with Required priority.
 
-- (void)keepAt:(CGFloat)equalHigh min:(CGFloat)minRequired;
-- (void)keepAt:(CGFloat)equalHigh max:(CGFloat)maxRequired;
-- (void)keepAt:(CGFloat)equalHigh min:(CGFloat)minRequired max:(CGFloat)maxRequired;
-- (void)keepMin:(CGFloat)minRequired max:(CGFloat)maxRequired;
+- (void)keepAt:(KeepValue)equal min:(KeepValue)min;
+- (void)keepAt:(KeepValue)equal max:(KeepValue)max;
+- (void)keepAt:(KeepValue)equal min:(KeepValue)min max:(KeepValue)max;
+- (void)keepMin:(KeepValue)min max:(KeepValue)max;
 
 
-#pragma mark Remove
-/// Removes all constraints managed by this attribute from view hierarchy.
-- (void)remove;
+#pragma mark Activation
+/// Whether at least one constraint is active.
+@property (nonatomic, readonly) BOOL isActive;
+/// Disables all managed constraints.
+- (void)deactivate;
+- (void)remove __deprecated_msg("Use -deactivate");
 
 
 #pragma mark Grouping
 /// Allows you to create groups of attributes. Grouped attribute forwards all methods to its children.
 + (KeepAttribute *)group:(KeepAttribute *)first, ... NS_REQUIRES_NIL_TERMINATION;
-/// Executes block and return group of all changed attributes. Call -remove on returned object to discard all changed attribute values.
-+ (KeepRemovableGroup *)removableChanges:(void(^)(void))block;
+
++ (KeepRemovableGroup *)removableChanges:(void(^)(void))block __deprecated_msg("Use +[KeepAtomic layout:]");
 
 
 #pragma mark Debugging
@@ -63,6 +63,26 @@
 
 
 
+@interface KeepAtomic : NSObject
+
+/// Executes block and returns group of all changed attributes.
++ (KeepAtomic *)layout:(void(^)(void))block;
+/// Disables all managed constraints.
+- (void)deactivate;
+
+@end
+
+
+
+
+
+__deprecated_msg("Use KeepAtomic")
+@interface KeepRemovableGroup : KeepAtomic
+
+@end
+
+
+
 
 
 /// Private class.
@@ -70,9 +90,9 @@
 @interface KeepSimpleAttribute : KeepAttribute
 
 /// Properties that don't change in time.
-- (instancetype)initWithView:(UIView *)view
+- (instancetype)initWithView:(KPView *)view
              layoutAttribute:(NSLayoutAttribute)layoutAttribute
-                 relatedView:(UIView *)relatedView
+                 relatedView:(KPView *)relatedView
       relatedLayoutAttribute:(NSLayoutAttribute)relatedLayoutAttribute
                  coefficient:(CGFloat)coefficient;
 /// Multiplier of values: equal, min and max
@@ -105,18 +125,5 @@
 
 @end
 
-
-
-/// Private class.
-/// The `+removableChanges:` method returns instance of this class.
-@interface KeepRemovableGroup : NSObject
-
-+ (KeepRemovableGroup *)current;
-+ (void)setCurrent:(KeepRemovableGroup *)current;
-- (void)addAttribute:(KeepAttribute *)attribute forRelation:(NSLayoutRelation)relation;
-
-- (void)remove;
-
-@end
 
 

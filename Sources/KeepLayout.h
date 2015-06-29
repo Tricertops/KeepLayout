@@ -8,6 +8,10 @@
 
 #import "KeepTypes.h"
 #import "KeepAttribute.h"
-#import "UIView+KeepLayout.h"
-#import "NSArray+KeepLayout.h"
+#import "KeepView.h"
+#import "KeepArray.h"
+
+#if TARGET_OS_IPHONE
 #import "UIViewController+KeepLayout.h"
+#import "UIScrollView+KeepLayout.h"
+#endif

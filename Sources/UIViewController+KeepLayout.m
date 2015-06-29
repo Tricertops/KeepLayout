@@ -9,7 +9,7 @@
 #import <objc/runtime.h>
 #import "UIViewController+KeepLayout.h"
 #import "KeepLayoutConstraint.h"
-#import "UIView+KeepLayout.h"
+#import "KeepView.h"
 #import "KeepAttribute.h"
 
 
@@ -36,7 +36,7 @@
     layoutView.backgroundColor = [UIColor clearColor];
     [self.view insertSubview:layoutView atIndex:0];
     
-    layoutView.keepHorizontalInsets.equal = KeepRequired(0);
+    layoutView.keepHorizontalMarginInsets.equal = 0;
     
     KeepLayoutConstraint *topAlign = [KeepLayoutConstraint constraintWithItem:layoutView
                                                                     attribute:NSLayoutAttributeTop

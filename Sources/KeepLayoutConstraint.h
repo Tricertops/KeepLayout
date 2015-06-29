@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Martin Kiss. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "KeepTypes.h"
 
 
 
@@ -22,3 +22,14 @@
 
 
 @end
+
+
+
+@interface NSLayoutConstraint (Activation)
+
+@property (getter=isKeepActive) BOOL keepActive;
++ (void)keepConstraints:(NSArray *)constraints active:(BOOL)active;
+
+@end
+
+

@@ -1,20 +1,21 @@
 //
-//  UIView+KeepLayout.m
-//  Geografia
+//  KeepView.m
+//  Keep Layout
 //
 //  Created by Martin Kiss on 21.10.12.
 //  Copyright (c) 2012 iMartin Kiss. All rights reserved.
 //
 
-#import "UIView+KeepLayout.h"
+#import "KeepView.h"
 #import "KeepAttribute.h"
+#import "KeepLayoutConstraint.h"
 #import <objc/runtime.h>
 
 
 
 
 
-@implementation UIView (KeepLayout)
+@implementation KPView (KeepLayout)
 
 
 
@@ -27,7 +28,11 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         
+#if TARGET_OS_IPHONE
         SEL originalSelector = @selector(willMoveToSuperview:);
+#else
+        SEL originalSelector = @selector(viewWillMoveToSuperview:);
+#endif
         SEL replacementSelector = @selector(keep_willMoveToSuperview:);
         
         Method originalMethod = class_getInstanceMethod(self, originalSelector);
@@ -49,11 +54,11 @@
 }
 
 
-- (void)keep_willMoveToSuperview:(UIView *)future {
+- (void)keep_willMoveToSuperview:(KPView *)future {
     [self keep_willMoveToSuperview:future];
     
-    UIView *current = self.superview;
-    if (current && current != future) {
+    KPView *current = self.superview;
+    if (future && current != future) {
         [self keep_clearSuperviewInsets];
         [self keep_clearSuperviewPosition];
     }
@@ -67,7 +72,7 @@
 
 
 - (KeepAttribute *)keep_attributeForSelector:(SEL)selector creationBlock:(KeepAttribute *(^)(void))creationBlock {
-    NSParameterAssert(selector);
+    KeepParameterAssert(selector);
     
     KeepAttribute *attribute = objc_getAssociatedObject(self, selector);
     if ( ! attribute && creationBlock) {
@@ -78,9 +83,9 @@
 }
 
 
-- (KeepAttribute *)keep_attributeForSelector:(SEL)selector relatedView:(UIView *)relatedView creationBlock:(KeepAttribute *(^)())creationBlock {
-    NSParameterAssert(selector);
-    NSParameterAssert(relatedView);
+- (KeepAttribute *)keep_attributeForSelector:(SEL)selector relatedView:(KPView *)relatedView creationBlock:(KeepAttribute *(^)())creationBlock {
+    KeepParameterAssert(selector);
+    KeepParameterAssert(relatedView);
     
     NSMapTable *attributesByRelatedView = objc_getAssociatedObject(self, selector);
     if ( ! attributesByRelatedView) {
@@ -97,10 +102,10 @@
 
 
 - (void)keep_clearAttribute:(SEL)selector {
-    NSParameterAssert(selector);
+    KeepParameterAssert(selector);
     
     KeepAttribute *attribute = objc_getAssociatedObject(self, selector);
-    [attribute remove];
+    [attribute deactivate];
     
     objc_setAssociatedObject(self, selector, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
@@ -205,7 +210,7 @@
 
 
 - (KeepRelatedAttributeBlock)keepWidthTo {
-    return ^KeepAttribute *(UIView *view) {
+    return ^KeepAttribute *(KPView *view) {
         return [self keep_dimensionForSelector:_cmd dimensionAttribute:NSLayoutAttributeWidth relatedView:view name:@"width"];
     };
 }
@@ -218,7 +223,7 @@
 
 
 - (KeepRelatedAttributeBlock)keepHeightTo {
-    return ^KeepAttribute *(UIView *view) {
+    return ^KeepAttribute *(KPView *view) {
         return [self keep_dimensionForSelector:_cmd dimensionAttribute:NSLayoutAttributeHeight relatedView:view name:@"height"];
     };
 }
@@ -231,7 +236,7 @@
 
 
 - (KeepRelatedAttributeBlock)keepSizeTo {
-    return ^KeepAttribute *(UIView *view) {
+    return ^KeepAttribute *(KPView *view) {
         return [[KeepAttribute group:
                  self.keepWidthTo(view),
                  self.keepHeightTo(view),
@@ -253,15 +258,33 @@
                         || edgeAttribute == NSLayoutAttributeTop
                         || edgeAttribute == NSLayoutAttributeBottom
                         || edgeAttribute == NSLayoutAttributeLeading
-                        || edgeAttribute == NSLayoutAttributeTrailing);
+                        || edgeAttribute == NSLayoutAttributeTrailing
+                        || edgeAttribute == NSLayoutAttributeLeftMargin
+                        || edgeAttribute == NSLayoutAttributeRightMargin
+                        || edgeAttribute == NSLayoutAttributeTopMargin
+                        || edgeAttribute == NSLayoutAttributeBottomMargin
+                        || edgeAttribute == NSLayoutAttributeLeadingMargin
+                        || edgeAttribute == NSLayoutAttributeTrailingMargin
+                        );
     KeepParameterAssert(name);
     KeepAssert(self.superview, @"Calling %@ allowed only when superview exists", NSStringFromSelector(selector));
     
     return [self keep_attributeForSelector:selector creationBlock:^KeepAttribute *{
+        NSDictionary *nonMarginAttributes = @{
+                                              @(NSLayoutAttributeLeftMargin): @(NSLayoutAttributeLeft),
+                                              @(NSLayoutAttributeRightMargin): @(NSLayoutAttributeRight),
+                                              @(NSLayoutAttributeTopMargin): @(NSLayoutAttributeTop),
+                                              @(NSLayoutAttributeBottomMargin): @(NSLayoutAttributeBottom),
+                                              @(NSLayoutAttributeLeadingMargin): @(NSLayoutAttributeLeading),
+                                              @(NSLayoutAttributeTrailingMargin): @(NSLayoutAttributeTrailing),
+                                              };
+        NSLayoutAttribute superviewEdgeAttribute = edgeAttribute;
+        NSLayoutAttribute selfEdgeAttribute = [[nonMarginAttributes objectForKey:@(edgeAttribute)] integerValue] ?: edgeAttribute;
+        
         KeepAttribute *attribute = [[[KeepConstantAttribute alloc] initWithView:self
-                                                                layoutAttribute:edgeAttribute
+                                                                layoutAttribute:selfEdgeAttribute
                                                                     relatedView:self.superview
-                                                         relatedLayoutAttribute:edgeAttribute
+                                                         relatedLayoutAttribute:superviewEdgeAttribute
                                                                     coefficient:coefficient]
                                     name:@"%@ of <%@ %p> to superview <%@ %p>", name, self.class, self, self.superview.class, self.superview];
         self.translatesAutoresizingMaskIntoConstraints = NO;
@@ -272,10 +295,20 @@
 
 - (void)keep_clearSuperviewInsets {
     // Clears all superview insets ever created. Works after removing from superview.
+    
     [self keep_clearAttribute:@selector(keepTopInset)];
     [self keep_clearAttribute:@selector(keepLeftInset)];
     [self keep_clearAttribute:@selector(keepRightInset)];
     [self keep_clearAttribute:@selector(keepBottomInset)];
+    [self keep_clearAttribute:@selector(keepLeadingInset)];
+    [self keep_clearAttribute:@selector(keepTrailingInset)];
+    
+    [self keep_clearAttribute:@selector(keepTopMarginInset)];
+    [self keep_clearAttribute:@selector(keepLeftMarginInset)];
+    [self keep_clearAttribute:@selector(keepRightMarginInset)];
+    [self keep_clearAttribute:@selector(keepBottomMarginInset)];
+    [self keep_clearAttribute:@selector(keepLeadingMarginInset)];
+    [self keep_clearAttribute:@selector(keepTrailingMarginInset)];
 }
 
 
@@ -286,6 +319,16 @@
 
 - (KeepAttribute *)keepRightInset {
     return [self keep_insetForSelector:_cmd edgeAttribute:NSLayoutAttributeRight coefficient:-1 name:@"right inset"];
+}
+
+
+- (KeepAttribute *)keepLeadingInset {
+    return [self keep_insetForSelector:_cmd edgeAttribute:NSLayoutAttributeLeading coefficient:1 name:@"leading inset"];
+}
+
+
+- (KeepAttribute *)keepTrailingInset {
+    return [self keep_insetForSelector:_cmd edgeAttribute:NSLayoutAttributeTrailing coefficient:-1 name:@"trailing inset"];
 }
 
 
@@ -325,17 +368,93 @@
 }
 
 
-- (void)keepInsets:(UIEdgeInsets)insets {
+- (void)keepInsets:(KPEdgeInsets)insets {
     [self keepInsets:insets priority:KeepPriorityRequired];
 }
 
 
-- (void)keepInsets:(UIEdgeInsets)insets priority:(KeepPriority)priority {
+- (void)keepInsets:(KPEdgeInsets)insets priority:(KeepPriority)priority {
     self.keepLeftInset.equal = KeepValueMake(insets.left, priority);
     self.keepRightInset.equal = KeepValueMake(insets.right, priority);
     self.keepTopInset.equal = KeepValueMake(insets.top, priority);
     self.keepBottomInset.equal = KeepValueMake(insets.bottom, priority);
 }
+
+
+
+
+
+#pragma mark Superview Margin Insets
+
+
+- (KeepAttribute *)keepLeftMarginInset {
+    return [self keep_insetForSelector:_cmd edgeAttribute:NSLayoutAttributeLeftMargin coefficient:1 name:@"left margin inset"];
+}
+
+
+- (KeepAttribute *)keepRightMarginInset {
+    return [self keep_insetForSelector:_cmd edgeAttribute:NSLayoutAttributeRightMargin coefficient:-1 name:@"right margin inset"];
+}
+
+
+- (KeepAttribute *)keepLeadingMarginInset {
+    return [self keep_insetForSelector:_cmd edgeAttribute:NSLayoutAttributeLeadingMargin coefficient:1 name:@"leading margin inset"];
+}
+
+
+- (KeepAttribute *)keepTrailingMarginInset {
+    return [self keep_insetForSelector:_cmd edgeAttribute:NSLayoutAttributeTrailingMargin coefficient:-1 name:@"trailing margin inset"];
+}
+
+
+- (KeepAttribute *)keepTopMarginInset {
+    return [self keep_insetForSelector:_cmd edgeAttribute:NSLayoutAttributeTopMargin coefficient:1 name:@"top margin inset"];
+}
+
+
+- (KeepAttribute *)keepBottomMarginInset {
+    return [self keep_insetForSelector:_cmd edgeAttribute:NSLayoutAttributeBottomMargin coefficient:-1 name:@"bottom margin inset"];
+}
+
+
+- (KeepAttribute *)keepMarginInsets {
+    return [[[KeepGroupAttribute alloc] initWithAttributes:@[
+                                                             self.keepTopMarginInset,
+                                                             self.keepBottomMarginInset,
+                                                             self.keepLeftMarginInset,
+                                                             self.keepRightMarginInset ]]
+            name:@"all margin insets of <%@ %p> to superview <%@ %p>", self.class, self, self.superview.class, self.superview];
+}
+
+
+- (KeepAttribute *)keepHorizontalMarginInsets {
+    return [[[KeepGroupAttribute alloc] initWithAttributes:@[
+                                                             self.keepLeftMarginInset,
+                                                             self.keepRightMarginInset ]]
+            name:@"horizontal margin insets of <%@ %p> to superview <%@ %p>", self.class, self, self.superview.class, self.superview];
+}
+
+
+- (KeepAttribute *)keepVerticalMarginInsets {
+    return [[[KeepGroupAttribute alloc] initWithAttributes:@[
+                                                             self.keepTopMarginInset,
+                                                             self.keepBottomMarginInset ]]
+            name:@"vertical margin insets of <%@ %p> to superview <%@ %p>", self.class, self, self.superview.class, self.superview];
+}
+
+
+- (void)keepMarginInsets:(KPEdgeInsets)insets {
+    [self keepMarginInsets:insets priority:KeepPriorityRequired];
+}
+
+
+- (void)keepMarginInsets:(KPEdgeInsets)insets priority:(KeepPriority)priority {
+    self.keepLeftMarginInset.equal = KeepValueMake(insets.left, priority);
+    self.keepRightMarginInset.equal = KeepValueMake(insets.right, priority);
+    self.keepTopMarginInset.equal = KeepValueMake(insets.top, priority);
+    self.keepBottomMarginInset.equal = KeepValueMake(insets.bottom, priority);
+}
+
 
 
 
@@ -436,7 +555,7 @@
 #pragma mark Offsets
 
 
-- (KeepAttribute *)keep_offsetForSelector:(SEL)selector edgeAttribute:(NSLayoutAttribute)edgeAttribute relatedView:(UIView *)relatedView name:(NSString *)name {
+- (KeepAttribute *)keep_offsetForSelector:(SEL)selector edgeAttribute:(NSLayoutAttribute)edgeAttribute relatedView:(KPView *)relatedView name:(NSString *)name {
     KeepParameterAssert(selector);
     KeepParameterAssert(edgeAttribute == NSLayoutAttributeLeft
                         || edgeAttribute == NSLayoutAttributeRight
@@ -454,6 +573,8 @@
                                         @(NSLayoutAttributeRight): @(NSLayoutAttributeLeft),
                                         @(NSLayoutAttributeTop): @(NSLayoutAttributeBottom),
                                         @(NSLayoutAttributeBottom): @(NSLayoutAttributeTop),
+                                        @(NSLayoutAttributeLeading): @(NSLayoutAttributeTrailing),
+                                        @(NSLayoutAttributeTrailing): @(NSLayoutAttributeLeading),
                                         };
         KeepAttribute *attribute =  [[[KeepConstantAttribute alloc] initWithView:self
                                                                  layoutAttribute:edgeAttribute
@@ -469,28 +590,42 @@
 
 
 - (KeepRelatedAttributeBlock)keepLeftOffsetTo {
-    return ^KeepAttribute *(UIView *view) {
+    return ^KeepAttribute *(KPView *view) {
         return [self keep_offsetForSelector:_cmd edgeAttribute:NSLayoutAttributeLeft relatedView:view name:@"left offset"];
     };
 }
 
 
 - (KeepRelatedAttributeBlock)keepRightOffsetTo {
-    return ^KeepAttribute *(UIView *view) {
+    return ^KeepAttribute *(KPView *view) {
         return view.keepLeftOffsetTo(self);
     };
 }
 
 
+- (KeepRelatedAttributeBlock)keepLeadingOffsetTo {
+    return ^KeepAttribute *(KPView *view) {
+        return [self keep_offsetForSelector:_cmd edgeAttribute:NSLayoutAttributeLeading relatedView:view name:@"leading offset"];
+    };
+}
+
+
+- (KeepRelatedAttributeBlock)keepTrailingOffsetTo {
+    return ^KeepAttribute *(KPView *view) {
+        return view.keepLeadingOffsetTo(self);
+    };
+}
+
+
 - (KeepRelatedAttributeBlock)keepTopOffsetTo {
-    return ^KeepAttribute *(UIView *view) {
+    return ^KeepAttribute *(KPView *view) {
         return [self keep_offsetForSelector:_cmd edgeAttribute:NSLayoutAttributeTop relatedView:view name:@"top offset"];
     };
 }
 
 
 - (KeepRelatedAttributeBlock)keepBottomOffsetTo {
-    return ^KeepAttribute *(UIView *view) {
+    return ^KeepAttribute *(KPView *view) {
         return view.keepTopOffsetTo(self);
     };
 }
@@ -502,7 +637,7 @@
 #pragma mark Alignments
 
 
-- (KeepAttribute *)keep_alignForSelector:(SEL)selector alignAttribute:(NSLayoutAttribute)alignAttribute relatedView:(UIView *)relatedView coefficient:(CGFloat)coefficient name:(NSString *)name {
+- (KeepAttribute *)keep_alignForSelector:(SEL)selector alignAttribute:(NSLayoutAttribute)alignAttribute relatedView:(KPView *)relatedView coefficient:(CGFloat)coefficient name:(NSString *)name {
     KeepParameterAssert(selector);
     KeepParameterAssert(alignAttribute == NSLayoutAttributeLeft
                         || alignAttribute == NSLayoutAttributeRight
@@ -512,6 +647,8 @@
                         || alignAttribute == NSLayoutAttributeTrailing
                         || alignAttribute == NSLayoutAttributeCenterX
                         || alignAttribute == NSLayoutAttributeBaseline
+                        || alignAttribute == NSLayoutAttributeFirstBaseline
+                        || alignAttribute == NSLayoutAttributeLastBaseline
                         || alignAttribute == NSLayoutAttributeCenterY);
     KeepParameterAssert(relatedView);
     KeepParameterAssert(name);
@@ -536,44 +673,80 @@
 
 
 - (KeepRelatedAttributeBlock)keepLeftAlignTo {
-    return ^KeepAttribute *(UIView *view) {
+    return ^KeepAttribute *(KPView *view) {
         return [self keep_alignForSelector:_cmd alignAttribute:NSLayoutAttributeLeft relatedView:view coefficient:1 name:@"left alignment"];
     };
 }
 
 
 - (KeepRelatedAttributeBlock)keepRightAlignTo {
-    return ^KeepAttribute *(UIView *view) {
+    return ^KeepAttribute *(KPView *view) {
         return [self keep_alignForSelector:_cmd alignAttribute:NSLayoutAttributeRight relatedView:view coefficient:-1 name:@"right alignment"];
     };
 }
 
 
+- (KeepRelatedAttributeBlock)keepLeadingAlignTo {
+    return ^KeepAttribute *(KPView *view) {
+        return [self keep_alignForSelector:_cmd alignAttribute:NSLayoutAttributeLeading relatedView:view coefficient:1 name:@"leading alignment"];
+    };
+}
+
+
+- (KeepRelatedAttributeBlock)keepTrailingAlignTo {
+    return ^KeepAttribute *(KPView *view) {
+        return [self keep_alignForSelector:_cmd alignAttribute:NSLayoutAttributeTrailing relatedView:view coefficient:-1 name:@"trailing alignment"];
+    };
+}
+
+
 - (KeepRelatedAttributeBlock)keepTopAlignTo {
-    return ^KeepAttribute *(UIView *view) {
+    return ^KeepAttribute *(KPView *view) {
         return [self keep_alignForSelector:_cmd alignAttribute:NSLayoutAttributeTop relatedView:view coefficient:1 name:@"top alignment"];
     };
 }
 
 
 - (KeepRelatedAttributeBlock)keepBottomAlignTo {
-    return ^KeepAttribute *(UIView *view) {
+    return ^KeepAttribute *(KPView *view) {
         return [self keep_alignForSelector:_cmd alignAttribute:NSLayoutAttributeBottom relatedView:view coefficient:-1 name:@"bottom alignment"];
     };
 }
 
 
-- (void)keepEdgeAlignTo:(UIView *)view {
-    [self keepEdgeAlignTo:view insets:UIEdgeInsetsZero];
+- (KeepRelatedAttributeBlock)keepEdgeAlignTo {
+    return ^KeepAttribute *(KPView *view) {
+        return [KeepAttribute group:
+                self.keepTopAlignTo(view),
+                self.keepLeftAlignTo(view),
+                self.keepRightAlignTo(view),
+                self.keepBottomAlignTo(view),
+                nil];
+    };
 }
 
 
-- (void)keepEdgeAlignTo:(UIView *)view insets:(UIEdgeInsets)insets {
+- (KeepRelatedAttributeBlock)keepCenterAlignTo {
+    return ^KeepAttribute *(KPView *view) {
+        return [KeepAttribute group:
+                self.keepVerticalAlignTo(view),
+                self.keepHorizontalAlignTo(view),
+                nil];
+    };
+}
+
+
+- (void)keepEdgeAlignTo:(KPView *)view {
+    [self keepEdgeAlignTo:view insets:KPEdgeInsetsZero];
+}
+
+
+- (void)keepEdgeAlignTo:(KPView *)view insets:(KPEdgeInsets)insets {
     [self keepEdgeAlignTo:view insets:insets withPriority:KeepPriorityRequired];
 }
 
 
-- (void)keepEdgeAlignTo:(UIView *)view insets:(UIEdgeInsets)insets withPriority:(KeepPriority)priority {
+- (void)keepEdgeAlignTo:(KPView *)view insets:(KPEdgeInsets)insets withPriority:(KeepPriority)priority {
     self.keepLeftAlignTo(view).equal = KeepValueMake(insets.left, priority);
     self.keepRightAlignTo(view).equal = KeepValueMake(insets.right, priority);
     self.keepTopAlignTo(view).equal = KeepValueMake(insets.top, priority);
@@ -582,38 +755,52 @@
 
 
 - (KeepRelatedAttributeBlock)keepVerticalAlignTo {
-    return ^KeepAttribute *(UIView *view) {
+    return ^KeepAttribute *(KPView *view) {
         return [self keep_alignForSelector:_cmd alignAttribute:NSLayoutAttributeCenterX relatedView:view coefficient:1 name:@"vertical center alignment"];
     };
 }
 
 
 - (KeepRelatedAttributeBlock)keepHorizontalAlignTo {
-    return ^KeepAttribute *(UIView *view) {
+    return ^KeepAttribute *(KPView *view) {
         return [self keep_alignForSelector:_cmd alignAttribute:NSLayoutAttributeCenterY relatedView:view coefficient:1 name:@"horizontal center alignment"];
     };
 }
 
 
-- (void)keepCenterAlignTo:(UIView *)view {
-    [self keepCenterAlignTo:view offset:UIOffsetZero];
+- (void)keepCenterAlignTo:(KPView *)view {
+    [self keepCenterAlignTo:view offset:KPOffsetZero];
 }
 
 
-- (void)keepCenterAlignTo:(UIView *)view offset:(UIOffset)offset {
+- (void)keepCenterAlignTo:(KPView *)view offset:(KPOffset)offset {
     [self keepCenterAlignTo:view offset:offset withPriority:KeepPriorityRequired];
 }
 
 
-- (void)keepCenterAlignTo:(UIView *)view offset:(UIOffset)offset withPriority:(KeepPriority)priority {
-    self.keepHorizontalAlignTo(view).equal = KeepValueMake(offset.horizontal, priority);
-    self.keepVerticalAlignTo(view).equal = KeepValueMake(offset.vertical, priority);
+- (void)keepCenterAlignTo:(KPView *)view offset:(KPOffset)offset withPriority:(KeepPriority)priority {
+    self.keepHorizontalAlignTo(view).equal = KeepValueMake(offset.vertical, priority);
+    self.keepVerticalAlignTo(view).equal = KeepValueMake(offset.horizontal, priority);
 }
 
 
 - (KeepRelatedAttributeBlock)keepBaselineAlignTo {
-    return ^KeepAttribute *(UIView *view) {
+    return ^KeepAttribute *(KPView *view) {
         return [self keep_alignForSelector:_cmd alignAttribute:NSLayoutAttributeBaseline relatedView:view coefficient:-1 name:@"baseline alignment"];
+    };
+}
+
+
+- (KeepRelatedAttributeBlock)keepFirstBaselineAlignTo {
+    return ^KeepAttribute *(KPView *view) {
+        return [self keep_alignForSelector:_cmd alignAttribute:NSLayoutAttributeFirstBaseline relatedView:view coefficient:-1 name:@"first baseline alignment"];
+    };
+}
+
+
+- (KeepRelatedAttributeBlock)keepLastBaselineAlignTo {
+    return ^KeepAttribute *(KPView *view) {
+        return [self keep_alignForSelector:_cmd alignAttribute:NSLayoutAttributeLastBaseline relatedView:view coefficient:-1 name:@"last baseline alignment"];
     };
 }
 
@@ -622,6 +809,7 @@
 
 
 #pragma mark Animating Constraints
+#if TARGET_OS_IPHONE
 
 
 - (void)keepAnimatedWithDuration:(NSTimeInterval)duration layout:(void(^)(void))animations {
@@ -649,6 +837,21 @@
                              animations();
                              [self layoutIfNeeded];
                          }];
+    }];
+}
+
+
+- (void)keepAnimatedWithDuration:(NSTimeInterval)duration layout:(void (^)(void))animations completion:(void (^)(BOOL))completion {
+	KeepParameterAssert(duration >= 0);
+    KeepParameterAssert(animations);
+    
+    [self keep_animationPerformWithDuration:duration delay:0 block:^{
+        [UIView animateWithDuration:duration
+                         animations:^{
+                             animations();
+                             [self layoutIfNeeded];
+                         }
+                         completion:completion];
     }];
 }
 
@@ -726,9 +929,9 @@
 }
 
 
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000   // Compiled with iOS 7 SDK
 - (void)keepNotAnimated:(void (^)(void))layout {
     
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000   // Compiled with iOS 7 SDK
     if ([UIView respondsToSelector:@selector(performWithoutAnimation:)]) {
         // Running iOS 7
         [UIView performWithoutAnimation:^{
@@ -736,13 +939,21 @@
             [self layoutIfNeeded];
         }];
     }
-    else {
-        // Running iOS 6, just execute block
+    else
+#endif
+    {
+        // Running iOS 6 or earlier, use legacy methods
+        BOOL wereAnimationsEnabled = [UIView areAnimationsEnabled];
+        [UIView setAnimationsEnabled: NO];
+        
         layout();
         [self layoutIfNeeded];
+        
+        [UIView setAnimationsEnabled: wereAnimationsEnabled];
     }
 }
-#endif
+
+#endif // TARGET_OS_IPHONE
 
 
 
@@ -751,10 +962,17 @@
 #pragma mark Common Superview
 
 
-- (UIView *)commonSuperview:(UIView *)anotherView {
-    UIView *superview = self;
+- (KPView *)commonSuperview:(KPView *)anotherView {
+    if ( ! anotherView) return self;
+    
+    KPView *superview = self;
     while (superview) {
-        if ([anotherView isDescendantOfView:superview]) {
+#if TARGET_OS_IPHONE
+        BOOL isDescendant = [anotherView isDescendantOfView:superview];
+#else
+        BOOL isDescendant = [anotherView isDescendantOf:superview];
+#endif
+        if (isDescendant) {
             break; // The `superview` is common for both views.
         }
         superview = superview.superview;
@@ -770,16 +988,12 @@
 
 
 - (void)addConstraintToCommonSuperview:(NSLayoutConstraint *)constraint {
-    UIView *relatedLayoutView = constraint.secondItem;
-    UIView *commonView = (relatedLayoutView? [self commonSuperview:relatedLayoutView] : self);
-    [commonView addConstraint:constraint];
+    [constraint setKeepActive:YES];
 }
 
 
 - (void)removeConstraintFromCommonSuperview:(NSLayoutConstraint *)constraint {
-    UIView *relatedLayoutView = constraint.secondItem;
-    UIView *commonView = (relatedLayoutView? [self commonSuperview:relatedLayoutView] : self);
-    [commonView removeConstraint:constraint];
+    [constraint setKeepActive:NO];
 }
 
 
