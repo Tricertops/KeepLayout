@@ -1,131 +1,57 @@
 //
-//  KeepTypes.m
+//  KeepTypes.h
 //  Keep Layout
 //
-//  Created by Martin Kiss on 19.6.13.
+//  Created by Martin Kiss on 28.1.13.
 //  Copyright (c) 2013 Triceratops. All rights reserved.
 //
 
-#import "KeepTypes.h"
-#import <complex.h>
+#import <Foundation/Foundation.h>
+#import <CoreGraphics/CoreGraphics.h>
+#import <UIKit/UIKit.h>
 
 
 
-#if TARGET_OS_IPHONE
-
-
-#else
-
-const KPEdgeInsets KPEdgeInsetsZero = (KPEdgeInsets){.top = 0, .left = 0, .bottom = 0, .right = 0};
-const KPOffset KPOffsetZero = (KPOffset){.horizontal = 0, .vertical = 0};
-
-#endif
-
-
-
-extern NSString *KeepPriorityDescription(KeepPriority priority) {
-    NSString *name = @"";
-    
-    if (priority > KeepPriorityRequired || isnan(priority) || priority <= 0) {
-        name = @"undefined";
-    }
-    else if (priority >= (KeepPriorityRequired + KeepPriorityHigh) / 2) {
-        priority -= KeepPriorityRequired;
-        name = @"required";
-    }
-    else if (priority >= (KeepPriorityHigh + KeepPriorityLow) / 2) {
-        priority -= KeepPriorityHigh;
-        name = @"high";
-    }
-    else if (priority >= (KeepPriorityLow + KeepPriorityFitting) / 2) {
-        priority -= KeepPriorityLow;
-        name = @"low";
-    }
-    else {
-        priority -= KeepPriorityFitting;
-        name = @"fitting";
-    }
-    
-    if (priority) {
-        name = [name stringByAppendingFormat:@"(%+g)", priority];
-    }
-    
-    return name;
-}
+#define KeepAssert(CONDITION, DESCRIPTION...)   NSAssert((CONDITION), @"Keep Layout: " DESCRIPTION)
+#define KeepParameterAssert(CONDITION)          NSAssert((CONDITION), @"Keep Layout: " @"Invalid parameter not satisfying: %s", #CONDITION)
 
 
 
 
 
-double KeepValueGetPriority(KeepValue value) {
-    return cimag(value);
-}
+#pragma mark Priority
+/// Use custom names.
+typedef float KeepPriority;
+static const KeepPriority KeepPriorityRequired = UILayoutPriorityRequired;
+static const KeepPriority KeepPriorityHigh = UILayoutPriorityDefaultHigh;
+static const KeepPriority KeepPriorityLow = UILayoutPriorityDefaultLow;
+static const KeepPriority KeepPriorityFitting = UILayoutPriorityFittingSizeLevel;
 
-
-KeepValue KeepValueSetDefaultPriority(KeepValue value, KeepPriority priority) {
-    if (KeepValueIsNone(value)) return KeepNone;
-    
-    if (KeepValueGetPriority(value) == 0) {
-        return KeepValueMake(value, priority);
-    }
-    else {
-        return value;
-    }
-}
+extern NSString *KeepPriorityDescription(KeepPriority);
 
 
 
+#pragma mark Value
+/// Represents a value with associated priority. Used as values for attributes and underlaying constraints.
+typedef struct {
+    CGFloat value;
+    KeepPriority priority;
+} KeepValue;
 
+/// Value, that represents no value. KeepValueIsNone will return YES.
+extern const KeepValue KeepNone;
+/// Returns YES for any value that has real value of CGFLOAT_MIN or priority 0.
+extern BOOL KeepValueIsNone(KeepValue);
 
-const KeepValue KeepNone = { NAN, 0 };
+/// Constructor with arbitrary priority
+extern KeepValue KeepValueMake(CGFloat, KeepPriority);
+/// Constructors for 4 basic priorities
+extern KeepValue KeepRequired(CGFloat);
+extern KeepValue KeepHigh(CGFloat);
+extern KeepValue KeepLow(CGFloat);
+extern KeepValue KeepFitting(CGFloat);
 
-
-BOOL KeepValueIsNone(KeepValue keepValue) {
-    double value = keepValue;
-    return isnan(value);
-}
-
-
-
-
-
-KeepValue KeepValueMake(CGFloat value, KeepPriority priority) {
-    return (KeepValue) { value, priority };
-}
-
-
-KeepValue KeepRequired(CGFloat value) {
-    return KeepValueMake(value, KeepPriorityRequired);
-}
-
-
-KeepValue KeepHigh(CGFloat value) {
-    return KeepValueMake(value, KeepPriorityHigh);
-}
-
-
-KeepValue KeepLow(CGFloat value) {
-    return KeepValueMake(value, KeepPriorityLow);
-}
-
-
-KeepValue KeepFitting(CGFloat value) {
-    return KeepValueMake(value, KeepPriorityFitting);
-}
-
-
-
-
-
-NSString *KeepValueDescription(KeepValue value) {
-    if (KeepValueIsNone(value)) return @"none";
-    
-    NSString *description = @((double)value).stringValue;
-    KeepPriority priority = KeepValueGetPriority(value);
-    if (priority != KeepPriorityRequired) {
-        description = [description stringByAppendingFormat:@"@%@", @(priority).stringValue];
-    }
-    return description;
-}
+/// Debug description (example “42@750”, or just “42” if priority is Required)
+extern NSString *KeepValueDescription(KeepValue);
 
 
