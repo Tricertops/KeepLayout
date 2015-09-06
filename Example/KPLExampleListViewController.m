@@ -18,7 +18,7 @@
 
 @interface KPLExampleListViewController ()
 
-@property (nonatomic, readwrite, strong) NSArray *examples;
+@property (nonatomic, readwrite, strong) NSArray<KPLExample *> *examples;
 
 @end
 
@@ -62,7 +62,7 @@
 
 
 - (void)loadExamples {
-    NSMutableArray *simpleExamples = [[NSMutableArray alloc] init];
+    NSMutableArray<KPLExample *> *simpleExamples = [[NSMutableArray alloc] init];
     
     UIView *(^createView)(UIColor *, UIView *) = ^UIView *(UIColor *color, UIView *superview) {
         UIView *view = [[UIView alloc] init];
@@ -249,7 +249,7 @@
                                 };
                             }]];
     
-    NSMutableArray *complexExamples = [[NSMutableArray alloc] init];
+    NSMutableArray<KPLExample *> *complexExamples = [[NSMutableArray alloc] init];
     [complexExamples addObject:
      [[KPLExample alloc] initWithTitle:@"Everything"
                               subtitle:@"All attributes used"
@@ -268,7 +268,7 @@
                                 KeepValue offsetRequired = 10;
                                 KeepValue thickness = 30;
                                 
-                                NSArray *views = @[ center, topStick, bottomStick, leftBox, rightBox, topLeftCorner, bottomRightCorner ];
+                                NSArray<UIView *> *views = @[ center, topStick, bottomStick, leftBox, rightBox, topLeftCorner, bottomRightCorner ];
                                 views.keepInsets.min = offsetRequired;
 
                                 center.keepCenter.equal = 0.5;
@@ -308,7 +308,7 @@
                                 center.keepHeightTo(topStick).equal = 1;
                                 topStick.keepHeightTo(bottomStick).equal = 1;
                                 
-                                NSArray *vertical = @[ topStick, center, bottomStick ];
+                                NSArray<UIView *> *vertical = @[ topStick, center, bottomStick ];
                                 [vertical keepVerticallyAligned];
                                 
                                 return ^(NSUInteger state) {
@@ -329,17 +329,17 @@
                                 CGFloat padding = 10;
                                 
                                 // Arrays
-                                NSMutableArray *tiles = [[NSMutableArray alloc] init];
-                                NSMutableArray *cells = [[NSMutableArray alloc] init];
+                                NSMutableArray<UIView *> *tiles = [[NSMutableArray alloc] init];
+                                NSMutableArray<UIView *> *cells = [[NSMutableArray alloc] init];
                                 
-                                NSMutableArray *columns = [[NSMutableArray alloc] init];
+                                NSMutableArray<UIView *> *columns = [[NSMutableArray alloc] init];
                                 for (NSUInteger c = 0; c < columnCount; c++) {
-                                    NSMutableArray *column = [[NSMutableArray alloc] init];
+                                    NSMutableArray<UIView *> *column = [[NSMutableArray alloc] init];
                                     [columns addObject:column];
                                 }
-                                NSMutableArray *rows = [[NSMutableArray alloc] init];
+                                NSMutableArray<UIView *> *rows = [[NSMutableArray alloc] init];
                                 for (NSUInteger r = 0; r < rowCount; r++) {
-                                    NSMutableArray *row = [[NSMutableArray alloc] init];
+                                    NSMutableArray<UIView *> *row = [[NSMutableArray alloc] init];
                                     [rows addObject:row];
                                 }
                                 
@@ -362,27 +362,27 @@
                                 tiles.keepInsets.min = padding; // 64 constraints
                                 
                                 
-                                NSArray *firstColumn = columns.firstObject;
+                                NSArray<UIView *> *firstColumn = columns.firstObject;
                                 firstColumn.keepLeftInset.equal = padding; // 4 constraints
                                 
-                                for (NSMutableArray *column in columns) {
+                                for (NSMutableArray<UIView *> *column in columns) {
                                     [column keepVerticalOffsets:padding +keepHigh]; // 4 iterations * 3 constraints
                                     [column keepVerticalAlignments:0 +keepHigh]; // 4 iterations * 3 constraints
                                 }
                                 
-                                NSArray *lastColumn = columns.lastObject;
+                                NSArray<UIView *> *lastColumn = columns.lastObject;
                                 lastColumn.keepRightInset.equal = padding; // 4 constraints
                                 
                                 
-                                NSArray *firstRow = rows.firstObject;
+                                NSArray<UIView *> *firstRow = rows.firstObject;
                                 firstRow.keepTopInset.equal = padding; // 4 constraints
                                 
-                                for (NSMutableArray *row in rows) {
+                                for (NSMutableArray<UIView *> *row in rows) {
                                     [row keepHorizontalOffsets:padding +keepHigh]; // 4 iterations * 3 constraints
                                     [row keepHorizontalAlignments:0 +keepHigh]; // 4 iterations * 3 constraints
                                 }
                                 
-                                NSArray *lastRow = rows.lastObject;
+                                NSArray<UIView *> *lastRow = rows.lastObject;
                                 lastRow.keepBottomInset.equal = padding; // 4 constraints
                                 
                                 

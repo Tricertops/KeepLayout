@@ -254,14 +254,14 @@
     KeepAssert(self.superview, @"Calling %@ allowed only when superview exists", NSStringFromSelector(selector));
     
     return [self keep_attributeForSelector:selector creationBlock:^KeepAttribute *{
-        NSDictionary *nonMarginAttributes = @{
-                                              @(NSLayoutAttributeLeftMargin): @(NSLayoutAttributeLeft),
-                                              @(NSLayoutAttributeRightMargin): @(NSLayoutAttributeRight),
-                                              @(NSLayoutAttributeTopMargin): @(NSLayoutAttributeTop),
-                                              @(NSLayoutAttributeBottomMargin): @(NSLayoutAttributeBottom),
-                                              @(NSLayoutAttributeLeadingMargin): @(NSLayoutAttributeLeading),
-                                              @(NSLayoutAttributeTrailingMargin): @(NSLayoutAttributeTrailing),
-                                              };
+        NSDictionary<NSNumber *, NSNumber *> *nonMarginAttributes = @{
+            @(NSLayoutAttributeLeftMargin): @(NSLayoutAttributeLeft),
+            @(NSLayoutAttributeRightMargin): @(NSLayoutAttributeRight),
+            @(NSLayoutAttributeTopMargin): @(NSLayoutAttributeTop),
+            @(NSLayoutAttributeBottomMargin): @(NSLayoutAttributeBottom),
+            @(NSLayoutAttributeLeadingMargin): @(NSLayoutAttributeLeading),
+            @(NSLayoutAttributeTrailingMargin): @(NSLayoutAttributeTrailing),
+        };
         NSLayoutAttribute superviewEdgeAttribute = edgeAttribute;
         NSLayoutAttribute selfEdgeAttribute = [[nonMarginAttributes objectForKey:@(edgeAttribute)] integerValue] ?: edgeAttribute;
         
@@ -552,14 +552,14 @@
     KeepAssert([self commonSuperview:relatedView], @"%@ requires both views to be in common hierarchy", NSStringFromSelector(selector));
     
     return [self keep_attributeForSelector:selector relatedView:relatedView creationBlock:^KeepAttribute *{
-        NSDictionary *oppositeEdges = @{
-                                        @(NSLayoutAttributeLeft): @(NSLayoutAttributeRight),
-                                        @(NSLayoutAttributeRight): @(NSLayoutAttributeLeft),
-                                        @(NSLayoutAttributeTop): @(NSLayoutAttributeBottom),
-                                        @(NSLayoutAttributeBottom): @(NSLayoutAttributeTop),
-                                        @(NSLayoutAttributeLeading): @(NSLayoutAttributeTrailing),
-                                        @(NSLayoutAttributeTrailing): @(NSLayoutAttributeLeading),
-                                        };
+        NSDictionary<NSNumber *, NSNumber *> *oppositeEdges = @{
+            @(NSLayoutAttributeLeft): @(NSLayoutAttributeRight),
+            @(NSLayoutAttributeRight): @(NSLayoutAttributeLeft),
+            @(NSLayoutAttributeTop): @(NSLayoutAttributeBottom),
+            @(NSLayoutAttributeBottom): @(NSLayoutAttributeTop),
+            @(NSLayoutAttributeLeading): @(NSLayoutAttributeTrailing),
+            @(NSLayoutAttributeTrailing): @(NSLayoutAttributeLeading),
+        };
         KeepAttribute *attribute =  [[[KeepConstantAttribute alloc] initWithView:self
                                                                  layoutAttribute:edgeAttribute
                                                                      relatedView:relatedView

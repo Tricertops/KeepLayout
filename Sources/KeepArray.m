@@ -43,7 +43,7 @@
 - (KeepGroupAttribute *)keep_groupAttributeForSelector:(SEL)selector relatedView:(KPView *)relatedView {
     KeepAssert([self keep_onlyContainsViews], @"%@ can only be called on array of View objects", NSStringFromSelector(selector));
     
-    NSMutableArray *builder = [[NSMutableArray alloc] initWithCapacity:self.count];
+    NSMutableArray<KeepAttribute *> *builder = [[NSMutableArray alloc] initWithCapacity:self.count];
     for (KPView *view in self) {
         KeepAttribute *(^block)(KPView *) = [view valueForKeyPath:NSStringFromSelector(selector)];
         [builder addObject:block(relatedView)];

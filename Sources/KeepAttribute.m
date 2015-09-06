@@ -106,7 +106,7 @@
     va_list list;
     va_start(list, first);
     
-    NSMutableArray *attributes = [[NSMutableArray alloc] init];
+    NSMutableArray<KeepAttribute *> *attributes = [[NSMutableArray alloc] init];
     KeepAttribute *attribute = first;
     while (attribute) {
         [attributes addObject:attribute];
@@ -354,11 +354,11 @@
 
 - (void)setNameForConstraint:(KeepLayoutConstraint *)constraint relation:(NSLayoutRelation)relation value:(KeepValue)value {
 #ifdef DEBUG
-    NSDictionary *relationNames = @{
-                                    @(NSLayoutRelationEqual) : @"equal to",
-                                    @(NSLayoutRelationGreaterThanOrEqual) : @"at least",
-                                    @(NSLayoutRelationLessThanOrEqual) : @"at most",
-                                    };
+    NSDictionary<NSNumber *, NSString *> *relationNames = @{
+                                                            @(NSLayoutRelationEqual) : @"equal to",
+                                                            @(NSLayoutRelationGreaterThanOrEqual) : @"at least",
+                                                            @(NSLayoutRelationLessThanOrEqual) : @"at most",
+                                                            };
     [constraint name:@"%@ %@ %@ with %@ priority", self.name, [relationNames objectForKey:@(relation)], @((double)value), KeepPriorityDescription(KeepValueGetPriority(value))];
 #endif
 }
@@ -615,12 +615,12 @@
 
 @interface KeepAtomic ()
 
-@property (nonatomic, readonly, strong) NSMutableSet *equalAttributes;
-@property (nonatomic, readonly, strong) NSMutableSet *minAttributes;
-@property (nonatomic, readonly, strong) NSMutableSet *maxAttributes;
+@property (nonatomic, readonly, strong) NSMutableSet<KeepAttribute *> *equalAttributes;
+@property (nonatomic, readonly, strong) NSMutableSet<KeepAttribute *> *minAttributes;
+@property (nonatomic, readonly, strong) NSMutableSet<KeepAttribute *> *maxAttributes;
 
-@property (nonatomic, readonly, strong) NSMutableArray *activeConstraints;
-@property (nonatomic, readonly, strong) NSMutableArray *inactiveConstraints;
+@property (nonatomic, readonly, strong) NSMutableArray<NSLayoutConstraint *> *activeConstraints;
+@property (nonatomic, readonly, strong) NSMutableArray<NSLayoutConstraint *> *inactiveConstraints;
 
 @end
 
@@ -671,7 +671,7 @@
 #pragma mark Building
 
 
-static NSMutableArray *KeepAtomicStack = nil;
+static NSMutableArray<KeepAtomic *> *KeepAtomicStack = nil;
 
 
 + (KeepAtomic *)current {

@@ -66,7 +66,7 @@
 }
 
 
-+ (void)keepConstraints:(NSArray *)constraints active:(BOOL)active {
++ (void)keepConstraints:(NSArray<NSLayoutConstraint *> *)constraints active:(BOOL)active {
     if ([self respondsToSelector:@selector(activateConstraints:)]) {
         if (active) {
             [self activateConstraints:constraints];
