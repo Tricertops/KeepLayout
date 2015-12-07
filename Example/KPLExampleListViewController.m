@@ -18,7 +18,7 @@
 
 @interface KPLExampleListViewController ()
 
-@property (nonatomic, readwrite, strong) NSArray<KPLExample *> *examples;
+@property (nonatomic, readwrite, strong) NSArray<NSArray<KPLExample *> *> *examples;
 
 @end
 
@@ -62,7 +62,7 @@
 
 
 - (void)loadExamples {
-    NSMutableArray<KPLExample *> *simpleExamples = [[NSMutableArray alloc] init];
+    NSMutableArray<KPLExample *> *simpleExamples = [[NSMutableArray alloc] init];
     
     UIView *(^createView)(UIColor *, UIView *) = ^UIView *(UIColor *color, UIView *superview) {
         UIView *view = [[UIView alloc] init];
@@ -249,7 +249,7 @@
                                 };
                             }]];
     
-    NSMutableArray<KPLExample *> *complexExamples = [[NSMutableArray alloc] init];
+    NSMutableArray<KPLExample *> *complexExamples = [[NSMutableArray alloc] init];
     [complexExamples addObject:
      [[KPLExample alloc] initWithTitle:@"Everything"
                               subtitle:@"All attributes used"
@@ -332,12 +332,12 @@
                                 NSMutableArray<UIView *> *tiles = [[NSMutableArray alloc] init];
                                 NSMutableArray<UIView *> *cells = [[NSMutableArray alloc] init];
                                 
-                                NSMutableArray<UIView *> *columns = [[NSMutableArray alloc] init];
+                                NSMutableArray<NSMutableArray<UIView *> *> *columns = [[NSMutableArray alloc] init];
                                 for (NSUInteger c = 0; c < columnCount; c++) {
                                     NSMutableArray<UIView *> *column = [[NSMutableArray alloc] init];
                                     [columns addObject:column];
                                 }
-                                NSMutableArray<UIView *> *rows = [[NSMutableArray alloc] init];
+                                NSMutableArray<NSMutableArray<UIView *> *> *rows = [[NSMutableArray alloc] init];
                                 for (NSUInteger r = 0; r < rowCount; r++) {
                                     NSMutableArray<UIView *> *row = [[NSMutableArray alloc] init];
                                     [rows addObject:row];
