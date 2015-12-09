@@ -49,12 +49,12 @@
 
 
 - (BOOL)isKeepActive {
-    if ([self respondsToSelector:@selector(active)]) {
+    if ([self respondsToSelector:@selector(isActive)]) {
         return self.active;
     }
     else {
-        UIView *firstView = self.firstItem;
-        UIView *secondView = self.secondItem;
+        KPView *firstView = self.firstItem;
+        KPView *secondView = self.secondItem;
         KPView *common = [firstView commonSuperview:secondView];
         return [common.constraints containsObject:self];
     }
@@ -77,8 +77,8 @@
     }
     else {
         for (NSLayoutConstraint *constraint in constraints) {
-            UIView *firstView = constraint.firstItem;
-            UIView *secondView = constraint.secondItem;
+            KPView *firstView = constraint.firstItem;
+            KPView *secondView = constraint.secondItem;
             KPView *common = [firstView commonSuperview:secondView];
             if (active) {
                 [common addConstraint:constraint];
