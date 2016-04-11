@@ -198,7 +198,7 @@
                                                                      relatedView:self
                                                           relatedLayoutAttribute:NSLayoutAttributeHeight
                                                                      coefficient:1];
-        [attribute name:@"aspect ration of <%@ %p>", self.class, self];
+        [attribute name:@"aspect ratio of <%@ %p>", self.class, self];
         self.translatesAutoresizingMaskIntoConstraints = NO;
         return attribute;
     }];
