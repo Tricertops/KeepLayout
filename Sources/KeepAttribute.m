@@ -205,16 +205,16 @@
 
 @interface KeepSimpleAttribute ()
 
-@property (nonatomic, readwrite, weak) KPView *view;
-@property (nonatomic, readwrite, assign) NSLayoutAttribute layoutAttribute;
-@property (nonatomic, readwrite, weak) KPView *relatedView;
-@property (nonatomic, readwrite, assign) NSLayoutAttribute relatedLayoutAttribute;
+@property (weak) KPView *view;
+@property NSLayoutAttribute layoutAttribute;
+@property (weak) KPView *relatedView;
+@property NSLayoutAttribute relatedLayoutAttribute;
 
-@property (nonatomic, readwrite, assign) CGFloat coefficient;
+@property CGFloat coefficient;
 
-@property (nonatomic, readwrite, strong) KeepLayoutConstraint *equalConstraint;
-@property (nonatomic, readwrite, strong) KeepLayoutConstraint *maxConstraint;
-@property (nonatomic, readwrite, strong) KeepLayoutConstraint *minConstraint;
+@property KeepLayoutConstraint *equalConstraint;
+@property KeepLayoutConstraint *maxConstraint;
+@property KeepLayoutConstraint *minConstraint;
 
 - (instancetype)initWithView:(KPView *)view
              layoutAttribute:(NSLayoutAttribute)layoutAttribute
@@ -305,18 +305,18 @@
 
 
 - (BOOL)isActive {
-    return (self.equalConstraint.keepActive || self.maxConstraint.keepActive || self.minConstraint.keepActive);
+    return (self.equalConstraint.isKeepActive || self.maxConstraint.isKeepActive || self.minConstraint.isKeepActive);
 }
 
 
 - (void)activateConstraint:(KeepLayoutConstraint *)constraint active:(BOOL)active {
-    if (constraint.keepActive != active) {
+    if (constraint.isKeepActive != active) {
         KeepAtomic *atomic = [KeepAtomic current];
         if (atomic) {
             [atomic addConstraint:constraint active:active];
         }
         else {
-            constraint.keepActive = active;
+            constraint.isKeepActive = active;
         }
     }
 }
@@ -514,7 +514,7 @@
 @interface KeepGroupAttribute ()
 
 
-@property (nonatomic, readwrite, strong) id<NSFastEnumeration> attributes;
+@property id<NSFastEnumeration> attributes;
 
 
 @end
@@ -642,12 +642,12 @@
 
 @interface KeepAtomic ()
 
-@property (nonatomic, readonly, strong) NSMutableSet<KeepAttribute *> *equalAttributes;
-@property (nonatomic, readonly, strong) NSMutableSet<KeepAttribute *> *minAttributes;
-@property (nonatomic, readonly, strong) NSMutableSet<KeepAttribute *> *maxAttributes;
+@property (readonly) NSMutableSet<KeepAttribute *> *equalAttributes;
+@property (readonly) NSMutableSet<KeepAttribute *> *minAttributes;
+@property (readonly) NSMutableSet<KeepAttribute *> *maxAttributes;
 
-@property (nonatomic, readonly, strong) NSMutableArray<NSLayoutConstraint *> *activeConstraints;
-@property (nonatomic, readonly, strong) NSMutableArray<NSLayoutConstraint *> *inactiveConstraints;
+@property (readonly) NSMutableArray<NSLayoutConstraint *> *activeConstraints;
+@property (readonly) NSMutableArray<NSLayoutConstraint *> *inactiveConstraints;
 
 @end
 

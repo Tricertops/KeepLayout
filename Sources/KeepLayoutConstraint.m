@@ -61,7 +61,7 @@
 }
 
 
-- (void)setKeepActive:(BOOL)keepActive {
+- (void)keepActive:(BOOL)keepActive {
     [KeepLayoutConstraint keepConstraints:@[self] active:keepActive];
 }
 

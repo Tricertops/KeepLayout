@@ -14,9 +14,9 @@
 
 
 //! When set to YES, a view with special constraints is installed in the receiver to prevent expanding content width.
-@property (nonatomic, setter=keepHorizontalScrollDisabled:) BOOL keepHorizontalScrollDisabled;
+@property (setter=keepHorizontalScrollDisabled:) BOOL keepHorizontalScrollDisabled;
 //! When set to YES, a view with special constraints is installed in the receiver to prevent expanding content height.
-@property (nonatomic, setter=keepVerticalScrollDisabled:) BOOL keepVerticalScrollDisabled;
+@property (setter=keepVerticalScrollDisabled:) BOOL keepVerticalScrollDisabled;
 
 
 @end

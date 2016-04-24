@@ -968,12 +968,12 @@
 
 
 - (void)addConstraintToCommonSuperview:(NSLayoutConstraint *)constraint {
-    [constraint setKeepActive:YES];
+    [constraint keepActive:YES];
 }
 
 
 - (void)removeConstraintFromCommonSuperview:(NSLayoutConstraint *)constraint {
-    [constraint setKeepActive:NO];
+    [constraint keepActive:NO];
 }
 
 

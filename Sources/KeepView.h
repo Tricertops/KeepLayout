@@ -40,19 +40,19 @@ typedef KeepAttribute *(^KeepRelatedAttributeBlock)(KPView *otherView);
 /// Attributes representing internal size of the receiver.
 
 /// Width of the receiver.
-@property (nonatomic, readonly) KeepAttribute *keepWidth;
+@property (readonly) KeepAttribute *keepWidth;
 
 /// Height of the receiver.
-@property (nonatomic, readonly) KeepAttribute *keepHeight;
+@property (readonly) KeepAttribute *keepHeight;
 
 /// Aspect Ratio of receiver's dimensions in the order Width/Height. For example 16/9 or 4/3.
-@property (nonatomic, readonly) KeepAttribute *keepAspectRatio;
+@property (readonly) KeepAttribute *keepAspectRatio;
 
 /// Relative Width to other view. Value is multiplier of the other view's dimension. Both views must be in the same hierarchy.
-@property (nonatomic, readonly) KeepRelatedAttributeBlock keepWidthTo;
+@property (readonly) KeepRelatedAttributeBlock keepWidthTo;
 
 /// Relative Height to other view. Value is multiplier of the other view's dimension. Both views must be in the same hierarchy.
-@property (nonatomic, readonly) KeepRelatedAttributeBlock keepHeightTo;
+@property (readonly) KeepRelatedAttributeBlock keepHeightTo;
 
 
 
@@ -60,10 +60,10 @@ typedef KeepAttribute *(^KeepRelatedAttributeBlock)(KPView *otherView);
 /// Convenience methods for setting both dimensions at once.
 
 /// Grouped proxy attribute for Width and Height.
-@property (nonatomic, readonly) KeepAttribute *keepSize;
+@property (readonly) KeepAttribute *keepSize;
 
 /// Grouped proxy attribute for Relative Width and Height. Values are multipliers of the other view's dimensions. Both views must be in the same hierarchy.
-@property (nonatomic, readonly) KeepRelatedAttributeBlock keepSizeTo;
+@property (readonly) KeepRelatedAttributeBlock keepSizeTo;
 
 /// Sets custom Width and Height at once with given priority.
 - (void)keepSize:(CGSize)size priority:(KeepPriority)priority;
@@ -80,22 +80,22 @@ typedef KeepAttribute *(^KeepRelatedAttributeBlock)(KPView *otherView);
 /// Attributes representing internal inset of the receiver to its current superview.
 
 /// Left Inset of the receiver in its current superview.
-@property (nonatomic, readonly) KeepAttribute *keepLeftInset;
+@property (readonly) KeepAttribute *keepLeftInset;
 
 /// Right Inset of the receiver in its current superview. Values are inverted to Right-to-Left direction.
-@property (nonatomic, readonly) KeepAttribute *keepRightInset;
+@property (readonly) KeepAttribute *keepRightInset;
 
 /// Leading Inset of the receiver in its current superview. Depends on writing direction.
-@property (nonatomic, readonly) KeepAttribute *keepLeadingInset;
+@property (readonly) KeepAttribute *keepLeadingInset;
 
 /// Trailing Inset of the receiver in its current superview. Values are inverted to Right-to-Left direction. Depends on writing direction.
-@property (nonatomic, readonly) KeepAttribute *keepTrailingInset;
+@property (readonly) KeepAttribute *keepTrailingInset;
 
 /// Top Inset of the receiver in its current superview.
-@property (nonatomic, readonly) KeepAttribute *keepTopInset;
+@property (readonly) KeepAttribute *keepTopInset;
 
 /// Bottom Inset of the receiver in its current superview. Values are inverted to Bottom-to-Top direction.
-@property (nonatomic, readonly) KeepAttribute *keepBottomInset;
+@property (readonly) KeepAttribute *keepBottomInset;
 
 
 
@@ -103,13 +103,13 @@ typedef KeepAttribute *(^KeepRelatedAttributeBlock)(KPView *otherView);
 /// Convenience methods for setting all insets at once.
 
 /// Grouped proxy attribute for Top, Bottom, Left and Right Inset.
-@property (nonatomic, readonly) KeepAttribute *keepInsets;
+@property (readonly) KeepAttribute *keepInsets;
 
 /// Grouped proxy attribute for Left and Right Inset.
-@property (nonatomic, readonly) KeepAttribute *keepHorizontalInsets;
+@property (readonly) KeepAttribute *keepHorizontalInsets;
 
 /// Grouped proxy attribute for Top and Bottom Inset.
-@property (nonatomic, readonly) KeepAttribute *keepVerticalInsets;
+@property (readonly) KeepAttribute *keepVerticalInsets;
 
 /// Sets custom Insets using given priority.
 - (void)keepInsets:(KPEdgeInsets)insets priority:(KeepPriority)priority;
@@ -126,22 +126,22 @@ typedef KeepAttribute *(^KeepRelatedAttributeBlock)(KPView *otherView);
 /// Attributes representing internal inset of the receive to its current superview, taking into account its margin insets.
 
 /// Left Margin Inset of the receiver in its current superview.
-@property (nonatomic, readonly) KeepAttribute *keepLeftMarginInset;
+@property (readonly) KeepAttribute *keepLeftMarginInset;
 
 /// Right Margin Inset of the receiver in its current superview. Values are inverted to Right-to-Left direction.
-@property (nonatomic, readonly) KeepAttribute *keepRightMarginInset;
+@property (readonly) KeepAttribute *keepRightMarginInset;
 
 /// Leading Margin Inset of the receiver in its current superview. Depends on writing direction.
-@property (nonatomic, readonly) KeepAttribute *keepLeadingMarginInset;
+@property (readonly) KeepAttribute *keepLeadingMarginInset;
 
 /// Trailing Margin Inset of the receiver in its current superview. Values are inverted to Right-to-Left direction. Depends on writing direction.
-@property (nonatomic, readonly) KeepAttribute *keepTrailingMarginInset;
+@property (readonly) KeepAttribute *keepTrailingMarginInset;
 
 /// Top Margin Inset of the receiver in its current superview.
-@property (nonatomic, readonly) KeepAttribute *keepTopMarginInset;
+@property (readonly) KeepAttribute *keepTopMarginInset;
 
 /// Bottom Margin Inset of the receiver in its current superview. Values are inverted to Bottom-to-Top direction.
-@property (nonatomic, readonly) KeepAttribute *keepBottomMarginInset;
+@property (readonly) KeepAttribute *keepBottomMarginInset;
 
 
 
@@ -149,13 +149,13 @@ typedef KeepAttribute *(^KeepRelatedAttributeBlock)(KPView *otherView);
 /// Convenience methods for setting all margin insets at once.
 
 /// Grouped proxy attribute for Top, Bottom, Left and Right Margin Inset.
-@property (nonatomic, readonly) KeepAttribute *keepMarginInsets;
+@property (readonly) KeepAttribute *keepMarginInsets;
 
 /// Grouped proxy attribute for Left and Right Margin Inset.
-@property (nonatomic, readonly) KeepAttribute *keepHorizontalMarginInsets;
+@property (readonly) KeepAttribute *keepHorizontalMarginInsets;
 
 /// Grouped proxy attribute for Top and Bottom Margin Inset.
-@property (nonatomic, readonly) KeepAttribute *keepVerticalMarginInsets;
+@property (readonly) KeepAttribute *keepVerticalMarginInsets;
 
 /// Sets custom Margin Insets using given priority.
 - (void)keepMarginInsets:(KPEdgeInsets)insets priority:(KeepPriority)priority;
@@ -172,10 +172,10 @@ typedef KeepAttribute *(^KeepRelatedAttributeBlock)(KPView *otherView);
 /// Attributes representing relative position of the receiver in its current superview.
 
 /// Horizontal Center of the receiver in its current superview (X axis). Value is multiplier of superview's width, so 0.5 is middle.
-@property (nonatomic, readonly) KeepAttribute *keepHorizontalCenter;
+@property (readonly) KeepAttribute *keepHorizontalCenter;
 
 /// Vertical Center of the receiver in its current superview (Y axis). Value is multiplier of superview's height, so 0.5 is middle.
-@property (nonatomic, readonly) KeepAttribute *keepVerticalCenter;
+@property (readonly) KeepAttribute *keepVerticalCenter;
 
 
 
@@ -183,7 +183,7 @@ typedef KeepAttribute *(^KeepRelatedAttributeBlock)(KPView *otherView);
 /// Convenience methods for both center axis at once or with default values.
 
 /// Grouped proxy attribute for Horizontal and Vertical Center. Value is multiplier of superview's dimensions, so 0.5 is middle.
-@property (nonatomic, readonly) KeepAttribute *keepCenter;
+@property (readonly) KeepAttribute *keepCenter;
 
 /// Sets both Center axis to 0.5 with given priority.
 - (void)keepCenteredWithPriority:(KeepPriority)priority;
@@ -218,22 +218,22 @@ typedef KeepAttribute *(^KeepRelatedAttributeBlock)(KPView *otherView);
 /// Attributes representing offset (padding or distance) of two views.
 
 /// Left Offset to other view. Views must be in the same view hierarchy.
-@property (nonatomic, readonly) KeepRelatedAttributeBlock keepLeftOffsetTo;
+@property (readonly) KeepRelatedAttributeBlock keepLeftOffsetTo;
 
 /// Right Offset to other view. Views must be in the same view hierarchy. Identical to Left Offset in reversed direction.
-@property (nonatomic, readonly) KeepRelatedAttributeBlock keepRightOffsetTo;
+@property (readonly) KeepRelatedAttributeBlock keepRightOffsetTo;
 
 /// Leading Offset to other view. Views must be in the same view hierarchy. Depends on writing direction.
-@property (nonatomic, readonly) KeepRelatedAttributeBlock keepLeadingOffsetTo;
+@property (readonly) KeepRelatedAttributeBlock keepLeadingOffsetTo;
 
 /// Trailing Offset to other view. Views must be in the same view hierarchy. Identical to Leading Offset in reversed direction. Depends on writing direction.
-@property (nonatomic, readonly) KeepRelatedAttributeBlock keepTrailingOffsetTo;
+@property (readonly) KeepRelatedAttributeBlock keepTrailingOffsetTo;
 
 /// Top Offset to other view. Views must be in the same view hierarchy.
-@property (nonatomic, readonly) KeepRelatedAttributeBlock keepTopOffsetTo;
+@property (readonly) KeepRelatedAttributeBlock keepTopOffsetTo;
 
 /// Bottom Offset to other view. Views must be in the same view hierarchy. Identical to Top Offset in reversed direction.
-@property (nonatomic, readonly) KeepRelatedAttributeBlock keepBottomOffsetTo;
+@property (readonly) KeepRelatedAttributeBlock keepBottomOffsetTo;
 
 
 
@@ -244,37 +244,37 @@ typedef KeepAttribute *(^KeepRelatedAttributeBlock)(KPView *otherView);
 /// Attributes representing alignment of two views. You align view usually to 0 offset, but this can be changed.
 
 /// Left Alignment with other view. Views must be in the same view hierarchy. Value is offset of the receiver from the other view.
-@property (nonatomic, readonly) KeepRelatedAttributeBlock keepLeftAlignTo;
+@property (readonly) KeepRelatedAttributeBlock keepLeftAlignTo;
 
 /// Right Alignment with other view. Views must be in the same view hierarchy. Value is offset of the receiver from the other view. Values are inverted to Right-to-Left direction.
-@property (nonatomic, readonly) KeepRelatedAttributeBlock keepRightAlignTo;
+@property (readonly) KeepRelatedAttributeBlock keepRightAlignTo;
 
 /// Leading Alignment with other view. Views must be in the same view hierarchy. Value is offset of the receiver from the other view. Depends on writing direction.
-@property (nonatomic, readonly) KeepRelatedAttributeBlock keepLeadingAlignTo;
+@property (readonly) KeepRelatedAttributeBlock keepLeadingAlignTo;
 
 /// Trailing Alignment with other view. Views must be in the same view hierarchy. Value is offset of the receiver from the other view. Values are inverted to Right-to-Left direction. Depends on writing direction.
-@property (nonatomic, readonly) KeepRelatedAttributeBlock keepTrailingAlignTo;
+@property (readonly) KeepRelatedAttributeBlock keepTrailingAlignTo;
 
 /// Top Alignment with other view. Views must be in the same view hierarchy. Value is offset of the receiver from the other view.
-@property (nonatomic, readonly) KeepRelatedAttributeBlock keepTopAlignTo;
+@property (readonly) KeepRelatedAttributeBlock keepTopAlignTo;
 
 /// Bottom Alignment with other view. Views must be in the same view hierarchy. Value is offset of the receiver from the other view. Values are inverted to Bottom-to-Top direction.
-@property (nonatomic, readonly) KeepRelatedAttributeBlock keepBottomAlignTo;
+@property (readonly) KeepRelatedAttributeBlock keepBottomAlignTo;
 
 /// Vertical Center Alignment with other view, modifies the X position. Views must be in the same view hierarchy. Value is offset of the receiver from the other view.
-@property (nonatomic, readonly) KeepRelatedAttributeBlock keepVerticalAlignTo;
+@property (readonly) KeepRelatedAttributeBlock keepVerticalAlignTo;
 
 /// Horizontal Center Alignment with other view, modifies the Y position. Views must be in the same view hierarchy. Value is offset of the receiver from the other view.
-@property (nonatomic, readonly) KeepRelatedAttributeBlock keepHorizontalAlignTo;
+@property (readonly) KeepRelatedAttributeBlock keepHorizontalAlignTo;
 
 /// Baseline Alignments with two views. Not all views have baselines. Values are inverted to Bottom-to-Top direction, so positive offset moves the receiver up.
-@property (nonatomic, readonly) KeepRelatedAttributeBlock keepBaselineAlignTo __deprecated_msg("You should use .keepFirstBaselineAlignTo or .keepLastBaselineAlignTo");
+@property (readonly) KeepRelatedAttributeBlock keepBaselineAlignTo __deprecated_msg("You should use .keepFirstBaselineAlignTo or .keepLastBaselineAlignTo");
 
 /// First Baseline Alignments of two views. Not all views have baselines. Values are inverted to Bottom-to-Top direction, so positive offset moves the receiver up.
-@property (nonatomic, readonly) KeepRelatedAttributeBlock keepFirstBaselineAlignTo;
+@property (readonly) KeepRelatedAttributeBlock keepFirstBaselineAlignTo;
 
 /// Last Baseline Alignments of two views. Not all views have baselines. Values are inverted to Bottom-to-Top direction, so positive offset moves the receiver up.
-@property (nonatomic, readonly) KeepRelatedAttributeBlock keepLastBaselineAlignTo;
+@property (readonly) KeepRelatedAttributeBlock keepLastBaselineAlignTo;
 
 
 
@@ -282,10 +282,10 @@ typedef KeepAttribute *(^KeepRelatedAttributeBlock)(KPView *otherView);
 /// Convenience methods for setting multiple alignments at once.
 
 /// Grouped proxy attribute for Top, Left, Bottom and Right Alignment with other view.
-@property (nonatomic, readonly) KeepRelatedAttributeBlock keepEdgeAlignTo;
+@property (readonly) KeepRelatedAttributeBlock keepEdgeAlignTo;
 
 /// Grouped proxy attribute for Center X and Center Y Alignment with other view.
-@property (nonatomic, readonly) KeepRelatedAttributeBlock keepCenterAlignTo;
+@property (readonly) KeepRelatedAttributeBlock keepCenterAlignTo;
 
 /// Sets all 4 edge alignments with other view with given insets and priority.
 - (void)keepEdgeAlignTo:(KPView *)view insets:(KPEdgeInsets)insets withPriority:(KeepPriority)priority __deprecated_msg("Use .keepEdgeAlignTo(view) instead");

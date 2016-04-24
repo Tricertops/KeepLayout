@@ -15,7 +15,7 @@
 
 #pragma mark Debugging
 /// Debugging helper. Name of the constraint is a part of its `-description`
-@property (nonatomic, readwrite, copy) NSString *name;
+@property (copy) NSString *name;
 - (instancetype)name:(NSString *)format, ... NS_FORMAT_FUNCTION(1, 2);
 
 - (NSString *)description;
@@ -27,7 +27,7 @@
 
 @interface NSLayoutConstraint (Activation)
 
-@property (getter=isKeepActive) BOOL keepActive;
+@property (setter=keepActive:) BOOL isKeepActive;
 + (void)keepConstraints:(NSArray<NSLayoutConstraint *> *)constraints active:(BOOL)active;
 
 @end
