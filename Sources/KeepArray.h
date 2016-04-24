@@ -248,13 +248,13 @@
 /// Convenience methods applied to whole array, in the order they are in array.
 
 /// All contained views will share the same Horizontal Offset (left to right) using given priority. First view will keep Right Offset to second view and so on.
-- (void)keepHorizontalOffsets:(KeepValue)value;
+- (void)keepHorizontalOffsets:(KeepValue)value KEEP_SWIFT_AWAY;
 
 /// All contained views will share the same Leading Offset (depends on writing direction) using given priority. First view will keep Leading Offset to second view and so on.
-- (void)keepLeadingOffsets:(KeepValue)value;
+- (void)keepLeadingOffsets:(KeepValue)value KEEP_SWIFT_AWAY;
 
 /// All contained views will share the same Vertical Offset (top to bottom) using given priority. First view will keep Bottom Offset to second view and so on.
-- (void)keepVerticalOffsets:(KeepValue)value;
+- (void)keepVerticalOffsets:(KeepValue)value KEEP_SWIFT_AWAY;
 
 
 
@@ -307,67 +307,61 @@
 /// Convenience methods applied to whole array, in the order they are in array.
 
 /// All contained views will share the same Left Alignment. First view will keep Left Alignment (with offset) with second view and so on.
-- (void)keepLeftAlignments:(KeepValue)value;
+- (void)keepLeftAlignments:(KeepValue)value KEEP_SWIFT_AWAY;
 
 /// All contained views will be aligned to the left. First view will keep Left Alignment with second view and so on.
 - (void)keepLeftAligned;
 
 /// All contained views will share the same Right Alignment. First view will keep Right Alignment (with offset) with second view and so on.
-- (void)keepRightAlignments:(KeepValue)value;
+- (void)keepRightAlignments:(KeepValue)value KEEP_SWIFT_AWAY;
 
 /// All contained views will be aligned to the right. First view will keep Right Alignment with second view and so on.
 - (void)keepRightAligned;
 
 /// All contained views will share the same Leading Alignment. First view will keep Leading Alignment (with offset) with second view and so on.
-- (void)keepLeadingAlignments:(KeepValue)value;
+- (void)keepLeadingAlignments:(KeepValue)value KEEP_SWIFT_AWAY;
 
 /// All contained views will be aligned to the leading side. First view will keep Leading Alignment with second view and so on.
 - (void)keepLeadingAligned;
 
 /// All contained views will share the same Trailing Alignment. First view will keep Trailing Alignment (with offset) with second view and so on.
-- (void)keepTrailingAlignments:(KeepValue)value;
+- (void)keepTrailingAlignments:(KeepValue)value KEEP_SWIFT_AWAY;
 
 /// All contained views will be aligned to the trailing side. First view will keep Trailing Alignment with second view and so on.
 - (void)keepTrailingAligned;
 
 /// All contained views will share the same Top Alignment. First view will keep Top Alignment (with offset) with second view and so on.
-- (void)keepTopAlignments:(KeepValue)value;
+- (void)keepTopAlignments:(KeepValue)value KEEP_SWIFT_AWAY;
 
 /// All contained views will be aligned to the top. First view will keep Top Alignment with second view and so on.
 - (void)keepTopAligned;
 
 /// All contained views will share the same Bottom Alignment. First view will keep Bottom Alignment (with offset) with second view and so on.
-- (void)keepBottomAlignments:(KeepValue)value;
+- (void)keepBottomAlignments:(KeepValue)value KEEP_SWIFT_AWAY;
 
 /// All contained views will be aligned to the bottom. First view will keep Bottom Alignment with second view and so on.
 - (void)keepBottomAligned;
 
 /// All contained views will share the same Vertical Center Alignment. First view will keep Vertical Center Alignment (with offset) with second view and so on.
-- (void)keepVerticalAlignments:(KeepValue)value;
+- (void)keepVerticalAlignments:(KeepValue)value KEEP_SWIFT_AWAY;
 
 /// All contained views will vertically aligned. First view will keep Vertical Center Alignment with second view and so on.
 - (void)keepVerticallyAligned;
 
 /// All contained views will share the same Horizontal Center Alignment. First view will keep Horizontal Center Alignment (with offset) with second view and so on.
-- (void)keepHorizontalAlignments:(KeepValue)value;
+- (void)keepHorizontalAlignments:(KeepValue)value KEEP_SWIFT_AWAY;
 
 /// All contained views will horizontally aligned. First view will keep Horizontal Center Alignment with second view and so on.
 - (void)keepHorizontallyAligned;
 
-/// All contained views will share the same Baseline Alignment. First view will keep Baseline Alignment (with offset) with second view and so on.
-- (void)keepBaselineAlignments:(KeepValue)value __deprecated_msg("You should use -keepFirstBaselineAlignments: or -keepLastBaselineAlignments:");
-
-/// All contained views will be baseline aligned. First view will keep Baseline Alignment with second view and so on.
-- (void)keepBaselineAligned __deprecated_msg("You should use -keepFirstBaselineAligned or -keepLastBaselineAligned");
-
 /// All contained views will share the same First Baseline Alignment. First view will keep First Baseline Alignment (with offset) with second view and so on.
-- (void)keepFirstBaselineAlignments:(KeepValue)value;
+- (void)keepFirstBaselineAlignments:(KeepValue)value KEEP_SWIFT_AWAY;
 
 /// All contained views will be aligned to their first baseline. First view will keep First Baseline Alignment with second view and so on.
 - (void)keepFirstBaselineAligned;
 
 /// All contained views will share the same Last Baseline Alignment. First view will keep Last Baseline Alignment (with offset) with second view and so on.
-- (void)keepLastBaselineAlignments:(KeepValue)value;
+- (void)keepLastBaselineAlignments:(KeepValue)value KEEP_SWIFT_AWAY;
 
 /// All contained views will aligned to their last baseline. First view will keep Last Baseline Alignment with second view and so on.
 - (void)keepLastBaselineAligned;

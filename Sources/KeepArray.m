@@ -580,11 +580,6 @@
 }
 
 
-- (void)keepBaselineAlignments:(KeepValue)value {
-    [self keep_alignedSelector:_cmd invokeSelector:@selector(keepBaselineAlignTo) value:value];
-}
-
-
 - (void)keepFirstBaselineAlignments:(KeepValue)value {
     [self keep_alignedSelector:_cmd invokeSelector:@selector(keepFirstBaselineAlignTo) value:value];
 }
@@ -632,11 +627,6 @@
 
 - (void)keepHorizontallyAligned {
     [self keep_alignedSelector:_cmd invokeSelector:@selector(keepHorizontalAlignTo) value:0];
-}
-
-
-- (void)keepBaselineAligned {
-    [self keep_alignedSelector:_cmd invokeSelector:@selector(keepBaselineAlignTo) value:0];
 }
 
 
