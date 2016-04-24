@@ -50,6 +50,7 @@
 		5B92B7681CCCD7F6002C1C3B /* UIScrollView+KeepLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BB485AB1A14D3D800AB82BE /* UIScrollView+KeepLayout.m */; };
 		5B92B7771CCCD954002C1C3B /* KeepLayout.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B92B7501CCCD5B0002C1C3B /* KeepLayout.framework */; };
 		5B92B7781CCCD954002C1C3B /* KeepLayout.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5B92B7501CCCD5B0002C1C3B /* KeepLayout.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5B92B77D1CCD01D0002C1C3B /* KeepLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B92B77C1CCD01D0002C1C3B /* KeepLayout.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -130,6 +131,7 @@
 		5B6D19671777811600FA2E3E /* KPLExample.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPLExample.m; sourceTree = "<group>"; };
 		5B92B7501CCCD5B0002C1C3B /* KeepLayout.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KeepLayout.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B92B7581CCCD65C002C1C3B /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5B92B77C1CCD01D0002C1C3B /* KeepLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeepLayout.swift; sourceTree = "<group>"; };
 		5B96279117984366005531F4 /* KeepLayoutConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeepLayoutConstraint.h; sourceTree = "<group>"; };
 		5B96279217984366005531F4 /* KeepLayoutConstraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeepLayoutConstraint.m; sourceTree = "<group>"; };
 		5BB485AA1A14D3D800AB82BE /* UIScrollView+KeepLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+KeepLayout.h"; sourceTree = "<group>"; };
@@ -281,6 +283,7 @@
 				5B00E1FC193F9BD900535B19 /* UIViewController+KeepLayout.m */,
 				5BB485AA1A14D3D800AB82BE /* UIScrollView+KeepLayout.h */,
 				5BB485AB1A14D3D800AB82BE /* UIScrollView+KeepLayout.m */,
+				5B92B77C1CCD01D0002C1C3B /* KeepLayout.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -392,6 +395,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = KPL;
+				LastSwiftUpdateCheck = 0730;
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Martin Kiss";
 				TargetAttributes = {
@@ -499,6 +503,7 @@
 				5B92B7681CCCD7F6002C1C3B /* UIScrollView+KeepLayout.m in Sources */,
 				5B92B7601CCCD7DF002C1C3B /* KeepArray.m in Sources */,
 				5B92B75E1CCCD7D2002C1C3B /* KeepView.m in Sources */,
+				5B92B77D1CCD01D0002C1C3B /* KeepLayout.swift in Sources */,
 				5B92B7621CCCD7E6002C1C3B /* KeepAttribute.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -741,6 +746,7 @@
 		5B3C509816B5304600D00BF3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Example/Prefix.pch;
 				INFOPLIST_FILE = "$(SRCROOT)/Example/Info.plist";
@@ -758,6 +764,7 @@
 		5B3C509916B5304600D00BF3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Example/Prefix.pch;
 				INFOPLIST_FILE = "$(SRCROOT)/Example/Info.plist";
@@ -776,6 +783,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -788,6 +796,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.Tricertops.KeepLayout;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -795,6 +804,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ENABLE_MODULES = YES;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
