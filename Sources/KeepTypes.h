@@ -110,3 +110,12 @@ extern KeepValue KeepFitting(CGFloat);
 extern NSString *KeepValueDescription(KeepValue);
 
 
+
+#pragma mark Swift Compatibility
+
+typedef struct {
+    CGFloat value;
+    KeepPriority priority;
+} KeepValue_Decomposed;
+
+

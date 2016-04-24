@@ -25,15 +25,22 @@
 
 #pragma mark Values
 /// Value with priority to be applied to underlaying constraints.
-@property (nonatomic, readwrite, assign) KeepValue equal; /// Constraint with relation Equal
-@property (nonatomic, readwrite, assign) KeepValue max; /// Constraint with relation GreaterThanOrEqual
-@property (nonatomic, readwrite, assign) KeepValue min; /// Constraint with relation LessThanOrEqual
-
+@property (nonatomic, readwrite, assign) KeepValue equal; ///< Constraint with relation Equal
+@property (nonatomic, readwrite, assign) KeepValue max; ///< Constraint with relation GreaterThanOrEqual
+@property (nonatomic, readwrite, assign) KeepValue min; ///< Constraint with relation LessThanOrEqual
 
 - (void)keepAt:(KeepValue)equal min:(KeepValue)min;
 - (void)keepAt:(KeepValue)equal max:(KeepValue)max;
 - (void)keepAt:(KeepValue)equal min:(KeepValue)min max:(KeepValue)max;
 - (void)keepMin:(KeepValue)min max:(KeepValue)max;
+
+
+#pragma mark Swift Compatibility
+/// Don’t use these directly. They are exposed for Swift extension to avoid KeepValue type.
+
+@property (nonatomic, readwrite, assign) KeepValue_Decomposed decomposed_equal;
+@property (nonatomic, readwrite, assign) KeepValue_Decomposed decomposed_max;
+@property (nonatomic, readwrite, assign) KeepValue_Decomposed decomposed_min;
 
 
 #pragma mark Activation

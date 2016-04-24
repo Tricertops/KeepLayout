@@ -66,6 +66,54 @@
 
 
 
+#pragma mark Swift Compatibility
+
+
+- (KeepValue_Decomposed)decomposed_equal {
+    KeepValue equal = self.equal;
+    return (KeepValue_Decomposed){
+        .value = equal,
+        .priority = KeepValueGetPriority(equal),
+    };
+}
+
+
+- (KeepValue_Decomposed)decomposed_min {
+    KeepValue min = self.min;
+    return (KeepValue_Decomposed){
+        .value = min,
+        .priority = KeepValueGetPriority(min),
+    };
+}
+
+
+- (KeepValue_Decomposed)decomposed_max {
+    KeepValue max = self.max;
+    return (KeepValue_Decomposed){
+        .value = max,
+        .priority = KeepValueGetPriority(max),
+    };
+}
+
+
+- (void)setDecomposed_equal:(KeepValue_Decomposed)decomposed {
+    self.equal = KeepValueMake(decomposed.value, decomposed.priority);
+}
+
+
+- (void)setDecomposed_min:(KeepValue_Decomposed)decomposed {
+    self.min = KeepValueMake(decomposed.value, decomposed.priority);
+}
+
+
+- (void)setDecomposed_max:(KeepValue_Decomposed)decomposed {
+    self.max = KeepValueMake(decomposed.value, decomposed.priority);
+}
+
+
+
+
+
 #pragma mark Activation
 
 
