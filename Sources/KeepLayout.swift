@@ -6,8 +6,6 @@
 //  Copyright © 2016 Martin Kiss. All rights reserved.
 //
 
-import Foundation
-
 
 
 //MARK: KeepAttribute + Swift
@@ -32,6 +30,31 @@ public extension KeepValue {
     var priority: KeepPriority {
         return KeepPriorityRequired
     }
+    var isNone: Bool {
+        return isnan(self.value)
+    }
+}
+
+/// Value, that represents no value. KeepNone.isNone will return true.
+public let KeepNone: KeepValue = KeepValue_Decomposed(value: CGFloat.NaN, priority: 0)
+
+/// Constructor with arbitrary priority.
+public func KeepValueMake(value: KeepValue, _ priority: KeepPriority) -> KeepValue {
+    return KeepValue_Decomposed(value: value.value, priority: priority)
+}
+
+/// Constructors for 4 basic priorities
+public func KeepRequired(value: KeepValue) -> KeepValue {
+    return KeepValueMake(value, KeepPriorityRequired)
+}
+public func KeepHigh(value: KeepValue) -> KeepValue {
+    return KeepValueMake(value, KeepPriorityHigh)
+}
+public func KeepLow(value: KeepValue) -> KeepValue {
+    return KeepValueMake(value, KeepPriorityLow)
+}
+public func KeepFitting(value: KeepValue) -> KeepValue {
+    return KeepValueMake(value, KeepPriorityFitting)
 }
 
 
@@ -67,7 +90,6 @@ extension UInt: KeepValue {
         return CGFloat(self)
     }
 }
-
 
 
 

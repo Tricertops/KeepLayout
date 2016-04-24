@@ -25,9 +25,9 @@
 
 #pragma mark Values
 /// Value with priority to be applied to underlaying constraints.
-@property KeepValue equal KEEP_SWIFT_AWAY; ///< Constraint with relation Equal
-@property KeepValue max KEEP_SWIFT_AWAY; ///< Constraint with relation GreaterThanOrEqual
-@property KeepValue min KEEP_SWIFT_AWAY; ///< Constraint with relation LessThanOrEqual
+@property KeepValue equal KEEP_SWIFT_AWAY NS_SWIFT_NAME(incompatible_equal); ///< Constraint with relation Equal
+@property KeepValue max KEEP_SWIFT_AWAY NS_SWIFT_NAME(incompatible_max); ///< Constraint with relation GreaterThanOrEqual
+@property KeepValue min KEEP_SWIFT_AWAY NS_SWIFT_NAME(incompatible_min); ///< Constraint with relation LessThanOrEqual
 
 - (void)keepAt:(KeepValue)equal min:(KeepValue)min KEEP_SWIFT_AWAY;
 - (void)keepAt:(KeepValue)equal max:(KeepValue)max KEEP_SWIFT_AWAY;
