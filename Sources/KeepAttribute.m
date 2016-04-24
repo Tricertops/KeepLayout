@@ -38,39 +38,76 @@
 #pragma mark Values
 
 
-- (void)keepAt:(CGFloat)equalHigh min:(CGFloat)minRequired {
-    self.equal = KeepHigh(equalHigh);
-    self.min = KeepRequired(minRequired);
+- (void)keepAt:(KeepValue)equal min:(KeepValue)min {
+    self.equal = KeepValueSetDefaultPriority(equal, KeepPriorityHigh);
+    self.min = min;
 }
 
 
-- (void)keepAt:(CGFloat)equalHigh max:(CGFloat)maxRequired {
-    self.equal = KeepHigh(equalHigh);
-    self.max = KeepRequired(maxRequired);
+- (void)keepAt:(KeepValue)equal max:(KeepValue)max {
+    self.equal = KeepValueSetDefaultPriority(equal, KeepPriorityHigh);
+    self.max = max;
 }
 
 
-- (void)keepAt:(CGFloat)equalHigh min:(CGFloat)minRequired max:(CGFloat)maxRequired {
-    self.equal = KeepHigh(equalHigh);
-    self.min = KeepRequired(minRequired);
-    self.max = KeepRequired(maxRequired);
+- (void)keepAt:(KeepValue)equal min:(KeepValue)min max:(KeepValue)max {
+    self.equal = KeepValueSetDefaultPriority(equal, KeepPriorityHigh);
+    self.min = min;
+    self.max = max;
 }
 
 
-- (void)keepMin:(CGFloat)minRequired max:(CGFloat)maxRequired {
-    self.min = KeepRequired(minRequired);
-    self.max = KeepRequired(maxRequired);
+- (void)keepMin:(KeepValue)min max:(KeepValue)max {
+    self.min = min;
+    self.max = max;
 }
 
 
-- (CGFloat)required {
+
+
+
+#pragma mark Swift Compatibility
+
+
+- (KeepValue_Decomposed)decomposed_equal {
     KeepValue equal = self.equal;
-    return (KeepValueGetPriority(equal) == KeepPriorityRequired? equal.value : NAN);
+    return (KeepValue_Decomposed){
+        .value = equal,
+        .priority = KeepValueGetPriority(equal),
+    };
 }
 
 
-- (void)setRequired:(CGFloat)value {
-    self.equal = KeepRequired(value);
+- (KeepValue_Decomposed)decomposed_min {
+    KeepValue min = self.min;
+    return (KeepValue_Decomposed){
+        .value = min,
+        .priority = KeepValueGetPriority(min),
+    };
+}
+
+
+- (KeepValue_Decomposed)decomposed_max {
+    KeepValue max = self.max;
+    return (KeepValue_Decomposed){
+        .value = max,
+        .priority = KeepValueGetPriority(max),
+    };
+}
+
+
+- (void)setDecomposed_equal:(KeepValue_Decomposed)decomposed {
+    self.equal = KeepValueMake(decomposed.value, decomposed.priority);
+}
+
+
+- (void)setDecomposed_min:(KeepValue_Decomposed)decomposed {
+    self.min = KeepValueMake(decomposed.value, decomposed.priority);
+}
+
+
+- (void)setDecomposed_max:(KeepValue_Decomposed)decomposed {
+    self.max = KeepValueMake(decomposed.value, decomposed.priority);
 }
 
 
@@ -91,11 +128,6 @@
 }
 
 
-- (void)remove {
-    [self deactivate];
-}
-
-
 
 
 
@@ -106,7 +138,7 @@
     va_list list;
     va_start(list, first);
     
-    NSMutableArray *attributes = [[NSMutableArray alloc] init];
+    NSMutableArray<KeepAttribute *> *attributes = [[NSMutableArray alloc] init];
     KeepAttribute *attribute = first;
     while (attribute) {
         [attributes addObject:attribute];
@@ -173,16 +205,16 @@
 
 @interface KeepSimpleAttribute ()
 
-@property (nonatomic, readwrite, weak) KPView *view;
-@property (nonatomic, readwrite, assign) NSLayoutAttribute layoutAttribute;
-@property (nonatomic, readwrite, weak) KPView *relatedView;
-@property (nonatomic, readwrite, assign) NSLayoutAttribute relatedLayoutAttribute;
+@property (weak) KPView *view;
+@property NSLayoutAttribute layoutAttribute;
+@property (weak) KPView *relatedView;
+@property NSLayoutAttribute relatedLayoutAttribute;
 
-@property (nonatomic, readwrite, assign) CGFloat coefficient;
+@property CGFloat coefficient;
 
-@property (nonatomic, readwrite, strong) KeepLayoutConstraint *equalConstraint;
-@property (nonatomic, readwrite, strong) KeepLayoutConstraint *maxConstraint;
-@property (nonatomic, readwrite, strong) KeepLayoutConstraint *minConstraint;
+@property KeepLayoutConstraint *equalConstraint;
+@property KeepLayoutConstraint *maxConstraint;
+@property KeepLayoutConstraint *minConstraint;
 
 - (instancetype)initWithView:(KPView *)view
              layoutAttribute:(NSLayoutAttribute)layoutAttribute
@@ -273,18 +305,18 @@
 
 
 - (BOOL)isActive {
-    return (self.equalConstraint.keepActive || self.maxConstraint.keepActive || self.minConstraint.keepActive);
+    return (self.equalConstraint.isKeepActive || self.maxConstraint.isKeepActive || self.minConstraint.isKeepActive);
 }
 
 
 - (void)activateConstraint:(KeepLayoutConstraint *)constraint active:(BOOL)active {
-    if (constraint.keepActive != active) {
+    if (constraint.isKeepActive != active) {
         KeepAtomic *atomic = [KeepAtomic current];
         if (atomic) {
             [atomic addConstraint:constraint active:active];
         }
         else {
-            constraint.keepActive = active;
+            constraint.isKeepActive = active;
         }
     }
 }
@@ -294,11 +326,6 @@
     self.equal = KeepNone;
     self.max = KeepNone;
     self.min = KeepNone;
-}
-
-
-- (void)remove {
-    [self deactivate];
 }
 
 
@@ -354,12 +381,12 @@
 
 - (void)setNameForConstraint:(KeepLayoutConstraint *)constraint relation:(NSLayoutRelation)relation value:(KeepValue)value {
 #ifdef DEBUG
-    NSDictionary *relationNames = @{
-                                    @(NSLayoutRelationEqual) : @"equal to",
-                                    @(NSLayoutRelationGreaterThanOrEqual) : @"at least",
-                                    @(NSLayoutRelationLessThanOrEqual) : @"at most",
-                                    };
-    [constraint name:@"%@ %@ %@ with %@ priority", self.name, [relationNames objectForKey:@(relation)], @(value.value), KeepPriorityDescription(value.priority)];
+    NSDictionary<NSNumber *, NSString *> *relationNames = @{
+                                                            @(NSLayoutRelationEqual) : @"equal to",
+                                                            @(NSLayoutRelationGreaterThanOrEqual) : @"at least",
+                                                            @(NSLayoutRelationLessThanOrEqual) : @"at most",
+                                                            };
+    [constraint name:@"%@ %@ %@ with %@ priority", self.name, [relationNames objectForKey:@(relation)], @((double)value), KeepPriorityDescription(KeepValueGetPriority(value))];
 #endif
 }
 
@@ -398,8 +425,8 @@
     KeepLayoutConstraint *constraint = [KeepLayoutConstraint constraintWithItem:self.view attribute:self.layoutAttribute
                                                                     relatedBy:relation
                                                                        toItem:self.relatedView attribute:self.relatedLayoutAttribute
-                                                                   multiplier:1 constant:value.value * self.coefficient];
-    constraint.priority = value.priority;
+                                                                   multiplier:1 constant:value * self.coefficient];
+    constraint.priority = KeepValueGetPriority(value);
     return constraint;
 }
 
@@ -417,7 +444,7 @@
     else if ( ! isRequired) {
         constraint.priority = KeepValueGetPriority(value);
     }
-    constraint.constant = value.value * self.coefficient;
+    constraint.constant = value * self.coefficient;
     
     return constraint;
 }
@@ -454,7 +481,7 @@
     KeepLayoutConstraint *constraint = [KeepLayoutConstraint constraintWithItem:self.view attribute:self.layoutAttribute
                                                                     relatedBy:relation
                                                                        toItem:self.relatedView attribute:self.relatedLayoutAttribute
-                                                                   multiplier:value.value * self.coefficient constant:0];
+                                                                   multiplier:value * self.coefficient constant:0];
     constraint.priority = KeepValueGetPriority(value);
     return constraint;
 }
@@ -487,7 +514,7 @@
 @interface KeepGroupAttribute ()
 
 
-@property (nonatomic, readwrite, strong) id<NSFastEnumeration> attributes;
+@property id<NSFastEnumeration> attributes;
 
 
 @end
@@ -615,12 +642,12 @@
 
 @interface KeepAtomic ()
 
-@property (nonatomic, readonly, strong) NSMutableSet *equalAttributes;
-@property (nonatomic, readonly, strong) NSMutableSet *minAttributes;
-@property (nonatomic, readonly, strong) NSMutableSet *maxAttributes;
+@property (readonly) NSMutableSet<KeepAttribute *> *equalAttributes;
+@property (readonly) NSMutableSet<KeepAttribute *> *minAttributes;
+@property (readonly) NSMutableSet<KeepAttribute *> *maxAttributes;
 
-@property (nonatomic, readonly, strong) NSMutableArray *activeConstraints;
-@property (nonatomic, readonly, strong) NSMutableArray *inactiveConstraints;
+@property (readonly) NSMutableArray<NSLayoutConstraint *> *activeConstraints;
+@property (readonly) NSMutableArray<NSLayoutConstraint *> *inactiveConstraints;
 
 @end
 
@@ -657,8 +684,8 @@
     [KeepAtomic setCurrent:atomic];
     block();
     [KeepAtomic setCurrent:nil];
-    [NSLayoutConstraint keepConstraints:atomic.activeConstraints active:YES];
     [NSLayoutConstraint keepConstraints:atomic.inactiveConstraints active:NO];
+    [NSLayoutConstraint keepConstraints:atomic.activeConstraints active:YES];
     [atomic.activeConstraints removeAllObjects];
     [atomic.inactiveConstraints removeAllObjects];
     return atomic;
@@ -671,7 +698,7 @@
 #pragma mark Building
 
 
-static NSMutableArray *KeepAtomicStack = nil;
+static NSMutableArray<KeepAtomic *> *KeepAtomicStack = nil;
 
 
 + (KeepAtomic *)current {

@@ -25,24 +25,29 @@
 
 #pragma mark Values
 /// Value with priority to be applied to underlaying constraints.
-@property (nonatomic, readwrite, assign) KeepValue equal; /// Constraint with relation Equal
-@property (nonatomic, readwrite, assign) KeepValue max; /// Constraint with relation GreaterThanOrEqual
-@property (nonatomic, readwrite, assign) KeepValue min; /// Constraint with relation LessThanOrEqual
+@property KeepValue equal KEEP_SWIFT_AWAY NS_SWIFT_NAME(incompatible_equal); ///< Constraint with relation Equal
+@property KeepValue max KEEP_SWIFT_AWAY NS_SWIFT_NAME(incompatible_max); ///< Constraint with relation GreaterThanOrEqual
+@property KeepValue min KEEP_SWIFT_AWAY NS_SWIFT_NAME(incompatible_min); ///< Constraint with relation LessThanOrEqual
 
-@property (nonatomic, readwrite, assign) CGFloat required; /// Proxy for Equal relation with Required priority.
+- (void)keepAt:(KeepValue)equal min:(KeepValue)min KEEP_SWIFT_AWAY;
+- (void)keepAt:(KeepValue)equal max:(KeepValue)max KEEP_SWIFT_AWAY;
+- (void)keepAt:(KeepValue)equal min:(KeepValue)min max:(KeepValue)max KEEP_SWIFT_AWAY;
+- (void)keepMin:(KeepValue)min max:(KeepValue)max KEEP_SWIFT_AWAY;
 
-- (void)keepAt:(CGFloat)equalHigh min:(CGFloat)minRequired;
-- (void)keepAt:(CGFloat)equalHigh max:(CGFloat)maxRequired;
-- (void)keepAt:(CGFloat)equalHigh min:(CGFloat)minRequired max:(CGFloat)maxRequired;
-- (void)keepMin:(CGFloat)minRequired max:(CGFloat)maxRequired;
+
+#pragma mark Swift Compatibility
+/// Don’t use these directly. They are exposed for Swift extension to avoid KeepValue type.
+
+@property KeepValue_Decomposed decomposed_equal;
+@property KeepValue_Decomposed decomposed_max;
+@property KeepValue_Decomposed decomposed_min;
 
 
 #pragma mark Activation
 /// Whether at least one constraint is active.
-@property (nonatomic, readonly) BOOL isActive;
+@property (readonly) BOOL isActive;
 /// Disables all managed constraints.
 - (void)deactivate;
-- (void)remove __deprecated_msg("Use -deactivate");
 
 
 #pragma mark Grouping
@@ -54,7 +59,7 @@
 
 #pragma mark Debugging
 /// Debugging helper. Name of attribute is a part of its `-description`
-@property (nonatomic, readwrite, copy) NSString *name;
+@property (copy) NSString *name;
 - (instancetype)name:(NSString *)format, ... NS_FORMAT_FUNCTION(1, 2);
 
 
@@ -96,7 +101,7 @@ __deprecated_msg("Use KeepAtomic")
       relatedLayoutAttribute:(NSLayoutAttribute)relatedLayoutAttribute
                  coefficient:(CGFloat)coefficient;
 /// Multiplier of values: equal, min and max
-@property (nonatomic, readonly, assign) CGFloat coefficient;
+@property (readonly) CGFloat coefficient;
 
 @end
 
@@ -121,7 +126,7 @@ __deprecated_msg("Use KeepAtomic")
 @interface KeepGroupAttribute : KeepAttribute
 
 - (instancetype)initWithAttributes:(id<NSFastEnumeration>)attributes;
-@property (nonatomic, readonly, strong) id<NSFastEnumeration> attributes;
+@property (readonly) id<NSFastEnumeration> attributes;
 
 @end
 

@@ -36,7 +36,7 @@
         disablingView.backgroundColor = [UIColor clearColor];
         [self insertSubview:disablingView atIndex:0];
         
-        disablingView.keepInsets.equal = KeepRequired(0);
+        disablingView.keepInsets.equal = 0;
     }
     return disablingView;
 }
@@ -51,7 +51,7 @@
 
 - (void)keepHorizontalScrollDisabled:(BOOL)disabled {
     UIView *disablingView = [self keepScrollDisablingView];
-    disablingView.keepWidthTo(self).equal = (disabled? KeepRequired(1) : KeepNone);
+    disablingView.keepWidthTo(self).equal = (disabled? 1 : KeepNone);
 }
 
 
@@ -64,7 +64,7 @@
 
 - (void)keepVerticalScrollDisabled:(BOOL)disabled {
     UIView *disablingView = [self keepScrollDisablingView];
-    disablingView.keepHeightTo(self).equal = (disabled? KeepRequired(1) : KeepNone);
+    disablingView.keepHeightTo(self).equal = (disabled? 1 : KeepNone);
 }
 
 

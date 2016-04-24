@@ -198,7 +198,7 @@
                                                                      relatedView:self
                                                           relatedLayoutAttribute:NSLayoutAttributeHeight
                                                                      coefficient:1];
-        [attribute name:@"aspect ration of <%@ %p>", self.class, self];
+        [attribute name:@"aspect ratio of <%@ %p>", self.class, self];
         self.translatesAutoresizingMaskIntoConstraints = NO;
         return attribute;
     }];
@@ -254,14 +254,14 @@
     KeepAssert(self.superview, @"Calling %@ allowed only when superview exists", NSStringFromSelector(selector));
     
     return [self keep_attributeForSelector:selector creationBlock:^KeepAttribute *{
-        NSDictionary *nonMarginAttributes = @{
-                                              @(NSLayoutAttributeLeftMargin): @(NSLayoutAttributeLeft),
-                                              @(NSLayoutAttributeRightMargin): @(NSLayoutAttributeRight),
-                                              @(NSLayoutAttributeTopMargin): @(NSLayoutAttributeTop),
-                                              @(NSLayoutAttributeBottomMargin): @(NSLayoutAttributeBottom),
-                                              @(NSLayoutAttributeLeadingMargin): @(NSLayoutAttributeLeading),
-                                              @(NSLayoutAttributeTrailingMargin): @(NSLayoutAttributeTrailing),
-                                              };
+        NSDictionary<NSNumber *, NSNumber *> *nonMarginAttributes = @{
+            @(NSLayoutAttributeLeftMargin): @(NSLayoutAttributeLeft),
+            @(NSLayoutAttributeRightMargin): @(NSLayoutAttributeRight),
+            @(NSLayoutAttributeTopMargin): @(NSLayoutAttributeTop),
+            @(NSLayoutAttributeBottomMargin): @(NSLayoutAttributeBottom),
+            @(NSLayoutAttributeLeadingMargin): @(NSLayoutAttributeLeading),
+            @(NSLayoutAttributeTrailingMargin): @(NSLayoutAttributeTrailing),
+        };
         NSLayoutAttribute superviewEdgeAttribute = edgeAttribute;
         NSLayoutAttribute selfEdgeAttribute = [[nonMarginAttributes objectForKey:@(edgeAttribute)] integerValue] ?: edgeAttribute;
         
@@ -552,14 +552,14 @@
     KeepAssert([self commonSuperview:relatedView], @"%@ requires both views to be in common hierarchy", NSStringFromSelector(selector));
     
     return [self keep_attributeForSelector:selector relatedView:relatedView creationBlock:^KeepAttribute *{
-        NSDictionary *oppositeEdges = @{
-                                        @(NSLayoutAttributeLeft): @(NSLayoutAttributeRight),
-                                        @(NSLayoutAttributeRight): @(NSLayoutAttributeLeft),
-                                        @(NSLayoutAttributeTop): @(NSLayoutAttributeBottom),
-                                        @(NSLayoutAttributeBottom): @(NSLayoutAttributeTop),
-                                        @(NSLayoutAttributeLeading): @(NSLayoutAttributeTrailing),
-                                        @(NSLayoutAttributeTrailing): @(NSLayoutAttributeLeading),
-                                        };
+        NSDictionary<NSNumber *, NSNumber *> *oppositeEdges = @{
+            @(NSLayoutAttributeLeft): @(NSLayoutAttributeRight),
+            @(NSLayoutAttributeRight): @(NSLayoutAttributeLeft),
+            @(NSLayoutAttributeTop): @(NSLayoutAttributeBottom),
+            @(NSLayoutAttributeBottom): @(NSLayoutAttributeTop),
+            @(NSLayoutAttributeLeading): @(NSLayoutAttributeTrailing),
+            @(NSLayoutAttributeTrailing): @(NSLayoutAttributeLeading),
+        };
         KeepAttribute *attribute =  [[[KeepConstantAttribute alloc] initWithView:self
                                                                  layoutAttribute:edgeAttribute
                                                                      relatedView:relatedView
@@ -909,9 +909,9 @@
 }
 
 
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000   // Compiled with iOS 7 SDK
 - (void)keepNotAnimated:(void (^)(void))layout {
     
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000   // Compiled with iOS 7 SDK
     if ([UIView respondsToSelector:@selector(performWithoutAnimation:)]) {
         // Running iOS 7
         [UIView performWithoutAnimation:^{
@@ -919,13 +919,19 @@
             [self layoutIfNeeded];
         }];
     }
-    else {
-        // Running iOS 6, just execute block
+    else
+#endif
+    {
+        // Running iOS 6 or earlier, use legacy methods
+        BOOL wereAnimationsEnabled = [UIView areAnimationsEnabled];
+        [UIView setAnimationsEnabled: NO];
+        
         layout();
         [self layoutIfNeeded];
+        
+        [UIView setAnimationsEnabled: wereAnimationsEnabled];
     }
 }
-#endif
 
 #endif // TARGET_OS_IPHONE
 
@@ -962,12 +968,12 @@
 
 
 - (void)addConstraintToCommonSuperview:(NSLayoutConstraint *)constraint {
-    [constraint setKeepActive:YES];
+    [constraint keepActive:YES];
 }
 
 
 - (void)removeConstraintFromCommonSuperview:(NSLayoutConstraint *)constraint {
-    [constraint setKeepActive:NO];
+    [constraint keepActive:NO];
 }
 
 

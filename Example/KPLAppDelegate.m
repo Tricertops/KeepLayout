@@ -19,7 +19,7 @@
 
 
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary<NSString *, id> *)launchOptions {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor blackColor];
     self.window.tintColor = [UIColor colorWithRed:1/5. green:2/3. blue:0.9 alpha:1];
@@ -44,17 +44,6 @@
     
     [self.window makeKeyAndVisible];
     return YES;
-}
-
-
-
-
-
-#pragma mark Split View Controller
-
-
-- (BOOL)splitViewController:(UISplitViewController *)svc shouldHideViewController:(UIViewController *)vc inOrientation:(UIInterfaceOrientation)orientation {
-    return NO;
 }
 
 

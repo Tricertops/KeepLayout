@@ -9,6 +9,8 @@ Before you start, you should be familiar with _Auto Layout_ topic. [How it works
 _**Project Status**: All planned features are implemented and functional. Project is maintained and kept up to date with latest iOS/OS X. Feel free to submit Issues or Pull Requests._
 
 
+_**Origins:** This library was originally made for [this app here](https://itunes.apple.com/app/geography-of-the-world/id391081388?mt=8&ct=KeepLayout), especially for its iPad interface._
+
 
 ## Attributes
 
@@ -79,8 +81,6 @@ See [`KeepTypes.h`][3] for more.
 
 ## Examples
 
-> **Simplified syntax is not supported in Swift, use KeepRequired() and related functions!**
-
 Keep width of the view to be equal to 150:
 
 ```objc
@@ -113,8 +113,6 @@ You will often want to set multiple attributes to the same value. For this we ha
 
 You can create groups at your own:
 
-> **Simplified syntax is not supported in Swift, use KeepRequired() and related functions!**
-
 ```objc
 KeepAttribute *leftInsets = [KeepAttribute group:
                              viewOne.keepLeftInset,
@@ -140,8 +138,6 @@ See [`KeepView.h`][2] or [`KeepAttribute.h`][4] for more .
 ## Atomic Groups
 
 _Atomic Groups_ are a way to deactivate multiple attributes at once. With atomic group you can quickly change one desired set of constraints (= layout) to another.
-
-> **Simplified syntax is not supported in Swift, use KeepRequired() and related functions!**
 
 ```objc
 // Create atomic group
@@ -182,8 +178,6 @@ See [`KeepView.h`][2] for more.
 
 Most of the methods added to `UIView`/`NSView` class can also be called on any **array on views**. Such call creates grouped attribute of all contained view attributes:
 
-> **Simplified syntax is not supported in Swift, use KeepRequired() and related functions!**
-
 ```objc
 NSArray *views = @[ viewOne, viewTwo, viewThree ];
 views.keepInsets.min = 10;
@@ -211,8 +205,6 @@ See [`NSArray+KeepLayout.h`][5] for more.
 Constraints can be animated. You can use simple `UIView` block animation, but you need to call `-layoutIfNeeded` at the end of animation block. That triggers `-layoutSubviews` which applies new constraints.
 
 Or you can use one of the provided methods so you don't need to care:
-
-> **Simplified syntax is not supported in Swift, use KeepRequired() and related functions!**
 
 ```objc
 view.keepWidth.equal = 100;

@@ -49,32 +49,24 @@
 
 
 - (BOOL)isKeepActive {
-    if ([self respondsToSelector:@selector(active)]) {
+    if ([self respondsToSelector:@selector(isActive)]) {
         return self.active;
     }
     else {
-        UIView *firstView = self.firstItem;
-        UIView *secondView = self.secondItem;
+        KPView *firstView = self.firstItem;
+        KPView *secondView = self.secondItem;
         KPView *common = [firstView commonSuperview:secondView];
         return [common.constraints containsObject:self];
     }
 }
 
 
-- (void)setKeepActive:(BOOL)keepActive {
-    UIView *firstView = self.firstItem;
-    UIView *secondView = self.secondItem;
-    KPView *common = [firstView commonSuperview:secondView];
-    if (keepActive) {
-        [common addConstraint:self];
-    }
-    else {
-        [common removeConstraint:self];
-    }
+- (void)keepActive:(BOOL)keepActive {
+    [KeepLayoutConstraint keepConstraints:@[self] active:keepActive];
 }
 
 
-+ (void)keepConstraints:(NSArray *)constraints active:(BOOL)active {
++ (void)keepConstraints:(NSArray<NSLayoutConstraint *> *)constraints active:(BOOL)active {
     if ([self respondsToSelector:@selector(activateConstraints:)]) {
         if (active) {
             [self activateConstraints:constraints];
@@ -85,7 +77,15 @@
     }
     else {
         for (NSLayoutConstraint *constraint in constraints) {
-            constraint.keepActive = active;
+            KPView *firstView = constraint.firstItem;
+            KPView *secondView = constraint.secondItem;
+            KPView *common = [firstView commonSuperview:secondView];
+            if (active) {
+                [common addConstraint:constraint];
+            }
+            else {
+                [common removeConstraint:constraint];
+            }
         }
     }
 }
