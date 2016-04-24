@@ -29,7 +29,6 @@
 @property (nonatomic, readwrite, assign) KeepValue max; /// Constraint with relation GreaterThanOrEqual
 @property (nonatomic, readwrite, assign) KeepValue min; /// Constraint with relation LessThanOrEqual
 
-@property (nonatomic, readwrite, assign) CGFloat required;
 
 - (void)keepAt:(KeepValue)equal min:(KeepValue)min;
 - (void)keepAt:(KeepValue)equal max:(KeepValue)max;
@@ -42,7 +41,6 @@
 @property (nonatomic, readonly) BOOL isActive;
 /// Disables all managed constraints.
 - (void)deactivate;
-- (void)remove __deprecated_msg("Use -deactivate");
 
 
 #pragma mark Grouping

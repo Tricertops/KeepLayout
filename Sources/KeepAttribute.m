@@ -63,17 +63,6 @@
 }
 
 
-- (CGFloat)required {
-    KeepValue equal = self.equal;
-    return (KeepValueGetPriority(equal) == KeepPriorityRequired? equal : NAN);
-}
-
-
-- (void)setRequired:(CGFloat)value {
-    self.equal = KeepRequired(value);
-}
-
-
 
 
 
@@ -88,11 +77,6 @@
 
 - (void)deactivate {
     NSAssert(NO, @"-[%@ %@] is abstract", KeepAttribute.class, NSStringFromSelector(_cmd));
-}
-
-
-- (void)remove {
-    [self deactivate];
 }
 
 
@@ -294,11 +278,6 @@
     self.equal = KeepNone;
     self.max = KeepNone;
     self.min = KeepNone;
-}
-
-
-- (void)remove {
-    [self deactivate];
 }
 
 
