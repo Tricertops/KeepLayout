@@ -8,9 +8,9 @@ Before you start, you should be familiar with _Auto Layout_ topic. [How it works
 
 _**Project Status**: All planned features are implemented and functional. Project is maintained and kept up to date with latest iOS/OS X. Feel free to submit Issues or Pull Requests._
 
-_**Swift Adoperts**: Some cool features introduced recently broke compatibility with Swift. Check out the Swift [compatible branch](https://github.com/iMartinKiss/KeepLayout/tree/swift-legacy). This branch will be updated along with the `master`._
+_**Swift Adopters**: Swift is fully supported, the usage syntax is the mostly the same._
 
-_**Origins:** This library was originally made for [this app here](https://itunes.apple.com/app/geography-of-the-world/id391081388?mt=8&ct=KeepLayout), especially for its iPad interface._
+_**Origins:** This library was originally made for [this app](https://itunes.apple.com/app/geography-of-the-world/id391081388?mt=8&ct=KeepLayout), especially for its iPad interface._
 
 
 ## Attributes
@@ -273,9 +273,9 @@ See [`KeepView.m`][6] for details.
 
 
 ---
-_Version 1.6.0_
+_Version 1.7.0_
 
-MIT License, Copyright © 2013-2014 Martin Kiss
+MIT License, Copyright © 2013-2016 Martin Kiss
 
 `THE SOFTWARE IS PROVIDED "AS IS", and so on...` see [`LICENSE.md`][9] more.
 
@@ -283,7 +283,7 @@ MIT License, Copyright © 2013-2014 Martin Kiss
 
 
 
-[1]: https://developer.apple.com/library/ios/documentation/userexperience/conceptual/AutolayoutPG/Introduction/Introduction.html
+[1]: https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/AutolayoutPG
 
 [2]: Sources/KeepView.h
 [3]: Sources/KeepTypes.h
