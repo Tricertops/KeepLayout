@@ -36,7 +36,7 @@
     self = [super initWithStyle:style];
     if (self) {
         self.title = @"Keep Layout";
-        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Examples" style:UIBarButtonItemStyleBordered target:nil action:nil];
+        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Examples" style:UIBarButtonItemStylePlain target:nil action:nil];
     }
     return self;
 }

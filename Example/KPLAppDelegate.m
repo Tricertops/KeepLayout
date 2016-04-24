@@ -50,15 +50,4 @@
 
 
 
-#pragma mark Split View Controller
-
-
-- (BOOL)splitViewController:(UISplitViewController *)svc shouldHideViewController:(UIViewController *)vc inOrientation:(UIInterfaceOrientation)orientation {
-    return NO;
-}
-
-
-
-
-
 @end
