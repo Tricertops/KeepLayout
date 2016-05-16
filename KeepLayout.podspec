@@ -30,9 +30,8 @@ Pod::Spec.new do |s|
     op.osx.exclude_files = 'Sources/UIViewController+KeepLayout.{h,m}', 'Sources/UIScrollView+KeepLayout.{h,m}'
   end
   s.subspec 'Swift' do |sp|
-    #sp.dependency 'KeepLayout/ObjC'
-    sp.source_files = 'Sources'
-    #sp.source_files = 'Sources/*.{swift}'
+    sp.dependency 'KeepLayout/ObjC'
+    sp.source_files = 'Sources/*.{swift}'
     sp.ios.deployment_target = '8.0'
     sp.osx.deployment_target = '10.9'
     sp.tvos.deployment_target = '9.0'
