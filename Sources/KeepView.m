@@ -249,6 +249,8 @@
                         || edgeAttribute == NSLayoutAttributeBottomMargin
                         || edgeAttribute == NSLayoutAttributeLeadingMargin
                         || edgeAttribute == NSLayoutAttributeTrailingMargin
+                        || edgeAttribute == NSLayoutAttributeFirstBaseline
+                        || edgeAttribute == NSLayoutAttributeLastBaseline
                         );
     KeepParameterAssert(name);
     KeepAssert(self.superview, @"Calling %@ allowed only when superview exists", NSStringFromSelector(selector));
@@ -262,7 +264,11 @@
             @(NSLayoutAttributeLeadingMargin): @(NSLayoutAttributeLeading),
             @(NSLayoutAttributeTrailingMargin): @(NSLayoutAttributeTrailing),
         };
-        NSLayoutAttribute superviewEdgeAttribute = edgeAttribute;
+        NSDictionary<NSNumber *, NSNumber *> *nonBaselineAttributes = @{
+            @(NSLayoutAttributeFirstBaseline): @(NSLayoutAttributeTop),
+            @(NSLayoutAttributeLastBaseline): @(NSLayoutAttributeBottom),
+        };
+        NSLayoutAttribute superviewEdgeAttribute = [[nonBaselineAttributes objectForKey:@(edgeAttribute)] integerValue] ?: edgeAttribute;
         NSLayoutAttribute selfEdgeAttribute = [[nonMarginAttributes objectForKey:@(edgeAttribute)] integerValue] ?: edgeAttribute;
         
         KeepAttribute *attribute = [[[KeepConstantAttribute alloc] initWithView:self
@@ -323,6 +329,16 @@
 
 - (KeepAttribute *)keepBottomInset {
     return [self keep_insetForSelector:_cmd edgeAttribute:NSLayoutAttributeBottom coefficient:-1 name:@"bottom inset"];
+}
+
+
+- (KeepAttribute *)keepFirstBaselineInset {
+    return [self keep_insetForSelector:_cmd edgeAttribute:NSLayoutAttributeFirstBaseline coefficient:1 name:@"first baseline inset"];
+}
+
+
+- (KeepAttribute *)keepLastBaselineInset {
+    return [self keep_insetForSelector:_cmd edgeAttribute:NSLayoutAttributeLastBaseline coefficient:-1 name:@"last baseline inset"];
 }
 
 
@@ -546,7 +562,9 @@
                         || edgeAttribute == NSLayoutAttributeTop
                         || edgeAttribute == NSLayoutAttributeBottom
                         || edgeAttribute == NSLayoutAttributeLeading
-                        || edgeAttribute == NSLayoutAttributeTrailing);
+                        || edgeAttribute == NSLayoutAttributeTrailing
+                        || edgeAttribute == NSLayoutAttributeFirstBaseline
+                        || edgeAttribute == NSLayoutAttributeLastBaseline);
     KeepParameterAssert(relatedView);
     KeepParameterAssert(name);
     KeepAssert([self commonSuperview:relatedView], @"%@ requires both views to be in common hierarchy", NSStringFromSelector(selector));
@@ -559,6 +577,8 @@
             @(NSLayoutAttributeBottom): @(NSLayoutAttributeTop),
             @(NSLayoutAttributeLeading): @(NSLayoutAttributeTrailing),
             @(NSLayoutAttributeTrailing): @(NSLayoutAttributeLeading),
+            @(NSLayoutAttributeFirstBaseline): @(NSLayoutAttributeLastBaseline),
+            @(NSLayoutAttributeLastBaseline): @(NSLayoutAttributeFirstBaseline),
         };
         KeepAttribute *attribute =  [[[KeepConstantAttribute alloc] initWithView:self
                                                                  layoutAttribute:edgeAttribute
@@ -611,6 +631,20 @@
 - (KeepRelatedAttributeBlock)keepBottomOffsetTo {
     return ^KeepAttribute *(KPView *view) {
         return view.keepTopOffsetTo(self);
+    };
+}
+
+
+- (KeepRelatedAttributeBlock)keepFirstBaselineOffsetTo {
+    return ^KeepAttribute *(KPView *view) {
+        return [self keep_offsetForSelector:_cmd edgeAttribute:NSLayoutAttributeFirstBaseline relatedView:view name:@"first baseline offset"];
+    };
+}
+
+
+- (KeepRelatedAttributeBlock)keepLastBaselineOffsetTo {
+    return ^KeepAttribute *(KPView *view) {
+        return view.keepFirstBaselineOffsetTo(self);
     };
 }
 
