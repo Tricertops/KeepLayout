@@ -6,7 +6,8 @@
 //  Copyright (c) 2013 Triceratops. All rights reserved.
 //
 
-@import Foundation;
+#import <Foundation/Foundation.h>
+
 
 
 FOUNDATION_EXPORT double KeepLayoutVersionNumber;
