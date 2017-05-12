@@ -207,6 +207,16 @@
 }
 
 
+- (KeepAttribute *)keepFirstBaselineInset {
+    return [self keep_groupAttributeForSelector:_cmd];
+}
+
+
+- (KeepAttribute *)keepLastBaselineInset {
+    return [self keep_groupAttributeForSelector:_cmd];
+}
+
+
 - (KeepAttribute *)keepInsets {
     return [self keep_groupAttributeForSelector:_cmd];
 }
@@ -413,6 +423,20 @@
 }
 
 
+- (KeepRelatedAttributeBlock)keepFirstBaselineOffsetTo {
+    return ^KeepAttribute *(KPView *view) {
+        return [self keep_groupAttributeForSelector:_cmd relatedView:view];
+    };
+}
+
+
+- (KeepRelatedAttributeBlock)keepLastBaselineOffsetTo {
+    return ^KeepAttribute *(KPView *view) {
+        return [self keep_groupAttributeForSelector:_cmd relatedView:view];
+    };
+}
+
+
 - (void)keepHorizontalOffsets:(KeepValue)value {
     [self keep_invoke:_cmd eachTwo:^(KPView *this, KPView *next) {
         this.keepRightOffsetTo(next).equal = value;
@@ -430,6 +454,13 @@
 - (void)keepVerticalOffsets:(KeepValue)value {
     [self keep_invoke:_cmd eachTwo:^(KPView *this, KPView *next) {
         this.keepBottomOffsetTo(next).equal = value;
+    }];
+}
+
+
+- (void)keepBaselineOffsets:(KeepValue)value {
+    [self keep_invoke:_cmd eachTwo:^(KPView *this, KPView *next) {
+        this.keepLastBaselineOffsetTo(next).equal = value;
     }];
 }
 
@@ -504,13 +535,6 @@
 
 
 - (KeepRelatedAttributeBlock)keepCenterAlignTo {
-    return ^KeepAttribute *(KPView *view) {
-        return [self keep_groupAttributeForSelector:_cmd relatedView:view];
-    };
-}
-
-
-- (KeepRelatedAttributeBlock)keepBaselineAlignTo {
     return ^KeepAttribute *(KPView *view) {
         return [self keep_groupAttributeForSelector:_cmd relatedView:view];
     };
