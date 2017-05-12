@@ -70,9 +70,6 @@ static const KeepPriority KeepPriorityFitting = NSLayoutPriorityFittingSizeCompr
 #define NSLayoutAttributeLeadingMargin  NSLayoutAttributeLeading
 #define NSLayoutAttributeTrailingMargin NSLayoutAttributeTrailing
 
-#define NSLayoutAttributeFirstBaseline  NSLayoutAttributeBaseline
-#define NSLayoutAttributeLastBaseline   NSLayoutAttributeBaseline
-
 #endif
 
 

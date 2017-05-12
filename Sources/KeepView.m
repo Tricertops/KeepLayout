@@ -237,7 +237,7 @@
 
 - (KeepAttribute *)keep_insetForSelector:(SEL)selector edgeAttribute:(NSLayoutAttribute)edgeAttribute coefficient:(CGFloat)coefficient name:(NSString *)name {
     KeepParameterAssert(selector);
-    KeepParameterAssert(edgeAttribute == NSLayoutAttributeLeft
+    KeepParameterAssert(   edgeAttribute == NSLayoutAttributeLeft
                         || edgeAttribute == NSLayoutAttributeRight
                         || edgeAttribute == NSLayoutAttributeTop
                         || edgeAttribute == NSLayoutAttributeBottom
@@ -557,7 +557,7 @@
 
 - (KeepAttribute *)keep_offsetForSelector:(SEL)selector edgeAttribute:(NSLayoutAttribute)edgeAttribute relatedView:(KPView *)relatedView name:(NSString *)name {
     KeepParameterAssert(selector);
-    KeepParameterAssert(edgeAttribute == NSLayoutAttributeLeft
+    KeepParameterAssert(   edgeAttribute == NSLayoutAttributeLeft
                         || edgeAttribute == NSLayoutAttributeRight
                         || edgeAttribute == NSLayoutAttributeTop
                         || edgeAttribute == NSLayoutAttributeBottom
@@ -799,13 +799,6 @@
 - (void)keepCenterAlignTo:(KPView *)view offset:(KPOffset)offset withPriority:(KeepPriority)priority {
     self.keepHorizontalAlignTo(view).equal = KeepValueMake(offset.vertical, priority);
     self.keepVerticalAlignTo(view).equal = KeepValueMake(offset.horizontal, priority);
-}
-
-
-- (KeepRelatedAttributeBlock)keepBaselineAlignTo {
-    return ^KeepAttribute *(KPView *view) {
-        return [self keep_alignForSelector:_cmd alignAttribute:NSLayoutAttributeBaseline relatedView:view coefficient:-1 name:@"baseline alignment"];
-    };
 }
 
 

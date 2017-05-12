@@ -97,10 +97,10 @@ typedef KeepAttribute *(^KeepRelatedAttributeBlock)(KPView *otherView);
 /// Bottom Inset of the receiver in its current superview. Values are inverted to Bottom-to-Top direction.
 @property (readonly) KeepAttribute *keepBottomInset;
 
-/// First Baseline Inset of the receiver in its current superview.
+/// First Baseline Inset of the receiver in its current superview from Top Edge. Not all views have baselines.
 @property (nonatomic, readonly) KeepAttribute *keepFirstBaselineInset;
 
-/// Last Baseline Inset of the receiver in its current superview. Values are inverted to Bottom-to-Top direction.
+/// Last Baseline Inset of the receiver in its current superview from Bottom Edge. Not all views have baselines. Values are inverted to Bottom-to-Top direction.
 @property (nonatomic, readonly) KeepAttribute *keepLastBaselineInset;
 
 
@@ -221,7 +221,7 @@ typedef KeepAttribute *(^KeepRelatedAttributeBlock)(KPView *otherView);
 
 #pragma mark -
 #pragma mark Offsets: Core
-/// Attributes representing offset (padding or distance) of two views.
+/// Attributes representing offset (padding or distance) of two views. There attributes use opposite edges to create constraints. 
 
 /// Left Offset to other view. Views must be in the same view hierarchy.
 @property (readonly) KeepRelatedAttributeBlock keepLeftOffsetTo;
@@ -241,10 +241,10 @@ typedef KeepAttribute *(^KeepRelatedAttributeBlock)(KPView *otherView);
 /// Bottom Offset to other view. Views must be in the same view hierarchy. Identical to Top Offset in reversed direction.
 @property (readonly) KeepRelatedAttributeBlock keepBottomOffsetTo;
 
-/// First Baseline Offset to other view. Not all views have baselines.
+/// First Baseline Offset to other view’s Last Baseline. Not all views have baselines.
 @property (nonatomic, readonly) KeepRelatedAttributeBlock keepFirstBaselineOffsetTo;
 
-/// Last Baseline Offset to other view. Not all views have baselines. Identical to First Baseline Offset in reversed direction.
+/// Last Baseline Offset to other view’s First Baseline. Not all views have baselines. Identical to First Baseline Offset in reversed direction.
 @property (nonatomic, readonly) KeepRelatedAttributeBlock keepLastBaselineOffsetTo;
 
 
@@ -278,9 +278,6 @@ typedef KeepAttribute *(^KeepRelatedAttributeBlock)(KPView *otherView);
 
 /// Horizontal Center Alignment with other view, modifies the Y position. Views must be in the same view hierarchy. Value is offset of the receiver from the other view.
 @property (readonly) KeepRelatedAttributeBlock keepHorizontalAlignTo;
-
-/// Baseline Alignments with two views. Not all views have baselines. Values are inverted to Bottom-to-Top direction, so positive offset moves the receiver up.
-@property (readonly) KeepRelatedAttributeBlock keepBaselineAlignTo __deprecated_msg("You should use .keepFirstBaselineAlignTo or .keepLastBaselineAlignTo");
 
 /// First Baseline Alignments of two views. Not all views have baselines. Values are inverted to Bottom-to-Top direction, so positive offset moves the receiver up.
 @property (readonly) KeepRelatedAttributeBlock keepFirstBaselineAlignTo;
