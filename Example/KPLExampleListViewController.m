@@ -51,9 +51,9 @@
     footnote.font = [UIFont boldSystemFontOfSize:[UIFont smallSystemFontSize]];
     footnote.textAlignment = NSTextAlignmentCenter;
     footnote.text =
-    @"github.com/iMartinKiss/KeepLayout" @"\n"
+    @"github.com/Tricertops/KeepLayout" @"\n"
     @"\n"
-    @"Copyright © 2013 Martin Kiss" @"\n"
+    @"Copyright © 2013-2017 Martin Kiss" @"\n"
     @"Licensed under MIT License";
     self.tableView.tableFooterView = footnote;
     
