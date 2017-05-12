@@ -21,7 +21,7 @@ FOUNDATION_EXPORT const unsigned char KeepLayoutVersionString[];
 #import "KeepArray.h"
 #import "KeepLayoutConstraint.h"
 
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IOS
 #import "UIViewController+KeepLayout.h"
 #import "UIScrollView+KeepLayout.h"
 #endif

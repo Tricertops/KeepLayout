@@ -28,7 +28,7 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IOS
         SEL originalSelector = @selector(willMoveToSuperview:);
 #else
         SEL originalSelector = @selector(viewWillMoveToSuperview:);
@@ -754,24 +754,6 @@
 }
 
 
-- (void)keepEdgeAlignTo:(KPView *)view {
-    [self keepEdgeAlignTo:view insets:KPEdgeInsetsZero];
-}
-
-
-- (void)keepEdgeAlignTo:(KPView *)view insets:(KPEdgeInsets)insets {
-    [self keepEdgeAlignTo:view insets:insets withPriority:KeepPriorityRequired];
-}
-
-
-- (void)keepEdgeAlignTo:(KPView *)view insets:(KPEdgeInsets)insets withPriority:(KeepPriority)priority {
-    self.keepLeftAlignTo(view).equal = KeepValueMake(insets.left, priority);
-    self.keepRightAlignTo(view).equal = KeepValueMake(insets.right, priority);
-    self.keepTopAlignTo(view).equal = KeepValueMake(insets.top, priority);
-    self.keepBottomAlignTo(view).equal = KeepValueMake(insets.bottom, priority);
-}
-
-
 - (KeepRelatedAttributeBlock)keepVerticalAlignTo {
     return ^KeepAttribute *(KPView *view) {
         return [self keep_alignForSelector:_cmd alignAttribute:NSLayoutAttributeCenterX relatedView:view coefficient:1 name:@"vertical center alignment"];
@@ -783,22 +765,6 @@
     return ^KeepAttribute *(KPView *view) {
         return [self keep_alignForSelector:_cmd alignAttribute:NSLayoutAttributeCenterY relatedView:view coefficient:1 name:@"horizontal center alignment"];
     };
-}
-
-
-- (void)keepCenterAlignTo:(KPView *)view {
-    [self keepCenterAlignTo:view offset:KPOffsetZero];
-}
-
-
-- (void)keepCenterAlignTo:(KPView *)view offset:(KPOffset)offset {
-    [self keepCenterAlignTo:view offset:offset withPriority:KeepPriorityRequired];
-}
-
-
-- (void)keepCenterAlignTo:(KPView *)view offset:(KPOffset)offset withPriority:(KeepPriority)priority {
-    self.keepHorizontalAlignTo(view).equal = KeepValueMake(offset.vertical, priority);
-    self.keepVerticalAlignTo(view).equal = KeepValueMake(offset.horizontal, priority);
 }
 
 
@@ -820,7 +786,7 @@
 
 
 #pragma mark Animating Constraints
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IOS
 
 
 - (void)keepAnimatedWithDuration:(NSTimeInterval)duration layout:(void(^)(void))animations {
@@ -885,42 +851,24 @@
 }
 
 
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000   // Compiled with iOS 7 SDK
 - (void)keepAnimatedWithDuration:(NSTimeInterval)duration delay:(NSTimeInterval)delay usingSpringWithDamping:(CGFloat)dampingRatio initialSpringVelocity:(CGFloat)velocity options:(UIViewAnimationOptions)options layout:(void (^)(void))animations completion:(void (^)(BOOL finished))completion {
     KeepParameterAssert(duration >= 0);
     KeepParameterAssert(delay >= 0);
     KeepParameterAssert(animations);
     
-    if ([UIView respondsToSelector:@selector(animateWithDuration:delay:usingSpringWithDamping:initialSpringVelocity:options:animations:completion:)]) {
-        // Running on iOS 7
-        [self keep_animationPerformWithDuration:duration delay:delay block:^{
-            [UIView animateWithDuration:duration
-                                  delay:0
-                 usingSpringWithDamping:dampingRatio
-                  initialSpringVelocity:velocity
-                                options:options
-                             animations:^{
-                                 animations();
-                                 [self layoutIfNeeded];
-                             }
-                             completion:completion];
-        }];
-    }
-    else {
-        // Running on iOS 6, fallback to non-spring animation
-        [self keep_animationPerformWithDuration:duration delay:delay block:^{
-            [UIView animateWithDuration:duration
-                                  delay:0
-                                options:options
-                             animations:^{
-                                 animations();
-                                 [self layoutIfNeeded];
-                             }
-                             completion:completion];
-        }];
-    }
+    [self keep_animationPerformWithDuration:duration delay:delay block:^{
+        [UIView animateWithDuration:duration
+                              delay:0
+             usingSpringWithDamping:dampingRatio
+              initialSpringVelocity:velocity
+                            options:options
+                         animations:^{
+                             animations();
+                             [self layoutIfNeeded];
+                         }
+                         completion:completion];
+    }];
 }
-#endif
 
 
 - (void)keep_animationPerformWithDuration:(NSTimeInterval)duration delay:(NSTimeInterval)delay block:(void(^)(void))block {
@@ -937,30 +885,13 @@
 
 
 - (void)keepNotAnimated:(void (^)(void))layout {
-    
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000   // Compiled with iOS 7 SDK
-    if ([UIView respondsToSelector:@selector(performWithoutAnimation:)]) {
-        // Running iOS 7
-        [UIView performWithoutAnimation:^{
-            layout();
-            [self layoutIfNeeded];
-        }];
-    }
-    else
-#endif
-    {
-        // Running iOS 6 or earlier, use legacy methods
-        BOOL wereAnimationsEnabled = [UIView areAnimationsEnabled];
-        [UIView setAnimationsEnabled: NO];
-        
+    [UIView performWithoutAnimation:^{
         layout();
         [self layoutIfNeeded];
-        
-        [UIView setAnimationsEnabled: wereAnimationsEnabled];
-    }
+    }];
 }
 
-#endif // TARGET_OS_IPHONE
+#endif // TARGET_OS_IOS
 
 
 
@@ -974,7 +905,7 @@
     
     KPView *superview = self;
     while (superview) {
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IOS
         BOOL isDescendant = [anotherView isDescendantOfView:superview];
 #else
         BOOL isDescendant = [anotherView isDescendantOf:superview];

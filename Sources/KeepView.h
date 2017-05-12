@@ -221,7 +221,7 @@ typedef KeepAttribute *(^KeepRelatedAttributeBlock)(KPView *otherView);
 
 #pragma mark -
 #pragma mark Offsets: Core
-/// Attributes representing offset (padding or distance) of two views. There attributes use opposite edges to create constraints. 
+/// Attributes representing offset (padding or distance) of two views. There attributes use opposite edges to create constraints.
 
 /// Left Offset to other view. Views must be in the same view hierarchy.
 @property (readonly) KeepRelatedAttributeBlock keepLeftOffsetTo;
@@ -296,31 +296,13 @@ typedef KeepAttribute *(^KeepRelatedAttributeBlock)(KPView *otherView);
 /// Grouped proxy attribute for Center X and Center Y Alignment with other view.
 @property (readonly) KeepRelatedAttributeBlock keepCenterAlignTo;
 
-/// Sets all 4 edge alignments with other view with given insets and priority.
-- (void)keepEdgeAlignTo:(KPView *)view insets:(KPEdgeInsets)insets withPriority:(KeepPriority)priority __deprecated_msg("Use .keepEdgeAlignTo(view) instead");
-
-/// Sets all 4 edge alignments with other view with given insets and Required priority. Use is discouraged.
-- (void)keepEdgeAlignTo:(KPView *)view insets:(KPEdgeInsets)insets __deprecated_msg("Use .keepEdgeAlignTo(view).required instead");
-
-/// Sets all 4 edge alignments with other view with zero insets and Required priority. Use is discouraged.
-- (void)keepEdgeAlignTo:(KPView *)view __deprecated_msg("Use .keepEdgeAlignTo(view).required = 0; instead");
-
-/// Sets both center alignments with other view view given offset and priority.
-- (void)keepCenterAlignTo:(KPView *)view offset:(KPOffset)offset withPriority:(KeepPriority)priority __deprecated_msg("Use .keepCenterAlignTo(view) instead");
-
-/// Sets both center alignments with other view view given offset and Required priority.
-- (void)keepCenterAlignTo:(KPView *)view offset:(KPOffset)offset __deprecated_msg("Use .keepCenterAlignTo(view).required instead");
-
-/// Sets both center alignments with other view view zero offset and Required priority.
-- (void)keepCenterAlignTo:(KPView *)view __deprecated_msg("Use .keepCenterAlignTo(view).required = 0; instead");
-
 
 
 
 
 #pragma mark -
 #pragma mark Animations
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IOS
 /// Animation methods allowing you to modify all above attributes (or even constraints directly) animatedly. All animations are scheduled on main queue with given or zero delay. The layout code itself is executed after the delay, which is different than in UIView animation methods. This behavior is needed, because of different nature of constraint-based layouting and allows you to schedule animations in the same update cycle as your main layout.
 
 /// Animate layout changes. Receiver automatically calls `-layoutIfNeeded` after the animation block. Animation is scheduled on Main Queue with zero delay, so the block not executed immediatelly.
@@ -335,15 +317,13 @@ typedef KeepAttribute *(^KeepRelatedAttributeBlock)(KPView *otherView);
 /// Animate layout changes with delay, options and completion. Receiver automatically calls `-layoutIfNeeded` after the animation block. Animation is scheduled on Main Queue with given delay.
 - (void)keepAnimatedWithDuration:(NSTimeInterval)duration delay:(NSTimeInterval)delay options:(UIViewAnimationOptions)options layout:(void(^)(void))animations completion:(void(^)(BOOL finished))completion;
 
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000   // Compiled with iOS 7 SDK
 /// Animate layout changes with spring behavior, delay, options and completion. Receiver automatically calls `-layoutIfNeeded` after the animation block. Animation is scheduled on Main Queue with given delay.
 - (void)keepAnimatedWithDuration:(NSTimeInterval)duration delay:(NSTimeInterval)delay usingSpringWithDamping:(CGFloat)dampingRatio initialSpringVelocity:(CGFloat)velocity options:(UIViewAnimationOptions)options layout:(void (^)(void))animations completion:(void (^)(BOOL finished))completion;
-#endif
 
 /// Prevent animating layout changes in the block. Due to different nature of constraint-based layouting, this may not work as you may expect.
 - (void)keepNotAnimated:(void (^)(void))layout;
 
-#endif // TARGET_OS_IPHONE
+#endif // TARGET_OS_IOS
 
 
 
