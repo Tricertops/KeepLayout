@@ -97,6 +97,12 @@ typedef KeepAttribute *(^KeepRelatedAttributeBlock)(KPView *otherView);
 /// Bottom Inset of the receiver in its current superview. Values are inverted to Bottom-to-Top direction.
 @property (readonly) KeepAttribute *keepBottomInset;
 
+/// First Baseline Inset of the receiver in its current superview.
+@property (nonatomic, readonly) KeepAttribute *keepFirstBaselineInset;
+
+/// Last Baseline Inset of the receiver in its current superview. Values are inverted to Bottom-to-Top direction.
+@property (nonatomic, readonly) KeepAttribute *keepLastBaselineInset;
+
 
 
 #pragma mark Superview Insets: Convenience
@@ -234,6 +240,12 @@ typedef KeepAttribute *(^KeepRelatedAttributeBlock)(KPView *otherView);
 
 /// Bottom Offset to other view. Views must be in the same view hierarchy. Identical to Top Offset in reversed direction.
 @property (readonly) KeepRelatedAttributeBlock keepBottomOffsetTo;
+
+/// First Baseline Offset to other view. Not all views have baselines.
+@property (nonatomic, readonly) KeepRelatedAttributeBlock keepFirstBaselineOffsetTo;
+
+/// Last Baseline Offset to other view. Not all views have baselines. Identical to First Baseline Offset in reversed direction.
+@property (nonatomic, readonly) KeepRelatedAttributeBlock keepLastBaselineOffsetTo;
 
 
 
