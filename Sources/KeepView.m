@@ -83,7 +83,7 @@
 }
 
 
-- (KeepAttribute *)keep_attributeForSelector:(SEL)selector relatedView:(KPView *)relatedView creationBlock:(KeepAttribute *(^)())creationBlock {
+- (KeepAttribute *)keep_attributeForSelector:(SEL)selector relatedView:(KPView *)relatedView creationBlock:(KeepAttribute *(^)(void))creationBlock {
     KeepParameterAssert(selector);
     KeepParameterAssert(relatedView);
     
