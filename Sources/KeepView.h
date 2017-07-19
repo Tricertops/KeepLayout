@@ -301,6 +301,31 @@ typedef KeepAttribute *(^KeepRelatedAttributeBlock)(KPView *otherView);
 
 
 #pragma mark -
+#pragma mark Compression & Hugging Convenience
+
+/// Convenience accessor for compression resistance priority in both axes. Primarily for setting. If they are different, lower is returned from getter.
+@property KeepPriority keepCompressionResistance;
+
+/// Convenience accessor for compression resistance priority in X axis.
+@property KeepPriority keepHorizontalCompressionResistance;
+
+/// Convenience accessor for compression resistance priority in Y axis.
+@property KeepPriority keepVerticalCompressionResistance;
+
+/// Convenience accessor for hugging priority in both axes. Primarily for setting. If they are different, lower is returned from getter.
+@property KeepPriority keepHuggingPriority;
+
+/// Convenience accessor for hugging priority in X axis.
+@property KeepPriority keepHorizontalHuggingPriority;
+
+/// Convenience accessor for hugging priority in Y axis.
+@property KeepPriority keepVerticalHuggingPriority;
+
+
+
+
+
+#pragma mark -
 #pragma mark Animations
 #if TARGET_OS_IOS
 /// Animation methods allowing you to modify all above attributes (or even constraints directly) animatedly. All animations are scheduled on main queue with given or zero delay. The layout code itself is executed after the delay, which is different than in UIView animation methods. This behavior is needed, because of different nature of constraint-based layouting and allows you to schedule animations in the same update cycle as your main layout.

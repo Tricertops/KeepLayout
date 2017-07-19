@@ -785,6 +785,106 @@
 
 
 
+#pragma mark Compression & Hugging Convenience
+
+
+- (KeepPriority)keepCompressionResistance {
+    return MIN(self.keepHorizontalCompressionResistance, self.keepVerticalCompressionResistance);
+}
+
+
+- (void)setKeepCompressionResistance:(KeepPriority)priority {
+    self.keepHorizontalCompressionResistance = priority;
+    self.keepVerticalCompressionResistance = priority;
+}
+
+
+- (KeepPriority)keepHorizontalCompressionResistance {
+#if TARGET_OS_IOS
+    return [self contentCompressionResistancePriorityForAxis:UILayoutConstraintAxisHorizontal];
+#else
+    return [self contentCompressionResistancePriorityForOrientation:NSLayoutConstraintOrientationHorizontal];
+#endif
+}
+
+
+- (void)setKeepHorizontalCompressionResistance:(KeepPriority)priority {
+#if TARGET_OS_IOS
+    [self setContentCompressionResistancePriority:priority forAxis:UILayoutConstraintAxisHorizontal];
+#else
+    [self setContentCompressionResistancePriority:priority forOrientation:NSLayoutConstraintOrientationHorizontal];
+#endif
+}
+
+
+- (KeepPriority)keepVerticalCompressionResistance {
+#if TARGET_OS_IOS
+    return [self contentCompressionResistancePriorityForAxis:UILayoutConstraintAxisVertical];
+#else
+    return [self contentCompressionResistancePriorityForOrientation:NSLayoutConstraintOrientationVertical];
+#endif
+}
+
+
+- (void)setKeepVerticalCompressionResistance:(KeepPriority)priority {
+#if TARGET_OS_IOS
+    [self setContentCompressionResistancePriority:priority forAxis:UILayoutConstraintAxisVertical];
+#else
+    [self setContentCompressionResistancePriority:priority forOrientation:NSLayoutConstraintOrientationVertical];
+#endif
+}
+
+
+- (KeepPriority)keepHuggingPriority {
+    return MIN(self.keepHorizontalHuggingPriority, self.keepVerticalHuggingPriority);
+}
+
+
+- (void)setKeepHuggingPriority:(KeepPriority)priority {
+    self.keepHorizontalHuggingPriority = priority;
+    self.keepVerticalHuggingPriority = priority;
+}
+
+
+- (KeepPriority)keepHorizontalHuggingPriority {
+#if TARGET_OS_IOS
+    return [self contentHuggingPriorityForAxis:UILayoutConstraintAxisHorizontal];
+#else
+    return [self contentHuggingPriorityForOrientation:NSLayoutConstraintOrientationHorizontal];
+#endif
+}
+
+
+- (void)setKeepHorizontalHuggingPriority:(KeepPriority)priority {
+#if TARGET_OS_IOS
+    [self setContentHuggingPriority:priority forAxis:UILayoutConstraintAxisHorizontal];
+#else
+    [self setContentHuggingPriority:priority forOrientation:NSLayoutConstraintOrientationHorizontal];
+#endif
+}
+
+
+- (KeepPriority)keepVerticalHuggingPriority {
+#if TARGET_OS_IOS
+    return [self contentHuggingPriorityForAxis:UILayoutConstraintAxisVertical];
+#else
+    return [self contentHuggingPriorityForOrientation:NSLayoutConstraintOrientationVertical];
+#endif
+}
+
+
+- (void)setKeepVerticalHuggingPriority:(KeepPriority)priority {
+#if TARGET_OS_IOS
+    [self setContentHuggingPriority:priority forAxis:UILayoutConstraintAxisVertical];
+#else
+    [self setContentHuggingPriority:priority forOrientation:NSLayoutConstraintOrientationVertical];
+#endif
+}
+
+
+
+
+
 #pragma mark Animating Constraints
 #if TARGET_OS_IOS
 
