@@ -16,16 +16,16 @@ typedef KeepAttribute *(^KeepRelatedAttributeBlock)(KPView *otherView);
 
 
 /**
- Category that provides very easy access to all Auto Layout features through abstraction above NSLayoutConstraints.
+ Category that provides very easy access to all Auto Layout features through abstraction on top of NSLayoutConstraints.
  
  Usage of methods returning KeepAttribute:
  \code
- view.keepWidth.equal = KeepRequired(320);
+ view.keepWidth.equal = 320;
  \endcode
  
  Usage of methods returning KeepRelatedAttributeBlock:
  \code
- view.keepWidthTo(anotherView).equal = KeepRequired(2); // 2x wider
+ view.keepWidthTo(anotherView).equal = 2; // 2x wider
  \endcode
  
  **/
