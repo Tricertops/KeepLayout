@@ -28,7 +28,7 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IOS
         SEL originalSelector = @selector(willMoveToSuperview:);
 #else
         SEL originalSelector = @selector(viewWillMoveToSuperview:);
@@ -83,7 +83,7 @@
 }
 
 
-- (KeepAttribute *)keep_attributeForSelector:(SEL)selector relatedView:(KPView *)relatedView creationBlock:(KeepAttribute *(^)())creationBlock {
+- (KeepAttribute *)keep_attributeForSelector:(SEL)selector relatedView:(KPView *)relatedView creationBlock:(KeepAttribute *(^)(void))creationBlock {
     KeepParameterAssert(selector);
     KeepParameterAssert(relatedView);
     
@@ -237,7 +237,7 @@
 
 - (KeepAttribute *)keep_insetForSelector:(SEL)selector edgeAttribute:(NSLayoutAttribute)edgeAttribute coefficient:(CGFloat)coefficient name:(NSString *)name {
     KeepParameterAssert(selector);
-    KeepParameterAssert(edgeAttribute == NSLayoutAttributeLeft
+    KeepParameterAssert(   edgeAttribute == NSLayoutAttributeLeft
                         || edgeAttribute == NSLayoutAttributeRight
                         || edgeAttribute == NSLayoutAttributeTop
                         || edgeAttribute == NSLayoutAttributeBottom
@@ -249,6 +249,8 @@
                         || edgeAttribute == NSLayoutAttributeBottomMargin
                         || edgeAttribute == NSLayoutAttributeLeadingMargin
                         || edgeAttribute == NSLayoutAttributeTrailingMargin
+                        || edgeAttribute == NSLayoutAttributeFirstBaseline
+                        || edgeAttribute == NSLayoutAttributeLastBaseline
                         );
     KeepParameterAssert(name);
     KeepAssert(self.superview, @"Calling %@ allowed only when superview exists", NSStringFromSelector(selector));
@@ -262,7 +264,11 @@
             @(NSLayoutAttributeLeadingMargin): @(NSLayoutAttributeLeading),
             @(NSLayoutAttributeTrailingMargin): @(NSLayoutAttributeTrailing),
         };
-        NSLayoutAttribute superviewEdgeAttribute = edgeAttribute;
+        NSDictionary<NSNumber *, NSNumber *> *nonBaselineAttributes = @{
+            @(NSLayoutAttributeFirstBaseline): @(NSLayoutAttributeTop),
+            @(NSLayoutAttributeLastBaseline): @(NSLayoutAttributeBottom),
+        };
+        NSLayoutAttribute superviewEdgeAttribute = [[nonBaselineAttributes objectForKey:@(edgeAttribute)] integerValue] ?: edgeAttribute;
         NSLayoutAttribute selfEdgeAttribute = [[nonMarginAttributes objectForKey:@(edgeAttribute)] integerValue] ?: edgeAttribute;
         
         KeepAttribute *attribute = [[[KeepConstantAttribute alloc] initWithView:self
@@ -323,6 +329,16 @@
 
 - (KeepAttribute *)keepBottomInset {
     return [self keep_insetForSelector:_cmd edgeAttribute:NSLayoutAttributeBottom coefficient:-1 name:@"bottom inset"];
+}
+
+
+- (KeepAttribute *)keepFirstBaselineInset {
+    return [self keep_insetForSelector:_cmd edgeAttribute:NSLayoutAttributeFirstBaseline coefficient:1 name:@"first baseline inset"];
+}
+
+
+- (KeepAttribute *)keepLastBaselineInset {
+    return [self keep_insetForSelector:_cmd edgeAttribute:NSLayoutAttributeLastBaseline coefficient:-1 name:@"last baseline inset"];
 }
 
 
@@ -541,12 +557,14 @@
 
 - (KeepAttribute *)keep_offsetForSelector:(SEL)selector edgeAttribute:(NSLayoutAttribute)edgeAttribute relatedView:(KPView *)relatedView name:(NSString *)name {
     KeepParameterAssert(selector);
-    KeepParameterAssert(edgeAttribute == NSLayoutAttributeLeft
+    KeepParameterAssert(   edgeAttribute == NSLayoutAttributeLeft
                         || edgeAttribute == NSLayoutAttributeRight
                         || edgeAttribute == NSLayoutAttributeTop
                         || edgeAttribute == NSLayoutAttributeBottom
                         || edgeAttribute == NSLayoutAttributeLeading
-                        || edgeAttribute == NSLayoutAttributeTrailing);
+                        || edgeAttribute == NSLayoutAttributeTrailing
+                        || edgeAttribute == NSLayoutAttributeFirstBaseline
+                        || edgeAttribute == NSLayoutAttributeLastBaseline);
     KeepParameterAssert(relatedView);
     KeepParameterAssert(name);
     KeepAssert([self commonSuperview:relatedView], @"%@ requires both views to be in common hierarchy", NSStringFromSelector(selector));
@@ -559,6 +577,8 @@
             @(NSLayoutAttributeBottom): @(NSLayoutAttributeTop),
             @(NSLayoutAttributeLeading): @(NSLayoutAttributeTrailing),
             @(NSLayoutAttributeTrailing): @(NSLayoutAttributeLeading),
+            @(NSLayoutAttributeFirstBaseline): @(NSLayoutAttributeLastBaseline),
+            @(NSLayoutAttributeLastBaseline): @(NSLayoutAttributeFirstBaseline),
         };
         KeepAttribute *attribute =  [[[KeepConstantAttribute alloc] initWithView:self
                                                                  layoutAttribute:edgeAttribute
@@ -611,6 +631,20 @@
 - (KeepRelatedAttributeBlock)keepBottomOffsetTo {
     return ^KeepAttribute *(KPView *view) {
         return view.keepTopOffsetTo(self);
+    };
+}
+
+
+- (KeepRelatedAttributeBlock)keepFirstBaselineOffsetTo {
+    return ^KeepAttribute *(KPView *view) {
+        return [self keep_offsetForSelector:_cmd edgeAttribute:NSLayoutAttributeFirstBaseline relatedView:view name:@"first baseline offset"];
+    };
+}
+
+
+- (KeepRelatedAttributeBlock)keepLastBaselineOffsetTo {
+    return ^KeepAttribute *(KPView *view) {
+        return view.keepFirstBaselineOffsetTo(self);
     };
 }
 
@@ -720,24 +754,6 @@
 }
 
 
-- (void)keepEdgeAlignTo:(KPView *)view {
-    [self keepEdgeAlignTo:view insets:KPEdgeInsetsZero];
-}
-
-
-- (void)keepEdgeAlignTo:(KPView *)view insets:(KPEdgeInsets)insets {
-    [self keepEdgeAlignTo:view insets:insets withPriority:KeepPriorityRequired];
-}
-
-
-- (void)keepEdgeAlignTo:(KPView *)view insets:(KPEdgeInsets)insets withPriority:(KeepPriority)priority {
-    self.keepLeftAlignTo(view).equal = KeepValueMake(insets.left, priority);
-    self.keepRightAlignTo(view).equal = KeepValueMake(insets.right, priority);
-    self.keepTopAlignTo(view).equal = KeepValueMake(insets.top, priority);
-    self.keepBottomAlignTo(view).equal = KeepValueMake(insets.bottom, priority);
-}
-
-
 - (KeepRelatedAttributeBlock)keepVerticalAlignTo {
     return ^KeepAttribute *(KPView *view) {
         return [self keep_alignForSelector:_cmd alignAttribute:NSLayoutAttributeCenterX relatedView:view coefficient:1 name:@"vertical center alignment"];
@@ -748,29 +764,6 @@
 - (KeepRelatedAttributeBlock)keepHorizontalAlignTo {
     return ^KeepAttribute *(KPView *view) {
         return [self keep_alignForSelector:_cmd alignAttribute:NSLayoutAttributeCenterY relatedView:view coefficient:1 name:@"horizontal center alignment"];
-    };
-}
-
-
-- (void)keepCenterAlignTo:(KPView *)view {
-    [self keepCenterAlignTo:view offset:KPOffsetZero];
-}
-
-
-- (void)keepCenterAlignTo:(KPView *)view offset:(KPOffset)offset {
-    [self keepCenterAlignTo:view offset:offset withPriority:KeepPriorityRequired];
-}
-
-
-- (void)keepCenterAlignTo:(KPView *)view offset:(KPOffset)offset withPriority:(KeepPriority)priority {
-    self.keepHorizontalAlignTo(view).equal = KeepValueMake(offset.vertical, priority);
-    self.keepVerticalAlignTo(view).equal = KeepValueMake(offset.horizontal, priority);
-}
-
-
-- (KeepRelatedAttributeBlock)keepBaselineAlignTo {
-    return ^KeepAttribute *(KPView *view) {
-        return [self keep_alignForSelector:_cmd alignAttribute:NSLayoutAttributeBaseline relatedView:view coefficient:-1 name:@"baseline alignment"];
     };
 }
 
@@ -792,8 +785,108 @@
 
 
 
+#pragma mark Compression & Hugging Convenience
+
+
+- (KeepPriority)keepCompressionResistance {
+    return MIN(self.keepHorizontalCompressionResistance, self.keepVerticalCompressionResistance);
+}
+
+
+- (void)setKeepCompressionResistance:(KeepPriority)priority {
+    self.keepHorizontalCompressionResistance = priority;
+    self.keepVerticalCompressionResistance = priority;
+}
+
+
+- (KeepPriority)keepHorizontalCompressionResistance {
+#if TARGET_OS_IOS
+    return [self contentCompressionResistancePriorityForAxis:UILayoutConstraintAxisHorizontal];
+#else
+    return [self contentCompressionResistancePriorityForOrientation:NSLayoutConstraintOrientationHorizontal];
+#endif
+}
+
+
+- (void)setKeepHorizontalCompressionResistance:(KeepPriority)priority {
+#if TARGET_OS_IOS
+    [self setContentCompressionResistancePriority:priority forAxis:UILayoutConstraintAxisHorizontal];
+#else
+    [self setContentCompressionResistancePriority:priority forOrientation:NSLayoutConstraintOrientationHorizontal];
+#endif
+}
+
+
+- (KeepPriority)keepVerticalCompressionResistance {
+#if TARGET_OS_IOS
+    return [self contentCompressionResistancePriorityForAxis:UILayoutConstraintAxisVertical];
+#else
+    return [self contentCompressionResistancePriorityForOrientation:NSLayoutConstraintOrientationVertical];
+#endif
+}
+
+
+- (void)setKeepVerticalCompressionResistance:(KeepPriority)priority {
+#if TARGET_OS_IOS
+    [self setContentCompressionResistancePriority:priority forAxis:UILayoutConstraintAxisVertical];
+#else
+    [self setContentCompressionResistancePriority:priority forOrientation:NSLayoutConstraintOrientationVertical];
+#endif
+}
+
+
+- (KeepPriority)keepHuggingPriority {
+    return MIN(self.keepHorizontalHuggingPriority, self.keepVerticalHuggingPriority);
+}
+
+
+- (void)setKeepHuggingPriority:(KeepPriority)priority {
+    self.keepHorizontalHuggingPriority = priority;
+    self.keepVerticalHuggingPriority = priority;
+}
+
+
+- (KeepPriority)keepHorizontalHuggingPriority {
+#if TARGET_OS_IOS
+    return [self contentHuggingPriorityForAxis:UILayoutConstraintAxisHorizontal];
+#else
+    return [self contentHuggingPriorityForOrientation:NSLayoutConstraintOrientationHorizontal];
+#endif
+}
+
+
+- (void)setKeepHorizontalHuggingPriority:(KeepPriority)priority {
+#if TARGET_OS_IOS
+    [self setContentHuggingPriority:priority forAxis:UILayoutConstraintAxisHorizontal];
+#else
+    [self setContentHuggingPriority:priority forOrientation:NSLayoutConstraintOrientationHorizontal];
+#endif
+}
+
+
+- (KeepPriority)keepVerticalHuggingPriority {
+#if TARGET_OS_IOS
+    return [self contentHuggingPriorityForAxis:UILayoutConstraintAxisVertical];
+#else
+    return [self contentHuggingPriorityForOrientation:NSLayoutConstraintOrientationVertical];
+#endif
+}
+
+
+- (void)setKeepVerticalHuggingPriority:(KeepPriority)priority {
+#if TARGET_OS_IOS
+    [self setContentHuggingPriority:priority forAxis:UILayoutConstraintAxisVertical];
+#else
+    [self setContentHuggingPriority:priority forOrientation:NSLayoutConstraintOrientationVertical];
+#endif
+}
+
+
+
+
+
 #pragma mark Animating Constraints
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IOS
 
 
 - (void)keepAnimatedWithDuration:(NSTimeInterval)duration layout:(void(^)(void))animations {
@@ -858,42 +951,24 @@
 }
 
 
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000   // Compiled with iOS 7 SDK
 - (void)keepAnimatedWithDuration:(NSTimeInterval)duration delay:(NSTimeInterval)delay usingSpringWithDamping:(CGFloat)dampingRatio initialSpringVelocity:(CGFloat)velocity options:(UIViewAnimationOptions)options layout:(void (^)(void))animations completion:(void (^)(BOOL finished))completion {
     KeepParameterAssert(duration >= 0);
     KeepParameterAssert(delay >= 0);
     KeepParameterAssert(animations);
     
-    if ([UIView respondsToSelector:@selector(animateWithDuration:delay:usingSpringWithDamping:initialSpringVelocity:options:animations:completion:)]) {
-        // Running on iOS 7
-        [self keep_animationPerformWithDuration:duration delay:delay block:^{
-            [UIView animateWithDuration:duration
-                                  delay:0
-                 usingSpringWithDamping:dampingRatio
-                  initialSpringVelocity:velocity
-                                options:options
-                             animations:^{
-                                 animations();
-                                 [self layoutIfNeeded];
-                             }
-                             completion:completion];
-        }];
-    }
-    else {
-        // Running on iOS 6, fallback to non-spring animation
-        [self keep_animationPerformWithDuration:duration delay:delay block:^{
-            [UIView animateWithDuration:duration
-                                  delay:0
-                                options:options
-                             animations:^{
-                                 animations();
-                                 [self layoutIfNeeded];
-                             }
-                             completion:completion];
-        }];
-    }
+    [self keep_animationPerformWithDuration:duration delay:delay block:^{
+        [UIView animateWithDuration:duration
+                              delay:0
+             usingSpringWithDamping:dampingRatio
+              initialSpringVelocity:velocity
+                            options:options
+                         animations:^{
+                             animations();
+                             [self layoutIfNeeded];
+                         }
+                         completion:completion];
+    }];
 }
-#endif
 
 
 - (void)keep_animationPerformWithDuration:(NSTimeInterval)duration delay:(NSTimeInterval)delay block:(void(^)(void))block {
@@ -910,30 +985,13 @@
 
 
 - (void)keepNotAnimated:(void (^)(void))layout {
-    
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000   // Compiled with iOS 7 SDK
-    if ([UIView respondsToSelector:@selector(performWithoutAnimation:)]) {
-        // Running iOS 7
-        [UIView performWithoutAnimation:^{
-            layout();
-            [self layoutIfNeeded];
-        }];
-    }
-    else
-#endif
-    {
-        // Running iOS 6 or earlier, use legacy methods
-        BOOL wereAnimationsEnabled = [UIView areAnimationsEnabled];
-        [UIView setAnimationsEnabled: NO];
-        
+    [UIView performWithoutAnimation:^{
         layout();
         [self layoutIfNeeded];
-        
-        [UIView setAnimationsEnabled: wereAnimationsEnabled];
-    }
+    }];
 }
 
-#endif // TARGET_OS_IPHONE
+#endif // TARGET_OS_IOS
 
 
 
@@ -947,7 +1005,7 @@
     
     KPView *superview = self;
     while (superview) {
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IOS
         BOOL isDescendant = [anotherView isDescendantOfView:superview];
 #else
         BOOL isDescendant = [anotherView isDescendantOf:superview];

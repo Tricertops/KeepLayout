@@ -110,6 +110,12 @@
 /// Grouped attribute for Bottom Inset of contained views.
 @property (readonly) KeepAttribute *keepBottomInset;
 
+/// Grouped attribute for First Baseline Inset of contained views.
+@property (nonatomic, readonly) KeepAttribute *keepFirstBaselineInset;
+
+/// Grouped attribute for Last Baseline Inset of contained views.
+@property (nonatomic, readonly) KeepAttribute *keepLastBaselineInset;
+
 /// Grouped attribute for All Insets of contained views.
 @property (readonly) KeepAttribute *keepInsets;
 
@@ -242,6 +248,12 @@
 /// Grouped attribute for Bottom Offset of contained views.
 @property (readonly) KeepRelatedAttributeBlock keepBottomOffsetTo;
 
+/// Grouped attribute for First Baseline Offset of contained views.
+@property (nonatomic, readonly) KeepRelatedAttributeBlock keepFirstBaselineOffsetTo;
+
+/// Grouped attribute for Last Baseline Offset of contained views.
+@property (nonatomic, readonly) KeepRelatedAttributeBlock keepLastBaselineOffsetTo;
+
 
 
 #pragma mark Offsets: Batch Convenience
@@ -255,6 +267,9 @@
 
 /// All contained views will share the same Vertical Offset (top to bottom) using given priority. First view will keep Bottom Offset to second view and so on.
 - (void)keepVerticalOffsets:(KeepValue)value KEEP_SWIFT_AWAY;
+
+/// All contained views will share the same Baseline Offset (top to bottom) using given priority. First view will keep Last Baseline Offset to second view’ First Baseline and so on.
+- (void)keepBaselineOffsets:(KeepValue)value KEEP_SWIFT_AWAY;
 
 
 
@@ -292,9 +307,6 @@
 
 /// Grouped attribute for Both Center Axis Alignment of contained views.
 @property (readonly) KeepRelatedAttributeBlock keepCenterAlignTo;
-
-/// Grouped attribute for Baseline Alignment of contained views.
-@property (readonly) KeepRelatedAttributeBlock keepBaselineAlignTo __deprecated_msg("You should use .keepFirstBaselineAlignTo or .keepLastBaselineAlignTo");
 
 /// Grouped attribute for First Baseline Alignment of contained views.
 @property (readonly) KeepRelatedAttributeBlock keepFirstBaselineAlignTo;
