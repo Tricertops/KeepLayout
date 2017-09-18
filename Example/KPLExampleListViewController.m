@@ -191,13 +191,13 @@
                                 
                                 UIView *top = createView(self.view.tintColor, container);
                                 top.keepHorizontalInsets.equal = 10;
-                                top.keepTopInset.equal = 10;
+                                top.keepTopAlignTo(controller.keepLayoutView).equal = 0;
                                 top.keepHeight.equal = 80;
                                 
                                 UIView *bottom = createView(self.view.tintColor, container);
                                 bottom.keepHorizontalInsets.equal = 10;
                                 bottom.keepHeight.equal = 30;
-                                bottom.keepBottomInset.equal = 10;
+                                bottom.keepBottomAlignTo(controller.keepLayoutView).equal = 0;
                                 
                                 UILabel *label = [[UILabel alloc] init];
                                 label.text = @"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";

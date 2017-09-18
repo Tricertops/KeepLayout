@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		499F44771F6FC18D002110AB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 499F44761F6FC18D002110AB /* LaunchScreen.storyboard */; };
 		5B099AC718358167004A8257 /* Icon~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B099AC418358167004A8257 /* Icon~ipad.png */; };
 		5B099AC818358167004A8257 /* Icon@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B099AC518358167004A8257 /* Icon@2x~ipad.png */; };
 		5B099AC918358167004A8257 /* Icon@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B099AC618358167004A8257 /* Icon@2x~iphone.png */; };
@@ -85,6 +86,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		499F44761F6FC18D002110AB /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5B00E1FB193F9BD900535B19 /* UIViewController+KeepLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+KeepLayout.h"; sourceTree = "<group>"; };
 		5B00E1FC193F9BD900535B19 /* UIViewController+KeepLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+KeepLayout.m"; sourceTree = "<group>"; };
 		5B099AC418358167004A8257 /* Icon~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon~ipad.png"; sourceTree = "<group>"; };
@@ -242,6 +244,7 @@
 				5B6D19661777811600FA2E3E /* KPLExample.h */,
 				5B6D19671777811600FA2E3E /* KPLExample.m */,
 				5B3C508416B5304600D00BF3 /* Supporting Files */,
+				499F44761F6FC18D002110AB /* LaunchScreen.storyboard */,
 			);
 			path = Example;
 			sourceTree = "<group>";
@@ -442,6 +445,7 @@
 				5B099AC718358167004A8257 /* Icon~ipad.png in Resources */,
 				5B3C509216B5304600D00BF3 /* Default@2x.png in Resources */,
 				5B099ACF183581F9004A8257 /* Default-Landscape@2x.png in Resources */,
+				499F44771F6FC18D002110AB /* LaunchScreen.storyboard in Resources */,
 				5B099AD1183581F9004A8257 /* Default-Portrait@2x.png in Resources */,
 				5B099AC918358167004A8257 /* Icon@2x~iphone.png in Resources */,
 				5B3C509416B5304600D00BF3 /* Default-568h@2x.png in Resources */,
