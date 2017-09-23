@@ -45,15 +45,6 @@
 }
 
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    
-    self->_containerView = [UIView new];
-    [self.view addSubview:self.containerView];
-    self.containerView.keepEdgeAlignTo(self.keepLayoutView).equal = 0;
-}
-
-
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
