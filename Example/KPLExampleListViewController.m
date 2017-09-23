@@ -191,13 +191,13 @@
                                 
                                 UIView *top = createView(self.view.tintColor, container);
                                 top.keepHorizontalInsets.equal = 10;
-                                top.keepTopAlignTo(controller.keepLayoutView).equal = 0;
+                                top.keepTopInset.equal = 10;
                                 top.keepHeight.equal = 80;
                                 
                                 UIView *bottom = createView(self.view.tintColor, container);
                                 bottom.keepHorizontalInsets.equal = 10;
                                 bottom.keepHeight.equal = 30;
-                                bottom.keepBottomAlignTo(controller.keepLayoutView).equal = 0;
+                                bottom.keepBottomInset.equal = 10;
                                 
                                 UILabel *label = [[UILabel alloc] init];
                                 label.text = @"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
@@ -366,8 +366,8 @@
                                 firstColumn.keepLeftInset.equal = padding; // 4 constraints
                                 
                                 for (NSMutableArray<UIView *> *column in columns) {
-                                    [column keepVerticalOffsets:padding +keepHigh]; // 4 iterations * 3 constraints
-                                    [column keepVerticalAlignments:0 +keepHigh]; // 4 iterations * 3 constraints
+                                    [column keepVerticalOffsets:padding]; // 4 iterations * 3 constraints
+                                    [column keepVerticalAlignments:0]; // 4 iterations * 3 constraints
                                 }
                                 
                                 NSArray<UIView *> *lastColumn = columns.lastObject;
@@ -378,8 +378,8 @@
                                 firstRow.keepTopInset.equal = padding; // 4 constraints
                                 
                                 for (NSMutableArray<UIView *> *row in rows) {
-                                    [row keepHorizontalOffsets:padding +keepHigh]; // 4 iterations * 3 constraints
-                                    [row keepHorizontalAlignments:0 +keepHigh]; // 4 iterations * 3 constraints
+                                    [row keepHorizontalOffsets:padding]; // 4 iterations * 3 constraints
+                                    [row keepHorizontalAlignments:0]; // 4 iterations * 3 constraints
                                 }
                                 
                                 NSArray<UIView *> *lastRow = rows.lastObject;
@@ -387,7 +387,7 @@
                                 
                                 
                                 cells.keepInsets.min = 0; // 64 constraints
-                                cells.keepInsets.equal = 0 keepHigh; // 64 constraints
+                                cells.keepInsets.equal = 0 +keepHigh; // 64 constraints
                                 [cells keepCentered]; // 32 constraints
                                 
                                 
