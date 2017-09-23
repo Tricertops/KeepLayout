@@ -11,10 +11,6 @@
 		5B099AC718358167004A8257 /* Icon~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B099AC418358167004A8257 /* Icon~ipad.png */; };
 		5B099AC818358167004A8257 /* Icon@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B099AC518358167004A8257 /* Icon@2x~ipad.png */; };
 		5B099AC918358167004A8257 /* Icon@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B099AC618358167004A8257 /* Icon@2x~iphone.png */; };
-		5B099ACE183581F9004A8257 /* Default-Landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B099ACA183581F9004A8257 /* Default-Landscape.png */; };
-		5B099ACF183581F9004A8257 /* Default-Landscape@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B099ACB183581F9004A8257 /* Default-Landscape@2x.png */; };
-		5B099AD0183581F9004A8257 /* Default-Portrait.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B099ACC183581F9004A8257 /* Default-Portrait.png */; };
-		5B099AD1183581F9004A8257 /* Default-Portrait@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B099ACD183581F9004A8257 /* Default-Portrait@2x.png */; };
 		5B0AF624195392C20041E966 /* KeepTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B19318217719A4E00A5747B /* KeepTypes.m */; };
 		5B0AF625195392C20041E966 /* KeepView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B3C50B016B530F900D00BF3 /* KeepView.m */; };
 		5B0AF626195392C20041E966 /* KeepArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B6D195E1776F32000FA2E3E /* KeepArray.m */; };
@@ -29,8 +25,6 @@
 		5B3C508216B5304600D00BF3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B3C508116B5304600D00BF3 /* CoreGraphics.framework */; };
 		5B3C508A16B5304600D00BF3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B3C508916B5304600D00BF3 /* main.m */; };
 		5B3C508E16B5304600D00BF3 /* KPLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B3C508D16B5304600D00BF3 /* KPLAppDelegate.m */; };
-		5B3C509216B5304600D00BF3 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B3C509116B5304600D00BF3 /* Default@2x.png */; };
-		5B3C509416B5304600D00BF3 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B3C509316B5304600D00BF3 /* Default-568h@2x.png */; };
 		5B6D196217777E4200FA2E3E /* KPLExampleListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B6D196117777E4200FA2E3E /* KPLExampleListViewController.m */; };
 		5B6D196517777E5100FA2E3E /* KPLExampleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B6D196417777E5100FA2E3E /* KPLExampleViewController.m */; };
 		5B6D19681777811600FA2E3E /* KPLExample.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B6D19671777811600FA2E3E /* KPLExample.m */; };
@@ -92,10 +86,6 @@
 		5B099AC418358167004A8257 /* Icon~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon~ipad.png"; sourceTree = "<group>"; };
 		5B099AC518358167004A8257 /* Icon@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x~ipad.png"; sourceTree = "<group>"; };
 		5B099AC618358167004A8257 /* Icon@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x~iphone.png"; sourceTree = "<group>"; };
-		5B099ACA183581F9004A8257 /* Default-Landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape.png"; sourceTree = "<group>"; };
-		5B099ACB183581F9004A8257 /* Default-Landscape@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape@2x.png"; sourceTree = "<group>"; };
-		5B099ACC183581F9004A8257 /* Default-Portrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait.png"; sourceTree = "<group>"; };
-		5B099ACD183581F9004A8257 /* Default-Portrait@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait@2x.png"; sourceTree = "<group>"; };
 		5B0AF5FF195392A30041E966 /* libKeepLayout-AppKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libKeepLayout-AppKit.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B19318217719A4E00A5747B /* KeepTypes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeepTypes.m; sourceTree = "<group>"; };
 		5B208DBF16B67381007ABFFE /* KeepAttribute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeepAttribute.h; sourceTree = "<group>"; };
@@ -118,8 +108,6 @@
 		5B3C508B16B5304600D00BF3 /* Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = "<group>"; };
 		5B3C508C16B5304600D00BF3 /* KPLAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KPLAppDelegate.h; sourceTree = "<group>"; };
 		5B3C508D16B5304600D00BF3 /* KPLAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KPLAppDelegate.m; sourceTree = "<group>"; };
-		5B3C509116B5304600D00BF3 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
-		5B3C509316B5304600D00BF3 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		5B3C50AF16B530F900D00BF3 /* KeepView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeepView.h; sourceTree = "<group>"; };
 		5B3C50B016B530F900D00BF3 /* KeepView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeepView.m; sourceTree = "<group>"; };
 		5B3C50B516B531C700D00BF3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -244,7 +232,6 @@
 				5B6D19661777811600FA2E3E /* KPLExample.h */,
 				5B6D19671777811600FA2E3E /* KPLExample.m */,
 				5B3C508416B5304600D00BF3 /* Supporting Files */,
-				499F44761F6FC18D002110AB /* LaunchScreen.storyboard */,
 			);
 			path = Example;
 			sourceTree = "<group>";
@@ -258,12 +245,7 @@
 				5B099AC618358167004A8257 /* Icon@2x~iphone.png */,
 				5B099AC418358167004A8257 /* Icon~ipad.png */,
 				5B099AC518358167004A8257 /* Icon@2x~ipad.png */,
-				5B3C509116B5304600D00BF3 /* Default@2x.png */,
-				5B3C509316B5304600D00BF3 /* Default-568h@2x.png */,
-				5B099ACC183581F9004A8257 /* Default-Portrait.png */,
-				5B099ACD183581F9004A8257 /* Default-Portrait@2x.png */,
-				5B099ACA183581F9004A8257 /* Default-Landscape.png */,
-				5B099ACB183581F9004A8257 /* Default-Landscape@2x.png */,
+				499F44761F6FC18D002110AB /* LaunchScreen.storyboard */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -402,6 +384,9 @@
 				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = "Martin Kiss";
 				TargetAttributes = {
+					5B3C507816B5304600D00BF3 = {
+						DevelopmentTeam = TAQH2MQM62;
+					};
 					5B92B74F1CCCD5B0002C1C3B = {
 						CreatedOnToolsVersion = 7.3;
 						LastSwiftMigration = 0900;
@@ -443,15 +428,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				5B099AC718358167004A8257 /* Icon~ipad.png in Resources */,
-				5B3C509216B5304600D00BF3 /* Default@2x.png in Resources */,
-				5B099ACF183581F9004A8257 /* Default-Landscape@2x.png in Resources */,
 				499F44771F6FC18D002110AB /* LaunchScreen.storyboard in Resources */,
-				5B099AD1183581F9004A8257 /* Default-Portrait@2x.png in Resources */,
 				5B099AC918358167004A8257 /* Icon@2x~iphone.png in Resources */,
-				5B3C509416B5304600D00BF3 /* Default-568h@2x.png in Resources */,
 				5B099AC818358167004A8257 /* Icon@2x~ipad.png in Resources */,
-				5B099AD0183581F9004A8257 /* Default-Portrait.png in Resources */,
-				5B099ACE183581F9004A8257 /* Default-Landscape.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -785,6 +764,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				DEVELOPMENT_TEAM = TAQH2MQM62;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Example/Prefix.pch;
 				INFOPLIST_FILE = "$(SRCROOT)/Example/Info.plist";
@@ -803,6 +783,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				DEVELOPMENT_TEAM = TAQH2MQM62;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Example/Prefix.pch;
 				INFOPLIST_FILE = "$(SRCROOT)/Example/Info.plist";
