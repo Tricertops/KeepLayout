@@ -188,7 +188,7 @@
 #pragma mark Supreview Insets
 
 
-- (KeepAttribute *)keep_insetForSelector:(SEL)selector edgeAttribute:(NSLayoutAttribute)edgeAttribute coefficient:(CGFloat)coefficient name:(NSString *)name {
+- (KeepAttribute *)keep_insetForSelector:(SEL)selector useSafe:(BOOL)useSafeInsets edgeAttribute:(NSLayoutAttribute)edgeAttribute coefficient:(CGFloat)coefficient name:(NSString *)name {
     KeepParameterAssert(selector);
     KeepParameterAssert(   edgeAttribute == NSLayoutAttributeLeft
                         || edgeAttribute == NSLayoutAttributeRight
@@ -224,9 +224,16 @@
         NSLayoutAttribute superviewEdgeAttribute = [[nonBaselineAttributes objectForKey:@(edgeAttribute)] integerValue] ?: edgeAttribute;
         NSLayoutAttribute selfEdgeAttribute = [[nonMarginAttributes objectForKey:@(edgeAttribute)] integerValue] ?: edgeAttribute;
         
+        id<KeepViewOrGuide> related = self.superview;
+        if (useSafeInsets) {
+            if (@available(iOS 11, *)) {
+                related = self.superview.safeAreaLayoutGuide;
+            }
+        }
+        
         KeepAttribute *attribute = [[[KeepConstantAttribute alloc] initWithView:self
                                                                 layoutAttribute:selfEdgeAttribute
-                                                                    relatedView:self.superview
+                                                                    relatedView:related
                                                          relatedLayoutAttribute:superviewEdgeAttribute
                                                                     coefficient:coefficient]
                                     name:@"%@ of <%@ %p> to superview <%@ %p>", name, self.class, self, self.superview.class, self.superview];
@@ -237,42 +244,42 @@
 
 
 - (KeepAttribute *)keepLeftInset {
-    return [self keep_insetForSelector:_cmd edgeAttribute:NSLayoutAttributeLeft coefficient:1 name:@"left inset"];
+    return [self keep_insetForSelector:_cmd useSafe:NO edgeAttribute:NSLayoutAttributeLeft coefficient:1 name:@"left inset"];
 }
 
 
 - (KeepAttribute *)keepRightInset {
-    return [self keep_insetForSelector:_cmd edgeAttribute:NSLayoutAttributeRight coefficient:-1 name:@"right inset"];
+    return [self keep_insetForSelector:_cmd useSafe:NO edgeAttribute:NSLayoutAttributeRight coefficient:-1 name:@"right inset"];
 }
 
 
 - (KeepAttribute *)keepLeadingInset {
-    return [self keep_insetForSelector:_cmd edgeAttribute:NSLayoutAttributeLeading coefficient:1 name:@"leading inset"];
+    return [self keep_insetForSelector:_cmd useSafe:NO edgeAttribute:NSLayoutAttributeLeading coefficient:1 name:@"leading inset"];
 }
 
 
 - (KeepAttribute *)keepTrailingInset {
-    return [self keep_insetForSelector:_cmd edgeAttribute:NSLayoutAttributeTrailing coefficient:-1 name:@"trailing inset"];
+    return [self keep_insetForSelector:_cmd useSafe:NO edgeAttribute:NSLayoutAttributeTrailing coefficient:-1 name:@"trailing inset"];
 }
 
 
 - (KeepAttribute *)keepTopInset {
-    return [self keep_insetForSelector:_cmd edgeAttribute:NSLayoutAttributeTop coefficient:1 name:@"top inset"];
+    return [self keep_insetForSelector:_cmd useSafe:NO edgeAttribute:NSLayoutAttributeTop coefficient:1 name:@"top inset"];
 }
 
 
 - (KeepAttribute *)keepBottomInset {
-    return [self keep_insetForSelector:_cmd edgeAttribute:NSLayoutAttributeBottom coefficient:-1 name:@"bottom inset"];
+    return [self keep_insetForSelector:_cmd useSafe:NO edgeAttribute:NSLayoutAttributeBottom coefficient:-1 name:@"bottom inset"];
 }
 
 
 - (KeepAttribute *)keepFirstBaselineInset {
-    return [self keep_insetForSelector:_cmd edgeAttribute:NSLayoutAttributeFirstBaseline coefficient:1 name:@"first baseline inset"];
+    return [self keep_insetForSelector:_cmd useSafe:NO edgeAttribute:NSLayoutAttributeFirstBaseline coefficient:1 name:@"first baseline inset"];
 }
 
 
 - (KeepAttribute *)keepLastBaselineInset {
-    return [self keep_insetForSelector:_cmd edgeAttribute:NSLayoutAttributeLastBaseline coefficient:-1 name:@"last baseline inset"];
+    return [self keep_insetForSelector:_cmd useSafe:NO edgeAttribute:NSLayoutAttributeLastBaseline coefficient:-1 name:@"last baseline inset"];
 }
 
 
@@ -318,36 +325,111 @@
 
 
 
+#pragma mark Superview Safe Insets
+
+
+- (KeepAttribute *)keepLeftSafeInset {
+    return [self keep_insetForSelector:_cmd useSafe:YES edgeAttribute:NSLayoutAttributeLeft coefficient:1 name:@"left safe inset"];
+}
+
+
+- (KeepAttribute *)keepRightSafeInset {
+    return [self keep_insetForSelector:_cmd useSafe:YES edgeAttribute:NSLayoutAttributeRight coefficient:-1 name:@"right safe inset"];
+}
+
+
+- (KeepAttribute *)keepLeadingSafeInset {
+    return [self keep_insetForSelector:_cmd useSafe:YES edgeAttribute:NSLayoutAttributeLeading coefficient:1 name:@"leading safe inset"];
+}
+
+
+- (KeepAttribute *)keepTrailingSafeInset {
+    return [self keep_insetForSelector:_cmd useSafe:YES edgeAttribute:NSLayoutAttributeTrailing coefficient:-1 name:@"trailing safe inset"];
+}
+
+
+- (KeepAttribute *)keepTopSafeInset {
+    return [self keep_insetForSelector:_cmd useSafe:YES edgeAttribute:NSLayoutAttributeTop coefficient:1 name:@"top safe inset"];
+}
+
+
+- (KeepAttribute *)keepBottomSafeInset {
+    return [self keep_insetForSelector:_cmd useSafe:YES edgeAttribute:NSLayoutAttributeBottom coefficient:-1 name:@"bottom safe inset"];
+}
+
+
+- (KeepAttribute *)keepSafeInsets {
+    return [[[KeepGroupAttribute alloc] initWithAttributes:@[
+                                                             self.keepTopSafeInset,
+                                                             self.keepBottomSafeInset,
+                                                             self.keepLeftSafeInset,
+                                                             self.keepRightSafeInset ]]
+            name:@"all safe insets of <%@ %p> to superview <%@ %p>", self.class, self, self.superview.class, self.superview];
+}
+
+
+- (KeepAttribute *)keepHorizontalSafeInsets {
+    return [[[KeepGroupAttribute alloc] initWithAttributes:@[
+                                                             self.keepLeftSafeInset,
+                                                             self.keepRightSafeInset ]]
+            name:@"horizontal safe insets of <%@ %p> to superview <%@ %p>", self.class, self, self.superview.class, self.superview];
+}
+
+
+- (KeepAttribute *)keepVerticalSafeInsets {
+    return [[[KeepGroupAttribute alloc] initWithAttributes:@[
+                                                             self.keepTopSafeInset,
+                                                             self.keepBottomSafeInset ]]
+            name:@"vertical safe insets of <%@ %p> to superview <%@ %p>", self.class, self, self.superview.class, self.superview];
+}
+
+
+- (void)keepSafeInsets:(KPEdgeInsets)insets {
+    [self keepSafeInsets:insets priority:KeepPriorityRequired];
+}
+
+
+- (void)keepSafeInsets:(KPEdgeInsets)insets priority:(KeepPriority)priority {
+    self.keepLeftSafeInset.equal = KeepValueMake(insets.left, priority);
+    self.keepRightSafeInset.equal = KeepValueMake(insets.right, priority);
+    self.keepTopSafeInset.equal = KeepValueMake(insets.top, priority);
+    self.keepBottomSafeInset.equal = KeepValueMake(insets.bottom, priority);
+}
+
+
+
+
+
 #pragma mark Superview Margin Insets
 
 
 - (KeepAttribute *)keepLeftMarginInset {
-    return [self keep_insetForSelector:_cmd edgeAttribute:NSLayoutAttributeLeftMargin coefficient:1 name:@"left margin inset"];
+    return [self keep_insetForSelector:_cmd useSafe:NO edgeAttribute:NSLayoutAttributeLeftMargin coefficient:1 name:@"left margin inset"];
 }
 
 
 - (KeepAttribute *)keepRightMarginInset {
-    return [self keep_insetForSelector:_cmd edgeAttribute:NSLayoutAttributeRightMargin coefficient:-1 name:@"right margin inset"];
+    return [self keep_insetForSelector:_cmd useSafe:NO edgeAttribute:NSLayoutAttributeRightMargin coefficient:-1 name:@"right margin inset"];
 }
 
 
 - (KeepAttribute *)keepLeadingMarginInset {
-    return [self keep_insetForSelector:_cmd edgeAttribute:NSLayoutAttributeLeadingMargin coefficient:1 name:@"leading margin inset"];
+    return [self keep_insetForSelector:_cmd useSafe:NO edgeAttribute:NSLayoutAttributeLeadingMargin coefficient:1 name:@"leading margin inset"];
 }
 
 
 - (KeepAttribute *)keepTrailingMarginInset {
-    return [self keep_insetForSelector:_cmd edgeAttribute:NSLayoutAttributeTrailingMargin coefficient:-1 name:@"trailing margin inset"];
+    return [self keep_insetForSelector:_cmd useSafe:NO edgeAttribute:NSLayoutAttributeTrailingMargin coefficient:-1 name:@"trailing margin inset"];
 }
 
 
 - (KeepAttribute *)keepTopMarginInset {
-    return [self keep_insetForSelector:_cmd edgeAttribute:NSLayoutAttributeTopMargin coefficient:1 name:@"top margin inset"];
+    return [self keep_insetForSelector:_cmd useSafe:NO edgeAttribute:NSLayoutAttributeTopMargin coefficient:1 name:@"top margin inset"];
 }
 
 
 - (KeepAttribute *)keepBottomMarginInset {
-    return [self keep_insetForSelector:_cmd edgeAttribute:NSLayoutAttributeBottomMargin coefficient:-1 name:@"bottom margin inset"];
+    return [self keep_insetForSelector:_cmd useSafe:NO edgeAttribute:NSLayoutAttributeBottomMargin coefficient:-1 name:@"bottom margin inset"];
 }
 
 
@@ -388,7 +470,6 @@
     self.keepTopMarginInset.equal = KeepValueMake(insets.top, priority);
     self.keepBottomMarginInset.equal = KeepValueMake(insets.bottom, priority);
 }
-
 
 
 

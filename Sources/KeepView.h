@@ -128,6 +128,52 @@ typedef KeepAttribute *(^KeepRelatedAttributeBlock)(KPView *otherView);
 
 
 #pragma mark -
+#pragma mark Superview Safe Insets: Core
+/// Attributes representing internal inset of the receive to its current superview, taking into account its safe insets.
+
+/// Left Safe Inset of the receiver in its current superview.
+@property (readonly) KeepAttribute *keepLeftSafeInset API_AVAILABLE(ios(11));
+
+/// Right Safe Inset of the receiver in its current superview. Values are inverted to Right-to-Left direction.
+@property (readonly) KeepAttribute *keepRightSafeInset API_AVAILABLE(ios(11));
+
+/// Leading Safe Inset of the receiver in its current superview. Depends on writing direction.
+@property (readonly) KeepAttribute *keepLeadingSafeInset API_AVAILABLE(ios(11));
+
+/// Trailing Safe Inset of the receiver in its current superview. Values are inverted to Right-to-Left direction. Depends on writing direction.
+@property (readonly) KeepAttribute *keepTrailingSafeInset API_AVAILABLE(ios(11));
+
+/// Top Safe Inset of the receiver in its current superview.
+@property (readonly) KeepAttribute *keepTopSafeInset API_AVAILABLE(ios(11));
+
+/// Bottom Safe Inset of the receiver in its current superview. Values are inverted to Bottom-to-Top direction.
+@property (readonly) KeepAttribute *keepBottomSafeInset API_AVAILABLE(ios(11));
+
+
+
+#pragma mark Superview Safe Insets: Convenience
+/// Convenience methods for setting all safe insets at once.
+
+/// Grouped proxy attribute for Top, Bottom, Left and Right Safe Inset.
+@property (readonly) KeepAttribute *keepSafeInsets API_AVAILABLE(ios(11));
+
+/// Grouped proxy attribute for Left and Right Safe Inset.
+@property (readonly) KeepAttribute *keepHorizontalSafeInsets API_AVAILABLE(ios(11));
+
+/// Grouped proxy attribute for Top and Bottom Safe Inset.
+@property (readonly) KeepAttribute *keepVerticalSafeInsets API_AVAILABLE(ios(11));
+
+/// Sets custom Safe Insets using given priority.
+- (void)keepSafeInsets:(KPEdgeInsets)insets priority:(KeepPriority)priority API_AVAILABLE(ios(11));
+
+/// Sets custom Safe Insets using Required priority. Use is discouraged.
+- (void)keepSafeInsets:(KPEdgeInsets)insets API_AVAILABLE(ios(11));
+
+
+
+
+
+#pragma mark -
 #pragma mark Superview Margin Insets: Core
 /// Attributes representing internal inset of the receive to its current superview, taking into account its margin insets.
 

@@ -36,48 +36,13 @@
     layoutView.backgroundColor = [UIColor clearColor];
     [self.view insertSubview:layoutView atIndex:0];
     
-    if (@available(iOS 11.0, *))
-    {
-        KeepLayoutConstraint* leftAlign = [KeepLayoutConstraint constraintWithItem:layoutView
-                                                  attribute:NSLayoutAttributeLeft
-                                                  relatedBy:NSLayoutRelationEqual
-                                                     toItem:self.view.safeAreaLayoutGuide
-                                                  attribute:NSLayoutAttributeLeft
-                                                 multiplier:1
-                                                   constant:0];
-        [leftAlign name:@"align left of <%@ %p> to left of safe area layout guide of <%@ %p>", layoutView.class, layoutView, self.class, self];
+    if (@available(iOS 11.0, *)) {
+        layoutView.keepSafeInsets.equal = 0;
+    }
+    else {
+        layoutView.keepHorizontalInsets.equal = 0;
         
-        KeepLayoutConstraint* rightAlign = [KeepLayoutConstraint constraintWithItem:layoutView
-                                                                         attribute:NSLayoutAttributeRight
-                                                                         relatedBy:NSLayoutRelationEqual
-                                                                            toItem:self.view.safeAreaLayoutGuide
-                                                                         attribute:NSLayoutAttributeRight
-                                                                        multiplier:1
-                                                                          constant:0];
-        [rightAlign name:@"align right of <%@ %p> to left of safe area layout guide of <%@ %p>", layoutView.class, layoutView, self.class, self];
-        
-        [self.view addConstraints:@[leftAlign, rightAlign]];
-    }
-    else
-    {
-     layoutView.keepHorizontalMarginInsets.equal = 0;
-    }
-
-    KeepLayoutConstraint *topAlign = nil;
-    if (@available(iOS 11.0, *))
-    {
-        topAlign = [KeepLayoutConstraint constraintWithItem:layoutView
-                                                  attribute:NSLayoutAttributeTop
-                                                  relatedBy:NSLayoutRelationEqual
-                                                     toItem:self.view.safeAreaLayoutGuide
-                                                  attribute:NSLayoutAttributeTop
-                                                 multiplier:1
-                                                   constant:0];
-        [topAlign name:@"align top of <%@ %p> to top of safe area layout guide of <%@ %p>", layoutView.class, layoutView, self.class, self];
-    }
-    else
-    {
-        topAlign = [KeepLayoutConstraint constraintWithItem:layoutView
+        KeepLayoutConstraint *topAlign = [KeepLayoutConstraint constraintWithItem:layoutView
                                                   attribute:NSLayoutAttributeTop
                                                   relatedBy:NSLayoutRelationEqual
                                                      toItem:self.topLayoutGuide
@@ -85,33 +50,18 @@
                                                  multiplier:1
                                                    constant:0];
         [topAlign name:@"align top of <%@ %p> to top layout guide of <%@ %p>", layoutView.class, layoutView, self.class, self];
-    }
-    
-    KeepLayoutConstraint *bottomAlign = nil;
-    if (@available(iOS 11.0, *))
-    {
-        bottomAlign = [KeepLayoutConstraint constraintWithItem:layoutView
+        
+        KeepLayoutConstraint *bottomAlign = [KeepLayoutConstraint constraintWithItem:layoutView
                                                      attribute:NSLayoutAttributeBottom
                                                      relatedBy:NSLayoutRelationEqual
-                                                        toItem:self.view.safeAreaLayoutGuide
+                                                        toItem:self.bottomLayoutGuide
                                                      attribute:NSLayoutAttributeBottom
                                                     multiplier:1
                                                       constant:0];
         [bottomAlign name:@"align bottom of <%@ %p> to bottom of safe area layout guide of <%@ %p>", layoutView.class, layoutView, self.class, self];
+        
+        [KeepLayoutConstraint activateConstraints:@[topAlign, bottomAlign]];
     }
-    else
-    {
-        bottomAlign = [KeepLayoutConstraint constraintWithItem:layoutView
-                                                     attribute:NSLayoutAttributeBottom
-                                                     relatedBy:NSLayoutRelationEqual
-                                                        toItem:self.bottomLayoutGuide
-                                                     attribute:NSLayoutAttributeTop
-                                                    multiplier:1
-                                                      constant:0];
-        [bottomAlign name:@"align bottom of <%@ %p> to bottom layout guide of <%@ %p>", layoutView.class, layoutView, self.class, self];
-    }
-    
-    [self.view addConstraints:@[ topAlign, bottomAlign ]];
     
     objc_setAssociatedObject(self, _cmd, layoutView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     return layoutView;
