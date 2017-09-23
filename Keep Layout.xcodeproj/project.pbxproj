@@ -32,7 +32,7 @@
 		5B3C509216B5304600D00BF3 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B3C509116B5304600D00BF3 /* Default@2x.png */; };
 		5B3C509416B5304600D00BF3 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B3C509316B5304600D00BF3 /* Default-568h@2x.png */; };
 		5B6D196217777E4200FA2E3E /* KPLExampleListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B6D196117777E4200FA2E3E /* KPLExampleListViewController.m */; };
-		5B6D196517777E5100FA2E3E /* KPLExampleViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B6D196417777E5100FA2E3E /* KPLExampleViewController.mm */; };
+		5B6D196517777E5100FA2E3E /* KPLExampleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B6D196417777E5100FA2E3E /* KPLExampleViewController.m */; };
 		5B6D19681777811600FA2E3E /* KPLExample.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B6D19671777811600FA2E3E /* KPLExample.m */; };
 		5B92B75A1CCCD7BC002C1C3B /* KeepLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B208DC316B67391007ABFFE /* KeepLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5B92B75B1CCCD7C4002C1C3B /* KeepTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B208DDE16B6EFFB007ABFFE /* KeepTypes.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -128,7 +128,7 @@
 		5B6D196017777E4200FA2E3E /* KPLExampleListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPLExampleListViewController.h; sourceTree = "<group>"; };
 		5B6D196117777E4200FA2E3E /* KPLExampleListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPLExampleListViewController.m; sourceTree = "<group>"; };
 		5B6D196317777E5100FA2E3E /* KPLExampleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPLExampleViewController.h; sourceTree = "<group>"; };
-		5B6D196417777E5100FA2E3E /* KPLExampleViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = KPLExampleViewController.mm; sourceTree = "<group>"; };
+		5B6D196417777E5100FA2E3E /* KPLExampleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPLExampleViewController.m; sourceTree = "<group>"; };
 		5B6D19661777811600FA2E3E /* KPLExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPLExample.h; sourceTree = "<group>"; };
 		5B6D19671777811600FA2E3E /* KPLExample.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPLExample.m; sourceTree = "<group>"; };
 		5B92B7501CCCD5B0002C1C3B /* KeepLayout.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KeepLayout.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -240,7 +240,7 @@
 				5B6D196017777E4200FA2E3E /* KPLExampleListViewController.h */,
 				5B6D196117777E4200FA2E3E /* KPLExampleListViewController.m */,
 				5B6D196317777E5100FA2E3E /* KPLExampleViewController.h */,
-				5B6D196417777E5100FA2E3E /* KPLExampleViewController.mm */,
+				5B6D196417777E5100FA2E3E /* KPLExampleViewController.m */,
 				5B6D19661777811600FA2E3E /* KPLExample.h */,
 				5B6D19671777811600FA2E3E /* KPLExample.m */,
 				5B3C508416B5304600D00BF3 /* Supporting Files */,
@@ -493,7 +493,7 @@
 				5B3C508A16B5304600D00BF3 /* main.m in Sources */,
 				5B3C508E16B5304600D00BF3 /* KPLAppDelegate.m in Sources */,
 				5B6D196217777E4200FA2E3E /* KPLExampleListViewController.m in Sources */,
-				5B6D196517777E5100FA2E3E /* KPLExampleViewController.mm in Sources */,
+				5B6D196517777E5100FA2E3E /* KPLExampleViewController.m in Sources */,
 				5B6D19681777811600FA2E3E /* KPLExample.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
