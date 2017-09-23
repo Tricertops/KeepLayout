@@ -80,20 +80,20 @@
                                UIView *view = createView(self.view.tintColor, container);
                                
                                // 1
-                               view.keepInsets.equal = 10;
+                               view.keepSafeInsets.equal = 10;
                                
                                // Equivalent:
                                /*
-                                view.keepTopInset.equal = 10;
-                                view.keepBottomInset.equal = 10;
-                                view.keepLeftInset.equal = 10;
-                                view.keepRightInset.equal = 10;
+                                view.keepTopSafeInset.equal = 10;
+                                view.keepBottomSafeInset.equal = 10;
+                                view.keepLeftSafeInset.equal = 10;
+                                view.keepRightSafeInset.equal = 10;
                                 */
                                
                                // Animating insets
                                return ^(NSUInteger state) {
                                    BOOL odd = (state % 2);
-                                   view.keepInsets.equal = (odd? 80 : 10);
+                                   view.keepSafeInsets.equal = (odd? 80 : 10);
                                };
                            }]];
     [simpleExamples addObject:
@@ -105,50 +105,41 @@
                                UIView *view = createView(self.view.tintColor, container);
                                
                                // 1
-                               [view keepInsets:UIEdgeInsetsMake(10, 20, 30, 40)];
+                               [view keepSafeInsets:UIEdgeInsetsMake(10, 20, 30, 40)];
                                
                                // Equivalent:
                                /*
-                                view.keepTopInset.equal = 10;
-                                view.keepBottomInset.equal = 30;
-                                view.keepLeftInset.equal = 20;
-                                view.keepRightInset.equal = 40;
+                                view.keepTopSafeInset.equal = 10;
+                                view.keepBottomSafeInset.equal = 30;
+                                view.keepLeftSafeInset.equal = 20;
+                                view.keepRightSafeInset.equal = 40;
                                 */
                                
                                // Animating insets
                                return ^(NSUInteger state) {
                                    BOOL odd = (state % 2);
-                                   [view keepInsets:UIEdgeInsetsMake(odd? 80 : 10, 20, 30, odd? 5 : 40)];
+                                   [view keepSafeInsets:UIEdgeInsetsMake(odd? 80 : 10, 20, 30, odd? 5 : 40)];
                                };
                            }]];
     [simpleExamples addObject:
      [[KPLExample alloc] initWithTitle:@"Center & Size"
-                                subtitle:@"2 lines of code"
+                                subtitle:@"3 lines of code"
                            setupBlock:^KPLExampleStateBlock(UIViewController *controller) {
                                UIView *container = controller.view;
                                
                                UIView *view = createView(self.view.tintColor, container);
                                
                                // 1
-                               [view keepSize:CGSizeMake(200, 200) priority:KeepPriorityHigh];
-                               
-                               // Equivalent:
-                               /*
-                                view.keepWidth.equal = 100 keepHigh;
-                                view.keepHeight.equal = 200 keepHigh;
-                                */
+                               view.keepWidth.equal = 100 +keepHigh;
                                
                                // 2
-                               [view keepCentered];
+                               view.keepHeight.equal = 200 +keepHigh;
                                
-                               // Equivalent:
-                               /*
-                                view.keepHorizontalCenter.equal = 0.5;
-                                view.keepVerticalCenter.equal = 0.5;
-                                */
+                               // 3
+                               view.keepCenter.equal = 0.5;
                                
                                // Animating center, which changes size
-                               view.keepInsets.min = 10;
+                               view.keepSafeInsets.min = 10;
                                return ^(NSUInteger state) {
                                    BOOL odd = (state % 2);
                                    view.keepHorizontalCenter.equal = (odd? 0.1 : 0.5);
@@ -156,31 +147,28 @@
                            }]];
     [simpleExamples addObject:
      [[KPLExample alloc] initWithTitle:@"Video 16:9"
-                                subtitle:@"3 lines of code"
+                                subtitle:@"4 lines of code"
                            setupBlock:^KPLExampleStateBlock(UIViewController *controller) {
                                UIView *container = controller.view;
                                
-                               UIView *black = createView(self.view.tintColor, container);
+                               UIView *video = createView(self.view.tintColor, container);
                                
                                // 1
-                               black.keepAspectRatio.equal = 16./9.;
+                               video.keepAspectRatio.equal = 16./9.;
                                
                                // 2
-                               [black keepCentered];
+                               video.keepCenter.equal = 0.5 +keepHigh;
                                
                                // 3
-                               [black.keepInsets keepAt:10 min:10];
+                               video.keepSafeInsets.equal = 10 +keepHigh;
                                
-                               // Equivalent:
-                               /*
-                                black.keepInsets.equal = 10 keepHigh;
-                                black.keepInsets.min = 10;
-                                */
+                               // 4
+                               video.keepSafeInsets.min = 10;
                                
                                // Animating horizontal or vertical aspect ratio
                                return ^(NSUInteger state) {
                                    BOOL odd = (state % 2);
-                                   black.keepAspectRatio.equal = (odd? 9./16 : 16./9.);
+                                   video.keepAspectRatio.equal = (odd? 9./16 : 16./9.);
                                };
                            }]];
     [simpleExamples addObject:
@@ -190,14 +178,14 @@
                                 UIView *container = controller.view;
                                 
                                 UIView *top = createView(self.view.tintColor, container);
-                                top.keepHorizontalInsets.equal = 10;
-                                top.keepTopInset.equal = 10;
-                                top.keepHeight.equal = 80;
+                                top.keepHorizontalSafeInsets.equal = 10;
+                                top.keepTopSafeInset.equal = 10;
+                                top.keepHeight.equal = 30;
                                 
                                 UIView *bottom = createView(self.view.tintColor, container);
-                                bottom.keepHorizontalInsets.equal = 10;
+                                bottom.keepHorizontalSafeInsets.equal = 10;
                                 bottom.keepHeight.equal = 30;
-                                bottom.keepBottomInset.equal = 10;
+                                bottom.keepBottomSafeInset.equal = 10;
                                 
                                 UILabel *label = [[UILabel alloc] init];
                                 label.text = @"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
@@ -205,7 +193,7 @@
                                 label.textAlignment = NSTextAlignmentCenter;
                                 [container addSubview:label];
                                 
-                                label.keepInsets.min = 10;
+                                label.keepSafeInsets.min = 10;
                                 label.keepHorizontalCenter.equal = 0.5;
                                 label.keepVerticalCenter.equal = 0.5 keepFitting;
                                 
@@ -217,44 +205,14 @@
                                     label.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:(odd? 20 : 15)];
                                 };
                             }]];
-    [simpleExamples addObject:
-     [[KPLExample alloc] initWithTitle:@"Margins & Layout Guides"
-                              subtitle:@"View Controller’s content rectangle"
-                            setupBlock:^KPLExampleStateBlock(UIViewController *controller) {
-                                UIView *container = controller.view;
-                                
-                                UIView *view = createView(self.view.tintColor, container);
-                                UILabel *label = [UILabel new];
-                                label.numberOfLines = 0;
-                                label.textAlignment = NSTextAlignmentCenter;
-                                label.font = [UIFont systemFontOfSize:[UIFont buttonFontSize]];
-                                label.text = @"You should place content of you View Controller in this rectangle.";
-                                label.backgroundColor = [UIColor whiteColor];
-                                [view addSubview:label];
-                                
-                                label.keepInsets.equal = 5;
-                                
-                                //! The .keepLayoutView is lazily created invisible subview, that respects .topLayoutGuide, .bottomLayoutGuide and view’s -layoutMargins
-                                view.keepEdgeAlignTo(controller.keepLayoutView).equal = 0;
-                                
-                                
-                                return ^(NSUInteger state) {
-                                    // This is abusing state block...
-                                    if (state == 0) return;
-                                    
-                                    [controller.navigationController setNavigationBarHidden:YES animated:YES];
-                                    [[NSOperationQueue mainQueue] performSelector:@selector(addOperationWithBlock:) withObject:^{
-                                        [controller.navigationController setNavigationBarHidden:NO animated:YES];
-                                    } afterDelay:1];
-                                };
-                            }]];
     
     NSMutableArray<KPLExample *> *complexExamples = [[NSMutableArray alloc] init];
     [complexExamples addObject:
      [[KPLExample alloc] initWithTitle:@"Everything"
                               subtitle:@"All attributes used"
                             setupBlock:^KPLExampleStateBlock(UIViewController *controller) {
-                                UIView *container = controller.view;
+                                UIView *container = createView(UIColor.whiteColor, controller.view);
+                                container.keepSafeInsets.equal = 0;
                                 
                                 UIView *center = createView(self.view.tintColor, container);
                                 UIView *topStick = createView(self.view.tintColor, container);
@@ -264,12 +222,12 @@
                                 UIView *topLeftCorner = createView(self.view.tintColor, container);
                                 UIView *bottomRightCorner = createView(self.view.tintColor, container);
                                 
-                                KeepValue offsetHigh = 10 keepHigh;
+                                KeepValue offsetHigh = 10 +keepHigh;
                                 KeepValue offsetRequired = 10;
                                 KeepValue thickness = 30;
                                 
                                 NSArray<UIView *> *views = @[ center, topStick, bottomStick, leftBox, rightBox, topLeftCorner, bottomRightCorner ];
-                                views.keepInsets.min = offsetRequired;
+                                views.keepSafeInsets.min = offsetRequired;
 
                                 center.keepCenter.equal = 0.5;
                                 
@@ -278,10 +236,10 @@
                                 center.keepLeftOffsetTo(leftBox).equal = offsetHigh;
                                 center.keepRightOffsetTo(rightBox).equal = offsetHigh;
                                 
-                                leftBox.keepLeftInset.equal = offsetRequired;
-                                rightBox.keepRightInset.equal = offsetRequired;
-                                topStick.keepTopInset.equal = offsetRequired;
-                                bottomStick.keepBottomInset.equal = offsetRequired;
+                                leftBox.keepLeftSafeInset.equal = offsetRequired;
+                                rightBox.keepRightSafeInset.equal = offsetRequired;
+                                topStick.keepTopSafeInset.equal = offsetRequired;
+                                bottomStick.keepBottomSafeInset.equal = offsetRequired;
                                 
                                 leftBox.keepAspectRatio.equal = 1;
                                 rightBox.keepAspectRatio.equal = 1;
@@ -313,8 +271,8 @@
                                 
                                 return ^(NSUInteger state) {
                                     BOOL odd = (state % 2);
-                                    center.keepWidthTo(leftBox).equal = (odd? 2 : 1);
-                                    center.keepHeightTo(topStick).equal = (odd? 2 : 1);
+                                    center.keepWidthTo(leftBox).equal = (odd? 3 : 1);
+                                    center.keepHeightTo(topStick).equal = (odd? 3 : 1);
                                 };
                             }]];
     
@@ -359,11 +317,11 @@
                                  // Constraint counts assume 4x4 grid
                                 
                                 [tiles keepSizesEqual]; // 30 constraints
-                                tiles.keepInsets.min = padding; // 64 constraints
+                                tiles.keepSafeInsets.min = padding; // 64 constraints
                                 
                                 
                                 NSArray<UIView *> *firstColumn = columns.firstObject;
-                                firstColumn.keepLeftInset.equal = padding; // 4 constraints
+                                firstColumn.keepLeftSafeInset.equal = padding; // 4 constraints
                                 
                                 for (NSMutableArray<UIView *> *column in columns) {
                                     [column keepVerticalOffsets:padding]; // 4 iterations * 3 constraints
@@ -371,11 +329,11 @@
                                 }
                                 
                                 NSArray<UIView *> *lastColumn = columns.lastObject;
-                                lastColumn.keepRightInset.equal = padding; // 4 constraints
+                                lastColumn.keepRightSafeInset.equal = padding; // 4 constraints
                                 
                                 
                                 NSArray<UIView *> *firstRow = rows.firstObject;
-                                firstRow.keepTopInset.equal = padding; // 4 constraints
+                                firstRow.keepTopSafeInset.equal = padding; // 4 constraints
                                 
                                 for (NSMutableArray<UIView *> *row in rows) {
                                     [row keepHorizontalOffsets:padding]; // 4 iterations * 3 constraints
@@ -383,7 +341,7 @@
                                 }
                                 
                                 NSArray<UIView *> *lastRow = rows.lastObject;
-                                lastRow.keepBottomInset.equal = padding; // 4 constraints
+                                lastRow.keepBottomSafeInset.equal = padding; // 4 constraints
                                 
                                 
                                 cells.keepInsets.min = 0; // 64 constraints
@@ -413,10 +371,10 @@
                                 [bottomHalf addSubview:bottomBar];
                                 
                                 //! Keep halves edge-to-edge
-                                topHalf.keepTopInset.equal = 0;
-                                topHalf.keepHorizontalInsets.equal = 0;
-                                bottomHalf.keepHorizontalInsets.equal = 0;
-                                bottomHalf.keepBottomInset.equal = 0;
+                                topHalf.keepTopSafeInset.equal = 0;
+                                topHalf.keepHorizontalSafeInsets.equal = 0;
+                                bottomHalf.keepHorizontalSafeInsets.equal = 0;
+                                bottomHalf.keepBottomSafeInset.equal = 0;
                                 //! Keep halves equaly high and touching
                                 topHalf.keepBottomOffsetTo(bottomHalf).equal = 0;
                                 topHalf.keepHeightTo(bottomHalf).equal = 1;
@@ -425,15 +383,15 @@
                                 topBar.keepAspectRatio.equal = 0.25;
                                 [topBar keepCentered];
                                 //! Keep size as much close to fill, but aspect ratio has higher priority
-                                topBar.keepSizeTo(topHalf).equal = 1 keepHigh;
-                                topBar.keepInsets.min = 0;
+                                topBar.keepSizeTo(topHalf).equal = 1 +keepHigh;
+                                topBar.keepSafeInsets.min = 0;
                                 
                                 //! Keep to bar horizontaly 4:1, centered
                                 bottomBar.keepAspectRatio.equal = 4;
                                 [bottomBar keepCentered];
                                 //! Keep size as much close to fill, but aspect ratio has higher priority
-                                bottomBar.keepSizeTo(bottomHalf).equal = 1 keepHigh;
-                                bottomBar.keepInsets.min = 0;
+                                bottomBar.keepSizeTo(bottomHalf).equal = 1 +keepHigh;
+                                bottomBar.keepSafeInsets.min = 0;
                                 
                                 //! On action, invert the aspect ratios
                                 return ^(NSUInteger state) {
@@ -459,25 +417,23 @@
                                     [atomic deactivate];
                                     if (state % 2 == 0) {
                                         atomic = [KeepAtomic layout:^{
-                                            first.keepHorizontalInsets.equal = padding;
-                                            first.keepTopAlignTo(controller.keepLayoutView).equal = padding;
+                                            first.keepHorizontalSafeInsets.equal = padding;
+                                            first.keepTopSafeInset.equal = padding;
                                             
                                             first.keepBottomOffsetTo(second).equal = padding;
                                             
-                                            second.keepHorizontalInsets.equal = padding;
-                                            second.keepBottomInset.equal = padding;
+                                            second.keepHorizontalSafeInsets.equal = padding;
+                                            second.keepBottomSafeInset.equal = padding;
                                         }];
                                     }
                                     else {
                                         atomic = [KeepAtomic layout:^{
-                                            first.keepTopAlignTo(controller.keepLayoutView).equal = padding;
-                                            first.keepBottomAlignTo(controller.keepLayoutView).equal = padding;
+                                            first.keepVerticalSafeInsets.equal = padding;
                                             first.keepLeftInset.equal = padding;
                                             
                                             first.keepRightOffsetTo(second).equal = padding;
                                             
-                                            second.keepTopAlignTo(controller.keepLayoutView).equal = padding;
-                                            second.keepBottomAlignTo(controller.keepLayoutView).equal = padding;
+                                            second.keepVerticalSafeInsets.equal = padding;
                                             second.keepRightInset.equal = padding;
                                         }];
                                     }
