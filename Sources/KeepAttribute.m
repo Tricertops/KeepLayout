@@ -303,18 +303,18 @@
 
 
 - (BOOL)isActive {
-    return (self.equalConstraint.isKeepActive || self.maxConstraint.isKeepActive || self.minConstraint.isKeepActive);
+    return (self.equalConstraint.isActive || self.maxConstraint.isActive || self.minConstraint.isActive);
 }
 
 
 - (void)activateConstraint:(KeepLayoutConstraint *)constraint active:(BOOL)active {
-    if (constraint.isKeepActive != active) {
+    if (constraint.active != active) {
         KeepAtomic *atomic = [KeepAtomic current];
         if (atomic) {
             [atomic addConstraint:constraint active:active];
         }
         else {
-            constraint.isKeepActive = active;
+            [constraint setActive:active];
         }
     }
 }
@@ -682,8 +682,8 @@
     [KeepAtomic setCurrent:atomic];
     block();
     [KeepAtomic setCurrent:nil];
-    [NSLayoutConstraint keepConstraints:atomic.inactiveConstraints active:NO];
-    [NSLayoutConstraint keepConstraints:atomic.activeConstraints active:YES];
+    [NSLayoutConstraint deactivateConstraints:atomic.inactiveConstraints];
+    [NSLayoutConstraint activateConstraints:atomic.activeConstraints];
     [atomic.activeConstraints removeAllObjects];
     [atomic.inactiveConstraints removeAllObjects];
     return atomic;

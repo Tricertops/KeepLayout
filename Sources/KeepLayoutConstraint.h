@@ -24,12 +24,3 @@
 @end
 
 
-
-@interface NSLayoutConstraint (Activation)
-
-@property (setter=keepActive:) BOOL isKeepActive;
-+ (void)keepConstraints:(NSArray<NSLayoutConstraint *> *)constraints active:(BOOL)active;
-
-@end
-
-

@@ -95,7 +95,6 @@
                         || dimensionAttribute == NSLayoutAttributeHeight);
     KeepParameterAssert(relatedView);
     KeepParameterAssert(name);
-    KeepAssert([self commonSuperview:relatedView], @"%@ requires both views to be in common hierarchy", NSStringFromSelector(selector));
     
     return [self keep_attributeForSelector:selector relatedView:relatedView creationBlock:^KeepAttribute *{
         KeepAttribute *attribute = [[KeepMultiplierAttribute alloc] initWithView:self
@@ -575,7 +574,6 @@
                         || edgeAttribute == NSLayoutAttributeLastBaseline);
     KeepParameterAssert(relatedView);
     KeepParameterAssert(name);
-    KeepAssert([self commonSuperview:relatedView], @"%@ requires both views to be in common hierarchy", NSStringFromSelector(selector));
     
     return [self keep_attributeForSelector:selector relatedView:relatedView creationBlock:^KeepAttribute *{
         NSDictionary<NSNumber *, NSNumber *> *oppositeEdges = @{
@@ -678,7 +676,6 @@
                         || alignAttribute == NSLayoutAttributeCenterY);
     KeepParameterAssert(relatedView);
     KeepParameterAssert(name);
-    KeepAssert([self commonSuperview:relatedView], @"%@ requires both views to be in common hierarchy", NSStringFromSelector(selector));
     
     return [self keep_attributeForSelector:selector relatedView:relatedView creationBlock:^KeepAttribute *{
         KeepAttribute *attribute =  [[[KeepConstantAttribute alloc] initWithView:self
@@ -1000,61 +997,6 @@
 }
 
 #endif // TARGET_OS_IOS
-
-
-
-
-
-#pragma mark Common Superview
-
-
-- (KPView *)commonSuperview:(KPView *)anotherView {
-    if ( ! anotherView) return self;
-    
-    KPView *superview = self;
-    while (superview) {
-#if TARGET_OS_IOS
-        BOOL isDescendant = [anotherView isDescendantOfView:superview];
-#else
-        BOOL isDescendant = [anotherView isDescendantOf:superview];
-#endif
-        if (isDescendant) {
-            break; // The `superview` is common for both views.
-        }
-        superview = superview.superview;
-    }
-    return superview;
-}
-
-
-
-
-
-#pragma mark Convenience Auto Layout
-
-
-- (void)addConstraintToCommonSuperview:(NSLayoutConstraint *)constraint {
-    [constraint keepActive:YES];
-}
-
-
-- (void)removeConstraintFromCommonSuperview:(NSLayoutConstraint *)constraint {
-    [constraint keepActive:NO];
-}
-
-
-- (void)addConstraintsToCommonSuperview:(id<NSFastEnumeration>)constraints {
-    for (NSLayoutConstraint *constraint in constraints) {
-        [self addConstraintToCommonSuperview:constraint];
-    }
-}
-
-
-- (void)removeConstraintsFromCommonSuperview:(id<NSFastEnumeration>)constraints {
-    for (NSLayoutConstraint *constraint in constraints) {
-        [self removeConstraintFromCommonSuperview:constraint];
-    }
-}
 
 
 
