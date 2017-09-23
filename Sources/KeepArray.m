@@ -247,6 +247,69 @@
 
 
 
+#pragma mark Superview Safe Insets
+
+
+- (KeepAttribute *)keepLeftSafeInset {
+    return [self keep_groupAttributeForSelector:_cmd];
+}
+
+
+- (KeepAttribute *)keepRightSafeInset {
+    return [self keep_groupAttributeForSelector:_cmd];
+}
+
+
+- (KeepAttribute *)keepLeadingSafeInset {
+    return [self keep_groupAttributeForSelector:_cmd];
+}
+
+
+- (KeepAttribute *)keepTrailingSafeInset {
+    return [self keep_groupAttributeForSelector:_cmd];
+}
+
+
+- (KeepAttribute *)keepTopSafeInset {
+    return [self keep_groupAttributeForSelector:_cmd];
+}
+
+
+- (KeepAttribute *)keepBottomSafeInset {
+    return [self keep_groupAttributeForSelector:_cmd];
+}
+
+
+- (KeepAttribute *)keepSafeInsets {
+    return [self keep_groupAttributeForSelector:_cmd];
+}
+
+
+- (KeepAttribute *)keepHorizontalSafeInsets {
+    return [self keep_groupAttributeForSelector:_cmd];
+}
+
+
+- (KeepAttribute *)keepVerticalSafeInsets {
+    return [self keep_groupAttributeForSelector:_cmd];
+}
+
+
+- (void)keepSafeInsets:(KPEdgeInsets)insets priority:(KeepPriority)priority {
+    [self keep_invoke:_cmd each:^(KPView *view) {
+        [view keepSafeInsets:insets priority:priority];
+    }];
+}
+
+
+- (void)keepSafeInsets:(KPEdgeInsets)insets {
+    [self keepSafeInsets:insets priority:KeepPriorityRequired];
+}
+
+
+
+
+
 #pragma mark Superview Margin Insets
 
 
