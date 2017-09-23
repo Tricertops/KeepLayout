@@ -151,11 +151,6 @@
 }
 
 
-+ (KeepRemovableGroup *)removableChanges:(void(^)(void))block {
-    return (KeepRemovableGroup *)[KeepAtomic layout:block];
-}
-
-
 
 
 
@@ -208,6 +203,7 @@
 @property (weak) KPView *view;
 @property NSLayoutAttribute layoutAttribute;
 @property (weak) KPView *relatedView;
+@property (weak) KPLayoutGuide *relatedGuide;
 @property NSLayoutAttribute relatedLayoutAttribute;
 
 @property CGFloat coefficient;
@@ -216,11 +212,6 @@
 @property KeepLayoutConstraint *maxConstraint;
 @property KeepLayoutConstraint *minConstraint;
 
-- (instancetype)initWithView:(KPView *)view
-             layoutAttribute:(NSLayoutAttribute)layoutAttribute
-                 relatedView:(KPView *)relatedView
-      relatedLayoutAttribute:(NSLayoutAttribute)superviewLayoutAttribute
-                 coefficient:(CGFloat)coefficient;
 - (KeepLayoutConstraint *)createConstraintWithRelation:(NSLayoutRelation)relation value:(KeepValue)value;
 - (KeepLayoutConstraint *)applyValue:(KeepValue)value forConstraint:(KeepLayoutConstraint *)constraint relation:(NSLayoutRelation)relation;
 - (void)setNameForConstraint:(KeepLayoutConstraint *)constraint relation:(NSLayoutRelation)relation value:(KeepValue)value;
@@ -262,7 +253,7 @@
 
 - (instancetype)initWithView:(KPView *)view
              layoutAttribute:(NSLayoutAttribute)layoutAttribute
-                 relatedView:(KPView *)relatedView
+                 relatedView:(id<KeepViewOrGuide>)relatedViewOrGuide
       relatedLayoutAttribute:(NSLayoutAttribute)relatedLayoutAttribute
                  coefficient:(CGFloat)coefficient {
     self = [super init];
@@ -278,7 +269,14 @@
         
         self.view = view;
         self.layoutAttribute = layoutAttribute;
-        self.relatedView = relatedView;
+        
+        if ([relatedViewOrGuide isKindOfClass:KPView.class]) {
+            self.relatedView = (KPView*)relatedViewOrGuide;
+        }
+        if ([relatedViewOrGuide isKindOfClass:KPLayoutGuide.class]) {
+            self.relatedGuide = (KPLayoutGuide*)relatedViewOrGuide;
+        }
+        
         self.relatedLayoutAttribute = relatedLayoutAttribute;
         self.coefficient = coefficient;
     }
@@ -424,7 +422,7 @@
     }
     KeepLayoutConstraint *constraint = [KeepLayoutConstraint constraintWithItem:self.view attribute:self.layoutAttribute
                                                                     relatedBy:relation
-                                                                       toItem:self.relatedView attribute:self.relatedLayoutAttribute
+                                                                         toItem:self.relatedView ?: self.relatedGuide attribute:self.relatedLayoutAttribute
                                                                    multiplier:1 constant:value * self.coefficient];
     constraint.priority = KeepValueGetPriority(value);
     return constraint;
@@ -480,7 +478,7 @@
 - (KeepLayoutConstraint *)createConstraintWithRelation:(NSLayoutRelation)relation value:(KeepValue)value {
     KeepLayoutConstraint *constraint = [KeepLayoutConstraint constraintWithItem:self.view attribute:self.layoutAttribute
                                                                     relatedBy:relation
-                                                                       toItem:self.relatedView attribute:self.relatedLayoutAttribute
+                                                                       toItem:self.relatedView ?: self.relatedGuide attribute:self.relatedLayoutAttribute
                                                                    multiplier:value * self.coefficient constant:0];
     constraint.priority = KeepValueGetPriority(value);
     return constraint;

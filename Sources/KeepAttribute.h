@@ -11,7 +11,6 @@
 
 
 @class KeepAtomic;
-@class KeepRemovableGroup;
 
 
 
@@ -54,8 +53,6 @@
 /// Allows you to create groups of attributes. Grouped attribute forwards all methods to its children.
 + (KeepAttribute *)group:(KeepAttribute *)first, ... NS_REQUIRES_NIL_TERMINATION;
 
-+ (KeepRemovableGroup *)removableChanges:(void(^)(void))block __deprecated_msg("Use +[KeepAtomic layout:]");
-
 
 #pragma mark Debugging
 /// Debugging helper. Name of attribute is a part of its `-description`
@@ -81,12 +78,13 @@
 
 
 
-__deprecated_msg("Use KeepAtomic")
-@interface KeepRemovableGroup : KeepAtomic
-
-@end
 
 
+/// Private protocol.
+/// Used as common type for Views and Layout Guides.
+@protocol KeepViewOrGuide <NSObject> @end
+@interface KPView (KeepViewOrGuide) <KeepViewOrGuide> @end
+@interface KPLayoutGuide (KeepViewOrGuide) <KeepViewOrGuide> @end
 
 
 
@@ -97,7 +95,7 @@ __deprecated_msg("Use KeepAtomic")
 /// Properties that don't change in time.
 - (instancetype)initWithView:(KPView *)view
              layoutAttribute:(NSLayoutAttribute)layoutAttribute
-                 relatedView:(KPView *)relatedView
+                 relatedView:(id<KeepViewOrGuide>)relatedViewOrGuide
       relatedLayoutAttribute:(NSLayoutAttribute)relatedLayoutAttribute
                  coefficient:(CGFloat)coefficient;
 /// Multiplier of values: equal, min and max

@@ -23,6 +23,7 @@
 
 #import <UIKit/UIKit.h>
 #define KPView                  UIView
+#define KPLayoutGuide           UILayoutGuide
 #define KPEdgeInsets            UIEdgeInsets
 #define KPEdgeInsetsZero        UIEdgeInsetsZero
 
@@ -40,6 +41,7 @@ static const KeepPriority KeepPriorityFitting = UILayoutPriorityFittingSizeLevel
 
 #import <AppKit/AppKit.h>
 #define KPView                  NSView
+#define KPLayoutGuide           NSLayoutGuide
 #define KPEdgeInsets            NSEdgeInsets
 
 extern const KPEdgeInsets KPEdgeInsetsZero;
