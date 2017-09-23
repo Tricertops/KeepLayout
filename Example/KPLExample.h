@@ -6,8 +6,10 @@
 //  Copyright (c) 2013 Triceratops. All rights reserved.
 //
 
+@class KPLExampleViewController;
+
 typedef void (^KPLExampleStateBlock)(NSUInteger state);
-typedef KPLExampleStateBlock (^KPLExampleSetupBlock)(UIViewController *container);
+typedef KPLExampleStateBlock (^KPLExampleSetupBlock)(KPLExampleViewController *controller);
 
 
 @interface KPLExample : NSObject

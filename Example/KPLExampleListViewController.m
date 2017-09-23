@@ -74,8 +74,8 @@
     [simpleExamples addObject:
      [[KPLExample alloc] initWithTitle:@"Equal Insets"
                              subtitle:@"1 line of code"
-                           setupBlock:^KPLExampleStateBlock(UIViewController *controller) {
-                               UIView *container = controller.view;
+                           setupBlock:^KPLExampleStateBlock(KPLExampleViewController *controller) {
+                               UIView *container = controller.containerView;
                                
                                UIView *view = createView(self.view.tintColor, container);
                                
@@ -99,8 +99,8 @@
     [simpleExamples addObject:
      [[KPLExample alloc] initWithTitle:@"Various Insets"
                                 subtitle:@"1 line of code"
-                           setupBlock:^KPLExampleStateBlock(UIViewController *controller) {
-                               UIView *container = controller.view;
+                           setupBlock:^KPLExampleStateBlock(KPLExampleViewController *controller) {
+                               UIView *container = controller.containerView;
                                
                                UIView *view = createView(self.view.tintColor, container);
                                
@@ -124,8 +124,8 @@
     [simpleExamples addObject:
      [[KPLExample alloc] initWithTitle:@"Center & Size"
                                 subtitle:@"2 lines of code"
-                           setupBlock:^KPLExampleStateBlock(UIViewController *controller) {
-                               UIView *container = controller.view;
+                           setupBlock:^KPLExampleStateBlock(KPLExampleViewController *controller) {
+                               UIView *container = controller.containerView;
                                
                                UIView *view = createView(self.view.tintColor, container);
                                
@@ -157,8 +157,8 @@
     [simpleExamples addObject:
      [[KPLExample alloc] initWithTitle:@"Video 16:9"
                                 subtitle:@"3 lines of code"
-                           setupBlock:^KPLExampleStateBlock(UIViewController *controller) {
-                               UIView *container = controller.view;
+                           setupBlock:^KPLExampleStateBlock(KPLExampleViewController *controller) {
+                               UIView *container = controller.containerView;
                                
                                UIView *black = createView(self.view.tintColor, container);
                                
@@ -186,8 +186,8 @@
     [simpleExamples addObject:
      [[KPLExample alloc] initWithTitle:@"Dynamic Text"
                               subtitle:@"Reflow content when text changes"
-                            setupBlock:^KPLExampleStateBlock(UIViewController *controller) {
-                                UIView *container = controller.view;
+                            setupBlock:^KPLExampleStateBlock(KPLExampleViewController *controller) {
+                                UIView *container = controller.containerView;
                                 
                                 UIView *top = createView(self.view.tintColor, container);
                                 top.keepHorizontalInsets.equal = 10;
@@ -220,8 +220,8 @@
     [simpleExamples addObject:
      [[KPLExample alloc] initWithTitle:@"Margins & Layout Guides"
                               subtitle:@"View Controller’s content rectangle"
-                            setupBlock:^KPLExampleStateBlock(UIViewController *controller) {
-                                UIView *container = controller.view;
+                            setupBlock:^KPLExampleStateBlock(KPLExampleViewController *controller) {
+                                UIView *container = controller.containerView;
                                 
                                 UIView *view = createView(self.view.tintColor, container);
                                 UILabel *label = [UILabel new];
@@ -253,8 +253,8 @@
     [complexExamples addObject:
      [[KPLExample alloc] initWithTitle:@"Everything"
                               subtitle:@"All attributes used"
-                            setupBlock:^KPLExampleStateBlock(UIViewController *controller) {
-                                UIView *container = controller.view;
+                            setupBlock:^KPLExampleStateBlock(KPLExampleViewController *controller) {
+                                UIView *container = controller.containerView;
                                 
                                 UIView *center = createView(self.view.tintColor, container);
                                 UIView *topStick = createView(self.view.tintColor, container);
@@ -321,8 +321,8 @@
     [complexExamples addObject:
      [[KPLExample alloc] initWithTitle:@"Tiles"
                               subtitle:@"Using many NSArray attributes"
-                            setupBlock:^KPLExampleStateBlock(UIViewController *controller) {
-                                UIView *container = controller.view;
+                            setupBlock:^KPLExampleStateBlock(KPLExampleViewController *controller) {
+                                UIView *container = controller.containerView;
                                 
                                 NSUInteger rowCount = 4;
                                 NSUInteger columnCount = 4;
@@ -401,8 +401,8 @@
     [complexExamples addObject:
      [[KPLExample alloc] initWithTitle:@"Aspect Fit"
                               subtitle:@"Multiple Aspect Ratios"
-                            setupBlock:^KPLExampleStateBlock(UIViewController *controller) {
-                                UIView *container = controller.view;
+                            setupBlock:^KPLExampleStateBlock(KPLExampleViewController *controller) {
+                                UIView *container = controller.containerView;
                                 
                                 UIView *topHalf = createView(UIColor.clearColor, container);
                                 UIView *topBar = createView(self.view.tintColor, container);
@@ -444,8 +444,8 @@
     [complexExamples addObject:
      [[KPLExample alloc] initWithTitle:@"Atomic Layout"
                               subtitle:@"Deactivation of Atomic Layout Groups"
-                            setupBlock:^KPLExampleStateBlock(UIViewController *controller) {
-                                UIView *container = controller.view;
+                            setupBlock:^KPLExampleStateBlock(KPLExampleViewController *controller) {
+                                UIView *container = controller.containerView;
                                 
                                 UIView *first = createView(self.view.tintColor, container);
                                 UIView *second = createView(self.view.tintColor, container);

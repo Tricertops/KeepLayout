@@ -18,5 +18,7 @@
 - (instancetype)initWithExample:(KPLExample *)example;
 @property (nonatomic, readonly, strong) KPLExample *example;
 
+@property (nonatomic, readonly, strong) UIView *containerView;
+
 
 @end
