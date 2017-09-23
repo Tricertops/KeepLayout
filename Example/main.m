@@ -11,7 +11,7 @@
 
 
 int main(int argc, char *argv[]) {
-	@autoreleasepool {
-	    return UIApplicationMain(argc, argv, nil, NSStringFromClass([KPLAppDelegate class]));
-	}
+    @autoreleasepool {
+        return UIApplicationMain(argc, argv, nil, NSStringFromClass([KPLAppDelegate class]));
+    }
 }
