@@ -32,6 +32,11 @@
 }
 
 
+- (BOOL)isRelatedToView:(UIView *)view {
+    return NO;
+}
+
+
 
 
 
@@ -281,6 +286,27 @@
         self.coefficient = coefficient;
     }
     return self;
+}
+
+
+- (BOOL)isRelatedToView:(UIView *)askedView {
+    UIView *relatedView = self.relatedView;
+    UILayoutGuide *relatedGuide = self.relatedGuide;
+    UIView *relatedGuideOwner = relatedGuide.owningView;
+    
+    if (relatedView == askedView) {
+        return YES; /// Simple relation.
+    }
+    if (relatedGuideOwner == nil) {
+        return NO; /// Owner of guide is deallocated or what.
+    }
+    if (relatedGuideOwner == askedView) {
+        return YES; /// Related to the owner of guide.
+    }
+    if (relatedGuide == nil && relatedView == nil) {
+        return (self.view == askedView); /// Related to owner view.
+    }
+    return NO;
 }
 
 
@@ -544,6 +570,17 @@
     }
     return self;
 }
+
+
+- (BOOL)isRelatedToView:(UIView *)view {
+    for (KeepAttribute *attribute in self.attributes) {
+        if ( ! [attribute isRelatedToView:view]) {
+            return NO;
+        }
+    }
+    return YES;
+}
+
 
 
 

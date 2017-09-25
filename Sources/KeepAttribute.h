@@ -33,6 +33,7 @@
 - (void)keepAt:(KeepValue)equal min:(KeepValue)min max:(KeepValue)max KEEP_SWIFT_AWAY;
 - (void)keepMin:(KeepValue)min max:(KeepValue)max KEEP_SWIFT_AWAY;
 
+- (BOOL)isRelatedToView:(KPView *)view;
 
 #pragma mark Swift Compatibility
 /// Don’t use these directly. They are exposed for Swift extension to avoid KeepValue type.

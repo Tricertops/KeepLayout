@@ -24,11 +24,14 @@
 #pragma mark Associations
 
 
-- (KeepAttribute *)keep_attributeForSelector:(SEL)selector creationBlock:(KeepAttribute *(^)(void))creationBlock {
+- (KeepAttribute *)keep_selfAttributeForSelector:(SEL)selector creationBlock:(KeepAttribute *(^)(void))creationBlock {
     KeepParameterAssert(selector);
+    KeepParameterAssert(creationBlock);
     
     KeepAttribute *attribute = objc_getAssociatedObject(self, selector);
-    if ( ! attribute && creationBlock) {
+    KeepAssert([attribute isRelatedToView:self]);
+    
+    if ( ! attribute) {
         attribute = creationBlock();
         objc_setAssociatedObject(self, selector, attribute, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
@@ -36,7 +39,25 @@
 }
 
 
-- (KeepAttribute *)keep_attributeForSelector:(SEL)selector relatedView:(KPView *)relatedView creationBlock:(KeepAttribute *(^)(void))creationBlock {
+- (KeepAttribute *)keep_superviewAttributeForSelector:(SEL)selector creationBlock:(KeepAttribute *(^)(void))creationBlock {
+    KeepParameterAssert(selector);
+    KeepParameterAssert(creationBlock);
+    
+    KeepAttribute *attribute = objc_getAssociatedObject(self, selector);
+    
+    if (attribute && ! [attribute isRelatedToView:self.superview]) {
+        [attribute deactivate];
+        attribute = nil;
+    }
+    if ( ! attribute) {
+        attribute = creationBlock();
+        objc_setAssociatedObject(self, selector, attribute, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
+    return attribute;
+}
+
+
+- (KeepAttribute *)keep_relatedAttributeForSelector:(SEL)selector toView:(KPView *)relatedView creationBlock:(KeepAttribute *(^)(void))creationBlock {
     KeepParameterAssert(selector);
     KeepParameterAssert(relatedView);
     
@@ -76,7 +97,7 @@
                         || dimensionAttribute == NSLayoutAttributeHeight);
     KeepParameterAssert(name);
     
-    return [self keep_attributeForSelector:selector creationBlock:^KeepAttribute *{
+    return [self keep_selfAttributeForSelector:selector creationBlock:^KeepAttribute *{
         KeepAttribute *attribute = [[[KeepConstantAttribute alloc] initWithView:self
                                                                 layoutAttribute:dimensionAttribute
                                                                     relatedView:nil
@@ -96,7 +117,7 @@
     KeepParameterAssert(relatedView);
     KeepParameterAssert(name);
     
-    return [self keep_attributeForSelector:selector relatedView:relatedView creationBlock:^KeepAttribute *{
+    return [self keep_relatedAttributeForSelector:selector toView:relatedView creationBlock:^KeepAttribute *{
         KeepAttribute *attribute = [[KeepMultiplierAttribute alloc] initWithView:self
                                                                  layoutAttribute:dimensionAttribute
                                                                      relatedView:relatedView
@@ -106,7 +127,7 @@
         self.translatesAutoresizingMaskIntoConstraints = NO;
         relatedView.translatesAutoresizingMaskIntoConstraints = NO;
         // Establish inverse relation
-        [relatedView keep_attributeForSelector:_cmd relatedView:self creationBlock:^KeepAttribute *{
+        [relatedView keep_relatedAttributeForSelector:_cmd toView:self creationBlock:^KeepAttribute *{
             return attribute;
         }];
         return attribute;
@@ -144,7 +165,7 @@
 
 
 - (KeepAttribute *)keepAspectRatio {
-    return [self keep_attributeForSelector:_cmd creationBlock:^KeepAttribute *{
+    return [self keep_selfAttributeForSelector:_cmd creationBlock:^KeepAttribute *{
         KeepAttribute *attribute = [[KeepMultiplierAttribute alloc] initWithView:self
                                                                  layoutAttribute:NSLayoutAttributeWidth
                                                                      relatedView:self
@@ -207,7 +228,7 @@
     KeepParameterAssert(name);
     KeepAssert(self.superview, @"Calling %@ allowed only when superview exists", NSStringFromSelector(selector));
     
-    return [self keep_attributeForSelector:selector creationBlock:^KeepAttribute *{
+    return [self keep_superviewAttributeForSelector:selector creationBlock:^KeepAttribute *{
         NSDictionary<NSNumber *, NSNumber *> *nonMarginAttributes = @{
             @(NSLayoutAttributeLeftMargin): @(NSLayoutAttributeLeft),
             @(NSLayoutAttributeRightMargin): @(NSLayoutAttributeRight),
@@ -484,7 +505,7 @@
     KeepParameterAssert(name);
     KeepAssert(self.superview, @"Calling %@ allowed only when superview exists", NSStringFromSelector(selector));
     
-    return [self keep_attributeForSelector:selector creationBlock:^KeepAttribute *{
+    return [self keep_superviewAttributeForSelector:selector creationBlock:^KeepAttribute *{
         KeepAttribute *attribute = [[[KeepMultiplierAttribute alloc] initWithView:self
                                                                   layoutAttribute:centerAttribute
                                                                       relatedView:self.superview
@@ -575,7 +596,7 @@
     KeepParameterAssert(relatedView);
     KeepParameterAssert(name);
     
-    return [self keep_attributeForSelector:selector relatedView:relatedView creationBlock:^KeepAttribute *{
+    return [self keep_relatedAttributeForSelector:selector toView:relatedView creationBlock:^KeepAttribute *{
         NSDictionary<NSNumber *, NSNumber *> *oppositeEdges = @{
             @(NSLayoutAttributeLeft): @(NSLayoutAttributeRight),
             @(NSLayoutAttributeRight): @(NSLayoutAttributeLeft),
@@ -677,7 +698,7 @@
     KeepParameterAssert(relatedView);
     KeepParameterAssert(name);
     
-    return [self keep_attributeForSelector:selector relatedView:relatedView creationBlock:^KeepAttribute *{
+    return [self keep_relatedAttributeForSelector:selector toView:relatedView creationBlock:^KeepAttribute *{
         KeepAttribute *attribute =  [[[KeepConstantAttribute alloc] initWithView:self
                                                                  layoutAttribute:alignAttribute
                                                                      relatedView:relatedView
@@ -687,7 +708,7 @@
         self.translatesAutoresizingMaskIntoConstraints = NO;
         relatedView.translatesAutoresizingMaskIntoConstraints = NO;
         // Establish inverse attribute
-        [relatedView keep_attributeForSelector:selector relatedView:self creationBlock:^KeepAttribute *{
+        [relatedView keep_relatedAttributeForSelector:selector toView:self creationBlock:^KeepAttribute *{
             return attribute;
         }];
         return attribute;
