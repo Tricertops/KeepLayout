@@ -290,20 +290,18 @@
 
 
 - (BOOL)isRelatedToView:(UIView *)askedView {
+    if (askedView == nil) return NO;
+    
     UIView *relatedView = self.relatedView;
     UILayoutGuide *relatedGuide = self.relatedGuide;
-    UIView *relatedGuideOwner = relatedGuide.owningView;
     
     if (relatedView == askedView) {
         return YES; /// Simple relation.
     }
-    if (relatedGuideOwner == nil) {
-        return NO; /// Owner of guide is deallocated or what.
+    if (relatedGuide) {
+        return (relatedGuide.owningView == askedView); /// Related to guide that belongs to this view.
     }
-    if (relatedGuideOwner == askedView) {
-        return YES; /// Related to the owner of guide.
-    }
-    if (relatedGuide == nil && relatedView == nil) {
+    if (relatedView == nil) {
         return (self.view == askedView); /// Related to owner view.
     }
     return NO;
