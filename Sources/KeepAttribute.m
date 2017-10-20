@@ -367,11 +367,11 @@
         value = KeepValueSetDefaultPriority(value, KeepPriorityRequired);
         if ( ! constraint) {
             constraint = [self createConstraintWithRelation:relation value:value];
-            [self activateConstraint:constraint active:YES];
         }
         else {
             constraint = [self applyValue:value forConstraint:constraint relation:relation];
         }
+        [self activateConstraint:constraint active:YES];
         [self setNameForConstraint:constraint relation:relation value:value];
         [[KeepAtomic current] addAttribute:self forRelation:relation];
     }
