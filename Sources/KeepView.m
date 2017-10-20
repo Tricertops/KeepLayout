@@ -29,9 +29,6 @@
     KeepParameterAssert(creationBlock);
     
     KeepAttribute *attribute = objc_getAssociatedObject(self, selector);
-    if (attribute) {
-        KeepAssert([attribute isRelatedToView:self]);
-    }
     
     if ( ! attribute) {
         attribute = creationBlock();
