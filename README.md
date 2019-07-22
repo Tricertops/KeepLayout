@@ -1,4 +1,4 @@
-# Keep Layout <a href="http://flattr.com/thing/1767350/iMartinKissKeepLayout-on-GitHub" target="_blank"><img src="http://api.flattr.com/button/flattr-badge-large.png" alt="Flattr this" title="Flattr this" border="0" /></a>
+# Keep Layout
 
 Keep Layout makes _Auto Layout_ much easier to use _from code_! No more _Interface Builder_ or _Visual Format_. _Keep Layout_ provides **simple, more readable and powerful API for creating and _accessing existing_ constraints**.
 
@@ -8,7 +8,7 @@ Before you start, you should be familiar with _Auto Layout_ topic. [How it works
 
 _**Project Status**: All planned features are implemented and functional. Project is maintained and kept up to date with latest iOS/OS X. Feel free to submit Issues or Pull Requests._
 
-_**Swift Adopters**: Swift is fully supported, the usage syntax is the mostly the same._
+_**Swift Adopters**: Swift is fully supported, the usage syntax is mostly the same._
 
 _**Origins:** This library was originally made for [this app](https://itunes.apple.com/app/geography-of-the-world/id391081388?mt=8&ct=KeepLayout), especially for its iPad interface._
 
