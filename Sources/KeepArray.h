@@ -143,41 +143,41 @@
 #pragma mark Superview Safe Insets: Grouped
 
 /// Grouped attribute for Left Safe Inset of contained views.
-@property (readonly) KeepAttribute *keepLeftSafeInset API_AVAILABLE(ios(11));
+@property (readonly) KeepAttribute *keepLeftSafeInset;
 
 /// Grouped attribute for Right Safe Inset of contained views.
-@property (readonly) KeepAttribute *keepRightSafeInset API_AVAILABLE(ios(11));
+@property (readonly) KeepAttribute *keepRightSafeInset;
 
 /// Grouped attribute for Leading Safe Inset of contained views.
-@property (readonly) KeepAttribute *keepLeadingSafeInset API_AVAILABLE(ios(11));
+@property (readonly) KeepAttribute *keepLeadingSafeInset;
 
 /// Grouped attribute for Trailing Safe Inset of contained views.
-@property (readonly) KeepAttribute *keepTrailingSafeInset API_AVAILABLE(ios(11));
+@property (readonly) KeepAttribute *keepTrailingSafeInset;
 
 /// Grouped attribute for Top Safe Inset of contained views.
-@property (readonly) KeepAttribute *keepTopSafeInset API_AVAILABLE(ios(11));
+@property (readonly) KeepAttribute *keepTopSafeInset;
 
 /// Grouped attribute for Bottom Safe Inset of contained views.
-@property (readonly) KeepAttribute *keepBottomSafeInset API_AVAILABLE(ios(11));
+@property (readonly) KeepAttribute *keepBottomSafeInset;
 
 /// Grouped attribute for All Safe Insets of contained views.
-@property (readonly) KeepAttribute *keepSafeInsets API_AVAILABLE(ios(11));
+@property (readonly) KeepAttribute *keepSafeInsets;
 
 /// Grouped attribute for Horizontal Safe Insets of contained views.
-@property (readonly) KeepAttribute *keepHorizontalSafeInsets API_AVAILABLE(ios(11));
+@property (readonly) KeepAttribute *keepHorizontalSafeInsets;
 
 /// Grouped attribute for Vertical Safe Insets of contained views.
-@property (readonly) KeepAttribute *keepVerticalSafeInsets API_AVAILABLE(ios(11));
+@property (readonly) KeepAttribute *keepVerticalSafeInsets;
 
 
 
 #pragma mark Superview Safe Insets: Forwarded
 
 /// Forwards to contained views.
-- (void)keepSafeInsets:(KPEdgeInsets)insets priority:(KeepPriority)priority API_AVAILABLE(ios(11));
+- (void)keepSafeInsets:(KPEdgeInsets)insets priority:(KeepPriority)priority;
 
 /// Forwards to contained views. Use is discouraged.
-- (void)keepSafeInsets:(KPEdgeInsets)insets API_AVAILABLE(ios(11));
+- (void)keepSafeInsets:(KPEdgeInsets)insets;
 
 
 

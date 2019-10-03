@@ -245,9 +245,7 @@
         
         id<KeepViewOrGuide> related = self.superview;
         if (useSafeInsets) {
-            if (@available(iOS 11, *)) {
-                related = self.superview.safeAreaLayoutGuide;
-            }
+            related = self.superview.safeAreaLayoutGuide;
         }
         
         KeepAttribute *attribute = [[[KeepConstantAttribute alloc] initWithView:self

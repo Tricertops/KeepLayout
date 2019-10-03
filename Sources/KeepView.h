@@ -132,22 +132,22 @@ typedef KeepAttribute *(^KeepRelatedAttributeBlock)(KPView *otherView);
 /// Attributes representing internal inset of the receive to its current superview, taking into account its safe insets.
 
 /// Left Safe Inset of the receiver in its current superview.
-@property (readonly) KeepAttribute *keepLeftSafeInset API_AVAILABLE(ios(11));
+@property (readonly) KeepAttribute *keepLeftSafeInset;
 
 /// Right Safe Inset of the receiver in its current superview. Values are inverted to Right-to-Left direction.
-@property (readonly) KeepAttribute *keepRightSafeInset API_AVAILABLE(ios(11));
+@property (readonly) KeepAttribute *keepRightSafeInset;
 
 /// Leading Safe Inset of the receiver in its current superview. Depends on writing direction.
-@property (readonly) KeepAttribute *keepLeadingSafeInset API_AVAILABLE(ios(11));
+@property (readonly) KeepAttribute *keepLeadingSafeInset;
 
 /// Trailing Safe Inset of the receiver in its current superview. Values are inverted to Right-to-Left direction. Depends on writing direction.
-@property (readonly) KeepAttribute *keepTrailingSafeInset API_AVAILABLE(ios(11));
+@property (readonly) KeepAttribute *keepTrailingSafeInset;
 
 /// Top Safe Inset of the receiver in its current superview.
-@property (readonly) KeepAttribute *keepTopSafeInset API_AVAILABLE(ios(11));
+@property (readonly) KeepAttribute *keepTopSafeInset;
 
 /// Bottom Safe Inset of the receiver in its current superview. Values are inverted to Bottom-to-Top direction.
-@property (readonly) KeepAttribute *keepBottomSafeInset API_AVAILABLE(ios(11));
+@property (readonly) KeepAttribute *keepBottomSafeInset;
 
 
 
@@ -155,19 +155,19 @@ typedef KeepAttribute *(^KeepRelatedAttributeBlock)(KPView *otherView);
 /// Convenience methods for setting all safe insets at once.
 
 /// Grouped proxy attribute for Top, Bottom, Left and Right Safe Inset.
-@property (readonly) KeepAttribute *keepSafeInsets API_AVAILABLE(ios(11));
+@property (readonly) KeepAttribute *keepSafeInsets;
 
 /// Grouped proxy attribute for Left and Right Safe Inset.
-@property (readonly) KeepAttribute *keepHorizontalSafeInsets API_AVAILABLE(ios(11));
+@property (readonly) KeepAttribute *keepHorizontalSafeInsets;
 
 /// Grouped proxy attribute for Top and Bottom Safe Inset.
-@property (readonly) KeepAttribute *keepVerticalSafeInsets API_AVAILABLE(ios(11));
+@property (readonly) KeepAttribute *keepVerticalSafeInsets;
 
 /// Sets custom Safe Insets using given priority.
-- (void)keepSafeInsets:(KPEdgeInsets)insets priority:(KeepPriority)priority API_AVAILABLE(ios(11));
+- (void)keepSafeInsets:(KPEdgeInsets)insets priority:(KeepPriority)priority;
 
 /// Sets custom Safe Insets using Required priority. Use is discouraged.
-- (void)keepSafeInsets:(KPEdgeInsets)insets API_AVAILABLE(ios(11));
+- (void)keepSafeInsets:(KPEdgeInsets)insets;
 
 
 
