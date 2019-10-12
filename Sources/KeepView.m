@@ -87,6 +87,24 @@
 
 
 
+#pragma mark Utilites
+
+
+- (void)keep_disableAutoresizingIfPossible {
+    // Error: Cannot choose layout method for UINavigationBar managed by a controller
+    if ([self isKindOfClass:UINavigationBar.class]) {
+        UINavigationBar *navigationBar = (UINavigationBar*)self;
+        if ([navigationBar.delegate isKindOfClass:UINavigationController.class]) {
+            return;
+        }
+    }
+    
+    self.translatesAutoresizingMaskIntoConstraints = NO;
+}
+
+
+
+
 #pragma mark Dimensions
 
 
@@ -103,7 +121,7 @@
                                                          relatedLayoutAttribute:NSLayoutAttributeNotAnAttribute
                                                                     coefficient:1]
                                     name:@"%@ of <%@ %p>", name, self.class, self];
-        self.translatesAutoresizingMaskIntoConstraints = NO;
+        [self keep_disableAutoresizingIfPossible];
         return attribute;
     }];
 }
@@ -123,8 +141,8 @@
                                                           relatedLayoutAttribute:dimensionAttribute
                                                                      coefficient:1];
         [attribute name:@"%@ of <%@ %p> to <%@ %p>", name, self.class, self, relatedView.class, relatedView];
-        self.translatesAutoresizingMaskIntoConstraints = NO;
-        relatedView.translatesAutoresizingMaskIntoConstraints = NO;
+        [self keep_disableAutoresizingIfPossible];
+        [relatedView keep_disableAutoresizingIfPossible];
         // Establish inverse relation
         [relatedView keep_relatedAttributeForSelector:_cmd toView:self creationBlock:^KeepAttribute *{
             return attribute;
@@ -171,7 +189,7 @@
                                                           relatedLayoutAttribute:NSLayoutAttributeHeight
                                                                      coefficient:1];
         [attribute name:@"aspect ratio of <%@ %p>", self.class, self];
-        self.translatesAutoresizingMaskIntoConstraints = NO;
+        [self keep_disableAutoresizingIfPossible];
         return attribute;
     }];
 }
@@ -254,7 +272,7 @@
                                                          relatedLayoutAttribute:superviewEdgeAttribute
                                                                     coefficient:coefficient]
                                     name:@"%@ of <%@ %p> to superview <%@ %p>", name, self.class, self, self.superview.class, self.superview];
-        self.translatesAutoresizingMaskIntoConstraints = NO;
+        [self keep_disableAutoresizingIfPossible];
         return attribute;
     }];
 }
@@ -509,7 +527,7 @@
                                                            relatedLayoutAttribute:centerAttribute
                                                                       coefficient:2]
                                     name:@"%@ of <%@ %p> in superview <%@ %p>", name, self.class, self, self.superview.class, self.superview];
-        self.translatesAutoresizingMaskIntoConstraints = NO;
+        [self keep_disableAutoresizingIfPossible];
         return attribute;
     }];
 }
@@ -610,8 +628,8 @@
                                                           relatedLayoutAttribute:[[oppositeEdges objectForKey:@(edgeAttribute)] integerValue]
                                                                      coefficient:1]
                                      name:@"%@ of <%@ %p> to <%@ %p>", name, self.class, self, relatedView.class, relatedView];
-        self.translatesAutoresizingMaskIntoConstraints = NO;
-        relatedView.translatesAutoresizingMaskIntoConstraints = NO;
+        [self keep_disableAutoresizingIfPossible];
+        [relatedView keep_disableAutoresizingIfPossible];
         return attribute;
     }];
 }
@@ -702,8 +720,8 @@
                                                           relatedLayoutAttribute:alignAttribute
                                                                      coefficient:coefficient]
                                      name:@"%@ of <%@ %p> to <%@ %p>", name, self.class, self, relatedView.class, relatedView];
-        self.translatesAutoresizingMaskIntoConstraints = NO;
-        relatedView.translatesAutoresizingMaskIntoConstraints = NO;
+        [self keep_disableAutoresizingIfPossible];
+        [relatedView keep_disableAutoresizingIfPossible];
         // Establish inverse attribute
         [relatedView keep_relatedAttributeForSelector:selector toView:self creationBlock:^KeepAttribute *{
             return attribute;
