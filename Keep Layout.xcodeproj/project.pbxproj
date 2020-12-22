@@ -381,7 +381,7 @@
 			attributes = {
 				CLASSPREFIX = KPL;
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 1100;
+				LastUpgradeCheck = 1230;
 				ORGANIZATIONNAME = "Martin Kiss";
 				TargetAttributes = {
 					5B3C507816B5304600D00BF3 = {
