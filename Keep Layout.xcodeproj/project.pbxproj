@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -381,8 +381,8 @@
 			attributes = {
 				CLASSPREFIX = KPL;
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 1230;
-				ORGANIZATIONNAME = "Martin Kiss";
+				LastUpgradeCheck = 1299;
+				ORGANIZATIONNAME = Tricertops;
 				TargetAttributes = {
 					5B3C507816B5304600D00BF3 = {
 						DevelopmentTeam = TAQH2MQM62;
@@ -394,7 +394,7 @@
 				};
 			};
 			buildConfigurationList = 5B3C507316B5304600D00BF3 /* Build configuration list for PBXProject "Keep Layout" */;
-			compatibilityVersion = "Xcode 10.0";
+			compatibilityVersion = "Xcode 12.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
