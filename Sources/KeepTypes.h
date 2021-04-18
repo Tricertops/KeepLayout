@@ -94,6 +94,8 @@ extern KeepValue KeepValueSetDefaultPriority(KeepValue, KeepPriority) KEEP_SWIFT
 #define keepHigh            keepAt(KeepPriorityHigh)
 #define keepLow             keepAt(KeepPriorityLow)
 #define keepFitting         keepAt(KeepPriorityFitting)
+#define keepMore            keepAt(10)
+#define keepLess            keepAt(-10)
 
 /// Value, that represents no value. KeepValueIsNone will return YES.
 extern const KeepValue KeepNone KEEP_SWIFT_AWAY;
