@@ -359,9 +359,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5B92B7551CCCD5B0002C1C3B /* Build configuration list for PBXNativeTarget "KeepLayout" */;
 			buildPhases = (
+				5B92B74D1CCCD5B0002C1C3B /* Headers */,
 				5B92B74B1CCCD5B0002C1C3B /* Sources */,
 				5B92B74C1CCCD5B0002C1C3B /* Frameworks */,
-				5B92B74D1CCCD5B0002C1C3B /* Headers */,
 				5B92B74E1CCCD5B0002C1C3B /* Resources */,
 			);
 			buildRules = (
