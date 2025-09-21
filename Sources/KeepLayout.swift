@@ -36,7 +36,7 @@ public extension KeepValue {
 }
 
 /// Value, that represents no value. KeepNone.isNone will return true.
-public let KeepNone: KeepValue = KeepValue_Decomposed(value: CGFloat.nan, priority: 0)
+nonisolated(unsafe) public let KeepNone: KeepValue = KeepValue_Decomposed(value: CGFloat.nan, priority: 0)
 
 /// Constructor with arbitrary priority.
 public func KeepValueMake(_ value: KeepValue, _ priority: KeepPriority) -> KeepValue {
