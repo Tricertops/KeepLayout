@@ -382,7 +382,7 @@
 				BuildIndependentTargetsInParallel = YES;
 				CLASSPREFIX = KPL;
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 2600;
+				LastUpgradeCheck = 2650;
 				ORGANIZATIONNAME = Tricertops;
 				TargetAttributes = {
 					5B3C507816B5304600D00BF3 = {
@@ -829,6 +829,7 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -859,6 +860,7 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
